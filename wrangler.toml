@@ -1,3 +1,12 @@
 name = "dr-islam-website"
 main = "src/index.js"
 compatibility_date = "2024-01-01"
+
+# Custom domain routes
+[[routes]]
+pattern = "dr-elsagher.com/*"
+zone_name = "dr-elsagher.com"
+
+[[routes]]
+pattern = "www.dr-elsagher.com/*"
+zone_name = "dr-elsagher.com"
