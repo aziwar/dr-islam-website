@@ -3,17 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دكتور اسلام الصغير - طبيب أسنان وزراعة</title>
-    <meta name="description" content="Dr. Islam Ramadan - General Dentist & Implantologist in Kuwait. Specializing in endodontics, prosthodontics, and dental implants.">
+    <title>دكتور اسلام الصغير - طبيب أسنان وزراعة في الكويت | Dr. Islam Elsagher</title>
+    <meta name="description" content="دكتور اسلام رمضان الصغير - طبيب أسنان عام وأخصائي زراعة الأسنان في الكويت. خبرة 15+ عام في زراعة الأسنان، علاج الجذور، التركيبات، وتجميل الأسنان.">
+    <meta name="keywords" content="طبيب اسنان الكويت, زراعة اسنان, دكتور اسلام الصغير, علاج جذور, تجميل اسنان, Dr Islam Elsagher, dentist kuwait">
+    <meta name="author" content="Dr. Islam Elsagher">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dr-islam-website.ahmedzawar.workers.dev/">
+    <meta property="og:title" content="دكتور اسلام الصغير - طبيب أسنان وزراعة في الكويت">
+    <meta property="og:description" content="طبيب أسنان عام وأخصائي زراعة الأسنان. خبرة 15+ عام في الكويت">
+    <meta property="og:image" content="/assets/images/dr-islam-og.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dr-islam-website.ahmedzawar.workers.dev/">
+    <meta property="twitter:title" content="دكتور اسلام الصغير - طبيب أسنان في الكويت">
+    <meta property="twitter:description" content="أخصائي زراعة الأسنان وعلاج الجذور">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://wa.me">
+    
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Dentist",
+        "name": "Dr. Islam Ramadan Elsagher",
+        "image": "https://dr-islam-website.ahmedzawar.workers.dev/assets/images/dr-islam.jpg",
+        "telephone": "+96598563711",
+        "email": "dr.islam_elsagher@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kuwait City",
+            "addressCountry": "KW"
+        },
+        "priceRange": "$$",
+        "openingHours": "Sa-Th 09:00-21:00",
+        "areaServed": "Kuwait",
+        "medicalSpecialty": ["Dental Implants", "Endodontics", "Prosthodontics"],
+        "availableService": [
+            {
+                "@type": "MedicalProcedure",
+                "name": "زراعة الأسنان",
+                "description": "زراعة فورية ومتأخرة بأحدث التقنيات"
+            },
+            {
+                "@type": "MedicalProcedure",
+                "name": "علاج الجذور",
+                "description": "علاج متخصص لقنوات الجذور"
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">
-                <img src="assets/images/logo.svg" alt="Dr. Islam Elsagher">
+                <span style="font-size: 1.5rem; color: var(--primary); font-weight: bold;">Dr. Islam</span>
             </div>
-            <ul>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+            <ul class="nav-menu">
                 <li><a href="#services">الخدمات</a></li>
                 <li><a href="#about">عن الطبيب</a></li>
                 <li><a href="#contact">اتصل بنا</a></li>
@@ -25,43 +83,54 @@
         <div class="container">
             <h1>دكتور اسلام رمضان الصغير</h1>
             <p class="subtitle">طبيب أسنان عام / أخصائي زراعة الأسنان</p>
-            <a href="https://wa.me/96598563711" class="cta-button">احجز موعدك الآن</a>
+            <div class="hero-cta">
+                <a href="https://wa.me/96598563711" class="cta-button">احجز موعدك الآن</a>
+                <a href="tel:+96598563711" class="cta-button secondary">اتصل مباشرة</a>
+            </div>
         </div>
     </section>
 
     <section id="services" class="services">
         <div class="container">
-            <h2>خدماتنا</h2>
+            <h2>خدماتنا الطبية</h2>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up">
+                    <div class="service-icon">🦷</div>
                     <h3>زراعة الأسنان</h3>
-                    <p>زراعة فورية ومتأخرة بأحدث التقنيات</p>
+                    <p>زراعة فورية ومتأخرة بأحدث التقنيات العالمية</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon">🔬</div>
                     <h3>علاج الجذور</h3>
-                    <p>علاج متخصص لقنوات الجذور</p>
+                    <p>علاج متخصص لقنوات الجذور بأحدث الأجهزة</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon">👑</div>
                     <h3>التركيبات</h3>
-                    <p>تركيبات ثابتة ومتحركة</p>
+                    <p>تركيبات ثابتة ومتحركة عالية الجودة</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon">🏥</div>
                     <h3>جراحة الأسنان</h3>
-                    <p>خلع جراحي وعمليات متقدمة</p>
+                    <p>خلع جراحي وعمليات متقدمة بدون ألم</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon">✨</div>
                     <h3>تجميل الأسنان</h3>
-                    <p>ابتسامة هوليوود وتبييض</p>
+                    <p>ابتسامة هوليوود وتبييض احترافي</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-icon">💉</div>
                     <h3>علاج اللثة</h3>
-                    <p>علاج أمراض اللثة والأنسجة</p>
+                    <p>علاج أمراض اللثة والأنسجة المحيطة</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-icon">💎</div>
                     <h3>الحشوات التجميلية</h3>
                     <p>حشوات بلون الأسنان الطبيعي</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="700">
+                    <div class="service-icon">🔄</div>
                     <h3>إعادة التأهيل الكامل</h3>
                     <p>علاج شامل للفم والأسنان</p>
                 </div>
@@ -85,6 +154,20 @@
                 <div class="experience">
                     <h3>الخبرة العملية</h3>
                     <p>أكثر من 15 عامًا من الخبرة في طب الأسنان في مصر والكويت</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <span class="stat-number">15+</span>
+                            <span class="stat-label">سنوات خبرة</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">5000+</span>
+                            <span class="stat-label">مريض سعيد</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">1000+</span>
+                            <span class="stat-label">زراعة ناجحة</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,23 +178,31 @@
             <h2>اتصل بنا</h2>
             <div class="contact-info">
                 <div class="contact-card">
-                    <h3>الهاتف</h3>
+                    <h3>📞 الهاتف</h3>
                     <p><a href="tel:+96598563711">98563711</a></p>
                 </div>
                 <div class="contact-card">
-                    <h3>البريد الإلكتروني</h3>
+                    <h3>📧 البريد الإلكتروني</h3>
                     <p><a href="mailto:dr.islam_elsagher@gmail.com">dr.islam_elsagher@gmail.com</a></p>
                 </div>
                 <div class="contact-card">
-                    <h3>الموقع</h3>
+                    <h3>📍 الموقع</h3>
                     <p>مدينة الكويت</p>
                 </div>
             </div>
-            <a href="https://wa.me/96598563711" class="whatsapp-float">
-                <img src="assets/icons/whatsapp.svg" alt="WhatsApp">
-            </a>
+            <div class="working-hours">
+                <h3>ساعات العمل</h3>
+                <p>السبت - الخميس: 9:00 صباحاً - 9:00 مساءً</p>
+                <p>الجمعة: عطلة</p>
+            </div>
         </div>
     </section>
+
+    <a href="https://wa.me/96598563711" class="whatsapp-float" aria-label="WhatsApp">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
 
     <footer>
         <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
