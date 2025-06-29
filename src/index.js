@@ -1,86 +1,94 @@
+// Cloudflare Worker - Serves static files from GitHub repository
 export default {
   async fetch(request) {
-    return new Response(`<!DOCTYPE html>
+    const url = new URL(request.url);
+    let path = url.pathname;
+    
+    // GitHub raw content base URL
+    const GITHUB_BASE = 'https://raw.githubusercontent.com/aziwar/dr-islam-website/master';
+    
+    // Default to index.html
+    if (path === '/') path = '/index.html';
+    
+    try {
+      // Fetch from GitHub
+      const response = await fetch(`${GITHUB_BASE}${path}`);
+      
+      if (!response.ok) {
+        // 404 fallback
+        return new Response(get404Page(), {
+          status: 404,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        });
+      }
+      
+      // Determine content type
+      const contentType = getContentType(path);
+      
+      // Return with proper headers
+      return new Response(response.body, {
+        headers: {
+          'Content-Type': contentType,
+          'Cache-Control': 'public, max-age=3600'
+        }
+      });
+      
+    } catch (error) {
+      return new Response(`Error: ${error.message}`, { status: 500 });
+    }
+  }
+};
+
+function getContentType(path) {
+  const ext = path.split('.').pop().toLowerCase();
+  const types = {
+    'html': 'text/html; charset=utf-8',
+    'css': 'text/css; charset=utf-8',
+    'js': 'application/javascript; charset=utf-8',
+    'json': 'application/json; charset=utf-8',
+    'png': 'image/png',
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'ico': 'image/x-icon',
+    'svg': 'image/svg+xml'
+  };
+  return types[ext] || 'text/plain; charset=utf-8';
+}
+
+function get404Page() {
+  return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دكتور اسلام الصغير - طبيب أسنان وزراعة</title>
+    <title>404 - الصفحة غير موجودة</title>
     <style>
-        :root{--primary:#BEB093;--secondary:#777669;--white:#FFF;--light:#F8F7F5;--text:#333}
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:Arial,sans-serif;color:var(--text);line-height:1.6;direction:rtl}
-        header{background:#fff;box-shadow:0 2px 5px rgba(0,0,0,0.1);position:sticky;top:0;z-index:100}
-        nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 5%;max-width:1200px;margin:0 auto}
-        nav ul{display:flex;list-style:none;gap:2rem}
-        nav a{text-decoration:none;color:var(--secondary);font-weight:500}
-        .hero{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:100px 5%;text-align:center}
-        .container{max-width:1200px;margin:0 auto}
-        h1{font-size:2.5rem;margin-bottom:1rem}
-        .subtitle{font-size:1.2rem;margin-bottom:2rem}
-        .cta-button{display:inline-block;background:#fff;color:var(--secondary);padding:15px 30px;border-radius:5px;text-decoration:none;font-weight:bold}
-        .services{padding:80px 5%;background:var(--light)}
-        h2{font-size:2rem;text-align:center;color:var(--secondary);margin-bottom:3rem}
-        .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
-        .service-card{background:#fff;padding:2rem;border-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,0.1);text-align:center}
-        .about{padding:80px 5%}
-        .contact{padding:80px 5%;background:var(--light)}
-        footer{background:var(--secondary);color:#fff;text-align:center;padding:20px}
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .error-container {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        a { color: #0066cc; text-decoration: none; }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">Dr. Islam Elsagher</div>
-            <ul>
-                <li><a href="#services">الخدمات</a></li>
-                <li><a href="#about">عن الطبيب</a></li>
-                <li><a href="#contact">اتصل بنا</a></li>
-            </ul>
-        </nav>
-    </header>
-    <section class="hero">
-        <div class="container">
-            <h1>دكتور اسلام رمضان الصغير</h1>
-            <p class="subtitle">طبيب أسنان عام / أخصائي زراعة الأسنان</p>
-            <a href="https://wa.me/96598563711" class="cta-button">احجز موعدك الآن</a>
-        </div>
-    </section>
-    <section id="services" class="services">
-        <div class="container">
-            <h2>خدماتنا</h2>
-            <div class="services-grid">
-                <div class="service-card"><h3>زراعة الأسنان</h3><p>زراعة فورية ومتأخرة بأحدث التقنيات</p></div>
-                <div class="service-card"><h3>علاج الجذور</h3><p>علاج متخصص لقنوات الجذور</p></div>
-                <div class="service-card"><h3>التركيبات</h3><p>تركيبات ثابتة ومتحركة</p></div>
-                <div class="service-card"><h3>جراحة الأسنان</h3><p>خلع جراحي وعمليات متقدمة</p></div>
-                <div class="service-card"><h3>تجميل الأسنان</h3><p>ابتسامة هوليوود وتبييض</p></div>
-                <div class="service-card"><h3>علاج اللثة</h3><p>علاج أمراض اللثة والأنسجة</p></div>
-                <div class="service-card"><h3>الحشوات التجميلية</h3><p>حشوات بلون الأسنان الطبيعي</p></div>
-                <div class="service-card"><h3>إعادة التأهيل الكامل</h3><p>علاج شامل للفم والأسنان</p></div>
-            </div>
-        </div>
-    </section>
-    <section id="about" class="about">
-        <div class="container">
-            <h2>عن الطبيب</h2>
-            <p>أكثر من 15 عامًا من الخبرة في طب الأسنان في مصر والكويت</p>
-        </div>
-    </section>
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>اتصل بنا</h2>
-            <p>الهاتف: <a href="tel:+96598563711">98563711</a></p>
-            <p>البريد: <a href="mailto:dr.islam_elsagher@gmail.com">dr.islam_elsagher@gmail.com</a></p>
-            <p>الموقع: مدينة الكويت</p>
-        </div>
-    </section>
-    <footer>
-        <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
-    </footer>
+    <div class="error-container">
+        <h1>404</h1>
+        <p>عذراً، الصفحة غير موجودة</p>
+        <p><a href="/">العودة للصفحة الرئيسية</a></p>
+    </div>
 </body>
-</html>`, {
-      headers: { 'content-type': 'text/html;charset=UTF-8' }
-    });
-  }
-};
+</html>`;
+}
