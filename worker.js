@@ -1,4 +1,4 @@
-// Cloudflare Worker - Serves static files from GitHub repository
+// Cloudflare Worker - Bilingual site with language routing
 export default {
   async fetch(request) {
     const url = new URL(request.url);
@@ -7,8 +7,17 @@ export default {
     // GitHub raw content base URL
     const GITHUB_BASE = 'https://raw.githubusercontent.com/aziwar/dr-islam-website/master';
     
-    // Default to index.html
-    if (path === '/') path = '/index.html';
+    // Language routing logic
+    if (path === '/') {
+      // Default to English
+      path = '/index-en.html';
+    } else if (path === '/ar' || path === '/ar/') {
+      // Arabic version
+      path = '/index.html';
+    } else if (path.startsWith('/ar/')) {
+      // Remove /ar prefix for assets
+      path = path.replace('/ar/', '/');
+    }
     
     try {
       // Fetch from GitHub
@@ -57,11 +66,11 @@ function getContentType(path) {
 
 function get404Page() {
   return `<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - الصفحة غير موجودة</title>
+    <title>404 - Page Not Found</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -86,8 +95,8 @@ function get404Page() {
 <body>
     <div class="error-container">
         <h1>404</h1>
-        <p>عذراً، الصفحة غير موجودة</p>
-        <p><a href="/">العودة للصفحة الرئيسية</a></p>
+        <p>Sorry, page not found</p>
+        <p><a href="/">Back to Homepage</a> | <a href="/ar">النسخة العربية</a></p>
     </div>
 </body>
 </html>`;
