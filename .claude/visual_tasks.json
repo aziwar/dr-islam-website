@@ -1,0 +1,156 @@
+{
+  "visual_tasks": {
+    "hero_gradient": {
+      "name": "Add Hero Gradient Animation",
+      "compliance": {
+        "context7_library": "/mdn/css-reference",
+        "requires_validation": true,
+        "git_branch": "feature/hero-visual",
+        "auto_pr": true
+      },
+      "steps": [
+        {
+          "action": "validate_context7",
+          "params": {
+            "library": "/mdn/css-reference",
+            "topic": "CSS gradients animations"
+          }
+        },
+        {
+          "action": "create_branch",
+          "tool": "github:create_branch",
+          "params": {
+            "branch": "feature/hero-visual"
+          }
+        },
+        {
+          "action": "update_css",
+          "file": "css/style.css",
+          "changes": [
+            {
+              "selector": ".hero",
+              "add_properties": {
+                "background": "linear-gradient(-45deg, #BEB093, #777669, #8B7F6B, #9A8E77)",
+                "background-size": "400% 400%",
+                "animation": "gradientShift 15s ease infinite"
+              }
+            },
+            {
+              "add_keyframes": "@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }"
+            }
+          ]
+        },
+        {
+          "action": "commit_push",
+          "tool": "github:push_files",
+          "message": "feat: animated gradient hero background"
+        }
+      ]
+    },
+    "glass_cards": {
+      "name": "Glassmorphism Service Cards",
+      "compliance": {
+        "context7_library": "/mdn/css-reference",
+        "requires_validation": true,
+        "git_branch": "feature/glass-cards",
+        "auto_pr": true
+      },
+      "steps": [
+        {
+          "action": "validate_context7",
+          "params": {
+            "library": "/mdn/css-reference",
+            "topic": "backdrop-filter glassmorphism"
+          }
+        },
+        {
+          "action": "create_branch",
+          "tool": "github:create_branch",
+          "params": {
+            "branch": "feature/glass-cards"
+          }
+        },
+        {
+          "action": "update_css",
+          "file": "css/style.css",
+          "changes": [
+            {
+              "selector": ".service-card",
+              "add_properties": {
+                "background": "rgba(255, 255, 255, 0.25)",
+                "backdrop-filter": "blur(10px)",
+                "border": "1px solid rgba(255, 255, 255, 0.18)",
+                "box-shadow": "0 8px 32px 0 rgba(31, 38, 135, 0.15)"
+              }
+            }
+          ]
+        },
+        {
+          "action": "commit_push",
+          "tool": "github:push_files",
+          "message": "feat: glassmorphism effect on service cards"
+        }
+      ]
+    },
+    "typography_upgrade": {
+      "name": "Modern Typography with Poppins",
+      "compliance": {
+        "context7_library": "/google/fonts-api",
+        "requires_validation": true,
+        "git_branch": "feature/typography",
+        "auto_pr": true
+      },
+      "steps": [
+        {
+          "action": "validate_context7",
+          "params": {
+            "library": "/google/fonts-api",
+            "topic": "Poppins font implementation"
+          }
+        },
+        {
+          "action": "create_branch",
+          "tool": "github:create_branch",
+          "params": {
+            "branch": "feature/typography"
+          }
+        },
+        {
+          "action": "update_html",
+          "file": "index-en.html",
+          "changes": [
+            {
+              "location": "head",
+              "add_element": "<link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap' rel='stylesheet'>"
+            }
+          ]
+        },
+        {
+          "action": "update_css",
+          "file": "css/style.css",
+          "changes": [
+            {
+              "selector": "body",
+              "update_properties": {
+                "font-family": "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                "letter-spacing": "0.5px"
+              }
+            }
+          ]
+        },
+        {
+          "action": "commit_push",
+          "tool": "github:push_files",
+          "message": "feat: Poppins font with improved typography"
+        }
+      ]
+    }
+  },
+  "execution_order": ["hero_gradient", "glass_cards", "typography_upgrade"],
+  "automation_config": {
+    "pre_execution": "node .claude/validator.js",
+    "parallel_execution": false,
+    "auto_merge": false,
+    "notification": "console"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "version": "2.1",
+  "enforcement": "MANDATORY",
+  "rules": {
+    "context7": {
+      "required": true,
+      "trust_score_min": 9.0,
+      "pre_code_validation": true,
+      "libraries": {
+        "javascript": "/cloudflare/workers-sdk",
+        "css": "/mdn/css-reference",
+        "html": "/whatwg/html"
+      }
+    },
+    "git_operations": {
+      "allowed_tools": ["github:*"],
+      "forbidden_tools": ["desktop-commander:*"],
+      "auto_branch": true,
+      "pr_required": true
+    },
+    "response_tracking": {
+      "max_responses": 5,
+      "checkpoint_required": true,
+      "auto_reset": true
+    },
+    "file_operations": {
+      "chunk_size": 30,
+      "mode": "incremental",
+      "validation": "pre_write"
+    }
+  },
+  "automation": {
+    "pre_task_checks": [
+      "validate_context7",
+      "check_response_count",
+      "verify_git_tool"
+    ],
+    "post_task_actions": [
+      "update_compliance_log",
+      "increment_response",
+      "commit_changes"
+    ],
+    "error_handling": {
+      "on_violation": "STOP",
+      "log_location": ".claude/violations.log",
+      "alert_method": "console"
+    }
+  }
+}
