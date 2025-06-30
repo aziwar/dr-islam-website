@@ -1,4 +1,4 @@
-// Cloudflare Worker - Optimized with embedded content
+// Cloudflare Worker - Optimized with embedded content (Brand Fixed)
 export default {
   async fetch(request) {
     const url = new URL(request.url);
@@ -138,8 +138,8 @@ const HTML_AR = `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دكتور اسلام الصغير - طبيب أسنان في الكويت</title>
-    <meta name="description" content="دكتور اسلام الصغير - طبيب أسنان عام وأخصائي زراعة الأسنان. خبرة 15+ عام في الكويت.">
+    <title>Dr. Islam Elsagher - طبيب أسنان في الكويت</title>
+    <meta name="description" content="Dr. Islam Elsagher - طبيب أسنان عام وأخصائي زراعة الأسنان. خبرة 15+ عام في الكويت.">
     <style>
         :root { --primary: #BEB093; --secondary: #777669; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -179,7 +179,7 @@ const HTML_AR = `<!DOCTYPE html>
         </nav>
     </header>
     <section class="hero">
-        <h1>دكتور اسلام الصغير</h1>
+        <h1>Dr. Islam Elsagher</h1>
         <p class="subtitle">طبيب أسنان عام / أخصائي زراعة الأسنان</p>
         <div>
             <a href="https://wa.me/96598563711" class="cta-button">احجز موعدك</a>
@@ -234,7 +234,7 @@ const HTML_AR = `<!DOCTYPE html>
         </svg>
     </a>
     <footer>
-        <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
+        <p>&copy; 2025 Dr. Islam Elsagher - جميع الحقوق محفوظة</p>
     </footer>
 </body>
 </html>`;
