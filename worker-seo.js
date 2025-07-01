@@ -62,34 +62,36 @@ export default {
   }
 };
 
-const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 140" width="450" height="140">
-  <!-- Dr. Islam Elsagher Dental Logo - Production Version -->
+const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <!-- Background -->
+  <rect width="400" height="200" fill="white"/>
   
-  <!-- Dental Symbol -->
-  <g id="logo-symbol" transform="translate(60, 70)">
-    <!-- Tooth shape -->
-    <path d="M0,-45 C-10,-45 -18,-40 -22,-32 C-26,-24 -28,-15 -28,-5 C-28,5 -26,15 -22,25 C-18,35 -12,43 -6,48 C-3,50 0,52 0,52 C0,52 3,50 6,48 C12,43 18,35 22,25 C26,15 28,5 28,-5 C28,-15 26,-24 22,-32 C18,-40 10,-45 0,-45Z" 
-          fill="#BEB093" stroke="#BEB093" stroke-width="0.5"/>
+  <!-- Dental Implant with Crescent Symbol -->
+  <g transform="translate(50, 100)">
+    <!-- Crescent Moon -->
+    <path d="M30,0 A30,30 0 1,1 30,60 A20,20 0 1,0 30,0" fill="#777669"/>
     
-    <!-- Crescent moon -->
-    <path d="M-12,-35 C-22,-35 -30,-26 -30,-15 C-30,-4 -22,5 -12,5 C-17,2 -20,-5 -20,-15 C-20,-25 -17,-32 -12,-35Z" 
-          fill="#777669"/>
+    <!-- Dental Implant Screw -->
+    <g transform="translate(35, 15)">
+      <!-- Screw threads -->
+      <path d="M5,0 L5,30 M0,5 L10,5 M0,10 L10,10 M0,15 L10,15 M0,20 L10,20 M0,25 L10,25" 
+            stroke="#BEB093" stroke-width="2" fill="none"/>
+      <!-- Implant top -->
+      <rect x="0" y="0" width="10" height="5" fill="#BEB093"/>
+    </g>
     
-    <!-- Center line -->
-    <line x1="0" y1="-40" x2="0" y2="48" stroke="#777669" stroke-width="1.5" opacity="0.5"/>
+    <!-- Decorative swirl -->
+    <path d="M15,35 Q25,40 35,35 T55,40" stroke="#BEB093" stroke-width="2" fill="none"/>
   </g>
   
-  <!-- Text Group -->
-  <g id="logo-text">
-    <!-- Using web-safe script fonts -->
-    <text x="120" y="70" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="42" fill="#777669">Dr. Islam</text>
-    <text x="260" y="70" font-family="Brush Script MT, Lucida Handwriting, cursive" font-size="44" fill="#777669" font-weight="500">Elsagher</text>
-    
-    <!-- Arabic text -->
-    <text x="225" y="105" font-family="Arial, sans-serif" font-size="16" fill="#777669" text-anchor="middle" direction="rtl">
-      دكتــور . اسـلام الصغـيـر
-    </text>
-  </g>
+  <!-- Text "Dr.Islam Elsagher" -->
+  <text x="120" y="100" font-family="Georgia, serif" font-size="36" fill="#777669" font-style="italic">Dr.Islam</text>
+  <text x="240" y="100" font-family="Georgia, serif" font-size="36" fill="#BEB093" font-style="italic">Elsagher</text>
+  
+  <!-- Arabic Text -->
+  <text x="200" y="140" font-family="Arial, sans-serif" font-size="20" fill="#777669" text-anchor="middle" direction="rtl">
+    دكتــور . اسـلام الصغـيـر
+  </text>
 </svg>`;
 
 const ROBOTS_TXT = `User-agent: *
@@ -112,7 +114,7 @@ const SITEMAP_XML = `<?xml version="1.0" encoding="UTF-8"?>
 
 const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <rect width="100" height="100" rx="20" fill="#BEB093"/>
-  <text x="50" y="55" font-family="Arial, sans-serif" font-size="40" font-weight="bold" text-anchor="middle" fill="white">DI</text>
+  <path d="M50,20 A30,30 0 1,1 50,80 A20,20 0 1,0 50,20" fill="white"/>
 </svg>`;
 
 const MANIFEST_JSON = JSON.stringify({
@@ -140,7 +142,7 @@ const HTML_EN = `<!DOCTYPE html>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
         nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; max-width: 1200px; margin: 0 auto; }
-        .logo { height: 60px; display: flex; align-items: center; }
+        .logo { height: 80px; display: flex; align-items: center; }
         .logo img { height: 100%; width: auto; }
         nav ul { list-style: none; display: flex; gap: 2rem; }
         nav a { text-decoration: none; color: #333; transition: color 0.3s; }
@@ -159,7 +161,7 @@ const HTML_EN = `<!DOCTYPE html>
         .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0; }
         .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
         footer { background: var(--secondary); color: white; text-align: center; padding: 2rem; margin-top: 3rem; }
-        @media (max-width: 768px) { nav ul { display: none; } .hero h1 { font-size: 2rem; } .logo { height: 50px; } }
+        @media (max-width: 768px) { nav ul { display: none; } .hero h1 { font-size: 2rem; } .logo { height: 60px; } }
     </style>
 </head>
 <body>
@@ -252,7 +254,7 @@ const HTML_AR = `<!DOCTYPE html>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; direction: rtl; }
         header { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
         nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; max-width: 1200px; margin: 0 auto; }
-        .logo { height: 60px; display: flex; align-items: center; }
+        .logo { height: 80px; display: flex; align-items: center; }
         .logo img { height: 100%; width: auto; }
         nav ul { list-style: none; display: flex; gap: 2rem; }
         nav a { text-decoration: none; color: #333; transition: color 0.3s; }
@@ -271,7 +273,7 @@ const HTML_AR = `<!DOCTYPE html>
         .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0; }
         .whatsapp-float { position: fixed; bottom: 20px; left: 20px; background: #25D366; color: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
         footer { background: var(--secondary); color: white; text-align: center; padding: 2rem; margin-top: 3rem; }
-        @media (max-width: 768px) { nav ul { display: none; } .hero h1 { font-size: 2rem; } .logo { height: 50px; } }
+        @media (max-width: 768px) { nav ul { display: none; } .hero h1 { font-size: 2rem; } .logo { height: 60px; } }
     </style>
 </head>
 <body>
