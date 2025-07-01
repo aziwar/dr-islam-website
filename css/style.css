@@ -268,3 +268,70 @@ footer {
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
+/* Logo Styles */
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 20px;
+    border: 2px solid #BEB093;
+    border-radius: 5px;
+    background: linear-gradient(135deg, rgba(190,176,147,0.1) 0%, rgba(119,118,105,0.1) 100%);
+}
+
+.logo-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #777669;
+    line-height: 1.2;
+}
+
+.logo-arabic {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #BEB093;
+    line-height: 1;
+}
+.logo {
+    position: relative;
+    display: inline-block;
+}
+
+.logo::before {
+    content: "Dr. Islam Elsagher";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #777669;
+    white-space: nowrap;
+    display: none;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+}
+
+/* Show text when image fails to load */
+.logo img[alt]:not([src]),
+.logo img[src=""]:not([src]),
+.logo img:not([src]) {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 60px;
+    background: linear-gradient(135deg, #BEB093 0%, #777669 100%);
+    opacity: 0;
+}
+
+.logo img[alt]:not([src]) + .logo::before,
+.logo img[src=""] + .logo::before {
+    display: block;
+}
