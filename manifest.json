@@ -1,0 +1,8 @@
+{
+  "name": "Dr. Islam Elsagher",
+  "short_name": "Dr. Islam",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#BEB093",
+  "icons": [{"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml"}]
+}
