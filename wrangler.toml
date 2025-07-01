@@ -1,5 +1,5 @@
 name = "dr-islam-website"
-main = "worker-optimized.js"
+main = "worker-seo.js"
 compatibility_date = "2024-01-01"
 
 [vars]
