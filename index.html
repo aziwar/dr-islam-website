@@ -11,6 +11,56 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="stylesheet" href="css/style.css">
     
+    <!-- Schema Markup for Dentist -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dentist",
+      "name": "Dr. Islam Elsagher",
+      "alternateName": "د. اسلام الصغير",
+      "description": "طبيب أسنان عام وأخصائي زراعة الأسنان في الكويت",
+      "image": "https://dr-elsagher.com/assets/dr-islam.jpg",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "KW"
+      },
+      "telephone": "+96598563711",
+      "url": "https://dr-elsagher.com",
+      "sameAs": [
+        "https://www.instagram.com/dr.islamelsagher/"
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+          "opens": "09:00",
+          "closes": "21:00"
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "خدمات طب الأسنان",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "زراعة الأسنان"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "علاج الجذور"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+    
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -21,6 +71,11 @@
     </script>
 </head>
 <body>
+    <!-- Emergency Banner -->
+    <div class="emergency-banner">
+        <p>حالات طوارئ الأسنان؟ اتصل الآن: <a href="tel:+96598563711">98563711</a></p>
+    </div>
+
     <header>
         <nav>
             <div class="logo">
@@ -33,6 +88,9 @@
             <ul>
                 <li><a href="#services">الخدمات</a></li>
                 <li><a href="#about">عن الطبيب</a></li>
+                <li><a href="#testimonials">آراء المرضى</a></li>
+                <li><a href="#gallery">قبل وبعد</a></li>
+                <li><a href="#faq">أسئلة شائعة</a></li>
                 <li><a href="#contact">اتصل بنا</a></li>
             </ul>
         </nav>
@@ -42,6 +100,11 @@
         <div class="container">
             <h1>دكتور اسلام الصغير</h1>
             <p class="subtitle">طبيب أسنان عام / أخصائي زراعة الأسنان</p>
+            <div class="trust-badges">
+                <span class="badge">خبرة +15 عاماً</span>
+                <span class="badge">أحدث التقنيات</span>
+                <span class="badge">رضا 100% للمرضى</span>
+            </div>
             <a href="https://wa.me/96598563711" class="cta-button">احجز موعدك الآن</a>
         </div>
     </section>
@@ -86,6 +149,55 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>ماذا يقول مرضانا</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"خدمة ممتازة وطبيب محترف جداً. الدكتور اسلام شرح لي كل خطوة في العلاج وكانت النتيجة رائعة"</p>
+                    <cite>- أحمد السالم</cite>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"أفضل تجربة زراعة أسنان. الدكتور متمكن جداً وفريق العمل متعاون. أنصح الجميع بزيارة العيادة"</p>
+                    <cite>- فاطمة العلي</cite>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"علاج احترافي ونتائج مبهرة. الدكتور اسلام حول ابتسامتي تماماً. شكراً جزيلاً"</p>
+                    <cite>- محمد الخالد</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before/After Gallery -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2>نتائج حقيقية</h2>
+            <p class="gallery-subtitle">شاهد التحول المذهل لابتسامات مرضانا</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="assets/before-after/case1-before.jpg" alt="قبل العلاج" loading="lazy">
+                    <img src="assets/before-after/case1-after.jpg" alt="بعد العلاج" loading="lazy">
+                    <p>زراعة أسنان أمامية</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/before-after/case2-before.jpg" alt="قبل العلاج" loading="lazy">
+                    <img src="assets/before-after/case2-after.jpg" alt="بعد العلاج" loading="lazy">
+                    <p>ابتسامة هوليوود</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="assets/before-after/case3-before.jpg" alt="قبل العلاج" loading="lazy">
+                    <img src="assets/before-after/case3-after.jpg" alt="بعد العلاج" loading="lazy">
+                    <p>علاج تقويمي وتجميلي</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="about" class="about">
         <div class="container">
             <h2>عن الطبيب</h2>
@@ -98,10 +210,56 @@
                         <li>ماجستير أمراض اللثة - جامعة الأزهر</li>
                         <li>ماجستير علوم الليزر - جامعة القاهرة</li>
                     </ul>
+                    <div class="certifications">
+                        <h4>الشهادات والعضويات</h4>
+                        <div class="cert-badges">
+                            <span class="cert-badge">عضو الجمعية الكويتية لطب الأسنان</span>
+                            <span class="cert-badge">رخصة مزاولة المهنة - وزارة الصحة الكويتية</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="experience">
                     <h3>الخبرة العملية</h3>
                     <p>أكثر من 15 عامًا من الخبرة في طب الأسنان في مصر والكويت</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <h4>+5000</h4>
+                            <p>مريض راضٍ</p>
+                        </div>
+                        <div class="stat">
+                            <h4>+1200</h4>
+                            <p>زراعة ناجحة</p>
+                        </div>
+                        <div class="stat">
+                            <h4>15+</h4>
+                            <p>سنوات خبرة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>أسئلة شائعة</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>كم تكلفة زراعة الأسنان؟</h3>
+                    <p>تختلف التكلفة حسب الحالة ونوع الزرعة المستخدمة. نقدم استشارة مجانية لتقييم حالتك وتقديم خطة علاج مفصلة مع التكلفة.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>هل الزراعة مؤلمة؟</h3>
+                    <p>نستخدم أحدث تقنيات التخدير الموضعي لضمان راحتك التامة. معظم المرضى يصفون العملية بأنها أقل ألماً من خلع الأسنان العادي.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>ما هي مدة العلاج؟</h3>
+                    <p>تعتمد مدة العلاج على الحالة. الزراعة الفورية يمكن إتمامها في جلسة واحدة، بينما الزراعة التقليدية تحتاج 3-6 أشهر للاندماج الكامل.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>هل تقبلون التأمين الصحي؟</h3>
+                    <p>نتعامل مع معظم شركات التأمين الصحي في الكويت. يرجى التواصل معنا للتأكد من قبول تأمينك الصحي.</p>
                 </div>
             </div>
         </div>
@@ -128,15 +286,30 @@
                     <p><a href="https://wa.me/96598563711">98563711</a></p>
                 </div>
             </div>
-            <a href="https://wa.me/96598563711" class="whatsapp-float">
-                <img src="assets/icons/whatsapp.svg" alt="WhatsApp">
-            </a>
+            <div class="working-hours">
+                <h3>ساعات العمل</h3>
+                <div class="hours-grid">
+                    <div class="day-hours">
+                        <span class="day">السبت - الخميس:</span>
+                        <span class="hours">9:00 صباحاً - 9:00 مساءً</span>
+                    </div>
+                    <div class="day-hours">
+                        <span class="day">الجمعة:</span>
+                        <span class="hours">مغلق</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <footer>
         <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
     </footer>
+
+    <!-- Sticky WhatsApp Booking Button -->
+    <a href="https://wa.me/96598563711" class="sticky-book">
+        احجز موعد 💬
+    </a>
 
     <script src="js/main.js"></script>
 </body>
