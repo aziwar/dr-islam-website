@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" width="600" height="180">
+  <!-- Dr. Islam Elsagher Professional Logo -->
+  <defs>
+    <!-- Define the exact brand colors -->
+    <linearGradient id="toothGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#BEB093;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A49B7F;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Dental Symbol Group -->
+  <g id="dentalSymbol" transform="translate(80, 90)">
+    <!-- Complex tooth shape with curves matching the image -->
+    <path d="M0,-50 C-8,-50 -15,-45 -20,-38 C-24,-32 -26,-24 -26,-15 C-26,-8 -25,-2 -23,5 C-21,12 -18,20 -15,28 C-12,35 -8,42 -5,48 C-2,54 0,58 0,58 C0,58 2,54 5,48 C8,42 12,35 15,28 C18,20 21,12 23,5 C25,-2 26,-8 26,-15 C26,-24 24,-32 20,-38 C15,-45 8,-50 0,-50Z" 
+          fill="#BEB093"/>
+    
+    <!-- Crescent moon detail -->
+    <path d="M-10,-40 C-20,-40 -28,-32 -28,-20 C-28,-8 -20,0 -10,0 C-15,-3 -18,-10 -18,-20 C-18,-30 -15,-37 -10,-40Z" 
+          fill="#777669" opacity="0.8"/>
+    
+    <!-- Center spine -->
+    <line x1="0" y1="-45" x2="0" y2="55" stroke="#777669" stroke-width="2" opacity="0.4"/>
+    
+    <!-- Horizontal details mimicking tooth ridges -->
+    <path d="M-15,15 Q0,18 15,15 M-12,25 Q0,28 12,25 M-8,35 Q0,38 8,35" 
+          stroke="#777669" stroke-width="1" fill="none" opacity="0.3"/>
+  </g>
+  
+  <!-- Typography Group -->
+  <g id="typography" transform="translate(300, 90)">
+    <!-- Dr. Islam - Script font -->
+    <path d="M-80,-10 Q-75,-15 -70,-15 Q-65,-15 -65,-10 Q-65,-5 -70,-5 Q-75,-5 -80,0 L-78,5 Q-75,8 -70,8 Q-60,8 -55,5 Q-50,2 -50,-5 Q-50,-10 -45,-12 Q-40,-14 -35,-12 Q-30,-10 -30,-5 L-30,5 Q-30,10 -35,10 M-20,-10 Q-20,-5 -20,0 Q-20,5 -15,5 Q-10,5 -10,0 M0,-15 Q5,-15 10,-10 Q15,-5 15,0 Q15,5 10,5 Q5,5 0,0 M20,-10 Q25,-10 30,-5 Q35,0 35,5 Q35,10 30,10 Q25,10 20,5" 
+          fill="#777669" stroke="none"/>
+    
+    <!-- Elsagher - Script font (larger, bolder) -->
+    <path d="M50,-15 Q60,-20 70,-15 Q75,-12 75,-5 Q75,0 70,5 Q65,10 60,10 Q55,10 50,5 M80,-15 Q85,-15 90,-10 Q95,-5 95,0 Q95,5 90,10 M100,-10 Q105,-10 110,-5 Q115,0 115,5 Q115,10 110,10 M120,-15 Q125,-15 130,-10 Q135,-5 135,0 Q135,5 135,10 Q135,15 130,15 M140,-10 Q145,-15 150,-15 Q155,-15 160,-10 Q165,-5 165,0 Q165,5 160,10 Q155,15 150,15 M170,-15 Q175,-15 180,-10 Q185,-5 185,0 Q185,5 180,10 Q175,15 170,15 M190,-10 Q195,-10 200,-5" 
+          fill="#777669" stroke="none" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Arabic Text -->
+  <text x="300" y="130" font-family="Arial, sans-serif" font-size="18" fill="#777669" text-anchor="middle">
+    دكتــور . اســلام الصغــيــر
+  </text>
+</svg>

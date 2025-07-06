@@ -1,0 +1,6 @@
+{
+    "isolation_mode":  true,
+    "api_port":  8081,
+    "preview_port":  8080,
+    "websocket_port":  8082
+}
