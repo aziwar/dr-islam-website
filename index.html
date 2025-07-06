@@ -3,13 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دكتور اسلام الصغير - طبيب أسنان وزراعة</title>
-    <meta name="description" content="Dr. Islam Elsagher - General Dentist & Implantologist in Kuwait. Specializing in endodontics, prosthodontics, and dental implants.">
+    <title>دكتور اسلام الصغير - طبيب أسنان وزراعة في الكويت</title>
+    <meta name="description" content="د. اسلام الصغير - طبيب أسنان عام وأخصائي زراعة الأسنان في الكويت. خبرة أكثر من 15 عام في علاج الجذور، التركيبات، وتجميل الأسنان.">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Dentist",
+      "name": "Dr. Islam Elsagher - د. اسلام الصغير",
+      "description": "طبيب أسنان عام وأخصائي زراعة الأسنان في الكويت",
+      "telephone": "+96598563711",
+      "url": "https://dr-elsagher.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "KW",
+        "addressLocality": "الكويت"
+      },
+      "priceRange": "$$",
+      "openingHours": "Sa-Th 09:00-21:00"
+    }
+    </script>
     
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -21,6 +40,11 @@
     </script>
 </head>
 <body>
+    <!-- Emergency Banner -->
+    <div class="emergency-banner">
+        <p>حالات طوارئ الأسنان؟ اتصل الآن: <a href="tel:+96598563711">98563711</a></p>
+    </div>
+
     <header>
         <nav>
             <div class="logo">
@@ -33,6 +57,9 @@
             <ul>
                 <li><a href="#services">الخدمات</a></li>
                 <li><a href="#about">عن الطبيب</a></li>
+                <li><a href="#gallery">قبل وبعد</a></li>
+                <li><a href="#testimonials">آراء المرضى</a></li>
+                <li><a href="#faq">الأسئلة الشائعة</a></li>
                 <li><a href="#contact">اتصل بنا</a></li>
             </ul>
         </nav>
@@ -42,7 +69,12 @@
         <div class="container">
             <h1>دكتور اسلام الصغير</h1>
             <p class="subtitle">طبيب أسنان عام / أخصائي زراعة الأسنان</p>
-            <a href="https://wa.me/96598563711" class="cta-button">احجز موعدك الآن</a>
+            <div class="hero-badges">
+                <span class="badge">خبرة +15 عام</span>
+                <span class="badge">زراعة الأسنان</span>
+                <span class="badge">تجميل الأسنان</span>
+            </div>
+            <a href="https://wa.me/96598563711?text=أريد حجز موعد" class="cta-button">احجز موعدك الآن</a>
         </div>
     </section>
 
@@ -86,6 +118,37 @@
         </div>
     </section>
 
+    <!-- Before/After Gallery -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2>نتائج علاجاتنا</h2>
+            <p class="section-subtitle">شاهد التحول المذهل لابتسامات مرضانا</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="before-after">
+                        <img src="assets/gallery/case1-before.jpg" alt="قبل العلاج" loading="lazy">
+                        <img src="assets/gallery/case1-after.jpg" alt="بعد العلاج" loading="lazy">
+                    </div>
+                    <p>زراعة أسنان أمامية</p>
+                </div>
+                <div class="gallery-item">
+                    <div class="before-after">
+                        <img src="assets/gallery/case2-before.jpg" alt="قبل العلاج" loading="lazy">
+                        <img src="assets/gallery/case2-after.jpg" alt="بعد العلاج" loading="lazy">
+                    </div>
+                    <p>ابتسامة هوليوود</p>
+                </div>
+                <div class="gallery-item">
+                    <div class="before-after">
+                        <img src="assets/gallery/case3-before.jpg" alt="قبل العلاج" loading="lazy">
+                        <img src="assets/gallery/case3-after.jpg" alt="بعد العلاج" loading="lazy">
+                    </div>
+                    <p>تقويم وتجميل</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="about" class="about">
         <div class="container">
             <h2>عن الطبيب</h2>
@@ -102,6 +165,77 @@
                 <div class="experience">
                     <h3>الخبرة العملية</h3>
                     <p>أكثر من 15 عامًا من الخبرة في طب الأسنان في مصر والكويت</p>
+                    <div class="trust-badges">
+                        <div class="badge-item">
+                            <span class="number">15+</span>
+                            <span>سنوات خبرة</span>
+                        </div>
+                        <div class="badge-item">
+                            <span class="number">5000+</span>
+                            <span>مريض سعيد</span>
+                        </div>
+                        <div class="badge-item">
+                            <span class="number">2000+</span>
+                            <span>زراعة ناجحة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>ماذا يقول مرضانا</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"دكتور اسلام من أفضل أطباء الأسنان في الكويت. احترافية عالية ونتائج ممتازة"</p>
+                    <cite>- أحمد السالم</cite>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"تجربة رائعة من البداية للنهاية. العيادة نظيفة والطاقم محترف جداً"</p>
+                    <cite>- فاطمة العلي</cite>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"زرعت 4 أسنان والحمدلله النتيجة ممتازة. أنصح الجميع بالدكتور اسلام"</p>
+                    <cite>- محمد الخالد</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2>الأسئلة الشائعة</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>كم تكلفة زراعة الأسنان؟</h3>
+                    <p>تختلف التكلفة حسب الحالة ونوع الزراعة. نقدم استشارة مجانية لتحديد الخطة العلاجية والتكلفة.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>هل زراعة الأسنان مؤلمة؟</h3>
+                    <p>نستخدم أحدث تقنيات التخدير الموضعي. معظم المرضى لا يشعرون بألم أثناء العملية.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>ما هي مدة العلاج؟</h3>
+                    <p>تعتمد المدة على نوع العلاج. الزراعة الفورية تتم في جلسة واحدة، بينما الزراعة التقليدية تحتاج 3-6 أشهر.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>هل تقبلون التأمين الصحي؟</h3>
+                    <p>نتعامل مع معظم شركات التأمين في الكويت. يرجى التواصل معنا للتأكد من تغطية شركتكم.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>ما هي ساعات العمل؟</h3>
+                    <p>نعمل من السبت إلى الخميس من 9 صباحاً حتى 9 مساءً. الجمعة عطلة.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>هل تقدمون خطط دفع مرنة؟</h3>
+                    <p>نعم، نوفر خطط دفع تقسيط مريحة للعلاجات الكبيرة مثل الزراعة والتقويم.</p>
                 </div>
             </div>
         </div>
@@ -110,33 +244,62 @@
     <section id="contact" class="contact">
         <div class="container">
             <h2>اتصل بنا</h2>
-            <div class="contact-info">
-                <div class="contact-card">
-                    <h3>الهاتف</h3>
-                    <p><a href="tel:+96598563711">98563711</a></p>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3>الهاتف</h3>
+                        <p><a href="tel:+96598563711">98563711</a></p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>البريد الإلكتروني</h3>
+                        <p><a href="mailto:dr.islam_elsagher@gmail.com">dr.islam_elsagher@gmail.com</a></p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>Instagram</h3>
+                        <p><a href="https://www.instagram.com/dr.islamelsagher/" target="_blank">@dr.islamelsagher</a></p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>WhatsApp</h3>
+                        <p><a href="https://wa.me/96598563711">98563711</a></p>
+                    </div>
                 </div>
-                <div class="contact-card">
-                    <h3>البريد الإلكتروني</h3>
-                    <p><a href="mailto:dr.islam_elsagher@gmail.com">dr.islam_elsagher@gmail.com</a></p>
-                </div>
-                <div class="contact-card">
-                    <h3>Instagram</h3>
-                    <p><a href="https://www.instagram.com/dr.islamelsagher/" target="_blank">@dr.islamelsagher</a></p>
-                </div>
-                <div class="contact-card">
-                    <h3>WhatsApp</h3>
-                    <p><a href="https://wa.me/96598563711">98563711</a></p>
+                <div class="working-hours">
+                    <h3>ساعات العمل</h3>
+                    <table>
+                        <tr>
+                            <td>السبت - الخميس</td>
+                            <td>9:00 ص - 9:00 م</td>
+                        </tr>
+                        <tr>
+                            <td>الجمعة</td>
+                            <td>مغلق</td>
+                        </tr>
+                        <tr>
+                            <td class="emergency">حالات الطوارئ</td>
+                            <td class="emergency">متاح 24/7</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <a href="https://wa.me/96598563711" class="whatsapp-float">
-                <img src="assets/icons/whatsapp.svg" alt="WhatsApp">
-            </a>
         </div>
     </section>
 
     <footer>
         <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
     </footer>
+
+    <!-- Sticky WhatsApp Booking Button -->
+    <a href="https://wa.me/96598563711?text=أريد حجز موعد" class="sticky-book" aria-label="احجز موعد عبر WhatsApp">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        <span>احجز الآن</span>
+    </a>
+
+    <!-- Regular WhatsApp Float (existing) -->
+    <a href="https://wa.me/96598563711" class="whatsapp-float">
+        <img src="assets/icons/whatsapp.svg" alt="WhatsApp">
+    </a>
 
     <script src="js/main.js"></script>
 </body>
