@@ -7,6 +7,10 @@ export const HTML_EN = `<!DOCTYPE html>
     <title>Dr. Islam Elsagher - General Dentist & Implantologist</title>
     <meta name="description" content="Dr. Islam Elsagher provides comprehensive dental care in Kuwait. 15+ years experience in implants, cosmetic dentistry, and oral surgery.">
     
+    <!-- CSS Links - CRITICAL FIX -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    
     <!-- Schema Markup for Dentist -->
     <script type="application/ld+json">
     {
