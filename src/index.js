@@ -9,8 +9,8 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    // Serve static assets
-    if (path === '/styles.css') {
+    // Serve static assets - MULTIPLE PATHS FOR CSS
+    if (path === '/styles.css' || path === '/css/style.css') {
       return new Response(CSS, {
         headers: {
           'Content-Type': 'text/css',
@@ -49,7 +49,7 @@ export default {
       'Content-Type': 'text/html; charset=utf-8',
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'DENY',
-      'Content-Security-Policy': "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;",
+      'Content-Security-Policy': "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;",
       'Cache-Control': 'public, max-age=3600' // 1 hour cache
     };
 
