@@ -5,7 +5,7 @@ Disallow: /private/
 Disallow: /*.pdf$
 
 # Sitemap location
-Sitemap: https://dr-islam-mosuly.com/sitemap.xml
+Sitemap: https://dr-elsagher.com/sitemap.xml
 
 # Crawl-delay (optional - in seconds)
 Crawl-delay: 1
