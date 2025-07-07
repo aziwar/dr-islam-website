@@ -96,7 +96,7 @@ export const HTML_AR = `<!DOCTYPE html>
                 <li><a href="#gallery">قبل وبعد</a></li>
                 <li><a href="#faq">أسئلة شائعة</a></li>
                 <li><a href="#contact">اتصل بنا</a></li>
-                <li><a href="/en/" class="lang-switch">English</a></li>
+                <li><a href="/" class="lang-switch">English</a></li>
             </ul>
         </nav>
     </header>
@@ -317,6 +317,14 @@ export const HTML_AR = `<!DOCTYPE html>
     </a>
 
     <script>
+    // Ensure menu starts closed
+    document.addEventListener('DOMContentLoaded', function() {
+        const menu = document.getElementById('mobileMenu');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        if (menu) menu.classList.remove('active');
+        if (toggle) toggle.classList.remove('active');
+    });
+
     // Mobile Menu Toggle
     function toggleMobileMenu() {
         const menu = document.getElementById('mobileMenu');

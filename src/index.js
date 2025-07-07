@@ -39,6 +39,9 @@ export default {
     if (path === '/ar' || path === '/ar/') {
       html = HTML_AR;
       lang = 'ar';
+    } else if (path === '/en' || path === '/en/') {
+      html = HTML_EN;
+      lang = 'en';
     } else if (path === '/' && preferredLang === 'ar') {
       // Auto-redirect Arabic speakers to Arabic version
       return Response.redirect(url.origin + '/ar/', 302);
