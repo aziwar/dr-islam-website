@@ -53,10 +53,6 @@ export default {
       'X-XSS-Protection': '1; mode=block',
       'Referrer-Policy': 'strict-origin-when-cross-origin'
     };
-      'X-Frame-Options': 'DENY',
-      'Content-Security-Policy': "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;",
-      'Cache-Control': 'public, max-age=3600' // 1 hour cache
-    };
 
     return new Response(html, { headers: securityHeaders });
   }
