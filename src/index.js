@@ -9,13 +9,23 @@ export default {
     const url = new URL(request.url);
     const path = url.pathname;
 
-    // Serve static assets - MULTIPLE PATHS FOR CSS
+    // Serve static assets
     if (path === '/styles.css' || path === '/css/style.css') {
       return new Response(CSS, {
         headers: {
           'Content-Type': 'text/css',
           'Cache-Control': 'public, max-age=31536000'
         }
+      });
+    }
+
+    // Serve logo images
+    if (path.startsWith('/assets/images/logo-')) {
+      // For now, return a placeholder response
+      // In production, these would be served from Cloudflare's KV or R2
+      return new Response('Logo image placeholder', {
+        status: 404,
+        headers: { 'Content-Type': 'text/plain' }
       });
     }
 

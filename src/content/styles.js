@@ -84,22 +84,38 @@ nav {
     margin: 0 auto;
 }
 
-.logo-text {
+.logo {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
 }
 
-.logo-name {
-    font-size: 1.1rem;
+.logo-img {
+    height: 50px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    /* Fallback styling */
+    display: block;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 8px;
+    padding: 5px;
+}
+
+/* Hide broken image icon */
+.logo-img::before {
+    content: "Dr. Islam Elsagher";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    color: white;
     font-weight: 600;
-    color: var(--secondary);
+    font-size: 0.9rem;
 }
 
-.logo-arabic {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--primary);
+.logo-img:not([src]), 
+.logo-img[src=""] {
+    width: 180px;
 }
 
 nav ul {
@@ -692,6 +708,12 @@ footer {
 
 /* Responsive - Enhanced Mobile Support */
 @media (max-width: 768px) {
+    /* Logo adjustments */
+    .logo-img {
+        height: 40px;
+        max-width: 150px;
+    }
+    
     /* Hide desktop nav */
     nav > ul {
         display: none !important;

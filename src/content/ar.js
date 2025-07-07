@@ -79,10 +79,10 @@ export const HTML_AR = `<!DOCTYPE html>
     <header>
         <nav>
             <div class="logo">
-                <div class="logo-text">
-                    <span class="logo-name">Dr. Islam Elsagher</span>
-                    <span class="logo-arabic">د. اسلام الصغير</span>
-                </div>
+                <picture>
+                    <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
+                    <img src="/assets/images/logo-main.png" alt="دكتور اسلام الصغير - Dr. Islam Elsagher" class="logo-img">
+                </picture>
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <span></span>
