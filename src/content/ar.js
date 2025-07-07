@@ -8,7 +8,7 @@ export const HTML_AR = `<!DOCTYPE html>
     <meta name="description" content="د. إسلام الصغير يقدم رعاية شاملة للأسنان في الكويت. خبرة تزيد عن 15 عامًا في الزراعة وطب الأسنان التجميلي وجراحة الفم.">
     
     <!-- CSS Links - CRITICAL FIX -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     
     <!-- Schema Markup for Dentist -->
@@ -334,6 +334,14 @@ export const HTML_AR = `<!DOCTYPE html>
             toggle.classList.remove('active');
         }
     });
+    
+    // Close menu when clicking navigation links
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.remove('active');
+            document.querySelector('.mobile-menu-toggle').classList.remove('active');
+        });
+    });
 
     // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -389,6 +397,55 @@ export const HTML_AR = `<!DOCTYPE html>
             } else {
                 header.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
             }
+        });
+    });
+
+    // Gallery Touch Support
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    galleryItems.forEach(item => {
+        let startX = 0;
+        let currentX = 0;
+        const slider = item.querySelector('.before-after-slider');
+        const afterImg = item.querySelector('img:last-of-type');
+        
+        if (!slider || !afterImg) return;
+        
+        const handleMove = (x) => {
+            const rect = item.getBoundingClientRect();
+            const percent = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+            slider.style.left = percent + '%';
+            afterImg.style.clipPath = \`inset(0 0 0 \${percent}%)\`;
+        };
+        
+        // Touch events
+        item.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+        
+        item.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            currentX = e.touches[0].clientX;
+            handleMove(currentX);
+        });
+        
+        // Mouse events for desktop
+        item.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            startX = e.clientX;
+            item.style.cursor = 'ew-resize';
+            
+            const handleMouseMove = (e) => {
+                handleMove(e.clientX);
+            };
+            
+            const handleMouseUp = () => {
+                item.style.cursor = 'grab';
+                document.removeEventListener('mousemove', handleMouseMove);
+                document.removeEventListener('mouseup', handleMouseUp);
+            };
+            
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
         });
     });
 

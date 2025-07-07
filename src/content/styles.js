@@ -19,10 +19,12 @@ export const CSS = `
 }
 
 body {
-    font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Noto Kufi Arabic', 'Poppins', 'Segoe UI', Tahoma, sans-serif;
     color: var(--text);
     line-height: 1.6;
     direction: rtl;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* Typography */
@@ -717,6 +719,7 @@ footer {
         min-height: 48px;
         display: flex;
         align-items: center;
+        -webkit-tap-highlight-color: transparent;
     }
     
     /* Hero Mobile */
@@ -837,7 +840,8 @@ footer {
     .emergency-banner {
         font-size: 0.85rem;
         padding: 8px 10px;
-        height: 35px;
+        min-height: 35px;
+        line-height: 1.2;
     }
     
     /* Header adjustments */
@@ -896,6 +900,14 @@ footer {
     
     .emergency-banner {
         font-size: 0.75rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .gallery-item {
+        position: relative;
+        touch-action: pan-y;
     }
 }
 
