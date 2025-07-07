@@ -48,6 +48,11 @@ export default {
     const securityHeaders = {
       'Content-Type': 'text/html; charset=utf-8',
       'X-Content-Type-Options': 'nosniff',
+      'Cache-Control': 'public, max-age=3600, s-maxage=86400',
+      'X-Frame-Options': 'SAMEORIGIN',
+      'X-XSS-Protection': '1; mode=block',
+      'Referrer-Policy': 'strict-origin-when-cross-origin'
+    };
       'X-Frame-Options': 'DENY',
       'Content-Security-Policy': "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;",
       'Cache-Control': 'public, max-age=3600' // 1 hour cache

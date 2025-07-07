@@ -54,13 +54,17 @@ h4 { font-size: 1.2rem; font-weight: 600; }
     text-decoration: underline;
 }
 
-/* Header */
+/* Header - Modern Glassmorphism */
 header {
-    background: var(--white);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     position: sticky;
     top: 40px;
     z-index: 100;
+    transition: all 0.3s ease;
 }
 
 nav {
@@ -101,12 +105,30 @@ nav a {
     text-decoration: none;
     color: var(--secondary);
     font-weight: 500;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
     font-size: 0.95rem;
+    position: relative;
+    padding: 5px 10px;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
 }
 
 nav a:hover {
     color: var(--primary);
+}
+
+nav a:hover::after {
+    width: 80%;
 }
 
 /* Hero with Animated Gradient */
@@ -154,17 +176,39 @@ nav a:hover {
 
 .cta-button {
     display: inline-block;
-    background: var(--white);
-    color: var(--secondary);
-    padding: 15px 30px;
-    border-radius: 5px;
+    background: linear-gradient(135deg, var(--primary) 0%, #a89680 100%);
+    color: var(--white);
+    padding: 18px 40px;
+    border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
-    transition: transform 0.3s;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 5px 25px rgba(190, 176, 147, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
 }
 
 .cta-button:hover {
-    transform: scale(1.05);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 35px rgba(190, 176, 147, 0.4);
+}
+
+.cta-button:hover::after {
+    width: 350px;
+    height: 350px;
 }
 
 /* Sticky Booking Button */
@@ -215,19 +259,39 @@ nav a:hover {
 
 /* Service Cards with Glassmorphism */
 .service-card {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
     text-align: center;
-    transition: transform 0.3s;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(190, 176, 147, 0.1) 0%, transparent 70%);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+
+.service-card:hover::before {
+    opacity: 1;
 }
 
 .service-card h3 {
@@ -254,11 +318,32 @@ nav a:hover {
 }
 
 .testimonial-card {
-    background: var(--light);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(190, 176, 147, 0.2);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 4rem;
+    color: var(--primary);
+    opacity: 0.1;
+    font-family: Georgia, serif;
 }
 
 .stars {
@@ -299,16 +384,61 @@ nav a:hover {
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
 }
 
 .gallery-item {
-    background: var(--white);
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+    height: 400px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.before-after-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.before-after-slider {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+    cursor: ew-resize;
+    transition: opacity 0.3s;
+}
+
+.before-after-slider::before {
+    content: '◄ ►';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--primary);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
 }
 
 .gallery-item img {

@@ -1,24 +1,22 @@
-# Before/After Gallery Images
+# Before/After Gallery Placeholder Images
 
-Place your before and after images in this directory with the following naming convention:
+Since we need placeholder images for development, please replace these with actual patient photos when available.
 
-- `case1-before.jpg` / `case1-after.jpg`
-- `case2-before.jpg` / `case2-after.jpg`
-- `case3-before.jpg` / `case3-after.jpg`
+## Image Requirements:
+- Size: 600x400px (optimized for web)
+- Format: JPEG (quality 85%)
+- Naming: case1-before.jpg, case1-after.jpg, etc.
 
-## Image Guidelines:
+## Placeholder Structure:
+For now, the gallery will use CSS gradients to simulate images.
 
-1. **Size**: Keep images under 500KB each for optimal loading
-2. **Format**: Use WebP or optimized JPEG
-3. **Dimensions**: 800x600px recommended
-4. **Quality**: 80-85% compression for web
+## Upload Instructions:
+1. Create before/after pairs for each case
+2. Ensure consistent lighting and angle
+3. Obtain patient consent for web use
+4. Compress images for web performance
 
-## Optimization Tools:
-
-- [TinyPNG](https://tinypng.com/) - For PNG/JPEG compression
-- [Squoosh](https://squoosh.app/) - For WebP conversion
-- [ImageOptim](https://imageoptim.com/) - For Mac users
-
-## Privacy Note:
-
-Always get written consent from patients before using their photos on the website.
+## Categories:
+- Case 1: Teeth Whitening
+- Case 2: Orthodontic Alignment
+- Case 3: Dental Restoration

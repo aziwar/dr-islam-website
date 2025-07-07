@@ -361,6 +361,36 @@ export const HTML_EN = `<!DOCTYPE html>
         });
     });
 
+    // Before/After Gallery
+    document.addEventListener('DOMContentLoaded', function() {
+        const galleries = document.querySelectorAll('.gallery-item');
+        galleries.forEach(gallery => {
+            let isDown = false;
+            const container = gallery.querySelector('.before-after-container');
+            if (container) {
+                const slider = document.createElement('div');
+                slider.className = 'before-after-slider';
+                container.appendChild(slider);
+                
+                const beforeImg = container.querySelector('img:first-child');
+                if (beforeImg) {
+                    beforeImg.style.clipPath = 'inset(0 50% 0 0)';
+                    
+                    slider.addEventListener('mousedown', () => isDown = true);
+                    document.addEventListener('mouseup', () => isDown = false);
+                    document.addEventListener('mousemove', (e) => {
+                        if (!isDown) return;
+                        const rect = container.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+                        slider.style.left = percent + '%';
+                        beforeImg.style.clipPath = \`inset(0 \${100 - percent}% 0 0)\`;
+                    });
+                }
+            }
+        });
+    });
+
     // Emergency banner auto-fade
     setTimeout(() => {
         const emergencyBanner = document.querySelector('.emergency-banner');
