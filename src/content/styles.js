@@ -11,6 +11,12 @@ export const CSS = `
     --success: #28a745;
 }
 
+/* Base HTML font size for responsive units */
+html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
 /* Reset */
 * {
     margin: 0;
@@ -699,7 +705,7 @@ footer {
         right: -100%;
         width: 80%;
         height: 100vh;
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
         flex-direction: column;
         justify-content: center;
@@ -707,6 +713,8 @@ footer {
         gap: 2rem;
         transition: right 0.3s ease;
         z-index: 1000;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     nav ul.active {
@@ -864,22 +872,23 @@ footer {
 /* RTL Mobile Support */
 @media (max-width: 768px) {
     [dir="rtl"] nav ul {
-        right: auto;
-        left: -100%;
+        left: auto;
+        right: -100%;
     }
     
     [dir="rtl"] nav ul.active {
-        left: 0;
+        right: 0;
+        left: auto;
     }
     
     [dir="rtl"] .sticky-book {
-        left: 20px;
-        right: auto;
+        right: 20px;
+        left: auto;
     }
     
     [dir="rtl"] .mobile-menu-toggle {
-        margin-left: auto;
-        margin-right: 0;
+        margin-right: auto;
+        margin-left: 0;
     }
 }
 
