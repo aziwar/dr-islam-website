@@ -84,7 +84,12 @@ export const HTML_AR = `<!DOCTYPE html>
                     <span class="logo-arabic">د. اسلام الصغير</span>
                 </div>
             </div>
-            <ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul id="mobileMenu">
                 <li><a href="#services">الخدمات</a></li>
                 <li><a href="#about">عن الطبيب</a></li>
                 <li><a href="#testimonials">آراء المرضى</a></li>
@@ -312,6 +317,24 @@ export const HTML_AR = `<!DOCTYPE html>
     </a>
 
     <script>
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        menu.classList.toggle('active');
+        toggle.classList.toggle('active');
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        const menu = document.getElementById('mobileMenu');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove('active');
+            toggle.classList.remove('active');
+        }
+    });
+
     // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -402,6 +425,18 @@ export const HTML_AR = `<!DOCTYPE html>
                         if (!isDown) return;
                         const rect = container.getBoundingClientRect();
                         const x = e.clientX - rect.left;
+                        const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
+                        slider.style.left = percent + '%';
+                        beforeImg.style.clipPath = \`inset(0 \${100 - percent}% 0 0)\`;
+                    });
+                    
+                    // Touch support
+                    slider.addEventListener('touchstart', () => isDown = true);
+                    document.addEventListener('touchend', () => isDown = false);
+                    document.addEventListener('touchmove', (e) => {
+                        if (!isDown) return;
+                        const rect = container.getBoundingClientRect();
+                        const x = e.touches[0].clientX - rect.left;
                         const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
                         slider.style.left = percent + '%';
                         beforeImg.style.clipPath = \`inset(0 \${100 - percent}% 0 0)\`;

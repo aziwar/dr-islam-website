@@ -649,45 +649,253 @@ footer {
     padding: 20px;
 }
 
-/* Responsive */
+/* Mobile Navigation */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--secondary);
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Responsive - Enhanced Mobile Support */
 @media (max-width: 768px) {
+    /* Mobile Navigation */
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    nav {
+        position: relative;
+    }
+    
     nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
         flex-direction: column;
-        gap: 0.5rem;
-        font-size: 0.9rem;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: right 0.3s ease;
+        z-index: 1000;
     }
     
-    .about-content {
-        grid-template-columns: 1fr;
+    nav ul.active {
+        right: 0;
     }
     
-    .stats {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+    nav a {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Hero Mobile */
+    .hero {
+        padding: 60px 5%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
     }
     
     h1 {
         font-size: 2rem;
+        line-height: 1.3;
     }
     
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    /* Touch-friendly CTA */
+    .cta-button {
+        padding: 20px 45px;
+        font-size: 1.1rem;
+        min-height: 56px;
+    }
+    
+    /* Service Cards Mobile */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .service-card {
+        padding: 2rem;
+    }
+    
+    /* Remove hover effects on mobile */
+    .service-card:hover {
+        transform: none;
+    }
+    
+    /* About Section */
+    .about-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .doctor-image {
+        max-width: 250px;
+        margin: 0 auto;
+    }
+    
+    /* Stats Mobile */
+    .stats {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .stat-card {
+        min-height: auto;
+        padding: 1.5rem;
+    }
+    
+    /* Testimonials Mobile */
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    /* Gallery Mobile */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-item {
+        height: 300px;
+    }
+    
+    .before-after-slider {
+        width: 6px;
+    }
+    
+    /* FAQ Mobile */
+    .faq-item h3 {
+        font-size: 1rem;
+        padding: 15px 0;
+        min-height: 48px;
+    }
+    
+    /* Contact Cards Mobile */
+    .contact-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Trust Badges */
     .trust-badges {
+        flex-direction: column;
         gap: 1rem;
     }
     
     .badge {
-        font-size: 0.8rem;
-        padding: 6px 15px;
-    }
-    
-    .sticky-book {
-        bottom: 80px;
-        right: 20px;
         font-size: 0.9rem;
-        padding: 12px 20px;
+        padding: 10px 20px;
+        width: 100%;
+        max-width: 250px;
     }
     
+    /* Sticky WhatsApp Button */
+    .sticky-book {
+        bottom: 20px;
+        right: 20px;
+        font-size: 1rem;
+        padding: 15px 25px;
+        min-width: auto;
+    }
+    
+    /* Emergency Banner */
+    .emergency-banner {
+        font-size: 0.85rem;
+        padding: 8px 10px;
+        height: 35px;
+    }
+    
+    /* Header adjustments */
     header {
         top: 35px;
+        padding: 0.5rem 5%;
+    }
+    
+    /* Working Hours Mobile */
+    .hours-grid {
+        gap: 0.5rem;
+    }
+    
+    .hour-item {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+}
+
+/* RTL Mobile Support */
+@media (max-width: 768px) {
+    [dir="rtl"] nav ul {
+        right: auto;
+        left: -100%;
+    }
+    
+    [dir="rtl"] nav ul.active {
+        left: 0;
+    }
+    
+    [dir="rtl"] .sticky-book {
+        left: 20px;
+        right: auto;
+    }
+    
+    [dir="rtl"] .mobile-menu-toggle {
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
+
+/* Small Mobile Screens */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.75rem;
+    }
+    
+    .cta-button {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .service-card {
+        padding: 1.5rem;
+    }
+    
+    .emergency-banner {
+        font-size: 0.75rem;
     }
 }
 
