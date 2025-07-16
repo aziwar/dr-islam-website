@@ -1,0 +1,1 @@
+﻿{ "name": "dr-islam-website", "description": "Bilingual dental practice website on Cloudflare Workers", "type": "cloudflare-workers", "framework": "vanilla-js", "buildCommand": "npm run build", "devCommand": "npm run dev", "deployCommand": "npm run deploy" }
