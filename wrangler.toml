@@ -2,6 +2,11 @@ name = "dr-islam-website"
 main = "src/index.js"
 compatibility_date = "2024-01-01"
 
+# R2 bucket binding
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "dr-islam-images"
+
 # Custom domain routes
 [[routes]]
 pattern = "dr-elsagher.com/*"

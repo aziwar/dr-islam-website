@@ -2,7 +2,8 @@
 
 ## Navigation
 ```bash
-cd /mnt/d/Github-work/dr-islam-website
+# Already in project directory when you start Claude Code
+dir
 ```
 
 ## Common Edits

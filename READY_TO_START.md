@@ -15,8 +15,8 @@
 
 ## Start Claude Code
 ```bash
-# In WSL
-cd /mnt/d/Github-work/dr-islam-website
+# In Windows (not WSL)
+cd D:\Github-work\dr-islam-website
 claude
 ```
 

@@ -1,0 +1,72 @@
+{
+  "mcpServers": {
+    "brave-search-server": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "BSAntQlS6LWRzG8SuhFeZorc8qEEvZ3"
+      }
+    },
+    "context7": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ],
+      "env": {
+        "NODE_OPTIONS": "--max-old-space-size=512 --no-warnings",
+        "PATH": "C:\\Python313\\Scripts;C:\\Python313;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Program Files\\nodejs",
+        "HOME": "C:\\Users\\zewar",
+        "USER": "zewar"
+      }
+    },
+    "filesystem-server": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "D:\\\\Github-work\\\\dr-islam-website"
+      ]
+    },
+    "github-server": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-github",
+        "--owner",
+        "ahmedziwar",
+        "--repo",
+        "dr-islam-website"
+      ]
+    },
+    "memory-server": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    },
+    "sequential-thinking-server": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    }
+  }
+}

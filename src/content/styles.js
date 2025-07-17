@@ -90,15 +90,13 @@ nav {
 }
 
 .logo-img {
-    height: 50px;
-    width: auto;
-    max-width: 200px;
+    height: 80px;
+    width: 80px;
     object-fit: contain;
-    /* Fallback styling */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    /* No padding or background for icon style */
     display: block;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    border-radius: 8px;
-    padding: 5px;
 }
 
 /* Hide broken image icon */

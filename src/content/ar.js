@@ -80,8 +80,9 @@ export const HTML_AR = `<!DOCTYPE html>
         <nav>
             <div class="logo">
                 <picture>
+                    <source srcset="/assets/images/logo-main.webp" type="image/webp">
                     <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
-                    <img src="/assets/images/logo-main.png" alt="دكتور اسلام الصغير - Dr. Islam Elsagher" class="logo-img">
+                    <img src="/assets/images/logo-main.png" alt="دكتور اسلام الصغير - Dr. Islam Elsagher" class="logo-img" loading="eager">
                 </picture>
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -185,18 +186,15 @@ export const HTML_AR = `<!DOCTYPE html>
             <p class="gallery-subtitle">شاهد التحول المذهل لابتسامات مرضانا</p>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="assets/before-after/case1-before.jpg" alt="قبل العلاج" loading="lazy">
-                    <img src="assets/before-after/case1-after.jpg" alt="بعد العلاج" loading="lazy">
-                    <p>زراعة أسنان أمامية</p>
+                    <img src="/assets/before-after/real-case1.png" alt="حالة حقيقية" loading="lazy">
+                    <p>تحول مذهل للابتسامة</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="assets/before-after/case2-before.jpg" alt="قبل العلاج" loading="lazy">
-                    <img src="assets/before-after/case2-after.jpg" alt="بعد العلاج" loading="lazy">
+                    <img src="/assets/before-after/real-case2.png" alt="نتيجة علاج" loading="lazy">
                     <p>ابتسامة هوليوود</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="assets/before-after/case3-before.jpg" alt="قبل العلاج" loading="lazy">
-                    <img src="assets/before-after/case3-after.jpg" alt="بعد العلاج" loading="lazy">
+                    <img src="/assets/before-after/real-case3.png" alt="علاج متقدم" loading="lazy">
                     <p>علاج تقويمي وتجميلي</p>
                 </div>
             </div>
