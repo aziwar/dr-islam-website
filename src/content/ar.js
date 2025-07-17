@@ -7,7 +7,19 @@ export const HTML_AR = `<!DOCTYPE html>
     <title>دكتور اسلام الصغير - طبيب أسنان وزراعة</title>
     <meta name="description" content="د. إسلام الصغير يقدم رعاية شاملة للأسنان في الكويت. خبرة تزيد عن 15 عامًا في الزراعة وطب الأسنان التجميلي وجراحة الفم.">
     
-    <!-- CSS Links - CRITICAL FIX -->
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/images/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/images/favicon-64x64.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="/assets/images/favicon-128x128.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="/assets/images/favicon-256x256.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    
+    <!-- Performance Optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     
@@ -186,15 +198,15 @@ export const HTML_AR = `<!DOCTYPE html>
             <p class="gallery-subtitle">شاهد التحول المذهل لابتسامات مرضانا</p>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="/assets/before-after/real-case1.png" alt="حالة حقيقية" loading="lazy">
+                    <img src="/assets/before-after/real-case1.png" alt="حالة حقيقية" loading="lazy" decoding="async">
                     <p>تحول مذهل للابتسامة</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="/assets/before-after/real-case2.png" alt="نتيجة علاج" loading="lazy">
+                    <img src="/assets/before-after/real-case2.png" alt="نتيجة علاج" loading="lazy" decoding="async">
                     <p>ابتسامة هوليوود</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="/assets/before-after/real-case3.png" alt="علاج متقدم" loading="lazy">
+                    <img src="/assets/before-after/real-case3.png" alt="علاج متقدم" loading="lazy" decoding="async">
                     <p>علاج تقويمي وتجميلي</p>
                 </div>
             </div>

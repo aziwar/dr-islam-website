@@ -7,7 +7,19 @@ export const HTML_EN = `<!DOCTYPE html>
     <title>Dr. Islam Elsagher - General Dentist & Implantologist</title>
     <meta name="description" content="Dr. Islam Elsagher provides comprehensive dental care in Kuwait. 15+ years experience in implants, cosmetic dentistry, and oral surgery.">
     
-    <!-- CSS Links - CRITICAL FIX -->
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/images/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/images/favicon-64x64.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="/assets/images/favicon-128x128.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="/assets/images/favicon-256x256.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    
+    <!-- Performance Optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     
