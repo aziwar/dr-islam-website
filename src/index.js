@@ -2,6 +2,8 @@
 import { HTML_EN } from './content/en.js';
 import { HTML_AR } from './content/ar.js';
 import { CSS } from './content/styles.js';
+import { SERVICE_WORKER_JS } from './content/sw.js';
+import { OFFLINE_HTML } from './content/offline.js';
 
 export default {
   async fetch(request, env, ctx) {
@@ -20,6 +22,65 @@ export default {
     // Handle sitemap.xml
     if (path === '/sitemap.xml') {
       return handleSitemap(url);
+    }
+
+    // Handle manifest files
+    if (path === '/manifest-ar.json' || path === '/manifest-en.json') {
+      const manifestLang = path.includes('-ar') ? 'ar' : 'en';
+      const manifestContent = manifestLang === 'ar' ? 
+        JSON.stringify({
+          "name": "د. اسلام الصغير - طبيب أسنان",
+          "short_name": "د. اسلام",
+          "start_url": "/ar/",
+          "display": "standalone",
+          "background_color": "#F8F7F5",
+          "theme_color": "#BEB093",
+          "orientation": "portrait",
+          "icons": [
+            {"src": "/assets/images/favicon-256x256.png", "sizes": "256x256", "type": "image/png"},
+            {"src": "/assets/images/apple-touch-icon.png", "sizes": "180x180", "type": "image/png"}
+          ]
+        }) :
+        JSON.stringify({
+          "name": "Dr. Islam Elsagher - Dentist",
+          "short_name": "Dr. Islam",
+          "start_url": "/en/",
+          "display": "standalone",
+          "background_color": "#F8F7F5",
+          "theme_color": "#BEB093",
+          "orientation": "portrait",
+          "icons": [
+            {"src": "/assets/images/favicon-256x256.png", "sizes": "256x256", "type": "image/png"},
+            {"src": "/assets/images/apple-touch-icon.png", "sizes": "180x180", "type": "image/png"}
+          ]
+        });
+      
+      return new Response(manifestContent, {
+        headers: {
+          'Content-Type': 'application/manifest+json',
+          'Cache-Control': 'public, max-age=86400'
+        }
+      });
+    }
+
+    // Handle service worker
+    if (path === '/sw.js') {
+      return new Response(SERVICE_WORKER_JS, {
+        headers: {
+          'Content-Type': 'application/javascript',
+          'Cache-Control': 'public, max-age=3600'
+        }
+      });
+    }
+
+    // Handle offline page
+    if (path === '/offline.html') {
+      return new Response(OFFLINE_HTML, {
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'public, max-age=86400'
+        }
+      });
     }
 
     // CSS serving

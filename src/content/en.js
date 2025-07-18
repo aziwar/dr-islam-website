@@ -4,7 +4,14 @@ export const HTML_EN = `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Dr. Islam Elsagher - General Dentist & Implantologist</title>
+
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest-en.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Dr. Islam">
+        <title>Dr. Islam Elsagher - General Dentist & Implantologist</title>
     <meta name="description" content="Dr. Islam Elsagher provides comprehensive dental care in Kuwait. 15+ years experience in implants, cosmetic dentistry, and oral surgery.">
     
     <!-- Favicon and Icons -->
@@ -73,7 +80,12 @@ export const HTML_EN = `<!DOCTYPE html>
             <div class="logo">
                 <picture>
                     <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
-                    <img src="/assets/images/logo-main.png" alt="Dr. Islam Elsagher - General Dentist" class="logo-img">
+                    <picture>
+                    <source srcset="/assets/images/logo-main.webp" type="image/webp">
+                    <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.webp" type="image/webp">
+                    <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
+                    <img src="/assets/images/logo-main.png" alt="دكتور اسلام الصغير - Dr. Islam Elsagher" class="logo-img" loading="eager">
+                </picture>
                 </picture>
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -179,15 +191,57 @@ export const HTML_EN = `<!DOCTYPE html>
             <p class="gallery-subtitle">See the amazing transformation of our patients' smiles</p>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="/assets/before-after/real-case1.png" alt="Real transformation" loading="lazy" decoding="async">
+                    <picture>
+                        <source 
+                            type="image/webp"
+                            srcset="/assets/before-after/real-case1-320w.webp 320w,
+                                    /assets/before-after/real-case1-768w.webp 768w,
+                                    /assets/before-after/real-case1.webp 1200w"
+                            sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
+                        >
+                        <img 
+                            src="/assets/before-after/real-case1.png" 
+                            alt="Real transformation"
+                            loading="lazy"
+                            class="gallery-img"
+                        >
+                    </picture>
                     <p>Amazing smile transformation</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="/assets/before-after/real-case2.png" alt="Treatment result" loading="lazy" decoding="async">
+                    <picture>
+                        <source 
+                            type="image/webp"
+                            srcset="/assets/before-after/real-case2-320w.webp 320w,
+                                    /assets/before-after/real-case2-768w.webp 768w,
+                                    /assets/before-after/real-case2.webp 1200w"
+                            sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
+                        >
+                        <img 
+                            src="/assets/before-after/real-case2.png" 
+                            alt="Treatment result"
+                            loading="lazy"
+                            class="gallery-img"
+                        >
+                    </picture>
                     <p>Hollywood smile</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="/assets/before-after/real-case3.png" alt="Advanced treatment" loading="lazy" decoding="async">
+                    <picture>
+                        <source 
+                            type="image/webp"
+                            srcset="/assets/before-after/real-case3-320w.webp 320w,
+                                    /assets/before-after/real-case3-768w.webp 768w,
+                                    /assets/before-after/real-case3.webp 1200w"
+                            sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
+                        >
+                        <img 
+                            src="/assets/before-after/real-case3.png" 
+                            alt="Advanced treatment"
+                            loading="lazy"
+                            class="gallery-img"
+                        >
+                    </picture>
                     <p>Orthodontic and cosmetic treatment</p>
                 </div>
             </div>
@@ -832,6 +886,57 @@ export const HTML_EN = `<!DOCTYPE html>
     
 })();
     // ===== END UI/UX ENHANCEMENTS =====
+    
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker registered:', registration);
+                    
+                    // Check for updates periodically
+                    setInterval(() => {
+                        registration.update();
+                    }, 60000); // Check every minute
+                })
+                .catch(err => console.log('ServiceWorker registration failed:', err));
+        });
+        
+        // Install prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button after 30 seconds
+            setTimeout(() => {
+                if (deferredPrompt) {
+                    const installBanner = document.createElement('div');
+                    installBanner.className = 'install-prompt';
+                    installBanner.innerHTML = `
+                        <p>قم بتثبيت التطبيق للوصول السريع</p>
+                        <button onclick="installPWA()">تثبيت</button>
+                        <button onclick="dismissInstall()">لاحقاً</button>
+                    `;
+                    document.body.appendChild(installBanner);
+                }
+            }, 30000);
+        });
+        
+        window.installPWA = async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response: ${outcome}`);
+                deferredPrompt = null;
+                document.querySelector('.install-prompt')?.remove();
+            }
+        };
+        
+        window.dismissInstall = () => {
+            document.querySelector('.install-prompt')?.remove();
+        };
+    }
     </script>
 </body>
 </html>`;
