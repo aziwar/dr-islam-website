@@ -12,6 +12,16 @@ export default {
     const BUILD_DATE = new Date().toISOString().split('T')[0];
     const CSS_VERSION = `mobile-fix-${BUILD_DATE}-v2`;
 
+    // Handle robots.txt
+    if (path === '/robots.txt') {
+      return handleRobotsTxt();
+    }
+
+    // Handle sitemap.xml
+    if (path === '/sitemap.xml') {
+      return handleSitemap(url);
+    }
+
     // CSS serving
     if (path === '/styles.css' || path === '/css/style.css') {
       return new Response(CSS, {
@@ -33,6 +43,60 @@ export default {
   }
 };
 
+// Robots.txt handler
+function handleRobotsTxt() {
+  const robots = `# Robots.txt for dr-elsagher.com
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://dr-elsagher.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+`;
+
+  return new Response(robots, {
+    headers: {
+      'Content-Type': 'text/plain',
+      'Cache-Control': 'public, max-age=86400'
+    }
+  });
+}
+
+// Sitemap handler
+function handleSitemap(url) {
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://dr-elsagher.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dr-elsagher.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://dr-elsagher.com/ar/"/>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://dr-elsagher.com/ar/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dr-elsagher.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://dr-elsagher.com/ar/"/>
+    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>`;
+
+  return new Response(sitemap, {
+    headers: {
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=86400'
+    }
+  });
+}
+
 // Image handler with WebP support and proper error handling
 async function handleImageRequest(request, env, ctx, path) {
   try {
@@ -50,7 +114,7 @@ async function handleImageRequest(request, env, ctx, path) {
       }
     }
     
-    // Fallback to original format
+    // Try original format from R2
     if (env.IMAGES) {
       const object = await env.IMAGES.get(key);
       if (object) {
@@ -59,7 +123,7 @@ async function handleImageRequest(request, env, ctx, path) {
       }
     }
     
-    // GitHub fallback
+    // Fallback to GitHub
     const githubUrl = `https://raw.githubusercontent.com/aziwar/dr-islam-website/master${path}`;
     const response = await fetch(githubUrl);
     
@@ -86,14 +150,16 @@ function serveR2Object(object, contentType) {
   headers.set('Content-Type', contentType);
   headers.set('Cache-Control', 'public, max-age=31536000, immutable');
   headers.set('ETag', object.httpEtag || `"r2-${object.key}"`);
+  
   return new Response(object.body, { headers });
 }
-// Content type detection
+
+// Get content type from file extension
 function getContentType(path) {
   const ext = path.split('.').pop()?.toLowerCase();
   const types = {
     'jpg': 'image/jpeg',
-    'jpeg': 'image/jpeg',
+    'jpeg': 'image/jpeg', 
     'png': 'image/png',
     'webp': 'image/webp',
     'svg': 'image/svg+xml',
@@ -102,20 +168,23 @@ function getContentType(path) {
   return types[ext] || 'application/octet-stream';
 }
 
-// HTML request handler
+// HTML request handler with enhanced security headers
 function handleHTMLRequest(request, url) {
   const acceptLanguage = request.headers.get('Accept-Language') || '';
   const preferredLang = acceptLanguage.includes('ar') ? 'ar' : 'en';
   const path = url.pathname;
   
   let html = HTML_EN;
+  let hreflang = 'en';
   
   if (path === '/ar' || path === '/ar/') {
     html = HTML_AR;
+    hreflang = 'ar';
   } else if (path === '/' && preferredLang === 'ar') {
     return Response.redirect(url.origin + '/ar/', 302);
   }
   
+  // Enhanced security headers
   const headers = {
     'Content-Type': 'text/html; charset=utf-8',
     'X-Content-Type-Options': 'nosniff',
@@ -123,7 +192,11 @@ function handleHTMLRequest(request, url) {
     'X-Frame-Options': 'SAMEORIGIN',
     'X-XSS-Protection': '1; mode=block',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
-    'Content-Security-Policy': "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';"
+    'Content-Security-Policy': "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com;",
+    'Permissions-Policy': 'geolocation=(), microphone=(), camera=()',
+    'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+    'X-Robots-Tag': 'index, follow',
+    'Content-Language': hreflang
   };
   
   return new Response(html, { headers });
