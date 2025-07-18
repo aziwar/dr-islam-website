@@ -93,6 +93,8 @@ export const HTML_EN = `<!DOCTYPE html>
         </nav>
     </header>
 
+    <div class="mobile-menu-backdrop" onclick="closeMobileMenu()"></div>
+
     <section class="hero">
         <div class="container">
             <h1>Dr. Islam Elsagher</h1>
@@ -243,19 +245,19 @@ export const HTML_EN = `<!DOCTYPE html>
             <h2>Frequently Asked Questions</h2>
             <div class="faq-list">
                 <div class="faq-item">
-                    <h3>How much does dental implant cost?</h3>
+                    <h3>How much does dental implant cost? <span class="faq-icon">+</span></h3>
                     <p>The cost varies depending on the case and type of implant used. We offer free consultation to evaluate your case and provide a detailed treatment plan with costs.</p>
                 </div>
                 <div class="faq-item">
-                    <h3>Is the implant procedure painful?</h3>
+                    <h3>Is the implant procedure painful? <span class="faq-icon">+</span></h3>
                     <p>We use the latest local anesthesia techniques to ensure your complete comfort. Most patients describe the procedure as less painful than a regular tooth extraction.</p>
                 </div>
                 <div class="faq-item">
-                    <h3>How long does the treatment take?</h3>
+                    <h3>How long does the treatment take? <span class="faq-icon">+</span></h3>
                     <p>Treatment duration depends on the case. Immediate implants can be completed in one session, while traditional implants need 3-6 months for complete integration.</p>
                 </div>
                 <div class="faq-item">
-                    <h3>Do you accept health insurance?</h3>
+                    <h3>Do you accept health insurance? <span class="faq-icon">+</span></h3>
                     <p>We work with most health insurance companies in Kuwait. Please contact us to confirm if your health insurance is accepted.</p>
                 </div>
             </div>
@@ -313,17 +315,31 @@ export const HTML_EN = `<!DOCTYPE html>
     function toggleMobileMenu() {
         const menu = document.getElementById('mobileMenu');
         const toggle = document.querySelector('.mobile-menu-toggle');
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
         menu.classList.toggle('active');
         toggle.classList.toggle('active');
+        backdrop.classList.toggle('active');
+    }
+
+    // Close Mobile Menu
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
+        menu.classList.remove('active');
+        toggle.classList.remove('active');
+        backdrop.classList.remove('active');
     }
 
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
         const menu = document.getElementById('mobileMenu');
         const toggle = document.querySelector('.mobile-menu-toggle');
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
         if (!toggle.contains(e.target) && !menu.contains(e.target)) {
             menu.classList.remove('active');
             toggle.classList.remove('active');
+            backdrop.classList.remove('active');
         }
     });
 

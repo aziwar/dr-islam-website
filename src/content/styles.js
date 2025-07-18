@@ -51,6 +51,7 @@ h4 { font-size: 1.2rem; font-weight: 600; }
     text-align: center;
     padding: 10px;
     font-weight: 500;
+    font-size: 1.125rem;
     position: sticky;
     top: 0;
     z-index: 101;
@@ -95,6 +96,10 @@ nav {
     object-fit: contain;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    /* High-DPI rendering optimizations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     /* No padding or background for icon style */
     display: block;
 }
@@ -470,6 +475,31 @@ nav a:hover::after {
     height: 200px;
     object-fit: cover;
     display: inline-block;
+    transition: opacity 0.3s ease;
+}
+
+/* Gallery Skeleton Loaders */
+.gallery-item.loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.gallery-item img.lazy-loading {
+    opacity: 0;
+}
+
+.gallery-item img.lazy-loaded {
+    opacity: 1;
 }
 
 .gallery-item p {
@@ -585,6 +615,22 @@ nav a:hover::after {
     color: var(--primary);
     margin-bottom: 1rem;
     font-size: 1.2rem;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(45deg);
 }
 
 .faq-item p {
@@ -710,6 +756,11 @@ footer {
     .logo-img {
         height: 40px;
         max-width: 150px;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        image-rendering: pixelated;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
     
     /* Hide desktop nav */
@@ -744,6 +795,25 @@ footer {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         display: flex !important;
+    }
+    
+    /* Mobile Menu Backdrop */
+    .mobile-menu-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .mobile-menu-backdrop.active {
+        opacity: 1;
+        visibility: visible;
     }
     
     #mobileMenu.active {
@@ -851,6 +921,22 @@ footer {
         grid-template-columns: 1fr;
     }
     
+    .contact-card {
+        min-height: 60px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .contact-card a {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+    
     /* Trust Badges */
     .trust-badges {
         flex-direction: column;
@@ -866,16 +952,17 @@ footer {
     
     /* Sticky WhatsApp Button */
     .sticky-book {
-        bottom: 20px;
+        bottom: 80px;
         right: 20px;
         font-size: 1rem;
         padding: 15px 25px;
         min-width: auto;
+        z-index: 997;
     }
     
     /* Emergency Banner */
     .emergency-banner {
-        font-size: 0.85rem;
+        font-size: 18px;
         padding: 8px 10px;
         min-height: 35px;
         line-height: 1.2;
@@ -934,6 +1021,10 @@ footer {
     
     .service-card {
         padding: 1.5rem;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
     
     .emergency-banner {

@@ -114,6 +114,8 @@ export const HTML_AR = `<!DOCTYPE html>
         </nav>
     </header>
 
+    <div class="mobile-menu-backdrop" onclick="closeMobileMenu()"></div>
+
     <section class="hero">
         <div class="container">
             <h1>دكتور اسلام الصغير</h1>
@@ -261,19 +263,19 @@ export const HTML_AR = `<!DOCTYPE html>
             <h2>أسئلة شائعة</h2>
             <div class="faq-list">
                 <div class="faq-item">
-                    <h3>كم تكلفة زراعة الأسنان؟</h3>
+                    <h3>كم تكلفة زراعة الأسنان؟ <span class="faq-icon">+</span></h3>
                     <p>تختلف التكلفة حسب الحالة ونوع الزرعة المستخدمة. نقدم استشارة مجانية لتقييم حالتك وتقديم خطة علاج مفصلة مع التكلفة.</p>
                 </div>
                 <div class="faq-item">
-                    <h3>هل الزراعة مؤلمة؟</h3>
+                    <h3>هل الزراعة مؤلمة؟ <span class="faq-icon">+</span></h3>
                     <p>نستخدم أحدث تقنيات التخدير الموضعي لضمان راحتك التامة. معظم المرضى يصفون العملية بأنها أقل ألماً من خلع الأسنان العادي.</p>
                 </div>
                 <div class="faq-item">
-                    <h3>ما هي مدة العلاج؟</h3>
+                    <h3>ما هي مدة العلاج؟ <span class="faq-icon">+</span></h3>
                     <p>تعتمد مدة العلاج على الحالة. الزراعة الفورية يمكن إتمامها في جلسة واحدة، بينما الزراعة التقليدية تحتاج 3-6 أشهر للاندماج الكامل.</p>
                 </div>
                 <div class="faq-item">
-                    <h3>هل تقبلون التأمين الصحي؟</h3>
+                    <h3>هل تقبلون التأمين الصحي؟ <span class="faq-icon">+</span></h3>
                     <p>نتعامل مع معظم شركات التأمين الصحي في الكويت. يرجى التواصل معنا للتأكد من قبول تأمينك الصحي.</p>
                 </div>
             </div>
@@ -339,25 +341,40 @@ export const HTML_AR = `<!DOCTYPE html>
     function toggleMobileMenu() {
         const menu = document.getElementById('mobileMenu');
         const toggle = document.querySelector('.mobile-menu-toggle');
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
         menu.classList.toggle('active');
         toggle.classList.toggle('active');
+        backdrop.classList.toggle('active');
+    }
+
+    // Close Mobile Menu
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
+        menu.classList.remove('active');
+        toggle.classList.remove('active');
+        backdrop.classList.remove('active');
     }
 
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
         const menu = document.getElementById('mobileMenu');
         const toggle = document.querySelector('.mobile-menu-toggle');
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
         if (!toggle.contains(e.target) && !menu.contains(e.target)) {
             menu.classList.remove('active');
             toggle.classList.remove('active');
+            backdrop.classList.remove('active');
         }
     });
     
     // Close menu when clicking navigation links
     document.querySelectorAll('#mobileMenu a').forEach(link => {
         link.addEventListener('click', () => {
-            document.getElementById('mobileMenu').classList.remove('active');
-            document.querySelector('.mobile-menu-toggle').classList.remove('active');
+            closeMobileMenu();
+        });
+    });
         });
     });
 
