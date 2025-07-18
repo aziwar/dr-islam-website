@@ -720,7 +720,7 @@ footer {
 }
 
 /* Mobile Navigation */
-.mobile-menu-toggle {
+..mobile-menu-toggle {
     display: none;
     background: none;
     border: none;
@@ -729,7 +729,7 @@ footer {
     z-index: 1001;
 }
 
-.mobile-menu-toggle span {
+..mobile-menu-toggle span {
     display: block;
     width: 25px;
     height: 3px;
@@ -738,15 +738,15 @@ footer {
     transition: 0.3s;
 }
 
-.mobile-menu-toggle.active span:nth-child(1) {
+..mobile-menu-toggle.active span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
 }
 
-.mobile-menu-toggle.active span:nth-child(2) {
+..mobile-menu-toggle.active span:nth-child(2) {
     opacity: 0;
 }
 
-.mobile-menu-toggle.active span:nth-child(3) {
+..mobile-menu-toggle.active span:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
@@ -769,7 +769,7 @@ footer {
     }
     
     /* Mobile Navigation */
-    .mobile-menu-toggle {
+    ..mobile-menu-toggle {
         display: block;
     }
     
@@ -950,22 +950,33 @@ footer {
         max-width: 250px;
     }
     
-    /* Sticky WhatsApp Button */
-    .sticky-book {
-        bottom: 80px;
-        right: 20px;
-        font-size: 1rem;
-        padding: 15px 25px;
-        min-width: auto;
-        z-index: 997;
+    /* Mobile WhatsApp Button - Maximum Specificity */
+    body .sticky-book,
+    body a.sticky-book,
+    html body .sticky-book,
+    html body a.sticky-book {
+        bottom: 80px !important;
+        right: 20px !important;
+        font-size: 1rem !important;
+        padding: 15px 25px !important;
+        min-width: auto !important;
+        z-index: 997 !important;
+        position: fixed !important;
+        display: block !important;
+        visibility: visible !important;
     }
     
-    /* Emergency Banner */
-    .emergency-banner {
-        font-size: 18px;
-        padding: 8px 10px;
-        min-height: 35px;
-        line-height: 1.2;
+    /* Mobile Emergency Banner - Maximum Specificity */
+    body .emergency-banner,
+    body p.emergency-banner,
+    html body .emergency-banner,
+    html body p.emergency-banner {
+        font-size: 18px !important;
+        padding: 8px 10px !important;
+        min-height: 35px !important;
+        line-height: 1.4 !important;
+        display: block !important;
+        visibility: visible !important;
     }
     
     /* Header adjustments */
@@ -1002,7 +1013,7 @@ footer {
         left: auto;
     }
     
-    [dir="rtl"] .mobile-menu-toggle {
+    [dir="rtl"] ..mobile-menu-toggle {
         margin-right: auto;
         margin-left: 0;
     }

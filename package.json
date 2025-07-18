@@ -1,12 +1,20 @@
 {
   "name": "dr-islam-website",
   "version": "1.0.0",
-  "private": true,
+  "description": "Dr Islam Dental Clinic Website",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "start": "powershell -ExecutionPolicy Bypass -File quick-start.ps1",
+    "dev": "wrangler dev --local",
+    "test:mobile": "node tests/mobile-test.js",
+    "lint:css": "stylelint src/content/styles.js --fix",
+    "deploy:staging": "wrangler deploy --env staging",
+    "deploy:prod": "powershell -ExecutionPolicy Bypass -File deploy.ps1",
+    "monitor": "wrangler deploy --config wrangler.monitor.toml"
   },
   "devDependencies": {
-    "wrangler": "^3.78.0"
+    "playwright": "^1.45.0",
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard": "^36.0.0",
+    "wrangler": "^4.25.0"
   }
 }

@@ -7,14 +7,18 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const path = url.pathname;
+    
+    // Dynamic versioning for cache busting
+    const BUILD_DATE = new Date().toISOString().split('T')[0];
+    const CSS_VERSION = `mobile-fix-${BUILD_DATE}-v2`;
 
     // CSS serving
     if (path === '/styles.css' || path === '/css/style.css') {
       return new Response(CSS, {
         headers: {
           'Content-Type': 'text/css',
-          'Cache-Control': 'public, max-age=31536000, immutable',
-          'ETag': '"css-v1.0"'
+          'Cache-Control': 'public, max-age=300, s-maxage=3600, must-revalidate',
+          'ETag': `"${CSS_VERSION}"`
         }
       });
     }
