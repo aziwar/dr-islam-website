@@ -546,6 +546,372 @@ export const HTML_AR = `<!DOCTYPE html>
             emergencyBanner.style.opacity = '0.8';
         }
     }, 10000);
+    
+    
+    // ===== UI/UX ENHANCEMENTS INJECTED 2025-07-18 =====
+    // UI/UX Enhancement JavaScript
+// Mobile-first improvements for dr-islam-website
+
+(function() {
+    'use strict';
+    
+    // =================================
+    // LAZY LOADING IMAGES
+    // =================================
+    
+    const setupLazyLoading = () => {
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    
+                    // Load the image
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.classList.add('loaded');
+                    }
+                    
+                    // Handle srcset for responsive images
+                    if (img.dataset.srcset) {
+                        img.srcset = img.dataset.srcset;
+                    }
+                    
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px', // Start loading 50px before visible
+            threshold: 0.01
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    };
+    
+    // =================================
+    // TOUCH GESTURES FOR GALLERY
+    // =================================
+    
+    const setupGalleryTouch = () => {
+        const galleries = document.querySelectorAll('.gallery-container');
+        
+        galleries.forEach(gallery => {
+            let startX = 0;
+            let scrollLeft = 0;
+            let isDown = false;
+            
+            gallery.addEventListener('touchstart', (e) => {
+                isDown = true;
+                startX = e.touches[0].pageX - gallery.offsetLeft;
+                scrollLeft = gallery.scrollLeft;
+            });
+            
+            gallery.addEventListener('touchmove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                
+                const x = e.touches[0].pageX - gallery.offsetLeft;
+                const walk = (x - startX) * 2;
+                gallery.scrollLeft = scrollLeft - walk;
+            });
+            
+            gallery.addEventListener('touchend', () => {
+                isDown = false;
+                
+                // Snap to nearest item
+                const items = gallery.querySelectorAll('.gallery-item');
+                const itemWidth = items[0].offsetWidth;
+                const scrollPos = gallery.scrollLeft;
+                const index = Math.round(scrollPos / itemWidth);
+                
+                gallery.scrollTo({
+                    left: index * itemWidth,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    };
+    
+    // =================================
+    // BEFORE/AFTER SLIDER TOUCH
+    // =================================
+    
+    const setupBeforeAfterTouch = () => {
+        const sliders = document.querySelectorAll('.before-after-slider');
+        
+        sliders.forEach(slider => {
+            const container = slider.parentElement;
+            const before = container.querySelector('.before');
+            
+            let isMoving = false;
+            
+            const moveSlider = (clientX) => {
+                const rect = container.getBoundingClientRect();
+                const x = clientX - rect.left;
+                const percent = (x / rect.width) * 100;
+                
+                // Clamp between 5% and 95%
+                const clampedPercent = Math.max(5, Math.min(95, percent));
+                
+                slider.style.left = `${clampedPercent}%`;
+                before.style.clipPath = `inset(0 ${100 - clampedPercent}% 0 0)`;
+            };
+            
+            // Touch events
+            slider.addEventListener('touchstart', (e) => {
+                isMoving = true;
+                e.preventDefault();
+            });
+            
+            document.addEventListener('touchmove', (e) => {
+                if (isMoving) {
+                    moveSlider(e.touches[0].clientX);
+                }
+            });
+            
+            document.addEventListener('touchend', () => {
+                isMoving = false;
+            });
+            
+            // Mouse events for desktop
+            slider.addEventListener('mousedown', () => {
+                isMoving = true;
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (isMoving) {
+                    moveSlider(e.clientX);
+                }
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isMoving = false;
+            });
+        });
+    };
+    
+    // =================================
+    // SMOOTH SCROLL ENHANCEMENTS
+    // =================================
+    
+    const setupSmoothScroll = () => {
+        // Add offset for fixed header
+        const headerHeight = document.querySelector('header').offsetHeight;
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const top = target.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: top,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update URL without jumping
+                    history.pushState(null, null, this.getAttribute('href'));
+                }
+            });
+        });
+    };
+    
+    // =================================
+    // KEYBOARD NAVIGATION
+    // =================================
+    
+    const setupKeyboardNav = () => {
+        // FAQ keyboard navigation
+        const faqItems = document.querySelectorAll('.faq-item h3');
+        
+        faqItems.forEach((item, index) => {
+            item.setAttribute('tabindex', '0');
+            item.setAttribute('role', 'button');
+            item.setAttribute('aria-expanded', 'false');
+            
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    item.click();
+                }
+                
+                // Arrow key navigation
+                if (e.key === 'ArrowDown' && faqItems[index + 1]) {
+                    faqItems[index + 1].focus();
+                }
+                
+                if (e.key === 'ArrowUp' && faqItems[index - 1]) {
+                    faqItems[index - 1].focus();
+                }
+            });
+        });
+        
+        // Gallery keyboard navigation
+        const galleryButtons = document.querySelectorAll('.gallery-nav button');
+        galleryButtons.forEach(btn => {
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    const prevBtn = btn.previousElementSibling;
+                    if (prevBtn && prevBtn.tagName === 'BUTTON') {
+                        prevBtn.focus();
+                    }
+                }
+                
+                if (e.key === 'ArrowRight') {
+                    const nextBtn = btn.nextElementSibling;
+                    if (nextBtn && nextBtn.tagName === 'BUTTON') {
+                        nextBtn.focus();
+                    }
+                }
+            });
+        });
+    };
+    
+    // =================================
+    // LOADING STATES
+    // =================================
+    
+    const addLoadingState = (element) => {
+        element.classList.add('loading');
+        element.setAttribute('aria-busy', 'true');
+        element.disabled = true;
+    };
+    
+    const removeLoadingState = (element) => {
+        element.classList.remove('loading');
+        element.setAttribute('aria-busy', 'false');
+        element.disabled = false;
+    };
+    
+    // =================================
+    // FORM ENHANCEMENTS
+    // =================================
+    
+    const setupFormEnhancements = () => {
+        const forms = document.querySelectorAll('form');
+        
+        forms.forEach(form => {
+            // Add floating labels
+            const inputs = form.querySelectorAll('input, textarea');
+            
+            inputs.forEach(input => {
+                if (input.value) {
+                    input.classList.add('has-value');
+                }
+                
+                input.addEventListener('focus', () => {
+                    input.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', () => {
+                    input.classList.remove('focused');
+                    if (input.value) {
+                        input.classList.add('has-value');
+                    } else {
+                        input.classList.remove('has-value');
+                    }
+                });
+            });
+            
+            // Form submission with loading state
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const submitBtn = form.querySelector('[type="submit"]');
+                addLoadingState(submitBtn);
+                
+                // Simulate form submission
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                removeLoadingState(submitBtn);
+                
+                // Show success message
+                const successMsg = document.createElement('div');
+                successMsg.className = 'success-message';
+                successMsg.textContent = 'تم الإرسال بنجاح!';
+                form.appendChild(successMsg);
+                
+                // Remove success message after 3 seconds
+                setTimeout(() => {
+                    successMsg.remove();
+                }, 3000);
+            });
+        });
+    };
+    
+    // =================================
+    // PERFORMANCE MONITORING
+    // =================================
+    
+    const monitorPerformance = () => {
+        // Track Largest Contentful Paint
+        new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const lastEntry = entries[entries.length - 1];
+            console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
+        }).observe({ entryTypes: ['largest-contentful-paint'] });
+        
+        // Track First Input Delay
+        new PerformanceObserver((list) => {
+            list.getEntries().forEach((entry) => {
+                console.log('FID:', entry.processingStart - entry.startTime);
+            });
+        }).observe({ entryTypes: ['first-input'] });
+        
+        // Track Cumulative Layout Shift
+        let cls = 0;
+        new PerformanceObserver((list) => {
+            list.getEntries().forEach((entry) => {
+                if (!entry.hadRecentInput) {
+                    cls += entry.value;
+                    console.log('CLS:', cls);
+                }
+            });
+        }).observe({ entryTypes: ['layout-shift'] });
+    };
+    
+    // =================================
+    // INITIALIZE EVERYTHING
+    // =================================
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        setupLazyLoading();
+        setupGalleryTouch();
+        setupBeforeAfterTouch();
+        setupSmoothScroll();
+        setupKeyboardNav();
+        setupFormEnhancements();
+        
+        // Only monitor performance in development
+        if (window.location.hostname === 'localhost') {
+            monitorPerformance();
+        }
+        
+        // Add loaded class to body for CSS animations
+        document.body.classList.add('js-loaded');
+        
+        // Announce to screen readers
+        const announcement = document.createElement('div');
+        announcement.setAttribute('role', 'status');
+        announcement.setAttribute('aria-live', 'polite');
+        announcement.className = 'sr-only';
+        announcement.textContent = 'الصفحة جاهزة';
+        document.body.appendChild(announcement);
+    });
+    
+    // =================================
+    // PROGRESSIVE ENHANCEMENT CHECK
+    // =================================
+    
+    // Add class to indicate JS is available
+    document.documentElement.classList.add('js');
+    document.documentElement.classList.remove('no-js');
+    
+})();
+    // ===== END UI/UX ENHANCEMENTS =====
     </script>
 </body>
 </html>`;

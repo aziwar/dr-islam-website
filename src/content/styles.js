@@ -1061,4 +1061,423 @@ a:focus,
 button:focus {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
-}`;
+}
+
+/* ===== UI/UX IMPROVEMENTS MERGED 2025-07-18 ===== */
+
+/* UI/UX IMPROVEMENTS - Mobile First Approach */
+
+/* =================================
+   PHASE 1: TOUCH TARGET OPTIMIZATION
+   ================================= */
+
+/* Ensure all interactive elements meet 48x48px minimum */
+.nav-link,
+.btn,
+.gallery-nav button,
+.faq-item h3,
+.contact-card a,
+.sticky-book,
+button,
+a[role="button"],
+input[type="submit"],
+input[type="button"] {
+    min-height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Increase clickable area without visual change */
+.nav-link::before,
+.btn::before,
+button::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    bottom: -8px;
+    left: -8px;
+}
+
+/* =================================
+   PHASE 2: ARABIC TYPOGRAPHY
+   ================================= */
+
+/* Import Arabic optimized fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap');
+
+/* Arabic specific typography */
+body.ar,
+.ar body {
+    font-family: 'Cairo', 'Tajawal', 'Noto Kufi Arabic', -apple-system, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0;
+    word-spacing: 0.1em;
+    line-height: 1.8;
+}
+
+/* Arabic headings */
+.ar h1, .ar h2, .ar h3, .ar h4, .ar h5, .ar h6 {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+/* Better Arabic readability on mobile */
+@media (max-width: 768px) {
+    .ar body {
+        font-size: 17px;
+        line-height: 1.9;
+    }
+    
+    .ar p {
+        margin-bottom: 1.2rem;
+    }
+}
+
+/* =================================
+   PHASE 3: LOADING STATES
+   ================================= */
+
+/* Skeleton loading animation */
+.skeleton {
+    background: linear-gradient(90deg, 
+        rgba(190, 176, 147, 0.1) 25%, 
+        rgba(190, 176, 147, 0.2) 50%, 
+        rgba(190, 176, 147, 0.1) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Loading spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(190, 176, 147, 0.2);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Button loading state */
+.btn.loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+/* =================================
+   PHASE 4: FOCUS STATES & ACCESSIBILITY
+   ================================= */
+
+/* Visible focus for keyboard navigation */
+:focus {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Better focus for buttons and links */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.2);
+}
+
+/* Skip navigation link */
+.skip-nav {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 0 0 4px 0;
+    z-index: 1000;
+}
+
+.skip-nav:focus {
+    top: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :focus {
+        outline-width: 4px;
+    }
+    
+    .btn {
+        border: 2px solid currentColor;
+    }
+}
+
+/* =================================
+   PHASE 5: MICRO-INTERACTIONS
+   ================================= */
+
+/* Smooth transitions */
+a,
+button,
+.btn,
+.nav-link,
+.gallery-item,
+.faq-item {
+    transition: all 0.3s ease;
+}
+
+/* Button hover effects */
+.btn:hover:not(.loading) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active:not(.loading) {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Link underline animation */
+a:not(.btn):not(.nav-link) {
+    position: relative;
+    text-decoration: none;
+}
+
+a:not(.btn):not(.nav-link)::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+a:not(.btn):not(.nav-link):hover::after {
+    width: 100%;
+}
+
+/* Gallery hover effects */
+.gallery-item {
+    overflow: hidden;
+}
+
+.gallery-item img {
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* FAQ accordion animation */
+.faq-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.faq-item.active .faq-content {
+    max-height: 500px;
+    transition: max-height 0.5s ease-in;
+}
+
+.faq-item h3::after {
+    content: '+';
+    position: absolute;
+    left: 20px;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active h3::after {
+    transform: rotate(45deg);
+}
+
+/* =================================
+   PHASE 6: MOBILE TOUCH GESTURES
+   ================================= */
+
+/* Swipeable gallery */
+.gallery-container {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.gallery-container::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery-item {
+    scroll-snap-align: center;
+}
+
+/* Touch feedback */
+.touchable {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.touchable:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+/* =================================
+   PHASE 7: PERFORMANCE OPTIMIZATIONS
+   ================================= */
+
+/* Hardware acceleration for animations */
+.animated {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Lazy loading images */
+img[loading="lazy"] {
+    background: var(--light);
+}
+
+/* Image fade-in when loaded */
+img {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img.loaded {
+    opacity: 1;
+}
+
+/* =================================
+   PHASE 8: ERROR STATES
+   ================================= */
+
+/* Form validation */
+.error {
+    border-color: var(--emergency) !important;
+    background-color: rgba(220, 53, 69, 0.05);
+}
+
+.error-message {
+    color: var(--emergency);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.error-message::before {
+    content: '⚠️';
+}
+
+/* Success states */
+.success {
+    border-color: var(--success) !important;
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.success-message {
+    color: var(--success);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.success-message::before {
+    content: '✓';
+}
+
+/* =================================
+   PHASE 9: RESPONSIVE UTILITIES
+   ================================= */
+
+/* Hide scrollbars but keep functionality */
+.no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Prevent text selection on UI elements */
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Prevent layout shift from scrollbar */
+html {
+    overflow-y: scroll;
+}
+
+/* Safe area insets for modern phones */
+.safe-top {
+    padding-top: env(safe-area-inset-top);
+}
+
+.safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+`;
