@@ -3,7 +3,7 @@ export const HTML_EN = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Dr. Islam Elsagher - General Dentist & Implantologist</title>
     <meta name="description" content="Dr. Islam Elsagher provides comprehensive dental care in Kuwait. 15+ years experience in implants, cosmetic dentistry, and oral surgery.">
     
@@ -20,7 +20,7 @@ export const HTML_EN = `<!DOCTYPE html>
     <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     
     <!-- Schema Markup for Dentist -->
@@ -179,18 +179,15 @@ export const HTML_EN = `<!DOCTYPE html>
             <p class="gallery-subtitle">See the amazing transformation of our patients' smiles</p>
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="assets/before-after/case1-before.jpg" alt="Before treatment" loading="lazy">
-                    <img src="assets/before-after/case1-after.jpg" alt="After treatment" loading="lazy">
-                    <p>Front teeth implants</p>
+                    <img src="/assets/before-after/real-case1.png" alt="Real transformation" loading="lazy" decoding="async">
+                    <p>Amazing smile transformation</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="assets/before-after/case2-before.jpg" alt="Before treatment" loading="lazy">
-                    <img src="assets/before-after/case2-after.jpg" alt="After treatment" loading="lazy">
+                    <img src="/assets/before-after/real-case2.png" alt="Treatment result" loading="lazy" decoding="async">
                     <p>Hollywood smile</p>
                 </div>
                 <div class="gallery-item">
-                    <img src="assets/before-after/case3-before.jpg" alt="Before treatment" loading="lazy">
-                    <img src="assets/before-after/case3-after.jpg" alt="After treatment" loading="lazy">
+                    <img src="/assets/before-after/real-case3.png" alt="Advanced treatment" loading="lazy" decoding="async">
                     <p>Orthodontic and cosmetic treatment</p>
                 </div>
             </div>
@@ -341,6 +338,13 @@ export const HTML_EN = `<!DOCTYPE html>
             toggle.classList.remove('active');
             backdrop.classList.remove('active');
         }
+    });
+    
+    // Close menu when clicking navigation links
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+        link.addEventListener('click', () => {
+            closeMobileMenu();
+        });
     });
 
     // Smooth scrolling

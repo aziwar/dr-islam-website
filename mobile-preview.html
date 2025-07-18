@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Mobile Preview - Dr. Islam Website</title>
+    <style>
+        /* Import the actual styles from the project */
+        ${CSS_CONTENT}
+    </style>
+    <style>
+        /* Mobile preview container */
+        .preview-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: #ddd;
+            min-height: 100vh;
+        }
+        .mobile-frame {
+            width: 390px;
+            height: 844px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        .mobile-screen {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .device-info {
+            text-align: center;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            color: #666;
+        }
+        .test-results {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .pass { background: #d4f4dd; color: #0a5f0a; }
+        .fail { background: #f4d4d4; color: #8b0000; }
+        .info { background: #e3f2fd; color: #1976d2; }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div>
+            <div class="mobile-frame">
+                <div class="mobile-screen">
+                    <!-- Emergency Banner -->
+                    <div class="emergency-banner">
+                        <p>Dental Emergency? Call Now: <a href="tel:+96598563711">+965 98563711</a></p>
+                    </div>
+
+                    <header>
+                        <nav>
+                            <div class="logo">
+                                <img src="#" alt="Dr. Islam Elsagher" class="logo-img">
+                            </div>
+                            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                            <ul id="mobileMenu">
+                                <li><a href="#services">Services</a></li>
+                                <li><a href="#about">About</a></li>
+                                <li><a href="#contact">Contact</a></li>
+                            </ul>
+                        </nav>
+                    </header>
+
+                    <!-- Sample service cards -->
+                    <section class="services" style="padding: 20px;">
+                        <h2>Our Services</h2>
+                        <div class="services-grid">
+                            <div class="service-card">
+                                <h3>Dental Implants</h3>
+                                <p>Latest techniques</p>
+                            </div>
+                            <div class="service-card">
+                                <h3>Root Canal</h3>
+                                <p>Specialized treatment</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- FAQ sample -->
+                    <section class="faq" style="padding: 20px;">
+                        <div class="faq-item">
+                            <h3>How much does it cost? <span class="faq-icon">+</span></h3>
+                            <p>Varies by case...</p>
+                        </div>
+                    </section>
+
+                    <!-- WhatsApp button -->
+                    <a href="#" class="sticky-book">Book Appointment 💬</a>
+                </div>
+            </div>
+            <div class="device-info">iPhone 14 Pro (390x844)</div>
+        </div>
+
+        <div class="test-results">
+            <h2>Mobile CSS Test Results</h2>
+            <div id="test-output"></div>
+        </div>
+    </div>
+
+    <script>
+        // Test mobile-specific CSS
+        function runTests() {
+            const results = document.getElementById('test-output');
+            results.innerHTML = '';
+
+            // Test 1: Emergency banner font size
+            const banner = document.querySelector('.emergency-banner');
+            const bannerStyle = window.getComputedStyle(banner);
+            const bannerFontSize = bannerStyle.fontSize;
+            
+            addResult('Emergency Banner Font Size', bannerFontSize, 
+                      bannerFontSize === '18px' ? 'pass' : 'fail');
+
+            // Test 2: WhatsApp button position
+            const whatsapp = document.querySelector('.sticky-book');
+            const whatsappStyle = window.getComputedStyle(whatsapp);
+            const whatsappBottom = whatsappStyle.bottom;
+            
+            addResult('WhatsApp Button Bottom', whatsappBottom, 
+                      whatsappBottom === '80px' ? 'pass' : 'fail');
+
+            // Test 3: Mobile menu display
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            const toggleStyle = window.getComputedStyle(mobileToggle);
+            const toggleDisplay = toggleStyle.display;
+            
+            addResult('Mobile Menu Toggle', toggleDisplay, 
+                      toggleDisplay === 'block' ? 'pass' : 'fail');
+
+            // Test 4: Service card on mobile
+            const serviceCard = document.querySelector('.service-card');
+            const cardStyle = window.getComputedStyle(serviceCard);
+            
+            addResult('Service Card Display', 'Rendered', 'info');
+
+            // Test 5: Viewport width
+            addResult('Viewport Width', window.innerWidth + 'px', 'info');
+        }
+
+        function addResult(test, value, status) {
+            const results = document.getElementById('test-output');
+            const div = document.createElement('div');
+            div.className = `test-item ${status}`;
+            div.innerHTML = `<strong>${test}:</strong> ${value}`;
+            results.appendChild(div);
+        }
+
+        // Mobile menu toggle function
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            menu.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        // Run tests on load
+        window.onload = runTests;
+    </script>
+</body>
+</html>
