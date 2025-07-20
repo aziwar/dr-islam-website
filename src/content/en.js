@@ -628,8 +628,8 @@ export const HTML_EN = `<!DOCTYPE html>
                 // Clamp between 5% and 95%
                 const clampedPercent = Math.max(5, Math.min(95, percent));
                 
-                slider.style.left = `${clampedPercent}%`;
-                before.style.clipPath = `inset(0 ${100 - clampedPercent}% 0 0)`;
+                slider.style.left = \`\${clampedPercent}%\`;
+                before.style.clipPath = \`inset(0 \${100 - clampedPercent}% 0 0)\`;
             };
             
             // Touch events
@@ -913,11 +913,11 @@ export const HTML_EN = `<!DOCTYPE html>
                 if (deferredPrompt) {
                     const installBanner = document.createElement('div');
                     installBanner.className = 'install-prompt';
-                    installBanner.innerHTML = `
-                        <p>قم بتثبيت التطبيق للوصول السريع</p>
-                        <button onclick="installPWA()">تثبيت</button>
-                        <button onclick="dismissInstall()">لاحقاً</button>
-                    `;
+                    installBanner.innerHTML = \`
+                        <p>Install the app for quick access</p>
+                        <button onclick="installPWA()">Install</button>
+                        <button onclick="dismissInstall()">Later</button>
+                    \`;
                     document.body.appendChild(installBanner);
                 }
             }, 30000);
@@ -927,7 +927,7 @@ export const HTML_EN = `<!DOCTYPE html>
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(`User response: ${outcome}`);
+                console.log(\`User response: \${outcome}\`);
                 deferredPrompt = null;
                 document.querySelector('.install-prompt')?.remove();
             }

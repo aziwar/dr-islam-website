@@ -1,9 +1,0 @@
-name = "dr-islam-monitor"
-main = "src/monitor.js"
-compatibility_date = "2024-07-18"
-
-[triggers]
-crons = ["*/5 * * * *"]  # Every 5 minutes
-
-[env.production]
-name = "dr-islam-monitor-production"

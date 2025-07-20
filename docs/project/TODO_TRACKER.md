@@ -1,0 +1,129 @@
+# TODO TRACKER
+<!-- AI AGENT: Read all 3 files in docs/ before starting -->
+<!-- WORKFLOW: Local → GitHub → Auto-deploy to Cloudflare -->
+**Updated:** July 19, 2025 9:26 AM Kuwait Time
+
+## 📏 SUB-TASK RULE
+For complex tasks, add timestamped sub-tasks directly under main task:
+```markdown
+### Main Task
+- **Status:** 25% - IN PROGRESS
+- **Sub-tasks:**
+  - [x] Sub-task 1 - Started: 2025-07-19 09:00 - Done: 2025-07-19 10:30
+  - [ ] Sub-task 2 - Started: -- - Due: 2025-07-20 14:00
+  - [ ] Sub-task 3 - Started: -- - Due: 2025-07-21 09:00
+```
+
+## 🔴 CRITICAL (Due: July 21, 2025)
+### CSS Modularization
+- **Started:** July 19, 2025
+- **Due:** July 21, 2025
+- **Status:** 80% - TESTING
+- **File:** src/content/styles.js (1,556 lines)
+- **Sub-tasks:**
+  - [x] Extract critical CSS (~500 lines) - Started: 2025-07-20 18:35 - Done: 2025-07-20 18:45
+  - [x] Extract component CSS (~500 lines) - Started: 2025-07-20 18:45 - Done: 2025-07-20 18:50
+  - [x] Extract responsive CSS (~500 lines) - Started: 2025-07-20 18:50 - Done: 2025-07-20 18:55
+  - [x] Update imports in index.js - Started: 2025-07-20 18:55 - Done: 2025-07-20 19:00
+  - [ ] Test all breakpoints - Started: -- - Due: 2025-07-21 14:00
+- **Blocked by:** Nothing
+- **Notes:** CSS split into 3 modules: critical.css.js (448 lines), components.css.js (585 lines), responsive.css.js (518 lines)
+
+### Cache Headers Implementation
+- **Started:** --
+- **Due:** July 21, 2025
+- **Status:** 0% - NOT STARTED
+- **Action:** Add to all responses:
+  ```javascript
+  // Dynamic content
+  "Cache-Control": "s-maxage=86400"
+  // Static assets
+  "Cache-Control": "public, max-age=31556952, immutable"
+  ```
+
+## 🟡 HIGH PRIORITY (Due: July 26, 2025)
+### Performance Monitoring
+- **Due:** July 26, 2025
+- **Status:** 0% - NOT STARTED
+- **Action:** Add timing to src/index.js:
+  ```javascript
+  const start = performance.now();
+  const response = await fetch(request);
+  console.log({ operation: "fetch", duration: performance.now() - start });
+  ```
+
+### Enhanced Security Headers
+- **Due:** July 26, 2025
+- **Status:** 0% - NOT STARTED
+- **Action:** Add missing headers:
+  ```javascript
+  "Cross-Origin-Embedder-Policy": "require-corp"
+  "Cross-Origin-Opener-Policy": "same-site"
+  "Cross-Origin-Resource-Policy": "same-site"
+  ```
+
+## 🟢 MEDIUM PRIORITY (Due: Aug 2, 2025)
+### R2 Bucket Optimization
+- **Due:** Aug 2, 2025
+- **Status:** 0% - PLANNING
+- **Action:** Conditional requests with etag
+
+### Rate Limiting
+- **Due:** Aug 2, 2025
+- **Status:** 0% - PLANNING
+- **Action:** User-based keys, not IP
+
+### RUM Analytics
+- **Due:** Aug 2, 2025
+- **Status:** 0% - PLANNING
+- **Action:** Cloudflare Web Analytics setup
+
+## ⚪ LOW PRIORITY (Due: Aug 16, 2025)
+### Stream-Based Rendering
+- **Due:** Aug 16, 2025
+- **Status:** 0% - FUTURE
+- **Action:** Replace string concatenation
+- **Note:** May be overkill for dental site
+
+### A/B Testing Framework
+- **Due:** Aug 16, 2025
+- **Status:** 0% - FUTURE
+- **Action:** Feature flags system
+
+## ✅ COMPLETED (July 2025)
+### GitHub Actions CI/CD
+- **Completed:** July 18, 2025
+- **File:** .github/workflows/deploy.yml
+- **Result:** Auto-deploy on master push
+
+### PWA Implementation
+- **Completed:** July 18, 2025
+- **Result:** Service worker + offline mode
+- **Files:** sw.js, manifest-*.json
+
+### WebP Optimization
+- **Completed:** July 18, 2025
+- **Result:** 93.7% size reduction
+- **Files:** 42 images in assets/webp-optimized/
+
+### Security Headers Base
+- **Completed:** July 18, 2025
+- **Result:** CSP, HSTS, X-Frame-Options
+- **Note:** Enhanced headers still needed
+
+### Mobile Optimization
+- **Completed:** July 17, 2025
+- **Result:** 48px touch targets, gestures
+- **Fonts:** Cairo, Tajawal (Arabic)
+
+## 📊 PROGRESS SUMMARY
+- **Total Tasks:** 12
+- **Completed:** 5 (42%)
+- **In Progress:** 0 (0%)
+- **Not Started:** 7 (58%)
+- **On Track:** NO - Critical tasks not started
+
+## 🚨 NEXT ACTION
+1. Start CSS modularization TODAY
+2. Test locally with `npm run dev`
+3. Commit to GitHub for auto-deploy
