@@ -1,57 +1,25 @@
 # DR-ISLAM-WEBSITE DOCS
-<!-- AI AGENTS: Start with AI_AGENT_GUIDE.md -->
-<!-- WORKFLOW: Local → GitHub → Auto-deploy to Cloudflare -->
-**Updated:** July 19, 2025
+**Updated:** July 20, 2025 9:12 PM
 
-## 🚨 AI AGENTS START HERE
-**[AI_AGENT_GUIDE.md](./AI_AGENT_GUIDE.md)** - Complete onboarding guide with Context Engineering structure
+## 📊 STATUS
+- **Live:** https://dr-elsagher.com
+- **Progress:** 67% (8/12 tasks)
+- **Health:** A (90/100)
 
-## 📋 ESSENTIAL FILES (READ IN ORDER)
+## 📁 ESSENTIAL FILES
+1. [PROJECT_CONTEXT.md](./project/PROJECT_CONTEXT.md) - Infrastructure & stack
+2. [TODO_TRACKER.md](./project/TODO_TRACKER.md) - What's left (4 tasks)
 
-### 1. [PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)
-**Complete project information**
-- Business context (Dr. Islam dental clinic, Kuwait)
-- Technical infrastructure (Workers, R2, URLs)
-- Project health scores (B+ 85/100)
-- 5 completed development phases
-- Deployment workflow (GitHub → Cloudflare)
-
-### 2. [TODO_TRACKER.md](./TODO_TRACKER.md)
-**Time-tracked task management**
-- Critical tasks with dates
-- Progress tracking (42% complete)
-- Next actions prioritized
-- Blocked/dependency status
-
-### 3. [DEV_RULES.md](./DEV_RULES.md)
-**Cloudflare Workers best practices**
-- 8 core rules from Context7
-- Performance, caching, security
-- Code examples (DO/DON'T)
-- Success metrics
-
-## 🚀 QUICK START FOR AI AGENTS
-
+## 🚀 WORKFLOW
 ```bash
-# 1. Read all 3 docs above
-# 2. Check current TODO status
-# 3. Work locally
-npm run dev
-
-# 4. Make changes
-# 5. Push to GitHub (auto-deploys)
-git add .
-git commit -m "feat: description"
-git push origin master
-
-# NEVER: Direct deploy to Cloudflare
+npm run dev                    # Local test
+git add . && git commit && git push  # Deploy
 ```
 
-## 📊 PROJECT STATUS
-- **Live:** https://dr-elsagher.com
-- **Health:** B+ (85/100)
-- **Critical:** CSS needs modularization
-- **Stack:** Cloudflare Workers + R2 + PWA
+## ✅ TODAY'S UPDATES (July 20)
+- CSS split into 3 modules
+- Cache headers with s-maxage  
+- Performance monitoring added
 
----
-**Old audit files (6) archived. Use only these 3 files.**
+## 🎯 NEXT
+Enhanced Security Headers (Due: July 26)

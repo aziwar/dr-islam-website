@@ -7,6 +7,14 @@ import { OFFLINE_HTML } from './content/offline.js';
 
 export default {
   async fetch(request, env, ctx) {
+    // Start performance monitoring
+    const requestStart = performance.now();
+    const metrics = {
+      url: request.url,
+      method: request.method,
+      timestamp: new Date().toISOString()
+    };
+    
     const url = new URL(request.url);
     const path = url.pathname;
     
@@ -16,12 +24,20 @@ export default {
 
     // Handle robots.txt
     if (path === '/robots.txt') {
-      return handleRobotsTxt();
+      const response = handleRobotsTxt();
+      metrics.operation = 'robots-txt';
+      metrics.duration = performance.now() - requestStart;
+      console.log(metrics);
+      return response;
     }
 
     // Handle sitemap.xml
     if (path === '/sitemap.xml') {
-      return handleSitemap(url);
+      const response = handleSitemap(url);
+      metrics.operation = 'sitemap';
+      metrics.duration = performance.now() - requestStart;
+      console.log(metrics);
+      return response;
     }
 
     // Handle manifest files
@@ -55,52 +71,78 @@ export default {
           ]
         });
       
-      return new Response(manifestContent, {
+      const response = new Response(manifestContent, {
         headers: {
           'Content-Type': 'application/manifest+json',
-          'Cache-Control': 'public, max-age=86400'
+          'Cache-Control': 'public, max-age=86400, s-maxage=86400'
         }
       });
+      
+      metrics.operation = 'manifest';
+      metrics.lang = manifestLang;
+      metrics.duration = performance.now() - requestStart;
+      console.log(metrics);
+      return response;
     }
 
     // Handle service worker
     if (path === '/sw.js') {
-      return new Response(SERVICE_WORKER_JS, {
+      const response = new Response(SERVICE_WORKER_JS, {
         headers: {
           'Content-Type': 'application/javascript',
-          'Cache-Control': 'public, max-age=3600'
+          'Cache-Control': 'public, max-age=3600, s-maxage=3600'
         }
       });
+      metrics.operation = 'service-worker';
+      metrics.duration = performance.now() - requestStart;
+      console.log(metrics);
+      return response;
     }
 
     // Handle offline page
     if (path === '/offline.html') {
-      return new Response(OFFLINE_HTML, {
+      const response = new Response(OFFLINE_HTML, {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'public, max-age=86400'
+          'Cache-Control': 'public, max-age=86400, s-maxage=86400'
         }
       });
+      metrics.operation = 'offline-page';
+      metrics.duration = performance.now() - requestStart;
+      console.log(metrics);
+      return response;
     }
 
     // CSS serving
     if (path === '/styles.css' || path === '/css/style.css') {
-      return new Response(CSS, {
+      const response = new Response(CSS, {
         headers: {
           'Content-Type': 'text/css',
           'Cache-Control': 'public, max-age=300, s-maxage=3600, must-revalidate',
           'ETag': `"${CSS_VERSION}"`
         }
       });
+      metrics.operation = 'css';
+      metrics.duration = performance.now() - requestStart;
+      console.log(metrics);
+      return response;
     }
 
     // Optimized image serving with R2
     if (path.startsWith('/assets/images/') || path.startsWith('/assets/before-after/')) {
-      return handleImageRequest(request, env, ctx, path);
+      const response = await handleImageRequest(request, env, ctx, path);
+      metrics.operation = 'image';
+      metrics.totalDuration = performance.now() - requestStart;
+      console.log(metrics);
+      return response;
     }
 
     // Route handling
-    return handleHTMLRequest(request, url);
+    const response = await handleHTMLRequest(request, url);
+    metrics.operation = 'html';
+    metrics.totalDuration = performance.now() - requestStart;
+    console.log(metrics);
+    return response;
   }
 };
 
@@ -122,7 +164,7 @@ Crawl-delay: 1
   return new Response(robots, {
     headers: {
       'Content-Type': 'text/plain',
-      'Cache-Control': 'public, max-age=86400'
+      'Cache-Control': 'public, max-age=86400, s-maxage=86400'
     }
   });
 }
@@ -153,32 +195,49 @@ function handleSitemap(url) {
   return new Response(sitemap, {
     headers: {
       'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=86400'
+      'Cache-Control': 'public, max-age=86400, s-maxage=86400'
     }
   });
 }
 
 // Image handler with WebP support and proper error handling
 async function handleImageRequest(request, env, ctx, path) {
+  const imageStart = performance.now();
+  const imageMetrics = {
+    path,
+    webpRequested: false,
+    source: 'unknown',
+    cacheHit: false
+  };
+  
   try {
     const key = path.substring(1); // Remove leading slash
     
     // Check Accept header for WebP support
     const acceptsWebP = request.headers.get('Accept')?.includes('image/webp');
     const webpKey = key.replace(/\.(jpg|png)$/i, '.webp');
+    imageMetrics.webpRequested = acceptsWebP;
     
     // Try WebP first if supported
     if (acceptsWebP && env.IMAGES) {
       const webpObject = await env.IMAGES.get(webpKey);
       if (webpObject) {
+        imageMetrics.source = 'r2-webp';
+        imageMetrics.duration = performance.now() - imageStart;
+        console.log({ operation: 'image-fetch', ...imageMetrics });
         return serveR2Object(webpObject, 'image/webp');
       }
     }
     
     // Try original format from R2
     if (env.IMAGES) {
+      const r2Start = performance.now();
       const object = await env.IMAGES.get(key);
       if (object) {
+        imageMetrics.source = 'r2-original';
+        imageMetrics.r2Duration = performance.now() - r2Start;
+        imageMetrics.duration = performance.now() - imageStart;
+        console.log({ operation: 'image-fetch', ...imageMetrics });
         const contentType = getContentType(key);
         return serveR2Object(object, contentType);
       }
@@ -186,9 +245,15 @@ async function handleImageRequest(request, env, ctx, path) {
     
     // Fallback to GitHub
     const githubUrl = `https://raw.githubusercontent.com/aziwar/dr-islam-website/master${path}`;
+    const githubStart = performance.now();
     const response = await fetch(githubUrl);
     
     if (response.ok) {
+      imageMetrics.source = 'github-fallback';
+      imageMetrics.githubDuration = performance.now() - githubStart;
+      imageMetrics.duration = performance.now() - imageStart;
+      console.log({ operation: 'image-fetch', ...imageMetrics });
+      
       const headers = {
         'Content-Type': response.headers.get('Content-Type') || getContentType(key),
         'Cache-Control': 'public, max-age=31536000, immutable',
@@ -197,9 +262,15 @@ async function handleImageRequest(request, env, ctx, path) {
       return new Response(response.body, { headers });
     }
     
+    imageMetrics.source = 'not-found';
+    imageMetrics.duration = performance.now() - imageStart;
+    console.log({ operation: 'image-fetch', ...imageMetrics });
     return new Response('Image not found', { status: 404 });
   } catch (error) {
     console.error('Image serving error:', error);
+    imageMetrics.error = error.message;
+    imageMetrics.duration = performance.now() - imageStart;
+    console.log({ operation: 'image-fetch-error', ...imageMetrics });
     return new Response('Internal server error', { status: 500 });
   }
 }
@@ -229,8 +300,25 @@ function getContentType(path) {
   return types[ext] || 'application/octet-stream';
 }
 
+// Standardized cache control headers helper
+function getCacheHeaders(type = 'default') {
+  const cacheProfiles = {
+    'static': 'public, max-age=31536000, immutable', // 1 year for static assets
+    'css': 'public, max-age=300, s-maxage=3600, must-revalidate', // 5 min client, 1 hour CDN
+    'html': 'public, max-age=3600, s-maxage=86400', // 1 hour client, 24 hours CDN
+    'api': 'no-cache, no-store, must-revalidate', // No caching for API
+    'manifest': 'public, max-age=86400, s-maxage=86400', // 24 hours
+    'sw': 'public, max-age=3600, s-maxage=3600', // 1 hour for service worker updates
+    'default': 'public, max-age=86400, s-maxage=86400' // 24 hours default
+  };
+  
+  return cacheProfiles[type] || cacheProfiles.default;
+}
+
 // HTML request handler with enhanced security headers
 function handleHTMLRequest(request, url) {
+  const htmlStart = performance.now();
+  
   const acceptLanguage = request.headers.get('Accept-Language') || '';
   const preferredLang = acceptLanguage.includes('ar') ? 'ar' : 'en';
   const path = url.pathname;
@@ -242,6 +330,12 @@ function handleHTMLRequest(request, url) {
     html = HTML_AR;
     hreflang = 'ar';
   } else if (path === '/' && preferredLang === 'ar') {
+    const redirectDuration = performance.now() - htmlStart;
+    console.log({ 
+      operation: 'html-redirect', 
+      lang: 'ar', 
+      duration: redirectDuration 
+    });
     return Response.redirect(url.origin + '/ar/', 302);
   }
   
@@ -249,7 +343,7 @@ function handleHTMLRequest(request, url) {
   const headers = {
     'Content-Type': 'text/html; charset=utf-8',
     'X-Content-Type-Options': 'nosniff',
-    'Cache-Control': 'public, max-age=3600, s-maxage=86400',
+    'Cache-Control': getCacheHeaders('html'),
     'X-Frame-Options': 'SAMEORIGIN',
     'X-XSS-Protection': '1; mode=block',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
@@ -259,6 +353,14 @@ function handleHTMLRequest(request, url) {
     'X-Robots-Tag': 'index, follow',
     'Content-Language': hreflang
   };
+  
+  const htmlDuration = performance.now() - htmlStart;
+  console.log({ 
+    operation: 'html-generation', 
+    lang: hreflang, 
+    path: path,
+    duration: htmlDuration 
+  });
   
   return new Response(html, { headers });
 }
