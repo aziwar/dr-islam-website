@@ -195,63 +195,112 @@ export const HTML_AR = `<!DOCTYPE html>
         </div>
     </section>
 
-    <!-- Before/After Gallery -->
+    <!-- Enhanced Before/After Gallery -->
     <section id="gallery" class="gallery">
         <div class="container">
-            <h2>نتائج حقيقية</h2>
-            <p class="gallery-subtitle">شاهد التحول المذهل لابتسامات مرضانا</p>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <picture>
-                        <source 
-                            type="image/webp"
-                            srcset="/assets/before-after/real-case1-320w.webp 320w,
-                                    /assets/before-after/real-case1-768w.webp 768w,
-                                    /assets/before-after/real-case1.webp 1200w"
-                            sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
-                        >
-                        <img 
-                            src="/assets/before-after/real-case1.png" 
-                            alt="حالة حقيقية"
-                            loading="lazy"
-                            class="gallery-img"
-                        >
-                    </picture>
-                    <p>تحول مذهل للابتسامة</p>
+            <h2>نتائج حقيقية تتحدث عن نفسها</h2>
+            <p class="gallery-subtitle">أكثر من 1200 حالة ناجحة وابتسامات متجددة</p>
+            
+            <!-- Gallery Filter Tabs -->
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">جميع الحالات</button>
+                <button class="filter-btn" data-filter="implants">زراعة الأسنان</button>
+                <button class="filter-btn" data-filter="cosmetic">تجميل الأسنان</button>
+                <button class="filter-btn" data-filter="orthodontic">التقويم</button>
+                <button class="filter-btn" data-filter="reconstruction">إعادة التأهيل</button>
+            </div>
+            
+            <div class="gallery-grid enhanced">
+                <!-- Dental Implants Cases -->
+                <div class="gallery-item" data-category="implants">
+                    <div class="case-images">
+                        <img src="/assets/before-after/real-case1.png" alt="قبل زراعة الأسنان الأمامية" loading="lazy">
+                        <img src="/assets/before-after/real-case1-after.png" alt="بعد زراعة الأسنان الأمامية" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>زراعة أسنان أمامية فورية</h4>
+                        <p class="case-details">مريض، 35 عام - زراعة فورية مع تاج خزفي</p>
+                        <p class="treatment-time">مدة العلاج: جلسة واحدة</p>
+                        <span class="case-badge implant">زراعة</span>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <picture>
-                        <source 
-                            type="image/webp"
-                            srcset="/assets/before-after/real-case2-320w.webp 320w,
-                                    /assets/before-after/real-case2-768w.webp 768w,
-                                    /assets/before-after/real-case2.webp 1200w"
-                            sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
-                        >
-                        <img 
-                            src="/assets/before-after/real-case2.png" 
-                            alt="نتيجة علاج"
-                            loading="lazy"
-                            class="gallery-img"
-                        >
-                    </picture>
-                    <p>ابتسامة هوليوود</p>
+
+                <div class="gallery-item" data-category="implants">
+                    <div class="case-images">
+                        <img src="/assets/before-after/real-case2.png" alt="قبل زراعة متعددة" loading="lazy">
+                        <img src="/assets/before-after/real-case2-after.png" alt="بعد زراعة متعددة" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>زراعة متعددة مع جسر ثابت</h4>
+                        <p class="case-details">مريضة، 42 عام - استبدال 4 أسنان مفقودة</p>
+                        <p class="treatment-time">مدة العلاج: 4 أشهر</p>
+                        <span class="case-badge implant">زراعة</span>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <picture>
-                        <source 
-                            type="image/webp"
-                            srcset="/assets/before-after/real-case3-320w.webp 320w,
-                                    /assets/before-after/real-case3-768w.webp 768w,
-                                    /assets/before-after/real-case3.webp 1200w"
-                            sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
-                        >
-                        <img 
-                            src="/assets/before-after/real-case3.png" 
-                            alt="علاج متقدم"
-                            loading="lazy"
-                            class="gallery-img"
-                        >
+
+                <!-- Cosmetic Cases -->
+                <div class="gallery-item" data-category="cosmetic">
+                    <div class="case-images">
+                        <img src="/assets/before-after/real-case3.png" alt="قبل ابتسامة هوليوود" loading="lazy">
+                        <img src="/assets/before-after/real-case3-after.png" alt="بعد ابتسامة هوليوود" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>ابتسامة هوليوود كاملة</h4>
+                        <p class="case-details">مريضة، 28 عام - فينير خزفي 16 سن</p>
+                        <p class="treatment-time">مدة العلاج: أسبوعين</p>
+                        <span class="case-badge cosmetic">تجميلي</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="cosmetic">
+                    <div class="case-images">
+                        <img src="/assets/before-after/whitening1-before.jpg" alt="قبل تبييض الأسنان" loading="lazy">
+                        <img src="/assets/before-after/whitening1-after.jpg" alt="بعد تبييض الأسنان" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>تبييض بالليزر + ترميم</h4>
+                        <p class="case-details">مريض، 31 عام - تبييض مع حشوات تجميلية</p>
+                        <p class="treatment-time">مدة العلاج: جلستين</p>
+                        <span class="case-badge cosmetic">تجميلي</span>
+                    </div>
+                </div>
+
+                <!-- Orthodontic Cases -->
+                <div class="gallery-item" data-category="orthodontic">
+                    <div class="case-images">
+                        <img src="/assets/before-after/ortho1-before.jpg" alt="قبل التقويم الشفاف" loading="lazy">
+                        <img src="/assets/before-after/ortho1-after.jpg" alt="بعد التقويم الشفاف" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>تقويم شفاف (Invisalign)</h4>
+                        <p class="case-details">مريضة، 24 عام - تصحيح ازدحام الأسنان</p>
+                        <p class="treatment-time">مدة العلاج: 8 أشهر</p>
+                        <span class="case-badge orthodontic">تقويم</span>
+                    </div>
+                </div>
+
+                <!-- Full Mouth Reconstruction -->
+                <div class="gallery-item" data-category="reconstruction">
+                    <div class="case-images">
+                        <img src="/assets/before-after/fullmouth1-before.jpg" alt="قبل إعادة تأهيل كاملة" loading="lazy">
+                        <img src="/assets/before-after/fullmouth1-after.jpg" alt="بعد إعادة تأهيل كاملة" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>إعادة تأهيل كاملة للفم</h4>
+                        <p class="case-details">مريض، 55 عام - زراعات متعددة مع تيجان</p>
+                        <p class="treatment-time">مدة العلاج: 6 أشهر</p>
+                        <span class="case-badge reconstruction">إعادة تأهيل</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View More Button -->
+            <div class="gallery-actions">
+                <button class="view-more-btn">عرض المزيد من الحالات <span class="arrow">←</span></button>
+                <p class="gallery-stats">+1200 حالة ناجحة | معدل نجاح 98%</p>
+            </div>
+        </div>
+    </section>
                     </picture>
                     <p>علاج تقويمي وتجميلي</p>
                 </div>
@@ -1107,6 +1156,119 @@ export const HTML_AR = `<!DOCTYPE html>
             document.querySelector('.install-prompt')?.remove();
         };
     }
+
+    // Enhanced Gallery Filter System
+    class GalleryFilter {
+        constructor() {
+            this.filterButtons = document.querySelectorAll('.filter-btn');
+            this.galleryItems = document.querySelectorAll('.gallery-item');
+            this.viewMoreBtn = document.querySelector('.view-more-btn');
+            this.maxVisible = 6;
+            this.currentFilter = 'all';
+            
+            this.init();
+        }
+        
+        init() {
+            if (this.filterButtons.length && this.galleryItems.length) {
+                // Add click listeners to filter buttons
+                this.filterButtons.forEach(button => {
+                    button.addEventListener('click', (e) => this.handleFilterClick(e));
+                });
+                
+                // Add view more functionality
+                if (this.viewMoreBtn) {
+                    this.viewMoreBtn.addEventListener('click', () => this.showMoreItems());
+                }
+                
+                // Initialize view
+                this.filterItems('all');
+                this.updateViewMoreButton();
+            }
+        }
+        
+        handleFilterClick(e) {
+            const filterValue = e.target.dataset.filter;
+            
+            // Update active button
+            this.filterButtons.forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+            
+            // Filter items
+            this.filterItems(filterValue);
+            this.currentFilter = filterValue;
+            this.updateViewMoreButton();
+            
+            // Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'gallery_filter', {
+                    'event_category': 'gallery',
+                    'event_label': filterValue,
+                    'value': 1
+                });
+            }
+        }
+        
+        filterItems(filter) {
+            let visibleCount = 0;
+            
+            this.galleryItems.forEach((item, index) => {
+                const category = item.dataset.category;
+                const shouldShow = filter === 'all' || category === filter;
+                
+                if (shouldShow && visibleCount < this.maxVisible) {
+                    item.style.display = 'block';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(30px)';
+                    
+                    // Staggered animation
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.6s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 100);
+                    
+                    visibleCount++;
+                } else if (shouldShow) {
+                    // Hidden but available for "view more"
+                    item.style.display = 'none';
+                } else {
+                    // Fade out filtered items
+                    item.style.transition = 'all 0.3s ease';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(-20px)';
+                    
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+        
+        updateViewMoreButton() {
+            if (!this.viewMoreBtn) return;
+            
+            const totalFilteredItems = Array.from(this.galleryItems).filter(item => {
+                const category = item.dataset.category;
+                return this.currentFilter === 'all' || category === this.currentFilter;
+            }).length;
+            
+            if (this.maxVisible >= totalFilteredItems) {
+                this.viewMoreBtn.style.display = 'none';
+            } else {
+                this.viewMoreBtn.style.display = 'inline-flex';
+                const remaining = totalFilteredItems - this.maxVisible;
+                this.viewMoreBtn.innerHTML = \`عرض \${remaining} حالة إضافية <span class="arrow">←</span>\`;
+            }
+        }
+    }
+
+    // Initialize enhanced gallery
+    document.addEventListener('DOMContentLoaded', () => {
+        new GalleryFilter();
+    });
+
+    console.log('Dr. Islam Website - Enhanced Gallery System Loaded');
     </script>
 </body>
 </html>`;

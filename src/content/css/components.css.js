@@ -125,7 +125,7 @@ export const COMPONENT_CSS = `
     font-style: normal;
 }
 
-/* Gallery */
+/* Enhanced Gallery */
 .gallery {
     padding: 80px 5%;
     background: var(--light);
@@ -135,35 +135,216 @@ export const COMPONENT_CSS = `
     text-align: center;
     color: var(--secondary);
     margin-bottom: 1rem;
+    font-size: 2.5rem;
 }
 
 .gallery-subtitle {
     text-align: center;
     color: var(--text);
     margin-bottom: 3rem;
+    font-size: 1.2rem;
+    opacity: 0.9;
 }
 
-.gallery-grid {
+/* Gallery Filter Tabs */
+.gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: var(--white);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(190, 176, 147, 0.3);
+}
+
+/* Enhanced Gallery Grid */
+.gallery-grid.enhanced {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 3rem;
 }
 
 .gallery-item {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
+    background: var(--white);
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    position: relative;
-    height: 400px;
-    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     transition: all 0.4s ease;
+    position: relative;
 }
 
 .gallery-item:hover {
-    transform: scale(1.03);
+    transform: translateY(-8px);
     box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+/* Case Images Container */
+.case-images {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.case-images img {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    display: inline-block;
+    transition: all 0.4s ease;
+}
+
+.case-images img:first-child {
+    border-right: 2px solid var(--white);
+}
+
+.gallery-item:hover .case-images img {
+    filter: brightness(1.1) contrast(1.05);
+}
+
+/* Before/After Labels */
+.case-images::before,
+.case-images::after {
+    position: absolute;
+    top: 10px;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 15px;
+    z-index: 2;
+}
+
+.case-images::before {
+    content: 'قبل';
+    right: 10px;
+}
+
+.case-images::after {
+    content: 'بعد';
+    left: 10px;
+}
+
+/* Case Information */
+.case-info {
+    padding: 1.5rem;
+    text-align: right;
+    direction: rtl;
+}
+
+.case-info h4 {
+    color: var(--secondary);
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.case-details {
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.treatment-time {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Case Badges */
+.case-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+}
+
+.case-badge.implant {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+}
+
+.case-badge.cosmetic {
+    background: linear-gradient(135deg, #E91E63, #C2185B);
+    color: white;
+}
+
+.case-badge.orthodontic {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+}
+
+.case-badge.reconstruction {
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+    color: white;
+}
+
+/* Gallery Actions */
+.gallery-actions {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.view-more-btn {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.view-more-btn:hover {
+    background: var(--secondary);
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(190, 176, 147, 0.4);
+}
+
+.view-more-btn .arrow {
+    transition: transform 0.3s ease;
+}
+
+.view-more-btn:hover .arrow {
+    transform: translateX(-5px);
+}
+
+.gallery-stats {
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
 }
 
 .before-after-container {
