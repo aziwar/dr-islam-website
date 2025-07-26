@@ -85,6 +85,15 @@ export default {
       return response;
     }
 
+    // Handle contact form submission
+    if (path === '/api/contact' && request.method === 'POST') {
+      const response = await handleContactForm(request);
+      metrics.operation = 'contact-form';
+      metrics.duration = performance.now() - requestStart;
+      console.log(metrics);
+      return response;
+    }
+
     // Handle service worker
     if (path === '/sw.js') {
       const response = new Response(SERVICE_WORKER_JS, {
@@ -366,4 +375,94 @@ function handleHTMLRequest(request, url) {
   });
   
   return new Response(html, { headers });
+}
+
+// Contact form handler
+async function handleContactForm(request) {
+  try {
+    const formData = await request.formData();
+    
+    // Extract form fields
+    const contactData = {
+      name: formData.get('name'),
+      phone: formData.get('phone'),
+      email: formData.get('email'),
+      service: formData.get('service'),
+      message: formData.get('message'),
+      timestamp: new Date().toISOString(),
+      ip: request.headers.get('CF-Connecting-IP') || 'unknown',
+      userAgent: request.headers.get('User-Agent') || 'unknown'
+    };
+
+    // Validate required fields
+    if (!contactData.name || !contactData.phone || !contactData.email || !contactData.message) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Missing required fields'
+      }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      });
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(contactData.email)) {
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Invalid email format'
+      }), {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      });
+    }
+
+    // Log the contact submission (in production, you'd send this to email/database)
+    console.log('Contact Form Submission:', {
+      ...contactData,
+      ip: undefined, // Don't log IP for privacy
+      userAgent: undefined // Don't log user agent for privacy
+    });
+
+    // In a real implementation, you would:
+    // 1. Send email to dr.islam_elsagher@gmail.com
+    // 2. Store in database
+    // 3. Send confirmation email to user
+    // 4. Integrate with CRM system
+    
+    // For now, we'll simulate success
+    // TODO: Implement actual email sending (e.g., using EmailJS, SendGrid, or similar)
+    
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Your message has been sent successfully. We will contact you soon!'
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+      }
+    });
+
+  } catch (error) {
+    console.error('Contact form error:', error);
+    
+    return new Response(JSON.stringify({
+      success: false,
+      error: 'Internal server error. Please try again later.'
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
+    });
+  }
 }

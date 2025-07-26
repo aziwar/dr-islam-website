@@ -348,6 +348,46 @@ export const HTML_EN = `<!DOCTYPE html>
                     </div>
                 </div>
             </div>
+            
+            <div class="contact-form-section">
+                <h3>Send us a Message</h3>
+                <form id="contactForm" class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">Full Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" required>
+                            <label for="phone">Phone Number</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required>
+                        <label for="email">Email Address</label>
+                    </div>
+                    <div class="form-group">
+                        <select id="service" name="service" required>
+                            <option value="">Select Service</option>
+                            <option value="dental-implants">Dental Implants</option>
+                            <option value="cosmetic-dentistry">Cosmetic Dentistry</option>
+                            <option value="general-dentistry">General Dentistry</option>
+                            <option value="emergency">Emergency Treatment</option>
+                            <option value="consultation">Consultation</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <label for="service">Service Needed</label>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                        <label for="message">Message</label>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loading" style="display: none;">Sending...</span>
+                    </button>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -783,24 +823,86 @@ export const HTML_EN = `<!DOCTYPE html>
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
+                // Only handle contact form
+                if (form.id !== 'contactForm') return;
+                
                 const submitBtn = form.querySelector('[type="submit"]');
                 addLoadingState(submitBtn);
                 
-                // Simulate form submission
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                removeLoadingState(submitBtn);
-                
-                // Show success message
-                const successMsg = document.createElement('div');
-                successMsg.className = 'success-message';
-                successMsg.textContent = 'تم الإرسال بنجاح!';
-                form.appendChild(successMsg);
-                
-                // Remove success message after 3 seconds
-                setTimeout(() => {
-                    successMsg.remove();
-                }, 3000);
+                try {
+                    // Prepare form data
+                    const formData = new FormData(form);
+                    
+                    // Send to backend
+                    const response = await fetch('/api/contact', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const result = await response.json();
+                    
+                    removeLoadingState(submitBtn);
+                    
+                    // Remove any existing messages
+                    const existingMsg = form.querySelector('.form-message');
+                    if (existingMsg) existingMsg.remove();
+                    
+                    // Create message element
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'form-message';
+                    
+                    if (result.success) {
+                        messageDiv.classList.add('success');
+                        messageDiv.textContent = result.message || 'Your message has been sent successfully!';
+                        
+                        // Reset form on success
+                        form.reset();
+                        
+                        // Remove has-value classes from inputs
+                        form.querySelectorAll('input, textarea').forEach(input => {
+                            input.classList.remove('has-value');
+                        });
+                        
+                        // Track conversion event
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'form_submit', {
+                                'event_category': 'engagement',
+                                'event_label': 'contact_form'
+                            });
+                        }
+                    } else {
+                        messageDiv.classList.add('error');
+                        messageDiv.textContent = result.error || 'There was an error sending your message. Please try again.';
+                    }
+                    
+                    // Insert message at top of form
+                    form.insertBefore(messageDiv, form.firstChild);
+                    
+                    // Remove message after 5 seconds
+                    setTimeout(() => {
+                        messageDiv.remove();
+                    }, 5000);
+                    
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                    
+                    removeLoadingState(submitBtn);
+                    
+                    // Remove any existing messages
+                    const existingMsg = form.querySelector('.form-message');
+                    if (existingMsg) existingMsg.remove();
+                    
+                    // Show error message
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'form-message error';
+                    errorDiv.textContent = 'Network error. Please check your connection and try again.';
+                    form.insertBefore(errorDiv, form.firstChild);
+                    
+                    // Remove error message after 5 seconds
+                    setTimeout(() => {
+                        errorDiv.remove();
+                    }, 5000);
+                }
             });
         });
     };
