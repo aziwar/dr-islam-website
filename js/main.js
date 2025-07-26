@@ -352,4 +352,222 @@ document.addEventListener('DOMContentLoaded', () => {
     new ScrollAnimations();
 });
 
-console.log('Dr. Islam Website - Enhanced UX Optimized');
+// Enhanced Gallery Filter System
+class GalleryFilter {
+    constructor() {
+        this.filterButtons = document.querySelectorAll('.filter-btn');
+        this.galleryItems = document.querySelectorAll('.gallery-item');
+        this.viewMoreBtn = document.querySelector('.view-more-btn');
+        this.maxVisible = 6;
+        this.currentFilter = 'all';
+        
+        this.init();
+    }
+    
+    init() {
+        if (this.filterButtons.length && this.galleryItems.length) {
+            // Add click listeners to filter buttons
+            this.filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => this.handleFilterClick(e));
+            });
+            
+            // Add view more functionality
+            if (this.viewMoreBtn) {
+                this.viewMoreBtn.addEventListener('click', () => this.showMoreItems());
+            }
+            
+            // Initialize view
+            this.filterItems('all');
+            this.updateViewMoreButton();
+        }
+    }
+    
+    handleFilterClick(e) {
+        const filterValue = e.target.dataset.filter;
+        
+        // Update active button
+        this.filterButtons.forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        
+        // Filter items
+        this.filterItems(filterValue);
+        this.currentFilter = filterValue;
+        this.updateViewMoreButton();
+        
+        // Analytics tracking
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'gallery_filter', {
+                'event_category': 'gallery',
+                'event_label': filterValue,
+                'value': 1
+            });
+        }
+    }
+    
+    filterItems(filter) {
+        let visibleCount = 0;
+        
+        this.galleryItems.forEach((item, index) => {
+            const category = item.dataset.category;
+            const shouldShow = filter === 'all' || category === filter;
+            
+            if (shouldShow && visibleCount < this.maxVisible) {
+                item.style.display = 'block';
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                
+                // Staggered animation
+                setTimeout(() => {
+                    item.style.transition = 'all 0.6s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+                
+                visibleCount++;
+            } else if (shouldShow) {
+                // Hidden but available for "view more"
+                item.style.display = 'none';
+            } else {
+                // Fade out filtered items
+                item.style.transition = 'all 0.3s ease';
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(-20px)';
+                
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 300);
+            }
+        });
+    }
+    
+    showMoreItems() {
+        let visibleCount = 0;
+        let newlyShown = 0;
+        
+        this.galleryItems.forEach((item, index) => {
+            const category = item.dataset.category;
+            const shouldShow = this.currentFilter === 'all' || category === this.currentFilter;
+            
+            if (shouldShow) {
+                if (item.style.display !== 'none') {
+                    visibleCount++;
+                } else if (newlyShown < 3) {
+                    // Show 3 more items
+                    item.style.display = 'block';
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.6s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, newlyShown * 150);
+                    
+                    newlyShown++;
+                    visibleCount++;
+                }
+            }
+        });
+        
+        this.maxVisible = visibleCount;
+        this.updateViewMoreButton();
+        
+        // Analytics tracking
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'gallery_view_more', {
+                'event_category': 'gallery',
+                'event_label': this.currentFilter,
+                'value': newlyShown
+            });
+        }
+    }
+    
+    updateViewMoreButton() {
+        if (!this.viewMoreBtn) return;
+        
+        const totalFilteredItems = Array.from(this.galleryItems).filter(item => {
+            const category = item.dataset.category;
+            return this.currentFilter === 'all' || category === this.currentFilter;
+        }).length;
+        
+        if (this.maxVisible >= totalFilteredItems) {
+            this.viewMoreBtn.style.display = 'none';
+        } else {
+            this.viewMoreBtn.style.display = 'inline-flex';
+            const remaining = totalFilteredItems - this.maxVisible;
+            this.viewMoreBtn.innerHTML = `عرض ${remaining} حالة إضافية <span class="arrow">←</span>`;
+        }
+    }
+}
+
+// Initialize enhanced gallery
+document.addEventListener('DOMContentLoaded', () => {
+    new GalleryFilter();
+});
+
+// Enhanced Case Study Modal (for future implementation)
+class CaseStudyModal {
+    constructor() {
+        this.modal = null;
+        this.createModal();
+        this.bindEvents();
+    }
+    
+    createModal() {
+        // Create modal structure
+        this.modal = document.createElement('div');
+        this.modal.className = 'case-modal';
+        this.modal.innerHTML = `
+            <div class="modal-overlay">
+                <div class="modal-content">
+                    <button class="modal-close">&times;</button>
+                    <div class="modal-body">
+                        <div class="modal-images">
+                            <img class="modal-before" alt="قبل العلاج">
+                            <img class="modal-after" alt="بعد العلاج">
+                        </div>
+                        <div class="modal-info">
+                            <h3 class="modal-title"></h3>
+                            <div class="modal-details"></div>
+                            <div class="modal-timeline"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(this.modal);
+    }
+    
+    bindEvents() {
+        // Close modal events
+        this.modal.querySelector('.modal-close').addEventListener('click', () => this.closeModal());
+        this.modal.querySelector('.modal-overlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) this.closeModal();
+        });
+        
+        // ESC key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+                this.closeModal();
+            }
+        });
+    }
+    
+    openModal(caseData) {
+        // Populate modal with case data
+        this.modal.querySelector('.modal-title').textContent = caseData.title;
+        this.modal.querySelector('.modal-before').src = caseData.beforeImage;
+        this.modal.querySelector('.modal-after').src = caseData.afterImage;
+        
+        // Show modal
+        this.modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    closeModal() {
+        this.modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+console.log('Dr. Islam Website - Enhanced Gallery System Loaded');

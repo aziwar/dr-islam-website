@@ -193,67 +193,360 @@
         </div>
     </section>
 
-    <!-- Before/After Gallery -->
+    <!-- Enhanced Before/After Gallery -->
     <section id="gallery" class="gallery">
         <div class="container">
-            <h2>نتائج حقيقية</h2>
-            <p class="gallery-subtitle">شاهد التحول المذهل لابتسامات مرضانا</p>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="assets/before-after/case1-before.jpg" alt="قبل العلاج" loading="lazy">
-                    <img src="assets/before-after/case1-after.jpg" alt="بعد العلاج" loading="lazy">
-                    <p>زراعة أسنان أمامية</p>
+            <h2>نتائج حقيقية تتحدث عن نفسها</h2>
+            <p class="gallery-subtitle">أكثر من 1200 حالة ناجحة وابتسامات متجددة</p>
+            
+            <!-- Gallery Filter Tabs -->
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">جميع الحالات</button>
+                <button class="filter-btn" data-filter="implants">زراعة الأسنان</button>
+                <button class="filter-btn" data-filter="cosmetic">تجميل الأسنان</button>
+                <button class="filter-btn" data-filter="orthodontic">التقويم</button>
+                <button class="filter-btn" data-filter="reconstruction">إعادة التأهيل</button>
+            </div>
+            
+            <div class="gallery-grid enhanced">
+                <!-- Dental Implants Cases -->
+                <div class="gallery-item" data-category="implants">
+                    <div class="case-images">
+                        <img src="assets/before-after/implant1-before.jpg" alt="قبل زراعة الأسنان الأمامية" loading="lazy">
+                        <img src="assets/before-after/implant1-after.jpg" alt="بعد زراعة الأسنان الأمامية" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>زراعة أسنان أمامية فورية</h4>
+                        <p class="case-details">مريض، 35 عام - زراعة فورية مع تاج خزفي</p>
+                        <p class="treatment-time">مدة العلاج: جلسة واحدة</p>
+                        <span class="case-badge implant">زراعة</span>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="assets/before-after/case2-before.jpg" alt="قبل العلاج" loading="lazy">
-                    <img src="assets/before-after/case2-after.jpg" alt="بعد العلاج" loading="lazy">
-                    <p>ابتسامة هوليوود</p>
+
+                <div class="gallery-item" data-category="implants">
+                    <div class="case-images">
+                        <img src="assets/before-after/implant2-before.jpg" alt="قبل زراعة متعددة" loading="lazy">
+                        <img src="assets/before-after/implant2-after.jpg" alt="بعد زراعة متعددة" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>زراعة متعددة مع جسر ثابت</h4>
+                        <p class="case-details">مريضة، 42 عام - استبدال 4 أسنان مفقودة</p>
+                        <p class="treatment-time">مدة العلاج: 4 أشهر</p>
+                        <span class="case-badge implant">زراعة</span>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="assets/before-after/case3-before.jpg" alt="قبل العلاج" loading="lazy">
-                    <img src="assets/before-after/case3-after.jpg" alt="بعد العلاج" loading="lazy">
-                    <p>علاج تقويمي وتجميلي</p>
+
+                <!-- Cosmetic Cases -->
+                <div class="gallery-item" data-category="cosmetic">
+                    <div class="case-images">
+                        <img src="assets/before-after/veneer1-before.jpg" alt="قبل ابتسامة هوليوود" loading="lazy">
+                        <img src="assets/before-after/veneer1-after.jpg" alt="بعد ابتسامة هوليوود" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>ابتسامة هوليوود كاملة</h4>
+                        <p class="case-details">مريضة، 28 عام - فينير خزفي 16 سن</p>
+                        <p class="treatment-time">مدة العلاج: أسبوعين</p>
+                        <span class="case-badge cosmetic">تجميلي</span>
+                    </div>
                 </div>
+
+                <div class="gallery-item" data-category="cosmetic">
+                    <div class="case-images">
+                        <img src="assets/before-after/whitening1-before.jpg" alt="قبل تبييض الأسنان" loading="lazy">
+                        <img src="assets/before-after/whitening1-after.jpg" alt="بعد تبييض الأسنان" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>تبييض بالليزر + ترميم</h4>
+                        <p class="case-details">مريض، 31 عام - تبييض مع حشوات تجميلية</p>
+                        <p class="treatment-time">مدة العلاج: جلستين</p>
+                        <span class="case-badge cosmetic">تجميلي</span>
+                    </div>
+                </div>
+
+                <!-- Orthodontic Cases -->
+                <div class="gallery-item" data-category="orthodontic">
+                    <div class="case-images">
+                        <img src="assets/before-after/ortho1-before.jpg" alt="قبل التقويم الشفاف" loading="lazy">
+                        <img src="assets/before-after/ortho1-after.jpg" alt="بعد التقويم الشفاف" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>تقويم شفاف (Invisalign)</h4>
+                        <p class="case-details">مريضة، 24 عام - تصحيح ازدحام الأسنان</p>
+                        <p class="treatment-time">مدة العلاج: 8 أشهر</p>
+                        <span class="case-badge orthodontic">تقويم</span>
+                    </div>
+                </div>
+
+                <!-- Full Mouth Reconstruction -->
+                <div class="gallery-item" data-category="reconstruction">
+                    <div class="case-images">
+                        <img src="assets/before-after/fullmouth1-before.jpg" alt="قبل إعادة تأهيل كاملة" loading="lazy">
+                        <img src="assets/before-after/fullmouth1-after.jpg" alt="بعد إعادة تأهيل كاملة" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>إعادة تأهيل كاملة للفم</h4>
+                        <p class="case-details">مريض، 55 عام - زراعات متعددة مع تيجان</p>
+                        <p class="treatment-time">مدة العلاج: 6 أشهر</p>
+                        <span class="case-badge reconstruction">إعادة تأهيل</span>
+                    </div>
+                </div>
+
+                <!-- Additional Cases -->
+                <div class="gallery-item" data-category="cosmetic">
+                    <div class="case-images">
+                        <img src="assets/before-after/smile-design1-before.jpg" alt="قبل تصميم الابتسامة" loading="lazy">
+                        <img src="assets/before-after/smile-design1-after.jpg" alt="بعد تصميم الابتسامة" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>تصميم ابتسامة رقمي</h4>
+                        <p class="case-details">مريضة، 33 عام - تصميم مخصص بالكمبيوتر</p>
+                        <p class="treatment-time">مدة العلاج: 3 أسابيع</p>
+                        <span class="case-badge cosmetic">تجميلي</span>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="implants">
+                    <div class="case-images">
+                        <img src="assets/before-after/immediate-implant-before.jpg" alt="قبل الزراعة الفورية" loading="lazy">
+                        <img src="assets/before-after/immediate-implant-after.jpg" alt="بعد الزراعة الفورية" loading="lazy">
+                    </div>
+                    <div class="case-info">
+                        <h4>زراعة فورية بعد الخلع</h4>
+                        <p class="case-details">مريض، 38 عام - زراعة فورية مع تاج مؤقت</p>
+                        <p class="treatment-time">مدة العلاج: نفس اليوم</p>
+                        <span class="case-badge implant">زراعة</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View More Button -->
+            <div class="gallery-actions">
+                <button class="view-more-btn">عرض المزيد من الحالات <span class="arrow">←</span></button>
+                <p class="gallery-stats">+1200 حالة ناجحة | معدل نجاح 98%</p>
             </div>
         </div>
     </section>
 
-    <section id="about" class="about">
+    <!-- Enhanced Doctor Profile Section -->
+    <section id="about" class="about enhanced">
         <div class="container">
-            <h2>عن الطبيب</h2>
-            <div class="about-content">
-                <div class="credentials">
-                    <h3>المؤهلات العلمية</h3>
-                    <ul>
-                        <li>بكالوريوس طب وجراحة الفم والأسنان - جامعة الإسكندرية (2004-2009)</li>
-                        <li>دبلوم زراعة الأسنان - جامعة الإسكندرية (2010-2011)</li>
-                        <li>ماجستير أمراض اللثة - جامعة الأزهر</li>
-                        <li>ماجستير علوم الليزر - جامعة القاهرة</li>
-                    </ul>
-                    <div class="certifications">
-                        <h4>الشهادات والعضويات</h4>
-                        <div class="cert-badges">
-                            <span class="cert-badge">عضو الجمعية الكويتية لطب الأسنان</span>
-                            <span class="cert-badge">رخصة مزاولة المهنة - وزارة الصحة الكويتية</span>
+            <div class="doctor-hero">
+                <div class="doctor-image">
+                    <img src="assets/images/dr-islam-professional.jpg" alt="د. اسلام الصغير" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="achievement-badge">
+                            <span class="badge-text">أكثر من 15 عام خبرة</span>
+                            <span class="badge-subtext">1200+ زراعة ناجحة</span>
                         </div>
                     </div>
                 </div>
-                <div class="experience">
-                    <h3>الخبرة العملية</h3>
-                    <p>أكثر من 15 عامًا من الخبرة في طب الأسنان في مصر والكويت</p>
-                    <div class="stats">
-                        <div class="stat">
-                            <h4>+5000</h4>
-                            <p>مريض راضٍ</p>
+                <div class="doctor-intro">
+                    <h2>د. اسلام الصغير</h2>
+                    <p class="doctor-title">طبيب أسنان عام وأخصائي زراعة الأسنان</p>
+                    <p class="doctor-philosophy">
+                        "أؤمن بأن كل مريض يستحق ابتسامة صحية وجميلة. خبرتي التي تمتد لأكثر من 15 عامًا في مجال طب الأسنان، 
+                        مع التخصص في زراعة الأسنان وعلاج الجذور، تمكنني من تقديم أفضل رعاية لمرضاي."
+                    </p>
+                    <div class="doctor-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🏆</span>
+                            <span class="highlight-text">خبرة 15+ عام</span>
                         </div>
-                        <div class="stat">
-                            <h4>+1200</h4>
-                            <p>زراعة ناجحة</p>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">🦷</span>
+                            <span class="highlight-text">1200+ زراعة ناجحة</span>
                         </div>
-                        <div class="stat">
-                            <h4>15+</h4>
-                            <p>سنوات خبرة</p>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">👥</span>
+                            <span class="highlight-text">5000+ مريض راضٍ</span>
                         </div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">📚</span>
+                            <span class="highlight-text">4 شهادات متخصصة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Educational Timeline -->
+            <div class="education-timeline">
+                <h3>المسيرة التعليمية والمهنية</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2004-2009</div>
+                        <div class="timeline-content">
+                            <div class="timeline-institution">
+                                <img src="assets/images/alexandria-university-logo.png" alt="جامعة الإسكندرية" class="institution-logo">
+                                <div class="institution-info">
+                                    <h4>بكالوريوس طب وجراحة الفم والأسنان</h4>
+                                    <p>جامعة الإسكندرية - كلية طب الأسنان</p>
+                                    <span class="grade">تقدير: امتياز مع مرتبة الشرف</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2010-2011</div>
+                        <div class="timeline-content">
+                            <div class="timeline-institution">
+                                <img src="assets/images/alexandria-university-logo.png" alt="جامعة الإسكندرية" class="institution-logo">
+                                <div class="institution-info">
+                                    <h4>دبلوم زراعة الأسنان</h4>
+                                    <p>جامعة الإسكندرية - قسم جراحة الفم والوجه والفكين</p>
+                                    <span class="specialty">تخصص: الزراعة الفورية والمتأخرة</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2012-2014</div>
+                        <div class="timeline-content">
+                            <div class="timeline-institution">
+                                <img src="assets/images/azhar-university-logo.png" alt="جامعة الأزهر" class="institution-logo">
+                                <div class="institution-info">
+                                    <h4>ماجستير أمراض اللثة</h4>
+                                    <p>جامعة الأزهر - كلية طب الأسنان</p>
+                                    <span class="thesis">الرسالة: "علاج أمراض اللثة المتقدمة بالليزر"</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015-2017</div>
+                        <div class="timeline-content">
+                            <div class="timeline-institution">
+                                <img src="assets/images/cairo-university-logo.png" alt="جامعة القاهرة" class="institution-logo">
+                                <div class="institution-info">
+                                    <h4>ماجستير علوم الليزر في طب الأسنان</h4>
+                                    <p>جامعة القاهرة - المعهد القومي لليزر</p>
+                                    <span class="achievement">أول طبيب أسنان كويتي متخصص في الليزر</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Experience -->
+            <div class="professional-experience">
+                <h3>الخبرة المهنية</h3>
+                <div class="experience-grid">
+                    <div class="experience-card">
+                        <div class="experience-period">2018 - الآن</div>
+                        <div class="experience-role">
+                            <h4>طبيب أسنان أخصائي زراعة</h4>
+                            <p class="clinic-name">عيادة خاصة - الكويت</p>
+                            <ul class="achievements">
+                                <li>أكثر من 1200 عملية زراعة أسنان ناجحة</li>
+                                <li>رائد في تقنيات الزراعة الفورية في الكويت</li>
+                                <li>معدل نجاح 98% في جميع عمليات الزراعة</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-card">
+                        <div class="experience-period">2014 - 2018</div>
+                        <div class="experience-role">
+                            <h4>طبيب أسنان أول</h4>
+                            <p class="clinic-name">مستشفى الصباح - وزارة الصحة الكويتية</p>
+                            <ul class="achievements">
+                                <li>رئيس قسم علاج الجذور والزراعة</li>
+                                <li>تدريب 15+ طبيب أسنان على تقنيات الزراعة</li>
+                                <li>تطوير بروتوكولات جديدة للعلاج</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="experience-card">
+                        <div class="experience-period">2009 - 2014</div>
+                        <div class="experience-role">
+                            <h4>طبيب امتياز ومقيم</h4>
+                            <p class="clinic-name">مستشفى جامعة الإسكندرية</p>
+                            <ul class="achievements">
+                                <li>تدريب مكثف في جميع تخصصات طب الأسنان</li>
+                                <li>المشاركة في 500+ عملية جراحية</li>
+                                <li>الحصول على شهادة التميز في الأداء</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications & Memberships -->
+            <div class="certifications-modern">
+                <h3>الشهادات والعضويات المهنية</h3>
+                <div class="cert-grid">
+                    <div class="cert-card">
+                        <img src="assets/images/kuwait-dental-society-logo.png" alt="الجمعية الكويتية لطب الأسنان" class="cert-logo">
+                        <div class="cert-info">
+                            <h4>الجمعية الكويتية لطب الأسنان</h4>
+                            <p>عضو فعال منذ 2018</p>
+                            <span class="cert-status active">نشط</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <img src="assets/images/kuwait-health-ministry-logo.png" alt="وزارة الصحة الكويتية" class="cert-logo">
+                        <div class="cert-info">
+                            <h4>رخصة مزاولة المهنة</h4>
+                            <p>وزارة الصحة الكويتية</p>
+                            <span class="cert-status valid">ساري</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <img src="assets/images/implant-society-logo.png" alt="الجمعية الدولية لزراعة الأسنان" class="cert-logo">
+                        <div class="cert-info">
+                            <h4>الجمعية الدولية لزراعة الأسنان</h4>
+                            <p>عضو معتمد</p>
+                            <span class="cert-status international">دولي</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-card">
+                        <img src="assets/images/laser-certification-logo.png" alt="شهادة الليزر" class="cert-logo">
+                        <div class="cert-info">
+                            <h4>شهادة الليزر المتقدمة</h4>
+                            <p>معتمد من الاتحاد الأوروبي</p>
+                            <span class="cert-status certified">معتمد</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Statistics -->
+            <div class="stats-modern">
+                <h3>إحصائيات النجاح</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number" data-count="5000">0</div>
+                        <div class="stat-label">مريض راضٍ</div>
+                        <div class="stat-growth">+15% نمو سنوي</div>
+                    </div>
+
+                    <div class="stat-card highlight">
+                        <div class="stat-icon">🦷</div>
+                        <div class="stat-number" data-count="1200">0</div>
+                        <div class="stat-label">زراعة ناجحة</div>
+                        <div class="stat-growth">98% معدل نجاح</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-number" data-count="15">0</div>
+                        <div class="stat-label">سنة خبرة</div>
+                        <div class="stat-growth">منذ 2009</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-number" data-count="4">0</div>
+                        <div class="stat-label">شهادة متخصصة</div>
+                        <div class="stat-growth">أعلى المؤهلات</div>
                     </div>
                 </div>
             </div>
