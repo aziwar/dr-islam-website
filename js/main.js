@@ -1,3 +1,66 @@
+// Mobile Navigation functionality
+class MobileNavigation {
+    constructor() {
+        this.toggle = document.querySelector('.mobile-menu-toggle');
+        this.menu = document.querySelector('.nav-menu');
+        this.overlay = document.querySelector('.nav-overlay');
+        this.menuLinks = document.querySelectorAll('.nav-menu a');
+        this.isOpen = false;
+        
+        this.init();
+    }
+    
+    init() {
+        if (this.toggle && this.menu) {
+            this.toggle.addEventListener('click', () => this.toggleMenu());
+            this.overlay?.addEventListener('click', () => this.closeMenu());
+            
+            // Close menu when clicking navigation links
+            this.menuLinks.forEach(link => {
+                link.addEventListener('click', () => this.closeMenu());
+            });
+            
+            // Close menu on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && this.isOpen) {
+                    this.closeMenu();
+                }
+            });
+        }
+    }
+    
+    toggleMenu() {
+        this.isOpen ? this.closeMenu() : this.openMenu();
+    }
+    
+    openMenu() {
+        this.isOpen = true;
+        this.toggle.setAttribute('aria-expanded', 'true');
+        this.toggle.setAttribute('aria-label', 'إغلاق القائمة الرئيسية');
+        this.menu.classList.add('active');
+        this.overlay?.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Focus management
+        const firstLink = this.menu.querySelector('a');
+        firstLink?.focus();
+    }
+    
+    closeMenu() {
+        this.isOpen = false;
+        this.toggle.setAttribute('aria-expanded', 'false');
+        this.toggle.setAttribute('aria-label', 'فتح القائمة الرئيسية');
+        this.menu.classList.remove('active');
+        this.overlay?.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Initialize mobile navigation
+document.addEventListener('DOMContentLoaded', () => {
+    new MobileNavigation();
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -44,23 +107,78 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Lazy loading for images
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src || img.src;
-                img.classList.add('loaded');
-                observer.unobserve(img);
+// Enhanced Lazy loading for images with loading states
+class ImageLoader {
+    constructor() {
+        this.observer = null;
+        this.init();
+    }
+    
+    init() {
+        if ('IntersectionObserver' in window) {
+            this.observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        this.loadImage(entry.target);
+                        this.observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px', // Start loading 50px before visible
+                threshold: 0.1
+            });
+            
+            this.observeImages();
+        }
+    }
+    
+    loadImage(img) {
+        const parentItem = img.closest('.gallery-item');
+        
+        // Show loading state
+        if (parentItem) {
+            parentItem.classList.add('loading');
+        }
+        
+        // Create a new image to preload
+        const imageLoader = new Image();
+        
+        imageLoader.onload = () => {
+            // Image loaded successfully
+            img.src = imageLoader.src;
+            img.classList.add('loaded');
+            
+            if (parentItem) {
+                parentItem.classList.remove('loading');
+                parentItem.classList.add('loaded');
             }
+        };
+        
+        imageLoader.onerror = () => {
+            // Handle image load error
+            img.alt = 'فشل في تحميل الصورة';
+            if (parentItem) {
+                parentItem.classList.remove('loading');
+                parentItem.classList.add('error');
+            }
+        };
+        
+        // Start loading
+        imageLoader.src = img.dataset.src || img.src;
+    }
+    
+    observeImages() {
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        images.forEach(img => {
+            this.observer.observe(img);
         });
-    });
-
-    document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-        imageObserver.observe(img);
-    });
+    }
 }
+
+// Initialize image loader
+document.addEventListener('DOMContentLoaded', () => {
+    new ImageLoader();
+});
 
 // Performance: Debounce scroll events
 let scrollTimeout;
@@ -80,16 +198,107 @@ window.addEventListener('scroll', function() {
     });
 });
 
-// Analytics: Track WhatsApp clicks
-document.querySelectorAll('a[href^="https://wa.me"]').forEach(link => {
-    link.addEventListener('click', function() {
+// Enhanced Booking Flow with Analytics and UX
+class BookingFlow {
+    constructor() {
+        this.bookingButtons = document.querySelectorAll('a[href^="https://wa.me"], .cta-button, .sticky-book');
+        this.init();
+    }
+    
+    init() {
+        this.bookingButtons.forEach(button => {
+            button.addEventListener('click', (e) => this.handleBookingClick(e, button));
+        });
+    }
+    
+    handleBookingClick(e, button) {
+        // Add loading state
+        button.classList.add('loading');
+        
+        // Show user feedback
+        this.showBookingFeedback(button);
+        
+        // Track analytics
+        this.trackBookingIntent(button);
+        
+        // Remove loading state after short delay for UX
+        setTimeout(() => {
+            button.classList.remove('loading');
+        }, 800);
+    }
+    
+    showBookingFeedback(button) {
+        // Create success message
+        const message = document.createElement('div');
+        message.className = 'booking-feedback';
+        message.innerHTML = `
+            <div class="feedback-content">
+                <span class="feedback-icon">✓</span>
+                <span class="feedback-text">سيتم توجيهك لـ WhatsApp...</span>
+            </div>
+        `;
+        
+        // Position near button
+        message.style.cssText = `
+            position: fixed;
+            bottom: 180px;
+            right: 30px;
+            background: var(--success);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            direction: rtl;
+        `;
+        
+        document.body.appendChild(message);
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            message.style.opacity = '1';
+            message.style.transform = 'translateY(0)';
+        });
+        
+        // Remove after delay
+        setTimeout(() => {
+            message.style.opacity = '0';
+            message.style.transform = 'translateY(-20px)';
+            setTimeout(() => message.remove(), 300);
+        }, 2500);
+    }
+    
+    trackBookingIntent(button) {
+        // Enhanced analytics tracking
+        const buttonType = button.classList.contains('sticky-book') ? 'sticky_button' :
+                          button.classList.contains('cta-button') ? 'hero_cta' : 'whatsapp_link';
+        
         if (typeof gtag !== 'undefined') {
-            gtag('event', 'contact', {
-                'event_category': 'engagement',
-                'event_label': 'whatsapp_click'
+            gtag('event', 'book_appointment_click', {
+                'event_category': 'booking',
+                'event_label': buttonType,
+                'value': 1
             });
         }
-    });
+        
+        // Custom analytics (if needed)
+        if (typeof dataLayer !== 'undefined') {
+            dataLayer.push({
+                'event': 'booking_intent',
+                'booking_type': buttonType,
+                'timestamp': new Date().toISOString()
+            });
+        }
+    }
+}
+
+// Initialize booking flow
+document.addEventListener('DOMContentLoaded', () => {
+    new BookingFlow();
 });
 
 // Emergency banner auto-hide after 10 seconds
@@ -101,4 +310,46 @@ setTimeout(() => {
     }
 }, 10000);
 
-console.log('Dr. Islam Website - Conversion Optimized');
+// Scroll-triggered animations
+class ScrollAnimations {
+    constructor() {
+        this.observer = null;
+        this.init();
+    }
+    
+    init() {
+        if ('IntersectionObserver' in window) {
+            this.observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            this.observeElements();
+        }
+    }
+    
+    observeElements() {
+        const animatedElements = document.querySelectorAll(
+            '.service-card, .testimonial-card, .gallery-item, .faq-item, .about-content, .contact-card'
+        );
+        
+        animatedElements.forEach((el, index) => {
+            el.classList.add('fade-in');
+            el.style.transitionDelay = `${index * 0.1}s`; // Staggered animation
+            this.observer.observe(el);
+        });
+    }
+}
+
+// Initialize scroll animations
+document.addEventListener('DOMContentLoaded', () => {
+    new ScrollAnimations();
+});
+
+console.log('Dr. Islam Website - Enhanced UX Optimized');

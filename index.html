@@ -82,7 +82,7 @@
     </div>
 
     <header>
-        <nav>
+        <nav role="navigation" aria-label="التنقل الرئيسي">
             <div class="logo">
                 <!-- Temporary text logo until PNG uploaded -->
                 <div class="logo-text">
@@ -90,16 +90,31 @@
                     <span class="logo-arabic">د. اسلام الصغير</span>
                 </div>
             </div>
-            <ul>
-                <li><a href="#services">الخدمات</a></li>
-                <li><a href="#about">عن الطبيب</a></li>
-                <li><a href="#testimonials">آراء المرضى</a></li>
-                <li><a href="#gallery">قبل وبعد</a></li>
-                <li><a href="#faq">أسئلة شائعة</a></li>
-                <li><a href="#contact">اتصل بنا</a></li>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" 
+                    aria-expanded="false" 
+                    aria-controls="mobile-menu"
+                    aria-label="فتح القائمة الرئيسية">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Navigation Menu -->
+            <ul id="mobile-menu" class="nav-menu" role="menubar">
+                <li role="none"><a href="#services" role="menuitem">الخدمات</a></li>
+                <li role="none"><a href="#about" role="menuitem">عن الطبيب</a></li>
+                <li role="none"><a href="#testimonials" role="menuitem">آراء المرضى</a></li>
+                <li role="none"><a href="#gallery" role="menuitem">قبل وبعد</a></li>
+                <li role="none"><a href="#faq" role="menuitem">أسئلة شائعة</a></li>
+                <li role="none"><a href="#contact" role="menuitem">اتصل بنا</a></li>
             </ul>
         </nav>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="nav-overlay" id="nav-overlay"></div>
 
     <section class="hero">
         <div class="container">
