@@ -80,14 +80,8 @@ export const HTML_AR = `<!DOCTYPE html>
     }
     </script>
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    <!-- Google Analytics - Placeholder removed for privacy -->
+    <!-- TODO: Add actual GA4 tracking ID when client provides credentials -->
 </head>
 <body>
     <!-- Emergency Banner -->
@@ -100,13 +94,9 @@ export const HTML_AR = `<!DOCTYPE html>
             <div class="logo">
                 <picture>
                     <source srcset="/assets/images/logo-main.webp" type="image/webp">
-                    <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
-                    <picture>
-                    <source srcset="/assets/images/logo-main.webp" type="image/webp">
                     <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.webp" type="image/webp">
                     <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
                     <img src="/assets/images/logo-main.png" alt="دكتور اسلام الصغير - Dr. Islam Elsagher" class="logo-img" loading="eager">
-                </picture>
                 </picture>
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -318,19 +308,27 @@ export const HTML_AR = `<!DOCTYPE html>
             <div class="faq-list">
                 <div class="faq-item">
                     <h3>كم تكلفة زراعة الأسنان؟ <span class="faq-icon">+</span></h3>
-                    <p>تختلف التكلفة حسب الحالة ونوع الزرعة المستخدمة. نقدم استشارة مجانية لتقييم حالتك وتقديم خطة علاج مفصلة مع التكلفة.</p>
+                    <div class="faq-content">
+                        <p>تختلف التكلفة حسب الحالة ونوع الزرعة المستخدمة. نقدم استشارة مجانية لتقييم حالتك وتقديم خطة علاج مفصلة مع التكلفة.</p>
+                    </div>
                 </div>
                 <div class="faq-item">
                     <h3>هل الزراعة مؤلمة؟ <span class="faq-icon">+</span></h3>
-                    <p>نستخدم أحدث تقنيات التخدير الموضعي لضمان راحتك التامة. معظم المرضى يصفون العملية بأنها أقل ألماً من خلع الأسنان العادي.</p>
+                    <div class="faq-content">
+                        <p>نستخدم أحدث تقنيات التخدير الموضعي لضمان راحتك التامة. معظم المرضى يصفون العملية بأنها أقل ألماً من خلع الأسنان العادي.</p>
+                    </div>
                 </div>
                 <div class="faq-item">
                     <h3>ما هي مدة العلاج؟ <span class="faq-icon">+</span></h3>
-                    <p>تعتمد مدة العلاج على الحالة. الزراعة الفورية يمكن إتمامها في جلسة واحدة، بينما الزراعة التقليدية تحتاج 3-6 أشهر للاندماج الكامل.</p>
+                    <div class="faq-content">
+                        <p>تعتمد مدة العلاج على الحالة. الزراعة الفورية يمكن إتمامها في جلسة واحدة، بينما الزراعة التقليدية تحتاج 3-6 أشهر للاندماج الكامل.</p>
+                    </div>
                 </div>
                 <div class="faq-item">
                     <h3>هل تقبلون التأمين الصحي؟ <span class="faq-icon">+</span></h3>
-                    <p>نتعامل مع معظم شركات التأمين الصحي في الكويت. يرجى التواصل معنا للتأكد من قبول تأمينك الصحي.</p>
+                    <div class="faq-content">
+                        <p>نتعامل مع معظم شركات التأمين الصحي في الكويت. يرجى التواصل معنا للتأكد من قبول تأمينك الصحي.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -452,22 +450,12 @@ export const HTML_AR = `<!DOCTYPE html>
     document.addEventListener('DOMContentLoaded', function() {
         const faqItems = document.querySelectorAll('.faq-item');
         
+        // FAQ functionality  
         faqItems.forEach(item => {
             const question = item.querySelector('h3');
-            const answer = item.querySelector('p');
-            
-            question.style.cursor = 'pointer';
-            answer.style.maxHeight = '200px';
-            answer.style.overflow = 'hidden';
-            answer.style.transition = 'max-height 0.3s ease';
             
             question.addEventListener('click', function() {
                 item.classList.toggle('active');
-                if (item.classList.contains('active')) {
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                } else {
-                    answer.style.maxHeight = '200px';
-                }
             });
         });
     });

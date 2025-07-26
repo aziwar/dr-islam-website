@@ -5,7 +5,7 @@
   "scripts": {
     "start": "powershell -ExecutionPolicy Bypass -File quick-start.ps1",
     "dev": "wrangler dev --local",
-    "test:mobile": "node tests/mobile-test.js",
+    "test:mobile": "node tests/mobile-specific-test.js",
     "lint:css": "stylelint src/content/styles.js --fix",
     "deploy:staging": "wrangler deploy --env staging",
     "deploy:prod": "powershell -ExecutionPolicy Bypass -File deploy.ps1",
@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "playwright": "^1.45.0",
+    "postcss-lit": "^1.2.0",
     "stylelint": "^16.0.0",
     "stylelint-config-standard": "^36.0.0",
     "wrangler": "^4.25.0"

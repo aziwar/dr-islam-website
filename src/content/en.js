@@ -60,14 +60,8 @@ export const HTML_EN = `<!DOCTYPE html>
     }
     </script>
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    <!-- Google Analytics - Placeholder removed for privacy -->
+    <!-- TODO: Add actual GA4 tracking ID when client provides credentials -->
 </head>
 <body>
     <!-- Emergency Banner -->
@@ -79,13 +73,10 @@ export const HTML_EN = `<!DOCTYPE html>
         <nav>
             <div class="logo">
                 <picture>
-                    <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
-                    <picture>
                     <source srcset="/assets/images/logo-main.webp" type="image/webp">
                     <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.webp" type="image/webp">
                     <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
                     <img src="/assets/images/logo-main.png" alt="دكتور اسلام الصغير - Dr. Islam Elsagher" class="logo-img" loading="eager">
-                </picture>
                 </picture>
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -297,19 +288,27 @@ export const HTML_EN = `<!DOCTYPE html>
             <div class="faq-list">
                 <div class="faq-item">
                     <h3>How much does dental implant cost? <span class="faq-icon">+</span></h3>
-                    <p>The cost varies depending on the case and type of implant used. We offer free consultation to evaluate your case and provide a detailed treatment plan with costs.</p>
+                    <div class="faq-content">
+                        <p>The cost varies depending on the case and type of implant used. We offer free consultation to evaluate your case and provide a detailed treatment plan with costs.</p>
+                    </div>
                 </div>
                 <div class="faq-item">
                     <h3>Is the implant procedure painful? <span class="faq-icon">+</span></h3>
-                    <p>We use the latest local anesthesia techniques to ensure your complete comfort. Most patients describe the procedure as less painful than a regular tooth extraction.</p>
+                    <div class="faq-content">
+                        <p>We use the latest local anesthesia techniques to ensure your complete comfort. Most patients describe the procedure as less painful than a regular tooth extraction.</p>
+                    </div>
                 </div>
                 <div class="faq-item">
                     <h3>How long does the treatment take? <span class="faq-icon">+</span></h3>
-                    <p>Treatment duration depends on the case. Immediate implants can be completed in one session, while traditional implants need 3-6 months for complete integration.</p>
+                    <div class="faq-content">
+                        <p>Treatment duration depends on the case. Immediate implants can be completed in one session, while traditional implants need 3-6 months for complete integration.</p>
+                    </div>
                 </div>
                 <div class="faq-item">
                     <h3>Do you accept health insurance? <span class="faq-icon">+</span></h3>
-                    <p>We work with most health insurance companies in Kuwait. Please contact us to confirm if your health insurance is accepted.</p>
+                    <div class="faq-content">
+                        <p>We work with most health insurance companies in Kuwait. Please contact us to confirm if your health insurance is accepted.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -421,22 +420,12 @@ export const HTML_EN = `<!DOCTYPE html>
     document.addEventListener('DOMContentLoaded', function() {
         const faqItems = document.querySelectorAll('.faq-item');
         
+        // FAQ functionality  
         faqItems.forEach(item => {
             const question = item.querySelector('h3');
-            const answer = item.querySelector('p');
-            
-            question.style.cursor = 'pointer';
-            answer.style.maxHeight = '200px';
-            answer.style.overflow = 'hidden';
-            answer.style.transition = 'max-height 0.3s ease';
             
             question.addEventListener('click', function() {
                 item.classList.toggle('active');
-                if (item.classList.contains('active')) {
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                } else {
-                    answer.style.maxHeight = '200px';
-                }
             });
         });
     });

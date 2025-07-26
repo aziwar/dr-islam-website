@@ -1,0 +1,255 @@
+{
+  "deviceTests": [
+    {
+      "device": "iPhone 12",
+      "tests": [
+        {
+          "name": "Viewport configured",
+          "passed": true,
+          "details": "390x664"
+        },
+        {
+          "name": "Mobile menu toggle visible",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Menu initially closed",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Menu opens on click",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Toggle shows active state",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Navigation links present",
+          "passed": true,
+          "details": "Found 7 links"
+        },
+        {
+          "name": "Link 1 has valid href",
+          "passed": true,
+          "details": "href=\"#services\""
+        },
+        {
+          "name": "Link 2 has valid href",
+          "passed": true,
+          "details": "href=\"#about\""
+        },
+        {
+          "name": "Link 3 has valid href",
+          "passed": true,
+          "details": "href=\"#testimonials\""
+        },
+        {
+          "name": "Menu closes on outside click",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Logo image loads correctly",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Text readable on mobile",
+          "passed": true,
+          "details": "Font size: 16px"
+        },
+        {
+          "name": "Touch targets adequate size",
+          "passed": true,
+          "details": "4 of 5 tested"
+        }
+      ],
+      "passed": 13,
+      "failed": 0
+    },
+    {
+      "device": "iPhone 12 Pro",
+      "tests": [
+        {
+          "name": "Viewport configured",
+          "passed": true,
+          "details": "390x664"
+        },
+        {
+          "name": "Mobile menu toggle visible",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Menu initially closed",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Menu opens on click",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Toggle shows active state",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Navigation links present",
+          "passed": true,
+          "details": "Found 7 links"
+        },
+        {
+          "name": "Link 1 has valid href",
+          "passed": true,
+          "details": "href=\"#services\""
+        },
+        {
+          "name": "Link 2 has valid href",
+          "passed": true,
+          "details": "href=\"#about\""
+        },
+        {
+          "name": "Link 3 has valid href",
+          "passed": true,
+          "details": "href=\"#testimonials\""
+        },
+        {
+          "name": "Menu closes on outside click",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Logo image loads correctly",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Text readable on mobile",
+          "passed": true,
+          "details": "Font size: 16px"
+        },
+        {
+          "name": "Touch targets adequate size",
+          "passed": true,
+          "details": "4 of 5 tested"
+        }
+      ],
+      "passed": 13,
+      "failed": 0
+    },
+    {
+      "device": "Galaxy S9+",
+      "tests": [
+        {
+          "name": "Viewport configured",
+          "passed": true,
+          "details": "320x658"
+        },
+        {
+          "name": "Mobile menu toggle visible",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Menu initially closed",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Menu opens on click",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Toggle shows active state",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Navigation links present",
+          "passed": true,
+          "details": "Found 7 links"
+        },
+        {
+          "name": "Link 1 has valid href",
+          "passed": true,
+          "details": "href=\"#services\""
+        },
+        {
+          "name": "Link 2 has valid href",
+          "passed": true,
+          "details": "href=\"#about\""
+        },
+        {
+          "name": "Link 3 has valid href",
+          "passed": true,
+          "details": "href=\"#testimonials\""
+        },
+        {
+          "name": "Menu closes on outside click",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Logo image loads correctly",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Text readable on mobile",
+          "passed": true,
+          "details": "Font size: 16px"
+        },
+        {
+          "name": "Touch targets adequate size",
+          "passed": true,
+          "details": "4 of 5 tested"
+        }
+      ],
+      "passed": 13,
+      "failed": 0
+    },
+    {
+      "device": "iPad",
+      "tests": [
+        {
+          "name": "Viewport configured",
+          "passed": true,
+          "details": "1280x720"
+        },
+        {
+          "name": "Mobile menu toggle visible",
+          "passed": false,
+          "details": ""
+        },
+        {
+          "name": "Logo image loads correctly",
+          "passed": true,
+          "details": ""
+        },
+        {
+          "name": "Text readable on mobile",
+          "passed": true,
+          "details": "Font size: 16px"
+        },
+        {
+          "name": "Touch targets adequate size",
+          "passed": false,
+          "details": "0 of 5 tested"
+        }
+      ],
+      "passed": 3,
+      "failed": 2
+    }
+  ],
+  "overallPassed": 42,
+  "overallFailed": 2,
+  "timestamp": "2025-07-26T13:33:44.911Z"
+}
