@@ -18,9 +18,12 @@ export const RESPONSIVE_CSS = `
         display: none !important;
     }
     
-    /* Mobile Navigation */
+    /* Mobile Navigation - Enhanced with defensive styles */
     .mobile-menu-toggle {
-        display: block;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
     }
     
     nav {
@@ -45,6 +48,8 @@ export const RESPONSIVE_CSS = `
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     /* Mobile Menu Backdrop */
