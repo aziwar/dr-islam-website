@@ -527,8 +527,32 @@ export const HTML_EN = `<!DOCTYPE html>
         });
     });
 
+    // Navigation visibility fix - ensures menu displays correctly
+    function ensureNavigationVisibility() {
+        const desktopNav = document.querySelector('nav > ul');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const viewport = window.innerWidth;
+        
+        if (desktopNav && mobileToggle) {
+            if (viewport >= 1025) {
+                // Desktop: show nav, hide toggle
+                desktopNav.style.setProperty('display', 'flex', 'important');
+                desktopNav.style.setProperty('visibility', 'visible', 'important');
+                desktopNav.style.setProperty('opacity', '1', 'important');
+                mobileToggle.style.setProperty('display', 'none', 'important');
+            } else {
+                // Mobile/tablet: hide nav, show toggle
+                desktopNav.style.setProperty('display', 'none', 'important');
+                mobileToggle.style.setProperty('display', 'flex', 'important');
+            }
+        }
+    }
+
     // FAQ Accordion
     document.addEventListener('DOMContentLoaded', function() {
+        // Fix navigation visibility on page load
+        ensureNavigationVisibility();
+        
         const faqItems = document.querySelectorAll('.faq-item');
         
         // FAQ functionality  
@@ -540,6 +564,9 @@ export const HTML_EN = `<!DOCTYPE html>
             });
         });
     });
+    
+    // Fix navigation on window resize
+    window.addEventListener('resize', ensureNavigationVisibility);
 
     // Header shadow on scroll
     let scrollTimeout;

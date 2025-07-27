@@ -535,13 +535,40 @@ export const HTML_AR = `<!DOCTYPE html>
     </button>
 
     <script>
-    // Ensure menu starts closed
+    // Navigation visibility fix - ensures menu displays correctly
+    function ensureNavigationVisibility() {
+        const desktopNav = document.querySelector('nav > ul');
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        const viewport = window.innerWidth;
+        
+        if (desktopNav && mobileToggle) {
+            if (viewport >= 1025) {
+                // Desktop: show nav, hide toggle
+                desktopNav.style.setProperty('display', 'flex', 'important');
+                desktopNav.style.setProperty('visibility', 'visible', 'important');
+                desktopNav.style.setProperty('opacity', '1', 'important');
+                mobileToggle.style.setProperty('display', 'none', 'important');
+            } else {
+                // Mobile/tablet: hide nav, show toggle
+                desktopNav.style.setProperty('display', 'none', 'important');
+                mobileToggle.style.setProperty('display', 'flex', 'important');
+            }
+        }
+    }
+
+    // Ensure menu starts closed and navigation is fixed
     document.addEventListener('DOMContentLoaded', function() {
         const menu = document.getElementById('mobileMenu');
         const toggle = document.querySelector('.mobile-menu-toggle');
         if (menu) menu.classList.remove('active');
         if (toggle) toggle.classList.remove('active');
+        
+        // Fix navigation visibility on page load
+        ensureNavigationVisibility();
     });
+    
+    // Fix navigation on window resize
+    window.addEventListener('resize', ensureNavigationVisibility);
 
     // Mobile Menu Toggle
     function toggleMobileMenu() {
