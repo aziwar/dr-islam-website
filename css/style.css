@@ -1,5 +1,6 @@
-/* Brand Colors */
+/* Enhanced CSS Custom Properties for better maintainability */
 :root {
+    /* Brand Colors */
     --primary: #BEB093;
     --secondary: #777669;
     --white: #FFFFFF;
@@ -7,6 +8,38 @@
     --text: #333333;
     --emergency: #dc3545;
     --success: #28a745;
+    
+    /* Animation Durations */
+    --animation-fast: 200ms;
+    --animation-normal: 300ms;
+    --animation-slow: 600ms;
+    
+    /* Spacing Scale */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    
+    /* Typography Scale */
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+    --font-size-4xl: 2.5rem;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 5px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+    --shadow-lg: 0 8px 25px rgba(0,0,0,0.2);
+    
+    /* Border Radius */
+    --radius-sm: 5px;
+    --radius-md: 10px;
+    --radius-lg: 15px;
+    --radius-full: 50px;
 }
 
 /* Reset */
@@ -101,10 +134,10 @@ h1, h2, h3 {
     margin-bottom: 1rem;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.5rem; }
-h4 { font-size: 1.2rem; font-weight: 600; }
+h1 { font-size: var(--font-size-4xl); }
+h2 { font-size: var(--font-size-3xl); }
+h3 { font-size: var(--font-size-2xl); }
+h4 { font-size: var(--font-size-xl); font-weight: 600; }
 
 /* Emergency Banner */
 .emergency-banner {
@@ -946,6 +979,49 @@ footer {
 /* Performance Optimizations */
 img {
     loading: lazy;
+}
+
+/* Improved GPU acceleration for animations */
+.service-card,
+.testimonial-card,
+.gallery-item,
+.cta-button,
+.sticky-book {
+    will-change: transform;
+    transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Reduce paint and layout thrashing */
+.fade-in {
+    will-change: opacity, transform;
+}
+
+.fade-in.visible {
+    will-change: auto; /* Remove will-change after animation */
+}
+
+/* Optimize text rendering */
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .hero {
+        animation: none;
+    }
+    
+    .sticky-book {
+        animation: none;
+    }
 }
 
 /* Loading States */

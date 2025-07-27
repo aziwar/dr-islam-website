@@ -5,18 +5,40 @@ import { CSS } from './content/styles.js';
 import { SERVICE_WORKER_JS } from './content/sw.js';
 import { OFFLINE_HTML } from './content/offline.js';
 
+// Constants for better maintainability
+const CACHE_PROFILES = {
+  STATIC: 'public, max-age=31536000, immutable',
+  CSS: 'public, max-age=300, s-maxage=3600, must-revalidate',
+  HTML: 'public, max-age=3600, s-maxage=86400',
+  API: 'no-cache, no-store, must-revalidate',
+  MANIFEST: 'public, max-age=86400, s-maxage=86400',
+  SW: 'public, max-age=3600, s-maxage=3600'
+};
+
+const CONTENT_TYPES = {
+  HTML: 'text/html; charset=utf-8',
+  CSS: 'text/css',
+  JS: 'application/javascript',
+  JSON: 'application/json',
+  MANIFEST: 'application/manifest+json',
+  XML: 'application/xml',
+  PLAIN: 'text/plain'
+};
+
 export default {
   async fetch(request, env, ctx) {
-    // Start performance monitoring
-    const requestStart = performance.now();
-    const metrics = {
-      url: request.url,
-      method: request.method,
-      timestamp: new Date().toISOString()
-    };
-    
-    const url = new URL(request.url);
-    const path = url.pathname;
+    try {
+      // Start performance monitoring
+      const requestStart = performance.now();
+      const metrics = {
+        url: request.url,
+        method: request.method,
+        timestamp: new Date().toISOString(),
+        userAgent: request.headers.get('User-Agent') || 'unknown'
+      };
+      
+      const url = new URL(request.url);
+      const path = url.pathname;
     
     // Dynamic versioning for cache busting
     const BUILD_DATE = new Date().toISOString().split('T')[0];
@@ -73,8 +95,8 @@ export default {
       
       const response = new Response(manifestContent, {
         headers: {
-          'Content-Type': 'application/manifest+json',
-          'Cache-Control': 'public, max-age=86400, s-maxage=86400'
+          'Content-Type': CONTENT_TYPES.MANIFEST,
+          'Cache-Control': CACHE_PROFILES.MANIFEST
         }
       });
       
@@ -98,8 +120,8 @@ export default {
     if (path === '/sw.js') {
       const response = new Response(SERVICE_WORKER_JS, {
         headers: {
-          'Content-Type': 'application/javascript',
-          'Cache-Control': 'public, max-age=3600, s-maxage=3600'
+          'Content-Type': CONTENT_TYPES.JS,
+          'Cache-Control': CACHE_PROFILES.SW
         }
       });
       metrics.operation = 'service-worker';
@@ -112,8 +134,8 @@ export default {
     if (path === '/offline.html') {
       const response = new Response(OFFLINE_HTML, {
         headers: {
-          'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'public, max-age=86400, s-maxage=86400'
+          'Content-Type': CONTENT_TYPES.HTML,
+          'Cache-Control': CACHE_PROFILES.HTML
         }
       });
       metrics.operation = 'offline-page';
@@ -126,8 +148,8 @@ export default {
     if (path === '/styles.css' || path === '/css/style.css') {
       const response = new Response(CSS, {
         headers: {
-          'Content-Type': 'text/css',
-          'Cache-Control': 'public, max-age=300, s-maxage=3600, must-revalidate',
+          'Content-Type': CONTENT_TYPES.CSS,
+          'Cache-Control': CACHE_PROFILES.CSS,
           'ETag': `"${CSS_VERSION}"`
         }
       });
@@ -146,12 +168,25 @@ export default {
       return response;
     }
 
-    // Route handling
-    const response = await handleHTMLRequest(request, url);
-    metrics.operation = 'html';
-    metrics.totalDuration = performance.now() - requestStart;
-    console.log(metrics);
-    return response;
+      // Route handling
+      const response = await handleHTMLRequest(request, url);
+      metrics.operation = 'html';
+      metrics.totalDuration = performance.now() - requestStart;
+      console.log(metrics);
+      return response;
+      
+    } catch (error) {
+      // Global error handler
+      console.error('Worker error:', error);
+      
+      return new Response('Internal Server Error', {
+        status: 500,
+        headers: {
+          'Content-Type': CONTENT_TYPES.PLAIN,
+          'Cache-Control': CACHE_PROFILES.API
+        }
+      });
+    }
   }
 };
 
@@ -311,17 +346,7 @@ function getContentType(path) {
 
 // Standardized cache control headers helper
 function getCacheHeaders(type = 'default') {
-  const cacheProfiles = {
-    'static': 'public, max-age=31536000, immutable', // 1 year for static assets
-    'css': 'public, max-age=300, s-maxage=3600, must-revalidate', // 5 min client, 1 hour CDN
-    'html': 'public, max-age=3600, s-maxage=86400', // 1 hour client, 24 hours CDN
-    'api': 'no-cache, no-store, must-revalidate', // No caching for API
-    'manifest': 'public, max-age=86400, s-maxage=86400', // 24 hours
-    'sw': 'public, max-age=3600, s-maxage=3600', // 1 hour for service worker updates
-    'default': 'public, max-age=86400, s-maxage=86400' // 24 hours default
-  };
-  
-  return cacheProfiles[type] || cacheProfiles.default;
+  return CACHE_PROFILES[type.toUpperCase()] || CACHE_PROFILES.HTML;
 }
 
 // HTML request handler with enhanced security headers
