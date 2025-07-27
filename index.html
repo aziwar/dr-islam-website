@@ -76,9 +76,14 @@
     </script>
 </head>
 <body>
+    <!-- Skip Links for Keyboard Navigation -->
+    <a href="#main-content" class="skip-link">انتقل إلى المحتوى الرئيسي</a>
+    <a href="#nav-menu" class="skip-link">انتقل إلى القائمة الرئيسية</a>
+    <a href="#contact" class="skip-link">انتقل إلى معلومات الاتصال</a>
+
     <!-- Emergency Banner -->
-    <div class="emergency-banner">
-        <p>حالات طوارئ الأسنان؟ اتصل الآن: <a href="tel:+96598563711">98563711</a></p>
+    <div class="emergency-banner" role="banner" aria-label="إعلان طوارئ الأسنان">
+        <p>حالات طوارئ الأسنان؟ اتصل الآن: <a href="tel:+96598563711" aria-label="الاتصال برقم الطوارئ 98563711">98563711</a></p>
     </div>
 
     <header>
@@ -132,62 +137,68 @@
     <section id="services" class="services">
         <div class="container">
             <h2>خدماتنا</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>زراعة الأسنان</h3>
-                    <p>زراعة فورية ومتأخرة بأحدث التقنيات</p>
+            <div class="services-grid" role="list" aria-label="قائمة الخدمات المتاحة">
+                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-1-title" aria-describedby="service-1-desc">
+                    <h3 id="service-1-title">زراعة الأسنان</h3>
+                    <p id="service-1-desc">زراعة فورية ومتأخرة بأحدث التقنيات</p>
                 </div>
-                <div class="service-card">
-                    <h3>علاج الجذور</h3>
-                    <p>علاج متخصص لقنوات الجذور</p>
+                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-2-title" aria-describedby="service-2-desc">
+                    <h3 id="service-2-title">علاج الجذور</h3>
+                    <p id="service-2-desc">علاج متخصص لقنوات الجذور</p>
                 </div>
-                <div class="service-card">
-                    <h3>التركيبات</h3>
-                    <p>تركيبات ثابتة ومتحركة</p>
+                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-3-title" aria-describedby="service-3-desc">
+                    <h3 id="service-3-title">التركيبات</h3>
+                    <p id="service-3-desc">تركيبات ثابتة ومتحركة</p>
                 </div>
-                <div class="service-card">
-                    <h3>جراحة الأسنان</h3>
-                    <p>خلع جراحي وعمليات متقدمة</p>
+                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-4-title" aria-describedby="service-4-desc">
+                    <h3 id="service-4-title">جراحة الأسنان</h3>
+                    <p id="service-4-desc">خلع جراحي وعمليات متقدمة</p>
                 </div>
-                <div class="service-card">
-                    <h3>تجميل الأسنان</h3>
-                    <p>ابتسامة هوليوود وتبييض</p>
+                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-5-title" aria-describedby="service-5-desc">
+                    <h3 id="service-5-title">تجميل الأسنان</h3>
+                    <p id="service-5-desc">ابتسامة هوليوود وتبييض</p>
                 </div>
-                <div class="service-card">
-                    <h3>علاج اللثة</h3>
-                    <p>علاج أمراض اللثة والأنسجة</p>
+                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-6-title" aria-describedby="service-6-desc">
+                    <h3 id="service-6-title">علاج اللثة</h3>
+                    <p id="service-6-desc">علاج أمراض اللثة والأنسجة</p>
                 </div>
-                <div class="service-card">
-                    <h3>الحشوات التجميلية</h3>
-                    <p>حشوات بلون الأسنان الطبيعي</p>
+                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-7-title" aria-describedby="service-7-desc">
+                    <h3 id="service-7-title">الحشوات التجميلية</h3>
+                    <p id="service-7-desc">حشوات بلون الأسنان الطبيعي</p>
                 </div>
-                <div class="service-card">
-                    <h3>إعادة التأهيل الكامل</h3>
-                    <p>علاج شامل للفم والأسنان</p>
+                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-8-title" aria-describedby="service-8-desc">
+                    <h3 id="service-8-title">إعادة التأهيل الكامل</h3>
+                    <p id="service-8-desc">علاج شامل للفم والأسنان</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials">
+    <section id="testimonials" class="testimonials" aria-labelledby="testimonials-heading" role="region">
         <div class="container">
-            <h2>ماذا يقول مرضانا</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"خدمة ممتازة وطبيب محترف جداً. الدكتور اسلام شرح لي كل خطوة في العلاج وكانت النتيجة رائعة"</p>
-                    <cite>- أحمد السالم</cite>
+            <h2 id="testimonials-heading">ماذا يقول مرضانا</h2>
+            <div class="testimonial-grid" role="list" aria-label="آراء وتجارب المرضى">
+                <div class="testimonial-card" role="listitem" tabindex="0">
+                    <div class="stars" aria-label="تقييم 5 نجوم من 5">⭐⭐⭐⭐⭐</div>
+                    <blockquote>
+                        <p>"خدمة ممتازة وطبيب محترف جداً. الدكتور اسلام شرح لي كل خطوة في العلاج وكانت النتيجة رائعة"</p>
+                        <cite>- أحمد السالم</cite>
+                    </blockquote>
                 </div>
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"أفضل تجربة زراعة أسنان. الدكتور متمكن جداً وفريق العمل متعاون. أنصح الجميع بزيارة العيادة"</p>
-                    <cite>- فاطمة العلي</cite>
+                <div class="testimonial-card" role="listitem" tabindex="0">
+                    <div class="stars" aria-label="تقييم 5 نجوم من 5">⭐⭐⭐⭐⭐</div>
+                    <blockquote>
+                        <p>"أفضل تجربة زراعة أسنان. الدكتور متمكن جداً وفريق العمل متعاون. أنصح الجميع بزيارة العيادة"</p>
+                        <cite>- فاطمة العلي</cite>
+                    </blockquote>
                 </div>
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"علاج احترافي ونتائج مبهرة. الدكتور اسلام حول ابتسامتي تماماً. شكراً جزيلاً"</p>
-                    <cite>- محمد الخالد</cite>
+                <div class="testimonial-card" role="listitem" tabindex="0">
+                    <div class="stars" aria-label="تقييم 5 نجوم من 5">⭐⭐⭐⭐⭐</div>
+                    <blockquote>
+                        <p>"علاج احترافي ونتائج مبهرة. الدكتور اسلام حول ابتسامتي تماماً. شكراً جزيلاً"</p>
+                        <cite>- محمد الخالد</cite>
+                    </blockquote>
                 </div>
             </div>
         </div>
@@ -210,16 +221,16 @@
             
             <div class="gallery-grid enhanced">
                 <!-- Dental Implants Cases -->
-                <div class="gallery-item" data-category="implants">
+                <div class="gallery-item" data-category="implants" role="article" tabindex="0" aria-labelledby="case-1-title" aria-describedby="case-1-details">
                     <div class="case-images">
-                        <img src="assets/webp-optimized/case1-before.webp" alt="قبل زراعة الأسنان الأمامية" loading="lazy">
-                        <img src="assets/webp-optimized/case1-after.webp" alt="بعد زراعة الأسنان الأمامية" loading="lazy">
+                        <img src="assets/webp-optimized/case1-before.webp" alt="قبل زراعة الأسنان الأمامية" loading="lazy" role="img">
+                        <img src="assets/webp-optimized/case1-after.webp" alt="بعد زراعة الأسنان الأمامية" loading="lazy" role="img">
                     </div>
                     <div class="case-info">
-                        <h4>زراعة أسنان أمامية فورية</h4>
-                        <p class="case-details">مريض، 35 عام - زراعة فورية مع تاج خزفي</p>
+                        <h4 id="case-1-title">زراعة أسنان أمامية فورية</h4>
+                        <p class="case-details" id="case-1-details">مريض، 35 عام - زراعة فورية مع تاج خزفي</p>
                         <p class="treatment-time">مدة العلاج: جلسة واحدة</p>
-                        <span class="case-badge implant">زراعة</span>
+                        <span class="case-badge implant" aria-label="نوع العلاج: زراعة">زراعة</span>
                     </div>
                 </div>
 
@@ -321,8 +332,8 @@
 
             <!-- View More Button -->
             <div class="gallery-actions">
-                <button class="view-more-btn">عرض المزيد من الحالات <span class="arrow">←</span></button>
-                <p class="gallery-stats">+1200 حالة ناجحة | معدل نجاح 98%</p>
+                <button class="view-more-btn" aria-label="عرض المزيد من حالات العلاج" aria-describedby="gallery-stats">عرض المزيد من الحالات <span class="arrow" aria-hidden="true">←</span></button>
+                <p class="gallery-stats" id="gallery-stats">+1200 حالة ناجحة | معدل نجاح 98%</p>
             </div>
         </div>
     </section>
@@ -372,7 +383,7 @@
             <div class="education-timeline">
                 <h3>المسيرة التعليمية والمهنية</h3>
                 <div class="timeline">
-                    <div class="timeline-item">
+                    <div class="timeline-item" role="listitem" tabindex="0">
                         <div class="timeline-year">2004-2009</div>
                         <div class="timeline-content">
                             <div class="timeline-institution">
@@ -386,7 +397,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-item">
+                    <div class="timeline-item" role="listitem" tabindex="0">
                         <div class="timeline-year">2010-2011</div>
                         <div class="timeline-content">
                             <div class="timeline-institution">
@@ -400,7 +411,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-item">
+                    <div class="timeline-item" role="listitem" tabindex="0">
                         <div class="timeline-year">2012-2014</div>
                         <div class="timeline-content">
                             <div class="timeline-institution">
@@ -414,7 +425,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-item">
+                    <div class="timeline-item" role="listitem" tabindex="0">
                         <div class="timeline-year">2015-2017</div>
                         <div class="timeline-content">
                             <div class="timeline-institution">
@@ -581,26 +592,96 @@
     <section id="contact" class="contact">
         <div class="container">
             <h2>اتصل بنا</h2>
-            <div class="contact-info">
-                <div class="contact-card">
-                    <h3>الهاتف</h3>
-                    <p><a href="tel:+96598563711">98563711</a></p>
+            <div class="contact-wrapper">
+                <div class="contact-info" role="list" aria-label="معلومات التواصل">
+                    <div class="contact-card" role="listitem" tabindex="0">
+                        <h3>الهاتف</h3>
+                        <p><a href="tel:+96598563711" aria-label="الاتصال برقم 98563711">98563711</a></p>
+                    </div>
+                    <div class="contact-card" role="listitem" tabindex="0">
+                        <h3>البريد الإلكتروني</h3>
+                        <p><a href="mailto:dr.islam_elsagher@gmail.com" aria-label="إرسال بريد إلكتروني إلى الدكتور">dr.islam_elsagher@gmail.com</a></p>
+                    </div>
+                    <div class="contact-card" role="listitem" tabindex="0">
+                        <h3>Instagram</h3>
+                        <p><a href="https://www.instagram.com/dr.islamelsagher/" target="_blank" rel="noopener noreferrer" aria-label="زيارة حساب الإنستغرام - يفتح في نافذة جديدة">@dr.islamelsagher</a></p>
+                    </div>
+                    <div class="contact-card" role="listitem" tabindex="0">
+                        <h3>WhatsApp</h3>
+                        <p><a href="https://wa.me/96598563711" aria-label="إرسال رسالة واتساب إلى 98563711">98563711</a></p>
+                    </div>
                 </div>
-                <div class="contact-card">
-                    <h3>البريد الإلكتروني</h3>
-                    <p><a href="mailto:dr.islam_elsagher@gmail.com">dr.islam_elsagher@gmail.com</a></p>
-                </div>
-                <div class="contact-card">
-                    <h3>Instagram</h3>
-                    <p><a href="https://www.instagram.com/dr.islamelsagher/" target="_blank">@dr.islamelsagher</a></p>
-                </div>
-                <div class="contact-card">
-                    <h3>WhatsApp</h3>
-                    <p><a href="https://wa.me/96598563711">98563711</a></p>
+                
+                <div class="contact-form-section" role="region" aria-labelledby="form-heading">
+                    <h3 id="form-heading">أرسل لنا رسالة</h3>
+                    <form id="contactForm" class="contact-form" action="/api/contact" method="POST" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" required aria-describedby="name-error">
+                                <label for="name">الاسم الكامل <span class="required" aria-label="مطلوب">*</span></label>
+                                <div class="error-message" id="name-error" role="alert" aria-live="polite"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="phone" name="phone" required aria-describedby="phone-error phone-hint">
+                                <label for="phone">رقم الهاتف <span class="required" aria-label="مطلوب">*</span></label>
+                                <div class="field-hint" id="phone-hint">مثال: 98563711 أو +96598563711</div>
+                                <div class="error-message" id="phone-error" role="alert" aria-live="polite"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" required aria-describedby="email-error email-hint">
+                                <label for="email">البريد الإلكتروني <span class="required" aria-label="مطلوب">*</span></label>
+                                <div class="field-hint" id="email-hint">مثال: patient@example.com</div>
+                                <div class="error-message" id="email-error" role="alert" aria-live="polite"></div>
+                            </div>
+                            <div class="form-group">
+                                <select id="service" name="service" required aria-describedby="service-error">
+                                    <option value="">اختر نوع الخدمة</option>
+                                    <option value="implants">زراعة الأسنان</option>
+                                    <option value="cosmetic">تجميل الأسنان</option>
+                                    <option value="orthodontic">التقويم</option>
+                                    <option value="endodontic">علاج الجذور</option>
+                                    <option value="surgery">جراحة الأسنان</option>
+                                    <option value="general">فحص عام</option>
+                                    <option value="emergency">حالة طوارئ</option>
+                                    <option value="consultation">استشارة</option>
+                                </select>
+                                <label for="service">نوع الخدمة <span class="required" aria-label="مطلوب">*</span></label>
+                                <div class="error-message" id="service-error" role="alert" aria-live="polite"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="4" maxlength="1000" aria-describedby="message-hint message-count"></textarea>
+                            <label for="message">رسالتك (اختياري)</label>
+                            <div class="field-hint" id="message-hint">اكتب تفاصيل إضافية عن حالتك أو أسئلتك</div>
+                            <div class="character-count" id="message-count" aria-live="polite">0/1000</div>
+                        </div>
+                        
+                        <button type="submit" id="submitBtn" class="submit-btn" aria-describedby="submit-hint">
+                            <span class="btn-text">إرسال الرسالة</span>
+                            <span class="btn-loading" style="display: none;">
+                                <span class="loading-spinner"></span>
+                                جاري الإرسال...
+                            </span>
+                        </button>
+                        <div class="field-hint" id="submit-hint">سنرد عليك في أقرب وقت ممكن</div>
+                        
+                        <div class="form-message" id="formMessage" style="display: none;" role="alert" aria-live="assertive">
+                            <div class="message-icon"></div>
+                            <div class="message-content">
+                                <div class="message-title"></div>
+                                <div class="message-description"></div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="working-hours">
-                <h3>ساعات العمل</h3>
+            
+            <div class="working-hours" role="region" aria-labelledby="hours-heading">
+                <h3 id="hours-heading">ساعات العمل</h3>
                 <div class="hours-grid">
                     <div class="day-hours">
                         <span class="day">السبت - الخميس:</span>
@@ -614,14 +695,15 @@
             </div>
         </div>
     </section>
+    </main>
 
-    <footer>
+    <footer role="contentinfo">
         <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
     </footer>
 
     <!-- Sticky WhatsApp Booking Button -->
-    <a href="https://wa.me/96598563711" class="sticky-book">
-        احجز موعد 💬
+    <a href="https://wa.me/96598563711" class="sticky-book" aria-label="احجز موعدك عبر الواتساب" role="button">
+        <span aria-hidden="true">💬</span> احجز موعد
     </a>
 
     <script src="js/main.js"></script>

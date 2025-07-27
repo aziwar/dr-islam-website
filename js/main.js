@@ -180,13 +180,279 @@ class MobileNavigation {
     }
 }
 
+// Accessibility and Keyboard Navigation Enhancement
+class AccessibilityManager {
+    constructor() {
+        this.focusableSelectors = [
+            'a[href]',
+            'button:not([disabled])',
+            'input:not([disabled])',
+            'select:not([disabled])',
+            'textarea:not([disabled])',
+            '[tabindex]:not([tabindex="-1"])',
+            '.service-card',
+            '.testimonial-card',
+            '.gallery-item',
+            '.contact-card',
+            '.timeline-item'
+        ].join(',');
+        
+        this.init();
+    }
+    
+    init() {
+        this.setupKeyboardNavigation();
+        this.setupFocusManagement();
+        this.setupArrowKeyNavigation();
+        this.announcePageLoad();
+    }
+    
+    setupKeyboardNavigation() {
+        // Global keyboard navigation handler
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'Tab':
+                    this.handleTabNavigation(e);
+                    break;
+                case 'Escape':
+                    this.handleEscape(e);
+                    break;
+                case 'ArrowUp':
+                case 'ArrowDown':
+                case 'ArrowLeft':
+                case 'ArrowRight':
+                    this.handleArrowNavigation(e);
+                    break;
+                case 'Enter':
+                case ' ':
+                    this.handleActivation(e);
+                    break;
+            }
+        });
+    }
+    
+    setupFocusManagement() {
+        // Improve focus management for cards
+        const focusableCards = document.querySelectorAll('.service-card, .testimonial-card, .gallery-item, .contact-card, .timeline-item');
+        
+        focusableCards.forEach(card => {
+            // Add proper focus and blur handling
+            card.addEventListener('focus', () => {
+                card.setAttribute('aria-describedby', this.generateCardDescription(card));
+            });
+            
+            card.addEventListener('blur', () => {
+                card.removeAttribute('aria-describedby');
+            });
+        });
+    }
+    
+    setupArrowKeyNavigation() {
+        // Arrow key navigation for card grids
+        const grids = [
+            { container: '.services-grid', items: '.service-card' },
+            { container: '.testimonial-grid', items: '.testimonial-card' },
+            { container: '.gallery-grid', items: '.gallery-item' },
+            { container: '.contact-info', items: '.contact-card' }
+        ];
+        
+        grids.forEach(grid => {
+            const container = document.querySelector(grid.container);
+            if (container) {
+                this.setupGridNavigation(container, grid.items);
+            }
+        });
+    }
+    
+    setupGridNavigation(container, itemSelector) {
+        const items = container.querySelectorAll(itemSelector);
+        
+        items.forEach((item, index) => {
+            item.addEventListener('keydown', (e) => {
+                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                    e.preventDefault();
+                    this.navigateGrid(items, index, e.key);
+                }
+            });
+        });
+    }
+    
+    navigateGrid(items, currentIndex, key) {
+        let newIndex = currentIndex;
+        const itemsPerRow = this.calculateItemsPerRow(items[0]);
+        
+        switch(key) {
+            case 'ArrowRight':
+                newIndex = (currentIndex + 1) % items.length;
+                break;
+            case 'ArrowLeft':
+                newIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
+                break;
+            case 'ArrowDown':
+                newIndex = Math.min(currentIndex + itemsPerRow, items.length - 1);
+                break;
+            case 'ArrowUp':
+                newIndex = Math.max(currentIndex - itemsPerRow, 0);
+                break;
+        }
+        
+        if (items[newIndex]) {
+            items[newIndex].focus();
+        }
+    }
+    
+    calculateItemsPerRow(item) {
+        const container = item.parentElement;
+        const containerWidth = container.offsetWidth;
+        const itemWidth = item.offsetWidth;
+        const gap = parseInt(getComputedStyle(container).gap) || 20;
+        
+        return Math.floor((containerWidth + gap) / (itemWidth + gap));
+    }
+    
+    handleTabNavigation(e) {
+        // Enhanced tab navigation with focus trapping
+        const activeElement = document.activeElement;
+        const modal = activeElement.closest('.nav-menu.active');
+        
+        if (modal) {
+            this.trapFocusInModal(e, modal);
+        }
+    }
+    
+    trapFocusInModal(e, modal) {
+        const focusableElements = modal.querySelectorAll(this.focusableSelectors);
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (e.shiftKey && document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+        }
+    }
+    
+    handleEscape(e) {
+        // Close any open modals or dropdowns
+        const activeModal = document.querySelector('.nav-menu.active');
+        if (activeModal) {
+            const mobileNav = window.mobileNavigation;
+            if (mobileNav) {
+                mobileNav.closeMenu();
+            }
+        }
+    }
+    
+    handleArrowNavigation(e) {
+        // Handle arrow navigation for specific components
+        const activeElement = document.activeElement;
+        
+        // Gallery filter navigation
+        if (activeElement.classList.contains('filter-btn')) {
+            this.navigateTablist(e, '.gallery-filters .filter-btn');
+        }
+    }
+    
+    navigateTablist(e, selector) {
+        const tabs = document.querySelectorAll(selector);
+        const currentIndex = Array.from(tabs).indexOf(document.activeElement);
+        let newIndex;
+        
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            newIndex = (currentIndex + 1) % tabs.length;
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            newIndex = currentIndex === 0 ? tabs.length - 1 : currentIndex - 1;
+        }
+        
+        if (newIndex !== undefined && tabs[newIndex]) {
+            e.preventDefault();
+            tabs[newIndex].focus();
+            tabs[newIndex].click();
+        }
+    }
+    
+    handleActivation(e) {
+        // Handle Enter and Space key activation
+        const activeElement = document.activeElement;
+        
+        if (activeElement.classList.contains('service-card') ||
+            activeElement.classList.contains('testimonial-card') ||
+            activeElement.classList.contains('gallery-item') ||
+            activeElement.classList.contains('contact-card')) {
+            
+            e.preventDefault();
+            this.activateCard(activeElement);
+        }
+    }
+    
+    activateCard(card) {
+        // Simulate click behavior for cards
+        const link = card.querySelector('a');
+        if (link) {
+            link.click();
+        } else {
+            // Announce card content
+            this.announceCardContent(card);
+        }
+    }
+    
+    announceCardContent(card) {
+        const title = card.querySelector('h3, h4')?.textContent;
+        const content = card.querySelector('p')?.textContent;
+        
+        if (title && content) {
+            this.announceToScreenReader(`${title}. ${content}`);
+        }
+    }
+    
+    generateCardDescription(card) {
+        // Generate helpful descriptions for screen readers
+        if (card.classList.contains('service-card')) {
+            return 'اضغط Enter للحصول على مزيد من المعلومات حول هذه الخدمة';
+        } else if (card.classList.contains('testimonial-card')) {
+            return 'تجربة مريض - اضغط Enter لقراءة التفاصيل';
+        } else if (card.classList.contains('gallery-item')) {
+            return 'حالة علاج - اضغط Enter لعرض التفاصيل';
+        } else if (card.classList.contains('contact-card')) {
+            return 'معلومات التواصل - اضغط Enter للاتصال';
+        }
+        return 'عنصر تفاعلي - اضغط Enter للتفاعل';
+    }
+    
+    announceToScreenReader(message) {
+        // Create a live region announcement
+        const announcement = document.createElement('div');
+        announcement.setAttribute('aria-live', 'polite');
+        announcement.setAttribute('aria-atomic', 'true');
+        announcement.className = 'sr-only';
+        announcement.textContent = message;
+        
+        document.body.appendChild(announcement);
+        
+        setTimeout(() => {
+            document.body.removeChild(announcement);
+        }, 1000);
+    }
+    
+    announcePageLoad() {
+        // Announce page load completion
+        setTimeout(() => {
+            this.announceToScreenReader('تم تحميل الصفحة بالكامل. يمكنك التنقل باستخدام Tab أو الأسهم');
+        }, 1000);
+    }
+}
+
 // Initialize mobile navigation and enhanced UX components
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize core components
-    new MobileNavigation();
+    const mobileNav = new MobileNavigation();
+    window.mobileNavigation = mobileNav; // Make globally accessible
     new EmergencyBanner();
     new FAQAccordion();
     new BookingFlow(); // Move here to ensure proper initialization
+    new AccessibilityManager(); // Initialize accessibility features
     
     // Setup cleanup on page unload
     window.addEventListener('beforeunload', () => {
@@ -984,8 +1250,33 @@ class ContactFormHandler {
         fields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
             if (field) {
-                field.addEventListener('blur', () => this.validateField(fieldId));
-                field.addEventListener('input', () => this.clearFieldError(fieldId));
+                // Real-time validation on blur
+                field.addEventListener('blur', () => {
+                    this.validateField(fieldId);
+                });
+                
+                // Clear errors and provide immediate feedback on input
+                field.addEventListener('input', () => {
+                    this.clearFieldError(fieldId);
+                    
+                    // Provide immediate validation for some fields
+                    if (fieldId === 'email' && field.value.includes('@')) {
+                        setTimeout(() => this.validateField(fieldId), 500);
+                    }
+                    
+                    if (fieldId === 'phone' && field.value.length >= 8) {
+                        setTimeout(() => this.validateField(fieldId), 500);
+                    }
+                });
+                
+                // Add success state on valid input
+                field.addEventListener('input', () => {
+                    if (field.value.trim() && !field.classList.contains('error')) {
+                        field.classList.add('success');
+                    } else {
+                        field.classList.remove('success');
+                    }
+                });
             }
         });
     }
@@ -999,12 +1290,24 @@ class ContactFormHandler {
                 const length = messageField.value.length;
                 counter.textContent = `${length}/1000`;
                 
-                if (length > 900) {
-                    counter.style.color = '#e53e3e';
+                // Update counter color based on usage
+                if (length > 950) {
+                    counter.style.color = 'var(--emergency)';
+                    counter.style.fontWeight = '600';
                 } else if (length > 800) {
                     counter.style.color = '#ed8936';
+                    counter.style.fontWeight = '600';
                 } else {
-                    counter.style.color = '#718096';
+                    counter.style.color = 'var(--secondary)';
+                    counter.style.fontWeight = '400';
+                }
+                
+                // Add warning if close to limit
+                if (length > 950) {
+                    messageField.style.borderColor = 'var(--emergency)';
+                    counter.textContent = `${length}/1000 - اقترب من الحد الأقصى`;
+                } else {
+                    messageField.style.borderColor = length > 0 ? 'var(--primary)' : '#e2e2e2';
                 }
             });
         }
@@ -1075,35 +1378,20 @@ class ContactFormHandler {
     
     validateAllFields() {
         let isValid = true;
+        const fields = ['name', 'email', 'phone', 'service'];
         
-        // Validate name
-        const name = document.getElementById('name').value.trim();
-        if (name.length < 2) {
-            this.showFieldError('name', 'الاسم يجب أن يكون على الأقل حرفين');
-            isValid = false;
-        }
+        // Validate all required fields
+        fields.forEach(fieldId => {
+            const fieldValid = this.validateField(fieldId);
+            if (!fieldValid) {
+                isValid = false;
+            }
+        });
         
-        // Validate email
-        const email = document.getElementById('email').value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            this.showFieldError('email', 'البريد الإلكتروني غير صحيح');
-            isValid = false;
-        }
-        
-        // Validate phone
-        const phone = document.getElementById('phone').value.trim();
-        const phoneRegex = /^(\+965|965)?[2456789]\d{7}$/;
-        const cleanPhone = phone.replace(/[\s-]/g, '');
-        if (!phoneRegex.test(cleanPhone)) {
-            this.showFieldError('phone', 'رقم الهاتف غير صحيح (مثال: 98563711)');
-            isValid = false;
-        }
-        
-        // Validate service
-        const service = document.getElementById('service').value;
-        if (!service) {
-            this.showFieldError('service', 'يرجى اختيار نوع الخدمة');
+        // Validate message length if provided
+        const messageField = document.getElementById('message');
+        if (messageField && messageField.value.length > 1000) {
+            this.showFieldError('message', 'الرسالة طويلة جداً (الحد الأقصى 1000 حرف)');
             isValid = false;
         }
         
@@ -1217,13 +1505,37 @@ class ContactFormHandler {
     handleSuccess(result) {
         // Reset form
         this.form.reset();
-        document.getElementById('message-count').textContent = '0/1000';
+        
+        // Clear all field states
+        const fields = ['name', 'email', 'phone', 'service'];
+        fields.forEach(fieldId => {
+            this.clearFieldError(fieldId);
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.classList.remove('success', 'error');
+                field.setAttribute('aria-invalid', 'false');
+            }
+        });
+        
+        // Reset character counter
+        const counter = document.getElementById('message-count');
+        if (counter) {
+            counter.textContent = '0/1000';
+            counter.style.color = 'var(--secondary)';
+            counter.style.fontWeight = '400';
+        }
+        
+        // Reset message field border
+        const messageField = document.getElementById('message');
+        if (messageField) {
+            messageField.style.borderColor = '#e2e2e2';
+        }
         
         // Show success message
         this.showMessage(
             'success',
             '✅ تم إرسال طلبك بنجاح!',
-            `شكراً لتواصلك معنا. سنرد عليك قريباً. رقم المرجع: ${result.reference || ''}`
+            `شكراً لتواصلك معنا. سنرد عليك قريباً في أقرب وقت ممكن. ${result.reference ? 'رقم المرجع: ' + result.reference : ''}`
         );
         
         // Track success analytics
@@ -1239,6 +1551,9 @@ class ContactFormHandler {
         setTimeout(() => {
             this.hideMessage();
         }, 10000);
+        
+        // Scroll to top of form to show success message
+        this.form.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     
     handleError(result) {
