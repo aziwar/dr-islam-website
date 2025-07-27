@@ -34,25 +34,23 @@ class MobileUXController {
     
     // 1. Create tabbed navigation for content sections
     createMobileTabs() {
-        const tabsHTML = \`
-            <div class="mobile-content-tabs" role="tablist" aria-label="Content sections">
-                <button class="mobile-tab active" data-section="hero" role="tab" aria-selected="true" aria-controls="hero-section">
-                    <span class="ar">معلومات</span><span class="en">Info</span>
-                </button>
-                <button class="mobile-tab" data-section="services" role="tab" aria-selected="false" aria-controls="services-section">
-                    <span class="ar">خدمات</span><span class="en">Services</span>
-                </button>
-                <button class="mobile-tab" data-section="about" role="tab" aria-selected="false" aria-controls="about-section">
-                    <span class="ar">عنا</span><span class="en">About</span>
-                </button>
-                <button class="mobile-tab" data-section="gallery" role="tab" aria-selected="false" aria-controls="gallery-section">
-                    <span class="ar">معرض</span><span class="en">Gallery</span>
-                </button>
-                <button class="mobile-tab" data-section="contact" role="tab" aria-selected="false" aria-controls="contact-section">
-                    <span class="ar">اتصال</span><span class="en">Contact</span>
-                </button>
-            </div>
-        \`;
+        const tabsHTML = '<div class="mobile-content-tabs" role="tablist" aria-label="Content sections">' +
+            '<button class="mobile-tab active" data-section="hero" role="tab" aria-selected="true" aria-controls="hero-section">' +
+                '<span class="ar">معلومات</span><span class="en">Info</span>' +
+            '</button>' +
+            '<button class="mobile-tab" data-section="services" role="tab" aria-selected="false" aria-controls="services-section">' +
+                '<span class="ar">خدمات</span><span class="en">Services</span>' +
+            '</button>' +
+            '<button class="mobile-tab" data-section="about" role="tab" aria-selected="false" aria-controls="about-section">' +
+                '<span class="ar">عنا</span><span class="en">About</span>' +
+            '</button>' +
+            '<button class="mobile-tab" data-section="gallery" role="tab" aria-selected="false" aria-controls="gallery-section">' +
+                '<span class="ar">معرض</span><span class="en">Gallery</span>' +
+            '</button>' +
+            '<button class="mobile-tab" data-section="contact" role="tab" aria-selected="false" aria-controls="contact-section">' +
+                '<span class="ar">اتصال</span><span class="en">Contact</span>' +
+            '</button>' +
+        '</div>';
         
         const header = document.querySelector('header');
         if (header) {
@@ -62,30 +60,26 @@ class MobileUXController {
     
     // 2. Create floating navigation
     createFloatingNav() {
-        const floatingNavHTML = \`
-            <div class="floating-nav" role="navigation" aria-label="Quick navigation">
-                <button data-section="services" title="خدمات">
-                    <span class="ar">خدمات</span><span class="en">Services</span>
-                </button>
-                <button data-section="about" title="عنا">
-                    <span class="ar">عنا</span><span class="en">About</span>
-                </button>
-                <button data-section="contact" title="اتصال">
-                    <span class="ar">اتصال</span><span class="en">Contact</span>
-                </button>
-            </div>
-        \`;
+        const floatingNavHTML = '<div class="floating-nav" role="navigation" aria-label="Quick navigation">' +
+            '<button data-section="services" title="خدمات">' +
+                '<span class="ar">خدمات</span><span class="en">Services</span>' +
+            '</button>' +
+            '<button data-section="about" title="عنا">' +
+                '<span class="ar">عنا</span><span class="en">About</span>' +
+            '</button>' +
+            '<button data-section="contact" title="اتصال">' +
+                '<span class="ar">اتصال</span><span class="en">Contact</span>' +
+            '</button>' +
+        '</div>';
         
         document.body.insertAdjacentHTML('beforeend', floatingNavHTML);
     }
     
     // 3. Create scroll progress indicator
     createScrollProgress() {
-        const progressHTML = \`
-            <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                <div class="scroll-progress-bar"></div>
-            </div>
-        \`;
+        const progressHTML = '<div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">' +
+            '<div class="scroll-progress-bar"></div>' +
+        '</div>';
         
         document.body.insertAdjacentHTML('afterbegin', progressHTML);
     }
@@ -94,14 +88,14 @@ class MobileUXController {
     initProgressiveDisclosure() {
         // Wrap existing sections in mobile containers
         this.sections.forEach(sectionId => {
-            const section = document.querySelector(\`#\${sectionId}, .\${sectionId}, section[data-section="\${sectionId}"]\`) ||
-                          document.querySelector(\`section:nth-of-type(\${this.sections.indexOf(sectionId) + 1})\`);
+            const section = document.querySelector('#' + sectionId + ', .' + sectionId + ', section[data-section="' + sectionId + '"]') ||
+                          document.querySelector('section:nth-of-type(' + (this.sections.indexOf(sectionId) + 1) + ')');
             
             if (section) {
                 section.classList.add('mobile-section');
                 section.setAttribute('role', 'tabpanel');
-                section.setAttribute('aria-labelledby', \`\${sectionId}-tab\`);
-                section.setAttribute('id', \`\${sectionId}-section\`);
+                section.setAttribute('aria-labelledby', sectionId + '-tab');
+                section.setAttribute('id', sectionId + '-section');
                 
                 if (sectionId !== 'hero') {
                     section.classList.remove('active');
@@ -156,7 +150,7 @@ class MobileUXController {
         
         // Update sections
         document.querySelectorAll('.mobile-section').forEach(section => {
-            const isActive = section.id === \`\${sectionId}-section\` || section.classList.contains(sectionId);
+            const isActive = section.id === (sectionId + '-section') || section.classList.contains(sectionId);
             section.classList.toggle('active', isActive);
             
             if (isActive) {
@@ -172,7 +166,7 @@ class MobileUXController {
         this.currentSection = sectionId;
         
         // Announce to screen readers
-        this.announceToScreenReader(\`Showing \${sectionId} section\`);
+        this.announceToScreenReader('Showing ' + sectionId + ' section');
     }
     
     // 7. Enhanced form validation and interactions
@@ -224,7 +218,7 @@ class MobileUXController {
             wrapper.appendChild(input);
             
             // Add label if missing
-            const label = document.querySelector(\`label[for="\${input.id}"]\`) || input.previousElementSibling;
+            const label = document.querySelector('label[for="' + input.id + '"]') || input.previousElementSibling;
             if (label && label.tagName === 'LABEL') {
                 wrapper.insertBefore(label, input);
             }
@@ -292,7 +286,7 @@ class MobileUXController {
     // 10. Show field validation message
     showFieldMessage(field, message, type) {
         const messageEl = document.createElement('div');
-        messageEl.className = \`form-\${type}-message show\`;
+        messageEl.className = 'form-' + type + '-message show';
         messageEl.textContent = message;
         messageEl.setAttribute('role', 'alert');
         
@@ -383,7 +377,7 @@ class MobileUXController {
     // 15. Skeleton loading for sections
     initSkeletonLoading() {
         this.sections.forEach(sectionId => {
-            const section = document.querySelector(\`#\${sectionId}-section\`);
+            const section = document.querySelector('#' + sectionId + '-section');
             if (section && section.classList.contains('mobile-section')) {
                 // Add skeleton when section loads
                 section.addEventListener('transitionstart', () => {
@@ -398,20 +392,18 @@ class MobileUXController {
     
     // 16. Show skeleton loading
     showSkeleton(container) {
-        const skeletonHTML = \`
-            <div class="skeleton-container">
-                <div class="skeleton-card">
-                    <div class="skeleton-avatar"></div>
-                    <div class="skeleton-line"></div>
-                    <div class="skeleton-line medium"></div>
-                    <div class="skeleton-line short"></div>
-                </div>
-                <div class="skeleton-card">
-                    <div class="skeleton-line"></div>
-                    <div class="skeleton-line short"></div>
-                </div>
-            </div>
-        \`;
+        const skeletonHTML = '<div class="skeleton-container">' +
+            '<div class="skeleton-card">' +
+                '<div class="skeleton-avatar"></div>' +
+                '<div class="skeleton-line"></div>' +
+                '<div class="skeleton-line medium"></div>' +
+                '<div class="skeleton-line short"></div>' +
+            '</div>' +
+            '<div class="skeleton-card">' +
+                '<div class="skeleton-line"></div>' +
+                '<div class="skeleton-line short"></div>' +
+            '</div>' +
+        '</div>';
         
         container.insertAdjacentHTML('afterbegin', skeletonHTML);
     }
@@ -488,7 +480,7 @@ class MobileUXController {
     // 23. Show toast notification
     showToast(message, type = 'info') {
         const toast = document.createElement('div');
-        toast.className = \`toast \${type} show\`;
+        toast.className = 'toast ' + type + ' show';
         toast.textContent = message;
         toast.setAttribute('role', 'alert');
         toast.setAttribute('aria-live', 'polite');
