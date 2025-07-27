@@ -7,6 +7,9 @@
     "dev": "wrangler dev --local",
     "test:mobile": "node tests/mobile-specific-test.js",
     "lint:css": "stylelint src/content/styles.js --fix",
+    "deploy": "wrangler deploy",
+    "deploy:contact": "wrangler deploy -c wrangler-contact.toml",
+    "deploy:all": "npm run deploy && npm run deploy:contact",
     "deploy:staging": "wrangler deploy --env staging",
     "deploy:prod": "powershell -ExecutionPolicy Bypass -File deploy.ps1",
     "monitor": "wrangler deploy --config wrangler.monitor.toml"

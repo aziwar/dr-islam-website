@@ -16,10 +16,10 @@ FROM_EMAIL = "noreply@dr-elsagher.com"
 # RESEND_API_KEY = "your-resend-api-key" (alternative)
 
 # KV namespace for rate limiting (optional)
-[[kv_namespaces]]
-binding = "RATE_LIMIT_KV"
-id = "your-kv-namespace-id"
-preview_id = "your-preview-kv-namespace-id"
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT_KV"
+# id = "your-kv-namespace-id"
+# preview_id = "your-preview-kv-namespace-id"
 
 # Custom domain routing
 [[routes]]
