@@ -13,7 +13,7 @@ export const RESPONSIVE_CSS = `
         -moz-osx-font-smoothing: grayscale;
     }
     
-    /* Hide desktop nav */
+    /* Hide desktop nav on mobile (will be overridden by desktop media query) */
     nav > ul {
         display: none !important;
     }
@@ -472,10 +472,13 @@ img[loading="lazy"] {
     }
 }
 
-/* Desktop specific styles - Maximum specificity to override mobile rules */
+/* Desktop specific styles - Override mobile rules with ultra-high specificity */
 @media (min-width: 1025px) {
-    /* Ensure desktop navigation is visible - Override mobile display:none with maximum specificity */
+    /* Force desktop navigation visible - Ultra high specificity */
+    html body header nav > ul[class],
     html body header nav > ul,
+    html body nav > ul[class],
+    html body nav > ul,
     body header nav > ul,
     header nav > ul,
     nav > ul {
