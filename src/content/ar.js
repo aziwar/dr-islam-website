@@ -774,7 +774,7 @@ export const HTML_AR = `<!DOCTYPE html>
             const rect = item.getBoundingClientRect();
             const percent = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
             slider.style.left = percent + '%';
-            afterImg.style.clipPath = \`inset(0 0 0 \${percent}%)\`;
+            afterImg.style.clipPath = 'inset(0 0 0 ' + percent + '%)';
         };
         
         // Touch events
@@ -865,24 +865,24 @@ export const HTML_AR = `<!DOCTYPE html>
                 const notes = document.getElementById('bookingNotes').value;
                 
                 // Create WhatsApp message in Arabic
-                let message = \`السلام عليكم دكتور اسلام،\\n\\n\`;
-                message += \`أرغب في حجز موعد:\\n\\n\`;
-                message += \`👤 الاسم: \${name}\\n\`;
-                message += \`📞 الهاتف: \${phone}\\n\`;
-                message += \`🦷 الخدمة: \${service}\\n\`;
-                message += \`⏰ الوقت المفضل: \${time}\\n\`;
+                let message = 'السلام عليكم دكتور اسلام،\\n\\n';
+                message += 'أرغب في حجز موعد:\\n\\n';
+                message += '👤 الاسم: ' + name + '\\n';
+                message += '📞 الهاتف: ' + phone + '\\n';
+                message += '🦷 الخدمة: ' + service + '\\n';
+                message += '⏰ الوقت المفضل: ' + time + '\\n';
                 
                 if (notes.trim()) {
-                    message += \`📝 ملاحظات: \${notes}\\n\`;
+                    message += '📝 ملاحظات: ' + notes + '\\n';
                 }
                 
-                message += \`\\nشكراً لكم\`;
+                message += '\\nشكراً لكم';
                 
                 // Encode message for URL
                 const encodedMessage = encodeURIComponent(message);
                 
                 // Create WhatsApp URL
-                const whatsappUrl = \`https://wa.me/96598563711?text=\${encodedMessage}\`;
+                const whatsappUrl = 'https://wa.me/96598563711?text=' + encodedMessage;
                 
                 // Track booking attempt
                 if (typeof gtag !== 'undefined') {
@@ -965,7 +965,7 @@ export const HTML_AR = `<!DOCTYPE html>
                         const x = e.clientX - rect.left;
                         const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
                         slider.style.left = percent + '%';
-                        beforeImg.style.clipPath = \`inset(0 \${100 - percent}% 0 0)\`;
+                        beforeImg.style.clipPath = 'inset(0 ' + (100 - percent) + '% 0 0)';
                     });
                     
                     // Touch support
@@ -977,7 +977,7 @@ export const HTML_AR = `<!DOCTYPE html>
                         const x = e.touches[0].clientX - rect.left;
                         const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
                         slider.style.left = percent + '%';
-                        beforeImg.style.clipPath = \`inset(0 \${100 - percent}% 0 0)\`;
+                        beforeImg.style.clipPath = 'inset(0 ' + (100 - percent) + '% 0 0)';
                     });
                 }
             }
@@ -1100,8 +1100,8 @@ export const HTML_AR = `<!DOCTYPE html>
                 // Clamp between 5% and 95%
                 const clampedPercent = Math.max(5, Math.min(95, percent));
                 
-                slider.style.left = \`\${clampedPercent}%\`;
-                before.style.clipPath = \`inset(0 \${100 - clampedPercent}% 0 0)\`;
+                slider.style.left = clampedPercent + '%';
+                before.style.clipPath = 'inset(0 ' + (100 - clampedPercent) + '% 0 0)';
             };
             
             // Touch events
@@ -1461,7 +1461,7 @@ export const HTML_AR = `<!DOCTYPE html>
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log(\`User response: \${outcome}\`);
+                console.log('User response: ' + outcome);
                 deferredPrompt = null;
                 document.querySelector('.install-prompt')?.remove();
             }
@@ -1573,7 +1573,7 @@ export const HTML_AR = `<!DOCTYPE html>
             } else {
                 this.viewMoreBtn.style.display = 'inline-flex';
                 const remaining = totalFilteredItems - this.maxVisible;
-                this.viewMoreBtn.innerHTML = \`عرض \${remaining} حالة إضافية <span class="arrow">←</span>\`;
+                this.viewMoreBtn.innerHTML = 'عرض ' + remaining + ' حالة إضافية <span class="arrow">←</span>';
             }
         }
     }
