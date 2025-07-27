@@ -537,20 +537,37 @@ export const HTML_AR = `<!DOCTYPE html>
     <script>
     // Navigation visibility fix - ensures menu displays correctly
     function ensureNavigationVisibility() {
-        const desktopNav = document.querySelector('nav > ul');
+        const navMenu = document.getElementById('mobileMenu'); // This is the only navigation menu
         const mobileToggle = document.querySelector('.mobile-menu-toggle');
         const viewport = window.innerWidth;
         
-        if (desktopNav && mobileToggle) {
+        if (navMenu && mobileToggle) {
             if (viewport >= 1025) {
-                // Desktop: show nav, hide toggle
-                desktopNav.style.setProperty('display', 'flex', 'important');
-                desktopNav.style.setProperty('visibility', 'visible', 'important');
-                desktopNav.style.setProperty('opacity', '1', 'important');
+                // Desktop: show navigation as horizontal menu, hide toggle
+                navMenu.style.setProperty('display', 'flex', 'important');
+                navMenu.style.setProperty('visibility', 'visible', 'important');
+                navMenu.style.setProperty('opacity', '1', 'important');
+                navMenu.style.setProperty('position', 'static', 'important');
+                navMenu.style.setProperty('right', 'auto', 'important');
+                navMenu.style.setProperty('top', 'auto', 'important');
+                navMenu.style.setProperty('width', 'auto', 'important');
+                navMenu.style.setProperty('height', 'auto', 'important');
+                navMenu.style.setProperty('flex-direction', 'row', 'important');
+                navMenu.style.setProperty('background', 'transparent', 'important');
+                navMenu.classList.remove('active');
                 mobileToggle.style.setProperty('display', 'none', 'important');
             } else {
-                // Mobile/tablet: hide nav, show toggle
-                desktopNav.style.setProperty('display', 'none', 'important');
+                // Mobile/tablet: hide nav by default, show toggle
+                navMenu.style.removeProperty('display');
+                navMenu.style.removeProperty('visibility'); 
+                navMenu.style.removeProperty('opacity');
+                navMenu.style.removeProperty('position');
+                navMenu.style.removeProperty('right');
+                navMenu.style.removeProperty('top');
+                navMenu.style.removeProperty('width');
+                navMenu.style.removeProperty('height');
+                navMenu.style.removeProperty('flex-direction');
+                navMenu.style.removeProperty('background');
                 mobileToggle.style.setProperty('display', 'flex', 'important');
             }
         }
@@ -559,13 +576,17 @@ export const HTML_AR = `<!DOCTYPE html>
     // Immediate navigation fix - runs as soon as script loads
     (function() {
         function immediateNavFix() {
-            const desktopNav = document.querySelector('nav > ul');
+            const navMenu = document.getElementById('mobileMenu');
             const mobileToggle = document.querySelector('.mobile-menu-toggle');
             
-            if (desktopNav && mobileToggle && window.innerWidth >= 1025) {
-                desktopNav.style.setProperty('display', 'flex', 'important');
-                desktopNav.style.setProperty('visibility', 'visible', 'important');
-                desktopNav.style.setProperty('opacity', '1', 'important');
+            if (navMenu && mobileToggle && window.innerWidth >= 1025) {
+                navMenu.style.setProperty('display', 'flex', 'important');
+                navMenu.style.setProperty('visibility', 'visible', 'important');
+                navMenu.style.setProperty('opacity', '1', 'important');
+                navMenu.style.setProperty('position', 'static', 'important');
+                navMenu.style.setProperty('flex-direction', 'row', 'important');
+                navMenu.style.setProperty('background', 'transparent', 'important');
+                navMenu.classList.remove('active');
                 mobileToggle.style.setProperty('display', 'none', 'important');
             }
         }
