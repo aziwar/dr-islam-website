@@ -23,7 +23,7 @@ const CSS_CLASSES = {
     ERROR: 'error'
 };
 
-// Mobile Navigation functionality
+// Enhanced Mobile Navigation functionality with touch support
 class MobileNavigation {
     constructor() {
         this.toggle = document.querySelector(SELECTORS.MOBILE_TOGGLE);
@@ -31,18 +31,24 @@ class MobileNavigation {
         this.overlay = document.querySelector(SELECTORS.NAV_OVERLAY);
         this.menuLinks = document.querySelectorAll('.nav-menu a');
         this.isOpen = false;
+        this.touchStartY = 0;
+        this.touchEndY = 0;
         
         this.init();
     }
     
     init() {
         if (this.toggle && this.menu) {
-            this.toggle.addEventListener('click', () => this.toggleMenu());
+            // Enhanced event listeners with touch support
+            this.toggle.addEventListener('click', (e) => this.handleToggleClick(e));
+            this.toggle.addEventListener('touchend', (e) => this.handleToggleTouch(e));
             this.overlay?.addEventListener('click', () => this.closeMenu());
+            this.overlay?.addEventListener('touchend', () => this.closeMenu());
             
-            // Close menu when clicking navigation links
+            // Enhanced menu link handling with touch support
             this.menuLinks.forEach(link => {
-                link.addEventListener('click', () => this.closeMenu());
+                link.addEventListener('click', (e) => this.handleLinkClick(e));
+                link.addEventListener('touchend', (e) => this.handleLinkTouch(e));
             });
             
             // Close menu on escape key
@@ -52,14 +58,24 @@ class MobileNavigation {
                 }
             });
             
-            // Close menu when clicking outside menu area (on page content)
+            // Enhanced outside click detection
             document.addEventListener('click', (e) => {
                 if (this.isOpen && 
                     !this.menu.contains(e.target) && 
                     !this.toggle.contains(e.target) &&
-                    !this.overlay.contains(e.target)) {
+                    !this.overlay?.contains(e.target)) {
                     this.closeMenu();
                 }
+            });
+            
+            // Touch gesture support for closing menu
+            this.menu.addEventListener('touchstart', (e) => {
+                this.touchStartY = e.touches[0].clientY;
+            });
+            
+            this.menu.addEventListener('touchend', (e) => {
+                this.touchEndY = e.changedTouches[0].clientY;
+                this.handleSwipeGesture();
             });
             
             // Ensure contact form interactions always work
@@ -112,16 +128,65 @@ class MobileNavigation {
             this.overlay.style.visibility = 'hidden';
             this.overlay.style.opacity = '0';
         }
+        
+        // Reset touch values
+        this.touchStartY = 0;
+        this.touchEndY = 0;
+    }
+    
+    handleToggleClick(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.toggleMenu();
+    }
+    
+    handleToggleTouch(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        // Small delay to prevent double-tap issues
+        setTimeout(() => {
+            if (!this.isOpen) {
+                this.toggleMenu();
+            }
+        }, 10);
+    }
+    
+    handleLinkClick(e) {
+        // Let the link work normally, then close menu
+        setTimeout(() => this.closeMenu(), 100);
+    }
+    
+    handleLinkTouch(e) {
+        // Prevent double events
+        e.preventDefault();
+        const link = e.target.closest('a');
+        if (link && link.href) {
+            // Navigate manually after touch
+            setTimeout(() => {
+                window.location.href = link.href;
+                this.closeMenu();
+            }, 100);
+        }
+    }
+    
+    handleSwipeGesture() {
+        const swipeDistance = this.touchStartY - this.touchEndY;
+        const threshold = 50;
+        
+        // Swipe up to close menu (common mobile gesture)
+        if (swipeDistance > threshold) {
+            this.closeMenu();
+        }
     }
 }
 
-// Initialize mobile navigation
-// Initialize all components
+// Initialize mobile navigation and enhanced UX components
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize core components
     new MobileNavigation();
     new EmergencyBanner();
     new FAQAccordion();
+    new BookingFlow(); // Move here to ensure proper initialization
     
     // Setup cleanup on page unload
     window.addEventListener('beforeunload', () => {
@@ -412,17 +477,26 @@ class ScrollHandler {
     }
 }
 
-// Enhanced Booking Flow with Analytics and UX
+// Enhanced Booking Flow with Analytics and Smart Positioning
 class BookingFlow {
     constructor() {
         this.bookingButtons = document.querySelectorAll('a[href^="https://wa.me"], .cta-button, .sticky-book');
+        this.stickyButton = document.querySelector('.sticky-book');
+        this.contactSection = document.querySelector('.contact');
         this.init();
     }
     
     init() {
         this.bookingButtons.forEach(button => {
             button.addEventListener('click', (e) => this.handleBookingClick(e, button));
+            // Enhanced touch support
+            button.addEventListener('touchend', (e) => this.handleBookingTouch(e, button));
         });
+        
+        // Smart positioning for sticky button
+        if (this.stickyButton && this.contactSection) {
+            this.setupSmartPositioning();
+        }
     }
     
     handleBookingClick(e, button) {
@@ -508,12 +582,69 @@ class BookingFlow {
             });
         }
     }
+    
+    handleBookingTouch(e, button) {
+        // Prevent double events on touch devices
+        e.preventDefault();
+        
+        // Add touch feedback
+        button.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            button.style.transform = '';
+        }, 150);
+        
+        // Handle the booking action
+        this.handleBookingClick(e, button);
+    }
+    
+    setupSmartPositioning() {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.target === this.contactSection) {
+                    if (entry.isIntersecting) {
+                        // Contact section is visible - adjust button position
+                        document.body.classList.add('contact-section-active');
+                        this.adjustButtonForContactSection(true);
+                    } else {
+                        // Contact section not visible - normal position
+                        document.body.classList.remove('contact-section-active');
+                        this.adjustButtonForContactSection(false);
+                    }
+                }
+            });
+        }, observerOptions);
+        
+        observer.observe(this.contactSection);
+    }
+    
+    adjustButtonForContactSection(isContactVisible) {
+        if (!this.stickyButton) return;
+        
+        if (isContactVisible) {
+            // Move button to avoid overlap with contact form
+            this.stickyButton.style.bottom = '20px';
+            this.stickyButton.style.right = '20px';
+            this.stickyButton.style.zIndex = '90';
+            this.stickyButton.style.transform = 'scale(0.9)';
+            this.stickyButton.style.opacity = '0.8';
+        } else {
+            // Reset to normal position
+            this.stickyButton.style.bottom = '';
+            this.stickyButton.style.right = '';
+            this.stickyButton.style.zIndex = '';
+            this.stickyButton.style.transform = '';
+            this.stickyButton.style.opacity = '';
+        }
+    }
 }
 
-// Initialize booking flow
-document.addEventListener('DOMContentLoaded', () => {
-    new BookingFlow();
-});
+// BookingFlow is now initialized in the main DOMContentLoaded event above
 
 // Emergency banner auto-hide with proper cleanup
 class EmergencyBanner {
@@ -984,29 +1115,63 @@ class ContactFormHandler {
         
         const field = document.getElementById(fieldId);
         const value = field.value.trim();
+        let isValid = true;
         
         switch (fieldId) {
             case 'name':
                 if (value.length < 2) {
                     this.showFieldError(fieldId, 'الاسم يجب أن يكون على الأقل حرفين');
+                    isValid = false;
+                } else if (value.length > 50) {
+                    this.showFieldError(fieldId, 'الاسم طويل جداً (الحد الأقصى 50 حرف)');
+                    isValid = false;
+                } else if (!/^[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFFa-zA-Z\s]+$/.test(value)) {
+                    this.showFieldError(fieldId, 'الاسم يجب أن يحتوي على أحرف فقط');
+                    isValid = false;
                 }
                 break;
                 
             case 'email':
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (value && !emailRegex.test(value)) {
-                    this.showFieldError(fieldId, 'البريد الإلكتروني غير صحيح');
+                if (!value) {
+                    this.showFieldError(fieldId, 'البريد الإلكتروني مطلوب');
+                    isValid = false;
+                } else if (!emailRegex.test(value)) {
+                    this.showFieldError(fieldId, 'البريد الإلكتروني غير صحيح (مثال: patient@example.com)');
+                    isValid = false;
+                } else if (value.length > 100) {
+                    this.showFieldError(fieldId, 'البريد الإلكتروني طويل جداً');
+                    isValid = false;
                 }
                 break;
                 
             case 'phone':
                 const phoneRegex = /^(\+965|965)?[2456789]\d{7}$/;
                 const cleanPhone = value.replace(/[\s-]/g, '');
-                if (value && !phoneRegex.test(cleanPhone)) {
-                    this.showFieldError(fieldId, 'رقم الهاتف غير صحيح');
+                if (!value) {
+                    this.showFieldError(fieldId, 'رقم الهاتف مطلوب');
+                    isValid = false;
+                } else if (!phoneRegex.test(cleanPhone)) {
+                    this.showFieldError(fieldId, 'رقم الهاتف غير صحيح (مثال: 98563711 أو +96598563711)');
+                    isValid = false;
+                }
+                break;
+                
+            case 'service':
+                if (!value) {
+                    this.showFieldError(fieldId, 'يرجى اختيار نوع الخدمة');
+                    isValid = false;
                 }
                 break;
         }
+        
+        // Add success state if valid
+        if (isValid && value) {
+            field.classList.add('success');
+            field.classList.remove('error');
+        }
+        
+        return isValid;
     }
     
     showFieldError(fieldId, message) {
@@ -1015,11 +1180,22 @@ class ContactFormHandler {
         
         if (errorElement) {
             errorElement.textContent = message;
-            errorElement.style.display = 'block';
+            errorElement.style.display = 'flex';
+            errorElement.setAttribute('aria-live', 'polite');
         }
         
         if (field) {
             field.classList.add('error');
+            field.classList.remove('success');
+            field.setAttribute('aria-invalid', 'true');
+            
+            // Add shake animation for immediate feedback
+            setTimeout(() => {
+                field.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    field.style.animation = '';
+                }, 500);
+            }, 10);
         }
     }
     
@@ -1029,10 +1205,12 @@ class ContactFormHandler {
         
         if (errorElement) {
             errorElement.style.display = 'none';
+            errorElement.textContent = '';
         }
         
         if (field) {
             field.classList.remove('error');
+            field.setAttribute('aria-invalid', 'false');
         }
     }
     

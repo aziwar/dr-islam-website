@@ -212,28 +212,45 @@ nav a:hover {
     color: var(--primary);
 }
 
-/* Mobile Menu Toggle */
+/* Mobile Menu Toggle - Enhanced Touch Support */
 .mobile-menu-toggle {
     display: none;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 12px; /* Increased padding for better touch target */
     flex-direction: column;
     justify-content: space-around;
-    width: 44px;
-    height: 44px;
+    width: 48px; /* Minimum 48px touch target */
+    height: 48px;
     position: relative;
     z-index: 102;
+    /* Enhanced touch support */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.mobile-menu-toggle:hover,
+.mobile-menu-toggle:focus {
+    background-color: rgba(190, 176, 147, 0.1);
+}
+
+.mobile-menu-toggle:active {
+    background-color: rgba(190, 176, 147, 0.2);
+    transform: scale(0.95);
 }
 
 .hamburger-line {
-    width: 24px;
+    width: 20px; /* Slightly smaller for better proportions */
     height: 3px;
     background: var(--secondary);
     border-radius: 2px;
     transition: all 0.3s ease;
     transform-origin: center;
+    /* Ensure proper touch interaction */
+    pointer-events: none;
 }
 
 /* Mobile Menu Toggle Animation */
@@ -317,7 +334,7 @@ nav a:hover {
     transform: scale(1.05);
 }
 
-/* Sticky Booking Button */
+/* Sticky Booking Button - Enhanced for Mobile UX */
 .sticky-book {
     position: fixed;
     bottom: 100px;
@@ -327,11 +344,19 @@ nav a:hover {
     padding: 15px 25px;
     border-radius: 50px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    z-index: 999;
+    z-index: 98; /* Reduced from 999 to prevent content overlap */
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s;
     animation: pulse 2s infinite;
+    /* Enhanced touch support */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    min-width: 48px; /* Minimum touch target */
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes pulse {
@@ -967,7 +992,7 @@ footer {
         display: flex;
     }
     
-    /* Mobile navigation styles - RTL optimized */
+    /* Mobile navigation styles - RTL optimized with enhanced touch support */
     .nav-menu {
         position: fixed;
         top: 0;
@@ -985,6 +1010,10 @@ footer {
         gap: 0;
         direction: rtl;
         text-align: right;
+        /* Enhanced touch support */
+        touch-action: manipulation;
+        -webkit-overflow-scrolling: touch;
+        overflow-y: auto;
     }
     
     .nav-menu.active {
@@ -999,20 +1028,32 @@ footer {
     
     .nav-menu a {
         display: block;
-        padding: 15px 0;
+        padding: 18px 0; /* Increased padding for better touch targets */
         border-bottom: 1px solid rgba(119, 118, 105, 0.1);
         font-size: 1.1rem;
         font-weight: 500;
         color: var(--secondary);
         text-decoration: none;
-        transition: color 0.3s ease;
+        transition: all 0.3s ease;
+        /* Enhanced touch support */
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        min-height: 48px; /* Minimum touch target */
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+    
+    .nav-menu a:active {
+        background-color: rgba(190, 176, 147, 0.1);
+        transform: scale(0.98);
     }
     
     .nav-menu a:hover {
         color: var(--primary);
     }
     
-    /* Mobile menu overlay */
+    /* Mobile menu overlay - Enhanced for better UX */
     .nav-overlay {
         position: fixed;
         top: 0;
@@ -1025,6 +1066,9 @@ footer {
         pointer-events: none;
         transition: all 0.3s ease;
         z-index: 99; /* Lowered z-index to prevent form interference */
+        /* Enhanced touch support */
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
     
     .nav-overlay.active {
@@ -1073,6 +1117,24 @@ footer {
         right: 20px;
         font-size: 0.9rem;
         padding: 12px 20px;
+        z-index: 95; /* Lower z-index on mobile to prevent form overlap */
+        /* Smart positioning to avoid content overlap */
+        transform: translateY(0);
+    }
+    
+    /* Hide sticky button when contact form is visible to prevent overlap */
+    .contact .sticky-book {
+        transform: translateY(100px);
+        opacity: 0.3;
+        pointer-events: none;
+    }
+    
+    /* Alternative positioning when scrolled to contact section */
+    .contact-section-active .sticky-book {
+        bottom: 20px;
+        right: 20px;
+        z-index: 90;
+        transform: scale(0.9);
     }
     
     header {
@@ -2148,5 +2210,613 @@ html {
     .contact-info,
     .working-hours {
         break-inside: avoid;
+    }
+}
+
+/* =================================================================
+   MOBILE UX ENHANCEMENTS - Issues #10 & #13 Fixes
+   ================================================================= */
+
+/* Enhanced Mobile Touch Support */
+@media (max-width: 768px) {
+    /* Ensure all interactive elements meet 48px minimum touch target */
+    .mobile-menu-toggle,
+    .sticky-book,
+    .nav-menu a,
+    .filter-btn,
+    .cta-button,
+    .submit-btn {
+        min-width: 48px;
+        min-height: 48px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Enhanced button touch feedback */
+    .mobile-menu-toggle:active,
+    .sticky-book:active,
+    .nav-menu a:active,
+    .filter-btn:active,
+    .cta-button:active,
+    .submit-btn:active {
+        transform: scale(0.95);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Improved sticky button behavior near contact section */
+    .contact-section-active .sticky-book {
+        animation: none; /* Stop pulsing when near contact form */
+        transition: all 0.3s ease;
+    }
+    
+    /* Better spacing for touch interactions in nav menu */
+    .nav-menu li {
+        margin: 4px 0;
+    }
+    
+    /* Enhanced visual feedback for menu toggle */
+    .mobile-menu-toggle[aria-expanded="true"] {
+        background-color: rgba(190, 176, 147, 0.15);
+    }
+    
+    /* Improved overlay tap area */
+    .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        touch-action: manipulation;
+    }
+    
+    /* Better contact form accessibility on mobile */
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+        outline: 3px solid var(--primary);
+        outline-offset: 2px;
+        transform: none; /* Remove transform on focus for better accessibility */
+    }
+    
+    /* Smart sticky button positioning */
+    .sticky-book.contact-adjusted {
+        bottom: 120px !important;
+        opacity: 0.7;
+        transform: scale(0.85);
+        z-index: 90;
+    }
+    
+    /* Hide sticky button completely when contact form is being filled */
+    .contact-form:focus-within ~ .sticky-book,
+    .contact-form-active .sticky-book {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(100px);
+    }
+}
+
+/* Touch device specific improvements */
+@media (hover: none) and (pointer: coarse) {
+    /* Remove hover effects on touch devices */
+    .service-card:hover,
+    .testimonial-card:hover,
+    .gallery-item:hover {
+        transform: none;
+    }
+    
+    /* Enhanced tap targets for touch */
+    .gallery-filters .filter-btn {
+        padding: 14px 20px;
+        margin: 4px;
+    }
+    
+    /* Better mobile menu button visibility */
+    .mobile-menu-toggle {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border-radius: 6px;
+    }
+}
+
+/* High contrast mode for better accessibility */
+@media (prefers-contrast: high) {
+    .mobile-menu-toggle {
+        border: 2px solid var(--text);
+    }
+    
+    .sticky-book {
+        border: 2px solid var(--white);
+    }
+    
+    .nav-menu a {
+        border-bottom: 2px solid var(--primary);
+    }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .sticky-book {
+        animation: none !important;
+    }
+    
+    .mobile-menu-toggle,
+    .nav-menu a,
+    .sticky-book {
+        transition: none !important;
+    }
+    
+    .nav-menu {
+        transition: left 0.1s ease !important;
+    }
+}
+
+/* Safe area adjustments for devices with notches */
+@supports (padding: max(0px)) {
+    @media (max-width: 768px) {
+        .sticky-book {
+            bottom: max(80px, env(safe-area-inset-bottom) + 20px);
+            right: max(20px, env(safe-area-inset-right) + 20px);
+        }
+        
+        .nav-menu {
+            padding-top: max(100px, env(safe-area-inset-top) + 60px);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+        }
+        
+        .mobile-menu-toggle {
+            margin-right: env(safe-area-inset-right);
+        }
+    }
+}
+
+/* =================================================================
+   COMPREHENSIVE CONTACT FORM STYLES - Issue #19 Implementation
+   ================================================================= */
+
+/* Contact Section Layout */
+.contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xl);
+}
+
+/* Contact Form Section */
+.contact-form-section {
+    background: var(--white);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(190, 176, 147, 0.1);
+}
+
+.contact-form-section h3 {
+    color: var(--primary);
+    margin-bottom: var(--space-lg);
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Form Layout */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form Labels */
+.form-group label {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--white);
+    padding: 0 8px;
+    color: var(--secondary);
+    font-size: var(--font-size-base);
+    transition: all var(--animation-normal) ease;
+    pointer-events: none;
+    z-index: 2;
+    transform-origin: right center;
+}
+
+/* Required Field Indicator */
+.required {
+    color: var(--emergency);
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+/* Form Inputs */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #e2e2e2;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    font-family: inherit;
+    background: var(--white);
+    color: var(--text);
+    transition: all var(--animation-normal) ease;
+    position: relative;
+    z-index: 1;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.2);
+    transform: translateY(-1px);
+}
+
+.form-group input:not(:placeholder-shown),
+.form-group select:not([value=""]),
+.form-group textarea:not(:placeholder-shown) {
+    border-color: var(--primary);
+}
+
+/* Floating Label Effect */
+.form-group input:focus + label,
+.form-group select:focus + label,
+.form-group textarea:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group select:not([value=""]) + label,
+.form-group textarea:not(:placeholder-shown) + label {
+    top: -8px;
+    font-size: var(--font-size-sm);
+    color: var(--primary);
+    font-weight: 600;
+    transform: scale(0.9);
+}
+
+/* Select Dropdown Styling */
+.form-group select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: left 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-left: 40px;
+    appearance: none;
+    cursor: pointer;
+}
+
+/* Textarea Specific */
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+    max-height: 200px;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+/* Field Hints */
+.field-hint {
+    font-size: var(--font-size-sm);
+    color: var(--secondary);
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+/* Character Counter */
+.character-count {
+    font-size: var(--font-size-sm);
+    color: var(--secondary);
+    text-align: left;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+/* Error States */
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: var(--emergency);
+    background-color: rgba(220, 53, 69, 0.05);
+    animation: shake 0.5s ease-in-out;
+}
+
+.form-group input.error:focus,
+.form-group select.error:focus,
+.form-group textarea.error:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+}
+
+.error-message {
+    color: var(--emergency);
+    font-size: var(--font-size-sm);
+    margin-top: 4px;
+    display: none;
+    align-items: center;
+    gap: var(--space-xs);
+    animation: slideDown var(--animation-normal) ease;
+}
+
+.error-message::before {
+    content: "⚠️";
+    font-size: 14px;
+}
+
+/* Success States */
+.form-group input.success,
+.form-group select.success,
+.form-group textarea.success {
+    border-color: var(--success);
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.form-group input.success:focus,
+.form-group select.success:focus,
+.form-group textarea.success:focus {
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+
+/* Submit Button */
+.submit-btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    border: none;
+    padding: 16px 32px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--animation-normal) ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: var(--space-md);
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid var(--white);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: var(--space-xs);
+}
+
+/* Form Messages */
+.form-message {
+    display: none;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-lg);
+    border: 1px solid;
+    animation: slideUp var(--animation-normal) ease;
+}
+
+.form-message.success {
+    background-color: rgba(40, 167, 69, 0.1);
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.form-message.error {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-color: var(--emergency);
+    color: var(--emergency);
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.message-icon {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-xs);
+}
+
+.message-title {
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+}
+
+.message-description {
+    font-size: var(--font-size-base);
+    opacity: 0.9;
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+    
+    .contact-form-section {
+        padding: var(--space-lg);
+    }
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+    
+    .contact-form-section {
+        padding: var(--space-md);
+        margin: 0 var(--space-sm);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 14px;
+        font-size: var(--font-size-base);
+    }
+    
+    .submit-btn {
+        padding: 14px 28px;
+        font-size: var(--font-size-base);
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-form-section {
+        padding: var(--space-sm);
+        margin: 0 var(--space-xs);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 12px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .submit-btn {
+        padding: 12px 24px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .form-group label {
+        font-size: var(--font-size-sm);
+    }
+}
+
+/* RTL Support for Contact Form */
+[dir="rtl"] .form-group label {
+    right: auto;
+    left: 16px;
+    transform-origin: left center;
+}
+
+[dir="rtl"] .form-group select {
+    background-position: right 12px center;
+    padding-left: 16px;
+    padding-right: 40px;
+}
+
+[dir="rtl"] .error-message::before {
+    margin-right: 0;
+    margin-left: var(--space-xs);
+}
+
+[dir="rtl"] .character-count {
+    text-align: right;
+}
+
+/* Focus Management */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.submit-btn:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        border-width: 3px;
+    }
+    
+    .submit-btn {
+        border: 3px solid var(--white);
+    }
+    
+    .form-message {
+        border-width: 3px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
+    .submit-btn,
+    .form-message,
+    .error-message {
+        transition: none;
+        animation: none;
+    }
+    
+    .loading-spinner {
+        animation: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .contact-form-section,
+    .submit-btn {
+        display: none;
     }
 }
