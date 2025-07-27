@@ -11,7 +11,7 @@ export const HTML_EN = `<!DOCTYPE html>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Dr. Islam">
-        <title>Dr. Islam Elsagher - General Dentist & Implantologist</title>
+    <title>Dr. Islam Elsagher - General Dentist & Implantologist</title>
     <meta name="description" content="Dr. Islam Elsagher provides comprehensive dental care in Kuwait. 15+ years experience in implants, cosmetic dentistry, and oral surgery.">
     
     <!-- Favicon and Icons -->
@@ -33,21 +33,21 @@ export const HTML_EN = `<!DOCTYPE html>
     <!-- Schema Markup for Dentist -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "Dentist",
-      "name": "Dr. Islam Elsagher",
-      "alternateName": "د. اسلام الصغير",
-      "description": "General Dentist and Dental Implant Specialist in Kuwait",
-      "image": "https://dr-elsagher.com/assets/dr-islam.jpg",
-      "priceRange": "$$",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "KW"
-      },
-      "telephone": "+96598563711",
-      "url": "https://dr-elsagher.com",
-      "sameAs": [
-        "https://www.instagram.com/dr.islamelsagher/"
+        "@context": "https://schema.org",
+        "@type": "Dentist",
+        "name": "Dr. Islam Elsagher",
+        "alternateName": "د. اسلام الصغير",
+        "description": "General Dentist and Dental Implant Specialist in Kuwait",
+        "image": "https://dr-elsagher.com/assets/dr-islam.jpg",
+        "priceRange": "$$",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "KW"
+        },
+        "telephone": "+96598563711",
+        "url": "https://dr-elsagher.com",
+        "sameAs": [
+            "https://www.instagram.com/dr.islamelsagher/"
       ],
       "openingHoursSpecification": [
         {

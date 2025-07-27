@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Enhanced Booking Modal</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8f7f5;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .test-button {
+            background: linear-gradient(135deg, #BEB093, #777669);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(190, 176, 147, 0.4);
+        }
+        .test-info {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🦷 Enhanced Booking Modal Test</h1>
+        <div class="test-info">
+            <h2>✅ UX Improvement Solution</h2>
+            <p><strong>Problem Solved:</strong> Appointment booking breaking user flow with WhatsApp redirect</p>
+            <p><strong>Solution:</strong> Two-step booking modal that collects context before WhatsApp redirect</p>
+        </div>
+        
+        <h3>Test the Enhanced Booking Flow:</h3>
+        <button class="test-button" onclick="openBookingModal()">📅 Book Your Appointment</button>
+        <button class="test-button sticky-book" onclick="openBookingModal()">احجز موعد 💬</button>
+        
+        <div class="test-info">
+            <h3>🎯 Expected User Journey:</h3>
+            <ol style="text-align: left;">
+                <li>User clicks "Book Appointment" button</li>
+                <li>Modal opens with clear context collection form</li>
+                <li>User fills name, service, preferred time</li>
+                <li>User clicks "Continue to WhatsApp"</li>
+                <li>WhatsApp opens with pre-filled professional message</li>
+                <li>Success notification confirms action</li>
+            </ol>
+            
+            <h3>🚀 Benefits:</h3>
+            <ul style="text-align: left;">
+                <li>✅ No context loss during booking process</li>
+                <li>✅ Clear expectations before WhatsApp redirect</li>
+                <li>✅ Professional pre-filled message</li>
+                <li>✅ Better conversion rates</li>
+                <li>✅ Improved user experience</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Enhanced Booking Modal -->
+    <div id="bookingModal" class="booking-modal" style="display: none;">
+        <div class="booking-modal-content">
+            <div class="booking-modal-header">
+                <h3>📅 Book Your Appointment</h3>
+                <button class="close-modal" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div class="booking-modal-body">
+                <p class="booking-description">We'll help you book an appointment via WhatsApp with your details pre-filled.</p>
+                
+                <form id="bookingForm" class="booking-form">
+                    <div class="form-group">
+                        <input type="text" id="bookingName" name="name" required>
+                        <label for="bookingName">Your Name</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="tel" id="bookingPhone" name="phone" required>
+                        <label for="bookingPhone">Phone Number</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="bookingService" name="service" required>
+                            <option value="">Select Service</option>
+                            <option value="Dental Implants">Dental Implants</option>
+                            <option value="Root Canal Treatment">Root Canal Treatment</option>
+                            <option value="Prosthodontics">Prosthodontics</option>
+                            <option value="Oral Surgery">Oral Surgery</option>
+                            <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
+                            <option value="Gum Treatment">Gum Treatment</option>
+                            <option value="Aesthetic Fillings">Aesthetic Fillings</option>
+                            <option value="Full Mouth Rehabilitation">Full Mouth Rehabilitation</option>
+                            <option value="General Consultation">General Consultation</option>
+                            <option value="Emergency Treatment">Emergency Treatment</option>
+                        </select>
+                        <label for="bookingService">Service Needed</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="bookingTime" name="time" required>
+                            <option value="">Preferred Time</option>
+                            <option value="Morning (9:00 AM - 12:00 PM)">Morning (9:00 AM - 12:00 PM)</option>
+                            <option value="Afternoon (12:00 PM - 6:00 PM)">Afternoon (12:00 PM - 6:00 PM)</option>
+                            <option value="Evening (6:00 PM - 9:00 PM)">Evening (6:00 PM - 9:00 PM)</option>
+                            <option value="Any time">Any time</option>
+                        </select>
+                        <label for="bookingTime">Preferred Time</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea id="bookingNotes" name="notes" rows="3" placeholder="Any specific concerns or requests (optional)"></textarea>
+                        <label for="bookingNotes">Additional Notes</label>
+                    </div>
+                    
+                    <div class="booking-modal-actions">
+                        <button type="submit" class="booking-submit-btn">
+                            <span class="booking-btn-icon">💬</span>
+                            Continue to WhatsApp
+                        </button>
+                        <p class="booking-disclaimer">You'll be redirected to WhatsApp with your information pre-filled</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced Booking Modal Functionality
+        function openBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            
+            // Focus on the first input
+            setTimeout(() => {
+                document.getElementById('bookingName').focus();
+            }, 100);
+            
+            console.log('Booking modal opened');
+        }
+        
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            console.log('Booking modal closed');
+        }
+        
+        // Close modal on outside click
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('bookingModal');
+            if (e.target === modal) {
+                closeBookingModal();
+            }
+        });
+        
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeBookingModal();
+            }
+        });
+        
+        // Handle booking form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingForm = document.getElementById('bookingForm');
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const name = document.getElementById('bookingName').value;
+                    const phone = document.getElementById('bookingPhone').value;
+                    const service = document.getElementById('bookingService').value;
+                    const time = document.getElementById('bookingTime').value;
+                    const notes = document.getElementById('bookingNotes').value;
+                    
+                    // Create WhatsApp message
+                    let message = `Hello Dr. Islam,\n\n`;
+                    message += `I would like to book an appointment:\n\n`;
+                    message += `👤 Name: ${name}\n`;
+                    message += `📞 Phone: ${phone}\n`;
+                    message += `🦷 Service: ${service}\n`;
+                    message += `⏰ Preferred Time: ${time}\n`;
+                    
+                    if (notes.trim()) {
+                        message += `📝 Notes: ${notes}\n`;
+                    }
+                    
+                    message += `\nThank you!`;
+                    
+                    console.log('Generated WhatsApp message:', message);
+                    
+                    // Encode message for URL
+                    const encodedMessage = encodeURIComponent(message);
+                    
+                    // Create WhatsApp URL
+                    const whatsappUrl = `https://wa.me/96598563711?text=${encodedMessage}`;
+                    
+                    console.log('WhatsApp URL:', whatsappUrl);
+                    
+                    // Show demo message instead of opening WhatsApp in test
+                    alert(`✅ SUCCESS!\n\nWhatsApp would open with this message:\n\n${message}\n\nURL: ${whatsappUrl}`);
+                    
+                    // Close modal and show success message
+                    closeBookingModal();
+                    showBookingSuccess();
+                });
+            }
+        });
+        
+        function showBookingSuccess() {
+            // Create success notification
+            const notification = document.createElement('div');
+            notification.className = 'booking-success-notification';
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <span class="notification-icon">✅</span>
+                    <span class="notification-text">WhatsApp opened with your booking details!</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Hide notification after 4 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

@@ -39,28 +39,28 @@ export default {
       
       const url = new URL(request.url);
       const path = url.pathname;
-    
-    // Dynamic versioning for cache busting
-    const BUILD_DATE = new Date().toISOString().split('T')[0];
-    const CSS_VERSION = `mobile-fix-${BUILD_DATE}-v2`;
+      
+      // Dynamic versioning for cache busting
+      const BUILD_DATE = new Date().toISOString().split('T')[0];
+      const CSS_VERSION = `mobile-fix-${BUILD_DATE}-v2`;
 
-    // Handle robots.txt
-    if (path === '/robots.txt') {
-      const response = handleRobotsTxt();
-      metrics.operation = 'robots-txt';
-      metrics.duration = performance.now() - requestStart;
-      console.log(metrics);
-      return response;
-    }
+      // Handle robots.txt
+      if (path === '/robots.txt') {
+        const response = handleRobotsTxt();
+        metrics.operation = 'robots-txt';
+        metrics.duration = performance.now() - requestStart;
+        console.log(metrics);
+        return response;
+      }
 
-    // Handle sitemap.xml
-    if (path === '/sitemap.xml') {
-      const response = handleSitemap(url);
-      metrics.operation = 'sitemap';
-      metrics.duration = performance.now() - requestStart;
-      console.log(metrics);
-      return response;
-    }
+      // Handle sitemap.xml
+      if (path === '/sitemap.xml') {
+        const response = handleSitemap(url);
+        metrics.operation = 'sitemap';
+        metrics.duration = performance.now() - requestStart;
+        console.log(metrics);
+        return response;
+      }
 
     // Handle manifest files
     if (path === '/manifest-ar.json' || path === '/manifest-en.json') {

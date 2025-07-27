@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار نموذج الاتصال - د. اسلام الصغير</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            padding: 2rem;
+            background: #f8f7f5;
+            font-family: 'Poppins', sans-serif;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .test-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #BEB093;
+        }
+        .test-scenarios {
+            background: #f0f9ff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #0ea5e9;
+        }
+        .test-scenarios h3 {
+            color: #0369a1;
+            margin-bottom: 1rem;
+        }
+        .test-scenarios ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .test-scenarios li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e0f2fe;
+        }
+        .test-scenarios li:last-child {
+            border-bottom: none;
+        }
+        .scenario-emoji {
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🧪 اختبار نموذج الاتصال المحسن</h1>
+            <p>اختبار شامل لنظام التحقق والتغذية الراجعة</p>
+        </div>
+
+        <div class="test-scenarios">
+            <h3>📝 سيناريوهات الاختبار</h3>
+            <ul>
+                <li><span class="scenario-emoji">1️⃣</span> اتركي الحقول فارغة واضغط إرسال - يجب ظهور رسائل خطأ</li>
+                <li><span class="scenario-emoji">2️⃣</span> ادخل بريد إلكتروني غير صحيح (بدون @) - يجب ظهور تحذير فوري</li>
+                <li><span class="scenario-emoji">3️⃣</span> ادخل رقم هاتف غير صحيح - يجب ظهور رسالة خطأ مع اهتزاز</li>
+                <li><span class="scenario-emoji">4️⃣</span> اكتب أكثر من 1000 حرف في الرسالة - يجب تغيير لون العداد</li>
+                <li><span class="scenario-emoji">5️⃣</span> املأ البيانات بشكل صحيح - يجب ظهور حالة النجاح الخضراء</li>
+                <li><span class="scenario-emoji">6️⃣</span> اختبر التنقل بالكيبورد (Tab) للتحقق من إمكانية الوصول</li>
+            </ul>
+        </div>
+
+        <!-- Contact Form Implementation -->
+        <div class="contact-form-section">
+            <h3>أرسل لنا رسالة</h3>
+            <form id="contactForm" class="contact-form" action="#" method="POST" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" required aria-describedby="name-error">
+                        <label for="name">الاسم الكامل <span class="required" aria-label="مطلوب">*</span></label>
+                        <div class="error-message" id="name-error" role="alert" aria-live="polite"></div>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" required aria-describedby="phone-error phone-hint">
+                        <label for="phone">رقم الهاتف <span class="required" aria-label="مطلوب">*</span></label>
+                        <div class="field-hint" id="phone-hint">مثال: 98563711 أو +96598563711</div>
+                        <div class="error-message" id="phone-error" role="alert" aria-live="polite"></div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required aria-describedby="email-error email-hint">
+                        <label for="email">البريد الإلكتروني <span class="required" aria-label="مطلوب">*</span></label>
+                        <div class="field-hint" id="email-hint">مثال: patient@example.com</div>
+                        <div class="error-message" id="email-error" role="alert" aria-live="polite"></div>
+                    </div>
+                    <div class="form-group">
+                        <select id="service" name="service" required aria-describedby="service-error">
+                            <option value="">اختر نوع الخدمة</option>
+                            <option value="implants">زراعة الأسنان</option>
+                            <option value="cosmetic">تجميل الأسنان</option>
+                            <option value="orthodontic">التقويم</option>
+                            <option value="endodontic">علاج الجذور</option>
+                            <option value="surgery">جراحة الأسنان</option>
+                            <option value="general">فحص عام</option>
+                            <option value="emergency">حالة طوارئ</option>
+                            <option value="consultation">استشارة</option>
+                        </select>
+                        <label for="service">نوع الخدمة <span class="required" aria-label="مطلوب">*</span></label>
+                        <div class="error-message" id="service-error" role="alert" aria-live="polite"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <textarea id="message" name="message" rows="4" maxlength="1000" aria-describedby="message-hint message-count"></textarea>
+                    <label for="message">رسالتك (اختياري)</label>
+                    <div class="field-hint" id="message-hint">اكتب تفاصيل إضافية عن حالتك أو أسئلتك</div>
+                    <div class="character-count" id="message-count" aria-live="polite">0/1000</div>
+                </div>
+                
+                <button type="submit" id="submitBtn" class="submit-btn" aria-describedby="submit-hint">
+                    <span class="btn-text">إرسال الرسالة</span>
+                    <span class="btn-loading" style="display: none;">
+                        <span class="loading-spinner"></span>
+                        جاري الإرسال...
+                    </span>
+                </button>
+                <div class="field-hint" id="submit-hint">سنرد عليك في أقرب وقت ممكن</div>
+                
+                <div class="form-message" id="formMessage" style="display: none;" role="alert" aria-live="assertive">
+                    <div class="message-icon"></div>
+                    <div class="message-content">
+                        <div class="message-title"></div>
+                        <div class="message-description"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Simple Contact Form Handler for Testing
+        class TestContactFormHandler {
+            constructor() {
+                this.form = document.getElementById('contactForm');
+                this.submitBtn = document.getElementById('submitBtn');
+                this.formMessage = document.getElementById('formMessage');
+                this.isSubmitting = false;
+                
+                this.init();
+            }
+            
+            init() {
+                if (!this.form) return;
+                
+                // Form submission handler
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+                
+                // Real-time validation
+                this.setupRealTimeValidation();
+                
+                // Character counter for message field
+                this.setupCharacterCounter();
+                
+                // Phone number formatting
+                this.setupPhoneFormatting();
+            }
+            
+            setupRealTimeValidation() {
+                const fields = ['name', 'email', 'phone', 'service'];
+                
+                fields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.addEventListener('blur', () => this.validateField(fieldId));
+                        field.addEventListener('input', () => {
+                            this.clearFieldError(fieldId);
+                            
+                            // Immediate validation for some fields
+                            if (fieldId === 'email' && field.value.includes('@')) {
+                                setTimeout(() => this.validateField(fieldId), 500);
+                            }
+                            
+                            if (fieldId === 'phone' && field.value.length >= 8) {
+                                setTimeout(() => this.validateField(fieldId), 500);
+                            }
+                            
+                            // Add success state
+                            if (field.value.trim() && !field.classList.contains('error')) {
+                                field.classList.add('success');
+                            } else {
+                                field.classList.remove('success');
+                            }
+                        });
+                    }
+                });
+            }
+            
+            setupCharacterCounter() {
+                const messageField = document.getElementById('message');
+                const counter = document.getElementById('message-count');
+                
+                if (messageField && counter) {
+                    messageField.addEventListener('input', () => {
+                        const length = messageField.value.length;
+                        counter.textContent = `${length}/1000`;
+                        
+                        if (length > 950) {
+                            counter.style.color = '#e53e3e';
+                            counter.style.fontWeight = '600';
+                            counter.textContent = `${length}/1000 - اقترب من الحد الأقصى`;
+                        } else if (length > 800) {
+                            counter.style.color = '#ed8936';
+                            counter.style.fontWeight = '600';
+                        } else {
+                            counter.style.color = '#777669';
+                            counter.style.fontWeight = '400';
+                        }
+                    });
+                }
+            }
+            
+            setupPhoneFormatting() {
+                const phoneField = document.getElementById('phone');
+                
+                if (phoneField) {
+                    phoneField.addEventListener('input', (e) => {
+                        let value = e.target.value.replace(/[^\d+]/g, '');
+                        
+                        if (value.length === 8 && !value.startsWith('+') && !value.startsWith('965')) {
+                            value = '+965' + value;
+                        }
+                        
+                        e.target.value = value;
+                    });
+                }
+            }
+            
+            async handleSubmit(e) {
+                e.preventDefault();
+                
+                if (this.isSubmitting) return;
+                
+                if (!this.validateAllFields()) {
+                    this.showMessage('error', '❌ يرجى تصحيح الأخطاء أولاً', 'هناك أخطاء في البيانات المدخلة');
+                    return;
+                }
+                
+                this.isSubmitting = true;
+                this.showLoadingState();
+                
+                // Simulate API call
+                setTimeout(() => {
+                    this.handleSuccess({ reference: 'TEST-' + Math.random().toString(36).substr(2, 9).toUpperCase() });
+                    this.isSubmitting = false;
+                    this.hideLoadingState();
+                }, 2000);
+            }
+            
+            validateAllFields() {
+                let isValid = true;
+                const fields = ['name', 'email', 'phone', 'service'];
+                
+                fields.forEach(fieldId => {
+                    const fieldValid = this.validateField(fieldId);
+                    if (!fieldValid) {
+                        isValid = false;
+                    }
+                });
+                
+                return isValid;
+            }
+            
+            validateField(fieldId) {
+                this.clearFieldError(fieldId);
+                
+                const field = document.getElementById(fieldId);
+                const value = field.value.trim();
+                let isValid = true;
+                
+                switch (fieldId) {
+                    case 'name':
+                        if (value.length < 2) {
+                            this.showFieldError(fieldId, 'الاسم يجب أن يكون على الأقل حرفين');
+                            isValid = false;
+                        } else if (value.length > 50) {
+                            this.showFieldError(fieldId, 'الاسم طويل جداً (الحد الأقصى 50 حرف)');
+                            isValid = false;
+                        }
+                        break;
+                        
+                    case 'email':
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!value) {
+                            this.showFieldError(fieldId, 'البريد الإلكتروني مطلوب');
+                            isValid = false;
+                        } else if (!emailRegex.test(value)) {
+                            this.showFieldError(fieldId, 'البريد الإلكتروني غير صحيح (مثال: patient@example.com)');
+                            isValid = false;
+                        }
+                        break;
+                        
+                    case 'phone':
+                        const phoneRegex = /^(\+965|965)?[2456789]\d{7}$/;
+                        const cleanPhone = value.replace(/[\s-]/g, '');
+                        if (!value) {
+                            this.showFieldError(fieldId, 'رقم الهاتف مطلوب');
+                            isValid = false;
+                        } else if (!phoneRegex.test(cleanPhone)) {
+                            this.showFieldError(fieldId, 'رقم الهاتف غير صحيح (مثال: 98563711 أو +96598563711)');
+                            isValid = false;
+                        }
+                        break;
+                        
+                    case 'service':
+                        if (!value) {
+                            this.showFieldError(fieldId, 'يرجى اختيار نوع الخدمة');
+                            isValid = false;
+                        }
+                        break;
+                }
+                
+                if (isValid && value) {
+                    field.classList.add('success');
+                    field.classList.remove('error');
+                }
+                
+                return isValid;
+            }
+            
+            showFieldError(fieldId, message) {
+                const errorElement = document.getElementById(`${fieldId}-error`);
+                const field = document.getElementById(fieldId);
+                
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'flex';
+                }
+                
+                if (field) {
+                    field.classList.add('error');
+                    field.classList.remove('success');
+                    
+                    // Shake animation
+                    setTimeout(() => {
+                        field.style.animation = 'shake 0.5s ease-in-out';
+                        setTimeout(() => {
+                            field.style.animation = '';
+                        }, 500);
+                    }, 10);
+                }
+            }
+            
+            clearFieldError(fieldId) {
+                const errorElement = document.getElementById(`${fieldId}-error`);
+                const field = document.getElementById(fieldId);
+                
+                if (errorElement) {
+                    errorElement.style.display = 'none';
+                    errorElement.textContent = '';
+                }
+                
+                if (field) {
+                    field.classList.remove('error');
+                }
+            }
+            
+            handleSuccess(result) {
+                this.form.reset();
+                
+                // Clear all field states
+                const fields = ['name', 'email', 'phone', 'service'];
+                fields.forEach(fieldId => {
+                    this.clearFieldError(fieldId);
+                    const field = document.getElementById(fieldId);
+                    if (field) {
+                        field.classList.remove('success', 'error');
+                    }
+                });
+                
+                // Reset character counter
+                const counter = document.getElementById('message-count');
+                if (counter) {
+                    counter.textContent = '0/1000';
+                    counter.style.color = '#777669';
+                    counter.style.fontWeight = '400';
+                }
+                
+                this.showMessage(
+                    'success',
+                    '✅ تم إرسال طلبك بنجاح!',
+                    `شكراً لتواصلك معنا. رقم المرجع: ${result.reference}`
+                );
+                
+                setTimeout(() => this.hideMessage(), 10000);
+            }
+            
+            showMessage(type, title, description) {
+                const messageElement = this.formMessage;
+                const icon = messageElement.querySelector('.message-icon');
+                const titleElement = messageElement.querySelector('.message-title');
+                const descElement = messageElement.querySelector('.message-description');
+                
+                titleElement.textContent = title;
+                descElement.textContent = description;
+                icon.textContent = type === 'success' ? '✅' : '❌';
+                
+                messageElement.className = `form-message ${type}`;
+                messageElement.style.display = 'block';
+                
+                messageElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            hideMessage() {
+                this.formMessage.style.display = 'none';
+            }
+            
+            showLoadingState() {
+                const btnText = this.submitBtn.querySelector('.btn-text');
+                const btnLoading = this.submitBtn.querySelector('.btn-loading');
+                
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline-flex';
+                this.submitBtn.disabled = true;
+                this.submitBtn.classList.add('loading');
+            }
+            
+            hideLoadingState() {
+                const btnText = this.submitBtn.querySelector('.btn-text');
+                const btnLoading = this.submitBtn.querySelector('.btn-loading');
+                
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+                this.submitBtn.disabled = false;
+                this.submitBtn.classList.remove('loading');
+            }
+        }
+        
+        // Initialize the test form handler
+        document.addEventListener('DOMContentLoaded', () => {
+            new TestContactFormHandler();
+        });
+    </script>
+</body>
+</html>
