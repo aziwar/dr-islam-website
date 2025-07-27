@@ -2,12 +2,13 @@
 import { CRITICAL_CSS } from './css/critical.css.js';
 import { COMPONENT_CSS } from './css/components.css.js';
 import { RESPONSIVE_CSS } from './css/responsive.css.js';
+import { MOBILE_UX_CSS } from './css/mobile-ux.css.js';
 
 // Combine all CSS modules
-export const CSS = CRITICAL_CSS + COMPONENT_CSS + RESPONSIVE_CSS;
+export const CSS = CRITICAL_CSS + COMPONENT_CSS + RESPONSIVE_CSS + MOBILE_UX_CSS;
 
 // Export individual modules for selective loading if needed
-export { CRITICAL_CSS, COMPONENT_CSS, RESPONSIVE_CSS };
+export { CRITICAL_CSS, COMPONENT_CSS, RESPONSIVE_CSS, MOBILE_UX_CSS };
 
 // Helper function to get CSS based on device type (optional optimization)
 export function getCSSForRequest(request, isMobile) {
@@ -16,7 +17,7 @@ export function getCSSForRequest(request, isMobile) {
     
     // For mobile devices, we might want to prioritize critical and responsive CSS
     if (isActuallyMobile) {
-        return CRITICAL_CSS + RESPONSIVE_CSS + COMPONENT_CSS;
+        return CRITICAL_CSS + MOBILE_UX_CSS + RESPONSIVE_CSS + COMPONENT_CSS;
     }
     
     // For desktop, load in standard order

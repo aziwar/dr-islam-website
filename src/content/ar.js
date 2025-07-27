@@ -1,4 +1,6 @@
 // src/content/ar.js
+import { MOBILE_UX_JS } from './js/mobile-ux.js';
+
 export const HTML_AR = `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -1582,6 +1584,12 @@ export const HTML_AR = `<!DOCTYPE html>
     });
 
     console.log('Dr. Islam Website - Enhanced Gallery System Loaded');
+    
+    // =================================
+    // MOBILE UX ENHANCEMENTS
+    // =================================
+    ` + MOBILE_UX_JS + `
+    
     </script>
 </body>
 </html>`;

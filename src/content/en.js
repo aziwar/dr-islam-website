@@ -1,4 +1,6 @@
 // src/content/en.js
+import { MOBILE_UX_JS } from './js/mobile-ux.js';
+
 export const HTML_EN = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1292,6 +1294,12 @@ export const HTML_EN = `<!DOCTYPE html>
             document.querySelector('.install-prompt')?.remove();
         };
     }
+    
+    // =================================
+    // MOBILE UX ENHANCEMENTS
+    // =================================
+    ` + MOBILE_UX_JS + `
+    
     </script>
 </body>
 </html>`;
