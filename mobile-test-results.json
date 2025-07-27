@@ -66,7 +66,7 @@
         {
           "name": "Touch targets adequate size",
           "passed": true,
-          "details": "4 of 5 tested"
+          "details": "3 of 5 tested"
         }
       ],
       "passed": 13,
@@ -138,7 +138,7 @@
         {
           "name": "Touch targets adequate size",
           "passed": true,
-          "details": "4 of 5 tested"
+          "details": "3 of 5 tested"
         }
       ],
       "passed": 13,
@@ -209,12 +209,12 @@
         },
         {
           "name": "Touch targets adequate size",
-          "passed": true,
-          "details": "4 of 5 tested"
+          "passed": false,
+          "details": "2 of 5 tested"
         }
       ],
-      "passed": 13,
-      "failed": 0
+      "passed": 12,
+      "failed": 1
     },
     {
       "device": "iPad",
@@ -242,14 +242,14 @@
         {
           "name": "Touch targets adequate size",
           "passed": false,
-          "details": "0 of 5 tested"
+          "details": "1 of 5 tested"
         }
       ],
       "passed": 3,
       "failed": 2
     }
   ],
-  "overallPassed": 42,
-  "overallFailed": 2,
-  "timestamp": "2025-07-26T13:33:44.911Z"
+  "overallPassed": 41,
+  "overallFailed": 3,
+  "timestamp": "2025-07-27T16:18:01.064Z"
 }
