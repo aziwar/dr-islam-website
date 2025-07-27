@@ -51,6 +51,33 @@ class MobileNavigation {
                     this.closeMenu();
                 }
             });
+            
+            // Close menu when clicking outside menu area (on page content)
+            document.addEventListener('click', (e) => {
+                if (this.isOpen && 
+                    !this.menu.contains(e.target) && 
+                    !this.toggle.contains(e.target) &&
+                    !this.overlay.contains(e.target)) {
+                    this.closeMenu();
+                }
+            });
+            
+            // Ensure contact form interactions always work
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.contact-form')) {
+                    // Force close menu if user interacts with contact form
+                    if (this.isOpen) {
+                        this.closeMenu();
+                    }
+                }
+            });
+            
+            // Additional safety: close menu when scrolling page content
+            window.addEventListener('scroll', () => {
+                if (this.isOpen) {
+                    this.closeMenu();
+                }
+            });
         }
     }
     
@@ -78,6 +105,13 @@ class MobileNavigation {
         this.menu.classList.remove(CSS_CLASSES.ACTIVE);
         this.overlay?.classList.remove(CSS_CLASSES.ACTIVE);
         document.body.style.overflow = '';
+        
+        // Ensure overlay doesn't interfere with pointer events
+        if (this.overlay) {
+            this.overlay.style.pointerEvents = 'none';
+            this.overlay.style.visibility = 'hidden';
+            this.overlay.style.opacity = '0';
+        }
     }
 }
 
@@ -786,4 +820,319 @@ class CaseStudyModal {
     }
 }
 
-console.log('Dr. Islam Website - Enhanced Gallery System Loaded');
+// Enhanced Contact Form Handler
+class ContactFormHandler {
+    constructor() {
+        this.form = document.getElementById('contactForm');
+        this.submitBtn = document.getElementById('submitBtn');
+        this.formMessage = document.getElementById('formMessage');
+        this.isSubmitting = false;
+        
+        this.init();
+    }
+    
+    init() {
+        if (!this.form) return;
+        
+        // Form submission handler
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        
+        // Real-time validation
+        this.setupRealTimeValidation();
+        
+        // Character counter for message field
+        this.setupCharacterCounter();
+        
+        // Phone number formatting
+        this.setupPhoneFormatting();
+    }
+    
+    setupRealTimeValidation() {
+        const fields = ['name', 'email', 'phone', 'service'];
+        
+        fields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.addEventListener('blur', () => this.validateField(fieldId));
+                field.addEventListener('input', () => this.clearFieldError(fieldId));
+            }
+        });
+    }
+    
+    setupCharacterCounter() {
+        const messageField = document.getElementById('message');
+        const counter = document.getElementById('message-count');
+        
+        if (messageField && counter) {
+            messageField.addEventListener('input', () => {
+                const length = messageField.value.length;
+                counter.textContent = `${length}/1000`;
+                
+                if (length > 900) {
+                    counter.style.color = '#e53e3e';
+                } else if (length > 800) {
+                    counter.style.color = '#ed8936';
+                } else {
+                    counter.style.color = '#718096';
+                }
+            });
+        }
+    }
+    
+    setupPhoneFormatting() {
+        const phoneField = document.getElementById('phone');
+        
+        if (phoneField) {
+            phoneField.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/[^\d+]/g, '');
+                
+                // Auto-add Kuwait country code if not present
+                if (value.length === 8 && !value.startsWith('+') && !value.startsWith('965')) {
+                    value = '+965' + value;
+                }
+                
+                e.target.value = value;
+            });
+        }
+    }
+    
+    async handleSubmit(e) {
+        e.preventDefault();
+        
+        if (this.isSubmitting) return;
+        
+        // Validate all fields
+        if (!this.validateAllFields()) {
+            this.showMessage('error', 'يرجى تصحيح الأخطاء أولاً', 'هناك أخطاء في البيانات المدخلة');
+            return;
+        }
+        
+        this.isSubmitting = true;
+        this.showLoadingState();
+        
+        try {
+            const formData = new FormData(this.form);
+            
+            // Submit to Cloudflare Worker
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok && result.success) {
+                this.handleSuccess(result);
+            } else {
+                this.handleError(result);
+            }
+            
+        } catch (error) {
+            console.error('Form submission error:', error);
+            this.handleError({
+                message: 'فشل في الاتصال بالخادم. يرجى التأكد من اتصال الإنترنت والمحاولة مرة أخرى.',
+                error: 'Network error'
+            });
+        } finally {
+            this.isSubmitting = false;
+            this.hideLoadingState();
+        }
+    }
+    
+    validateAllFields() {
+        let isValid = true;
+        
+        // Validate name
+        const name = document.getElementById('name').value.trim();
+        if (name.length < 2) {
+            this.showFieldError('name', 'الاسم يجب أن يكون على الأقل حرفين');
+            isValid = false;
+        }
+        
+        // Validate email
+        const email = document.getElementById('email').value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            this.showFieldError('email', 'البريد الإلكتروني غير صحيح');
+            isValid = false;
+        }
+        
+        // Validate phone
+        const phone = document.getElementById('phone').value.trim();
+        const phoneRegex = /^(\+965|965)?[2456789]\d{7}$/;
+        const cleanPhone = phone.replace(/[\s-]/g, '');
+        if (!phoneRegex.test(cleanPhone)) {
+            this.showFieldError('phone', 'رقم الهاتف غير صحيح (مثال: 98563711)');
+            isValid = false;
+        }
+        
+        // Validate service
+        const service = document.getElementById('service').value;
+        if (!service) {
+            this.showFieldError('service', 'يرجى اختيار نوع الخدمة');
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+    
+    validateField(fieldId) {
+        this.clearFieldError(fieldId);
+        
+        const field = document.getElementById(fieldId);
+        const value = field.value.trim();
+        
+        switch (fieldId) {
+            case 'name':
+                if (value.length < 2) {
+                    this.showFieldError(fieldId, 'الاسم يجب أن يكون على الأقل حرفين');
+                }
+                break;
+                
+            case 'email':
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (value && !emailRegex.test(value)) {
+                    this.showFieldError(fieldId, 'البريد الإلكتروني غير صحيح');
+                }
+                break;
+                
+            case 'phone':
+                const phoneRegex = /^(\+965|965)?[2456789]\d{7}$/;
+                const cleanPhone = value.replace(/[\s-]/g, '');
+                if (value && !phoneRegex.test(cleanPhone)) {
+                    this.showFieldError(fieldId, 'رقم الهاتف غير صحيح');
+                }
+                break;
+        }
+    }
+    
+    showFieldError(fieldId, message) {
+        const errorElement = document.getElementById(`${fieldId}-error`);
+        const field = document.getElementById(fieldId);
+        
+        if (errorElement) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        
+        if (field) {
+            field.classList.add('error');
+        }
+    }
+    
+    clearFieldError(fieldId) {
+        const errorElement = document.getElementById(`${fieldId}-error`);
+        const field = document.getElementById(fieldId);
+        
+        if (errorElement) {
+            errorElement.style.display = 'none';
+        }
+        
+        if (field) {
+            field.classList.remove('error');
+        }
+    }
+    
+    handleSuccess(result) {
+        // Reset form
+        this.form.reset();
+        document.getElementById('message-count').textContent = '0/1000';
+        
+        // Show success message
+        this.showMessage(
+            'success',
+            '✅ تم إرسال طلبك بنجاح!',
+            `شكراً لتواصلك معنا. سنرد عليك قريباً. رقم المرجع: ${result.reference || ''}`
+        );
+        
+        // Track success analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'form_submit_success', {
+                'event_category': 'contact',
+                'event_label': 'contact_form',
+                'value': 1
+            });
+        }
+        
+        // Auto-hide success message after 10 seconds
+        setTimeout(() => {
+            this.hideMessage();
+        }, 10000);
+    }
+    
+    handleError(result) {
+        let errorMessage = 'حدث خطأ أثناء إرسال الطلب. يرجى المحاولة مرة أخرى.';
+        
+        if (result.message) {
+            errorMessage = result.message;
+        } else if (result.details && Array.isArray(result.details)) {
+            errorMessage = result.details.join('، ');
+        }
+        
+        this.showMessage('error', '❌ فشل في إرسال الطلب', errorMessage);
+        
+        // Track error analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'form_submit_error', {
+                'event_category': 'contact',
+                'event_label': result.error || 'unknown_error',
+                'value': 0
+            });
+        }
+    }
+    
+    showMessage(type, title, description) {
+        const messageElement = this.formMessage;
+        const icon = messageElement.querySelector('.message-icon');
+        const titleElement = messageElement.querySelector('.message-title');
+        const descElement = messageElement.querySelector('.message-description');
+        
+        // Set content
+        titleElement.textContent = title;
+        descElement.textContent = description;
+        
+        // Set icon based on type
+        icon.textContent = type === 'success' ? '✅' : '❌';
+        
+        // Set styling
+        messageElement.className = `form-message ${type}`;
+        messageElement.style.display = 'block';
+        
+        // Scroll to message
+        messageElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    hideMessage() {
+        this.formMessage.style.display = 'none';
+    }
+    
+    showLoadingState() {
+        const btnText = this.submitBtn.querySelector('.btn-text');
+        const btnLoading = this.submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline-flex';
+        this.submitBtn.disabled = true;
+        this.submitBtn.classList.add('loading');
+    }
+    
+    hideLoadingState() {
+        const btnText = this.submitBtn.querySelector('.btn-text');
+        const btnLoading = this.submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'inline';
+        btnLoading.style.display = 'none';
+        this.submitBtn.disabled = false;
+        this.submitBtn.classList.remove('loading');
+    }
+}
+
+// Initialize contact form handler
+document.addEventListener('DOMContentLoaded', () => {
+    new ContactFormHandler();
+});
+
+console.log('Dr. Islam Website - Enhanced Gallery System and Contact Form Loaded');

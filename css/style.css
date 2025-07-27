@@ -795,6 +795,95 @@ nav a:hover {
     background: var(--light);
 }
 
+/* Contact Form */
+.contact-form-container {
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    text-align: right;
+    direction: rtl;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px 15px;
+    border: 2px solid rgba(119, 118, 105, 0.2);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    direction: rtl;
+    text-align: right;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: var(--white);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-btn {
+    background: var(--primary);
+    color: var(--white);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.submit-btn:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(190, 176, 147, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
 .contact h2 {
     text-align: center;
     color: var(--secondary);
@@ -933,13 +1022,28 @@ footer {
         background: rgba(0,0,0,0.5);
         opacity: 0;
         visibility: hidden;
+        pointer-events: none;
         transition: all 0.3s ease;
-        z-index: 100;
+        z-index: 99; /* Lowered z-index to prevent form interference */
     }
     
     .nav-overlay.active {
         opacity: 1;
         visibility: visible;
+        pointer-events: auto;
+    }
+    
+    /* Ensure contact form has higher z-index to prevent interference */
+    .contact-form-container {
+        position: relative;
+        z-index: 102;
+    }
+    
+    /* Ensure contact form buttons are accessible */
+    .contact-form .submit-btn {
+        position: relative;
+        z-index: 103;
+        pointer-events: auto;
     }
     
     .about-content {
@@ -1222,4 +1326,827 @@ html {
     background-size: 200% 100%;
     animation: loading-shimmer 1.5s infinite;
     border-radius: 8px;
+}
+
+/* ===== ENHANCED BOOKING MODAL STYLES ===== */
+
+/* Modal Overlay */
+.booking-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--animation-normal) ease;
+    backdrop-filter: blur(3px);
+    padding: var(--space-sm);
+}
+
+.booking-modal[style*="flex"] {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal Content */
+.booking-modal-content {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(30px);
+    transition: transform var(--animation-normal) ease;
+    animation: modalSlideIn 0.3s ease forwards;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Modal Header */
+.booking-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-lg);
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.booking-modal-header h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--animation-fast) ease;
+}
+
+.close-modal:hover {
+    background: #f5f5f5;
+    color: var(--text);
+}
+
+/* Modal Body */
+.booking-modal-body {
+    padding: var(--space-lg);
+}
+
+.booking-description {
+    color: var(--secondary);
+    margin-bottom: var(--space-lg);
+    text-align: center;
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+}
+
+/* Booking Form */
+.booking-form .form-group {
+    position: relative;
+    margin-bottom: var(--space-lg);
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+    width: 100%;
+    padding: 16px 12px 8px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    background: var(--white);
+    transition: all var(--animation-fast) ease;
+    font-family: inherit;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.1);
+}
+
+.booking-form label {
+    position: absolute;
+    left: 12px;
+    top: 16px;
+    color: var(--secondary);
+    font-size: var(--font-size-base);
+    transition: all var(--animation-fast) ease;
+    pointer-events: none;
+    background: var(--white);
+    padding: 0 4px;
+}
+
+.booking-form input:focus + label,
+.booking-form select:focus + label,
+.booking-form textarea:focus + label,
+.booking-form input:not(:placeholder-shown) + label,
+.booking-form select:not([value=""]) + label,
+.booking-form textarea:not(:placeholder-shown) + label {
+    transform: translateY(-24px) scale(0.85);
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.booking-form textarea {
+    resize: vertical;
+    min-height: 80px;
+    padding-top: 20px;
+}
+
+.booking-form textarea + label {
+    top: 20px;
+}
+
+/* Modal Actions */
+.booking-modal-actions {
+    margin-top: var(--space-xl);
+    text-align: center;
+}
+
+.booking-submit-btn {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--animation-fast) ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-family: inherit;
+}
+
+.booking-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.booking-submit-btn:active {
+    transform: translateY(0);
+}
+
+.booking-btn-icon {
+    font-size: var(--font-size-xl);
+}
+
+.booking-disclaimer {
+    margin-top: var(--space-md);
+    color: var(--secondary);
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
+/* Success Notification */
+.booking-success-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--success);
+    color: white;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    transform: translateX(350px);
+    transition: transform var(--animation-normal) ease;
+}
+
+.booking-success-notification.show {
+    transform: translateX(0);
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.notification-icon {
+    font-size: var(--font-size-lg);
+}
+
+.notification-text {
+    font-weight: 500;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .booking-modal {
+        padding: var(--space-xs);
+        align-items: flex-end;
+    }
+    
+    .booking-modal-content {
+        max-height: 85vh;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+    
+    .booking-modal-header,
+    .booking-modal-body {
+        padding: var(--space-md);
+    }
+    
+    .booking-success-notification {
+        right: 10px;
+        left: 10px;
+        transform: translateY(-100px);
+    }
+    
+    .booking-success-notification.show {
+        transform: translateY(0);
+    }
+}
+
+/* RTL Support for Arabic */
+[dir="rtl"] .booking-modal-header {
+    direction: rtl;
+}
+
+[dir="rtl"] .booking-form label {
+    left: auto;
+    right: 12px;
+}
+
+[dir="rtl"] .booking-success-notification {
+    right: auto;
+    left: 20px;
+}
+
+@media (max-width: 768px) {
+    [dir="rtl"] .booking-success-notification {
+        left: 10px;
+        right: 10px;
+    }
+}
+
+/* Button Styling Update */
+.cta-button, .sticky-book {
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Accessibility Improvements */
+.booking-modal:focus-within .booking-modal-content {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .booking-modal,
+    .booking-modal-content,
+    .booking-submit-btn,
+    .booking-success-notification {
+        transition: none;
+    }
+    
+    @keyframes modalSlideIn {
+        from, to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+}
+
+/* =================================================================
+   ENHANCED CONTACT FORM STYLES
+   ================================================================= */
+
+/* Contact Section Base */
+.contact {
+    padding: var(--space-xl) 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    position: relative;
+}
+
+.contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.contact h2 {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    color: var(--text);
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+}
+
+/* Contact Form Container */
+.contact-form-container {
+    max-width: 600px;
+    margin: 0 auto var(--space-xl);
+    background: var(--white);
+    padding: var(--space-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+}
+
+.contact-form-container::before {
+    content: '📋';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    background: var(--white);
+    padding: 0 var(--space-sm);
+}
+
+/* Form Layout */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    position: relative;
+}
+
+/* Form Labels */
+.form-group label {
+    font-weight: 600;
+    color: var(--text);
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-xs);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.form-group label::after {
+    content: '*';
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Form Inputs */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    font-family: inherit;
+    transition: all var(--animation-fast) ease;
+    background: var(--white);
+    width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+    border-color: var(--secondary);
+}
+
+/* Error States */
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+/* Error Messages */
+.error-message {
+    color: #dc3545;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    display: none;
+    margin-top: var(--space-xs);
+    padding-left: var(--space-sm);
+    position: relative;
+}
+
+.error-message::before {
+    content: '⚠️';
+    margin-right: var(--space-xs);
+}
+
+/* Character Counter */
+.char-count {
+    font-size: var(--font-size-sm);
+    color: #718096;
+    text-align: left;
+    margin-top: var(--space-xs);
+    font-weight: 500;
+}
+
+/* Select Styling */
+.form-group select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: left 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-left: 40px;
+}
+
+[dir="rtl"] .form-group select {
+    background-position: right 12px center;
+    padding-left: 16px;
+    padding-right: 40px;
+}
+
+/* Textarea Styling */
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+}
+
+/* Submit Button */
+.submit-btn {
+    padding: 16px 32px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--animation-fast) ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    font-family: inherit;
+    position: relative;
+    overflow: hidden;
+    min-height: 54px;
+    margin-top: var(--space-md);
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Loading State */
+.submit-btn.loading {
+    pointer-events: none;
+}
+
+.btn-loading {
+    display: none;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--white);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Form Messages */
+.form-message {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    display: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-message.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.form-message.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.message-content {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+}
+
+.message-icon {
+    font-size: var(--font-size-xl);
+    margin-top: 2px;
+}
+
+.message-title {
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+    font-size: var(--font-size-lg);
+}
+
+.message-description {
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Contact Info Grid */
+.contact-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-md);
+    margin: var(--space-xl) 0;
+}
+
+.contact-card {
+    background: var(--white);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    transition: all var(--animation-fast) ease;
+    border: 1px solid #e9ecef;
+}
+
+.contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+}
+
+.contact-card h3 {
+    color: var(--primary);
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.contact-card p {
+    margin: 0;
+}
+
+.contact-card a {
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--animation-fast) ease;
+}
+
+.contact-card a:hover {
+    color: var(--primary);
+}
+
+/* Working Hours */
+.working-hours {
+    background: var(--white);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-top: var(--space-xl);
+    text-align: center;
+}
+
+.working-hours h3 {
+    color: var(--primary);
+    margin-bottom: var(--space-md);
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+}
+
+.hours-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.day-hours {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.day-hours:last-child {
+    border-bottom: none;
+}
+
+.day {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.hours {
+    color: var(--secondary);
+    font-weight: 500;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .contact {
+        padding: var(--space-lg) 0;
+    }
+    
+    .contact h2 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--space-lg);
+    }
+    
+    .contact-form-container {
+        margin: 0 var(--space-sm) var(--space-lg);
+        padding: var(--space-lg);
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+    
+    .submit-btn {
+        font-size: var(--font-size-base);
+        padding: 14px 24px;
+    }
+    
+    .contact-info {
+        grid-template-columns: 1fr;
+        margin: var(--space-lg) var(--space-sm);
+        gap: var(--space-sm);
+    }
+    
+    .working-hours {
+        margin: var(--space-lg) var(--space-sm) 0;
+        padding: var(--space-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-form-container {
+        padding: var(--space-md);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .submit-btn {
+        padding: 12px 20px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .contact-card {
+        padding: var(--space-md);
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .form-group select {
+    background-position: right 12px center;
+    padding-left: 16px;
+    padding-right: 40px;
+}
+
+[dir="rtl"] .error-message::before {
+    margin-right: 0;
+    margin-left: var(--space-xs);
+}
+
+[dir="rtl"] .char-count {
+    text-align: right;
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea,
+    .submit-btn,
+    .contact-card {
+        transition: none;
+    }
+    
+    .loading-spinner {
+        animation: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        border-width: 3px;
+    }
+    
+    .submit-btn {
+        border: 3px solid var(--text);
+    }
+}
+
+/* Focus Indicators */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.submit-btn:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .contact-form-container,
+    .submit-btn {
+        display: none;
+    }
+    
+    .contact-info,
+    .working-hours {
+        break-inside: avoid;
+    }
 }
