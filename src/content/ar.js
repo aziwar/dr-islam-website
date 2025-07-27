@@ -127,7 +127,7 @@ export const HTML_AR = `<!DOCTYPE html>
                 <span class="badge">أحدث التقنيات</span>
                 <span class="badge">رضا 100% للمرضى</span>
             </div>
-            <a href="https://wa.me/96598563711" class="cta-button">احجز موعدك الآن</a>
+            <button class="cta-button" onclick="openBookingModal()">احجز موعدك الآن</button>
         </div>
     </section>
 
@@ -460,14 +460,80 @@ export const HTML_AR = `<!DOCTYPE html>
         </div>
     </section>
 
+    <!-- Enhanced Booking Modal - Arabic -->
+    <div id="bookingModal" class="booking-modal" style="display: none;" dir="rtl">
+        <div class="booking-modal-content">
+            <div class="booking-modal-header">
+                <h3>📅 احجز موعدك</h3>
+                <button class="close-modal" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div class="booking-modal-body">
+                <p class="booking-description">سنساعدك في حجز موعد عبر واتساب مع ملء بياناتك مسبقاً.</p>
+                
+                <form id="bookingForm" class="booking-form">
+                    <div class="form-group">
+                        <input type="text" id="bookingName" name="name" required>
+                        <label for="bookingName">الاسم الكامل</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="tel" id="bookingPhone" name="phone" required>
+                        <label for="bookingPhone">رقم الهاتف</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="bookingService" name="service" required>
+                            <option value="">اختر الخدمة</option>
+                            <option value="زراعة الأسنان">زراعة الأسنان</option>
+                            <option value="علاج العصب">علاج العصب</option>
+                            <option value="التركيبات الثابتة والمتحركة">التركيبات الثابتة والمتحركة</option>
+                            <option value="جراحة الفم">جراحة الفم</option>
+                            <option value="تجميل الأسنان">تجميل الأسنان</option>
+                            <option value="علاج اللثة">علاج اللثة</option>
+                            <option value="الحشوات التجميلية">الحشوات التجميلية</option>
+                            <option value="تأهيل الفم بالكامل">تأهيل الفم بالكامل</option>
+                            <option value="استشارة عامة">استشارة عامة</option>
+                            <option value="علاج طوارئ">علاج طوارئ</option>
+                        </select>
+                        <label for="bookingService">نوع الخدمة</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="bookingTime" name="time" required>
+                            <option value="">الوقت المفضل</option>
+                            <option value="صباحاً (9:00 - 12:00)">صباحاً (9:00 - 12:00)</option>
+                            <option value="بعد الظهر (12:00 - 6:00)">بعد الظهر (12:00 - 6:00)</option>
+                            <option value="مساءً (6:00 - 9:00)">مساءً (6:00 - 9:00)</option>
+                            <option value="أي وقت">أي وقت</option>
+                        </select>
+                        <label for="bookingTime">الوقت المفضل</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea id="bookingNotes" name="notes" rows="3" placeholder="أي ملاحظات أو طلبات خاصة (اختياري)"></textarea>
+                        <label for="bookingNotes">ملاحظات إضافية</label>
+                    </div>
+                    
+                    <div class="booking-modal-actions">
+                        <button type="submit" class="booking-submit-btn">
+                            <span class="booking-btn-icon">💬</span>
+                            متابعة عبر واتساب
+                        </button>
+                        <p class="booking-disclaimer">سيتم توجيهك إلى واتساب مع ملء بياناتك مسبقاً</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
     </footer>
 
     <!-- Sticky WhatsApp Booking Button -->
-    <a href="https://wa.me/96598563711" class="sticky-book">
+    <button class="sticky-book" onclick="openBookingModal()">
         احجز موعد 💬
-    </a>
+    </button>
 
     <script>
     // Ensure menu starts closed
@@ -615,13 +681,134 @@ export const HTML_AR = `<!DOCTYPE html>
         });
     });
 
-    // Analytics tracking
+    // Enhanced Booking Modal Functionality - Arabic
+    function openBookingModal() {
+        const modal = document.getElementById('bookingModal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Focus on the first input
+        setTimeout(() => {
+            document.getElementById('bookingName').focus();
+        }, 100);
+        
+        // Track modal open event
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'booking_modal_open', {
+                'event_category': 'engagement',
+                'event_label': 'booking_modal_ar'
+            });
+        }
+    }
+    
+    function closeBookingModal() {
+        const modal = document.getElementById('bookingModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Close modal on outside click
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('bookingModal');
+        if (e.target === modal) {
+            closeBookingModal();
+        }
+    });
+    
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeBookingModal();
+        }
+    });
+    
+    // Handle booking form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const bookingForm = document.getElementById('bookingForm');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const name = document.getElementById('bookingName').value;
+                const phone = document.getElementById('bookingPhone').value;
+                const service = document.getElementById('bookingService').value;
+                const time = document.getElementById('bookingTime').value;
+                const notes = document.getElementById('bookingNotes').value;
+                
+                // Create WhatsApp message in Arabic
+                let message = \`السلام عليكم دكتور اسلام،\\n\\n\`;
+                message += \`أرغب في حجز موعد:\\n\\n\`;
+                message += \`👤 الاسم: \${name}\\n\`;
+                message += \`📞 الهاتف: \${phone}\\n\`;
+                message += \`🦷 الخدمة: \${service}\\n\`;
+                message += \`⏰ الوقت المفضل: \${time}\\n\`;
+                
+                if (notes.trim()) {
+                    message += \`📝 ملاحظات: \${notes}\\n\`;
+                }
+                
+                message += \`\\nشكراً لكم\`;
+                
+                // Encode message for URL
+                const encodedMessage = encodeURIComponent(message);
+                
+                // Create WhatsApp URL
+                const whatsappUrl = \`https://wa.me/96598563711?text=\${encodedMessage}\`;
+                
+                // Track booking attempt
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'booking_attempt', {
+                        'event_category': 'conversion',
+                        'event_label': service,
+                        'value': 1
+                    });
+                }
+                
+                // Open WhatsApp
+                window.open(whatsappUrl, '_blank');
+                
+                // Close modal and show success message
+                closeBookingModal();
+                showBookingSuccess();
+            });
+        }
+    });
+    
+    function showBookingSuccess() {
+        // Create success notification
+        const notification = document.createElement('div');
+        notification.className = 'booking-success-notification';
+        notification.innerHTML = \`
+            <div class="notification-content">
+                <span class="notification-icon">✅</span>
+                <span class="notification-text">تم فتح واتساب مع بيانات الحجز!</span>
+            </div>
+        \`;
+        
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+        
+        // Hide notification after 4 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 4000);
+    }
+
+    // Analytics tracking for direct WhatsApp links
     document.querySelectorAll('a[href^="https://wa.me"]').forEach(link => {
         link.addEventListener('click', function() {
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'contact', {
                     'event_category': 'engagement',
-                    'event_label': 'whatsapp_click'
+                    'event_label': 'whatsapp_direct_click_ar'
                 });
             }
         });

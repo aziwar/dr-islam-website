@@ -1,0 +1,39 @@
+# Cloudflare Workers configuration for Dr. Islam Elsagher contact form handler
+
+name = "dr-islam-contact-form"
+main = "workers/contact-form-handler.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Environment variables (set these in Cloudflare dashboard)
+[vars]
+NODE_ENV = "production"
+CLINIC_EMAIL = "dr.islam_elsagher@gmail.com"
+FROM_EMAIL = "noreply@dr-elsagher.com"
+
+# Secrets (set via: wrangler secret put SENDGRID_API_KEY)
+# SENDGRID_API_KEY = "your-sendgrid-api-key"
+# RESEND_API_KEY = "your-resend-api-key" (alternative)
+
+# KV namespace for rate limiting (optional)
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "your-kv-namespace-id"
+preview_id = "your-preview-kv-namespace-id"
+
+# Custom domain routing
+[[routes]]
+pattern = "dr-elsagher.com/api/contact"
+zone_name = "dr-elsagher.com"
+
+[[routes]]
+pattern = "www.dr-elsagher.com/api/contact"
+zone_name = "dr-elsagher.com"
+
+# Development configuration
+[env.development]
+name = "dr-islam-contact-form-dev"
+
+[env.development.vars]
+NODE_ENV = "development"
+CLINIC_EMAIL = "test@example.com"

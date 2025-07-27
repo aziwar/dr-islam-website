@@ -107,7 +107,7 @@ export const HTML_EN = `<!DOCTYPE html>
                 <span class="badge">Latest Technology</span>
                 <span class="badge">100% Patient Satisfaction</span>
             </div>
-            <a href="https://wa.me/96598563711" class="cta-button">Book Your Appointment</a>
+            <button class="cta-button" onclick="openBookingModal()">Book Your Appointment</button>
         </div>
     </section>
 
@@ -391,14 +391,80 @@ export const HTML_EN = `<!DOCTYPE html>
         </div>
     </section>
 
+    <!-- Enhanced Booking Modal -->
+    <div id="bookingModal" class="booking-modal" style="display: none;">
+        <div class="booking-modal-content">
+            <div class="booking-modal-header">
+                <h3>📅 Book Your Appointment</h3>
+                <button class="close-modal" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div class="booking-modal-body">
+                <p class="booking-description">We'll help you book an appointment via WhatsApp with your details pre-filled.</p>
+                
+                <form id="bookingForm" class="booking-form">
+                    <div class="form-group">
+                        <input type="text" id="bookingName" name="name" required>
+                        <label for="bookingName">Your Name</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="tel" id="bookingPhone" name="phone" required>
+                        <label for="bookingPhone">Phone Number</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="bookingService" name="service" required>
+                            <option value="">Select Service</option>
+                            <option value="Dental Implants">Dental Implants</option>
+                            <option value="Root Canal Treatment">Root Canal Treatment</option>
+                            <option value="Prosthodontics">Prosthodontics</option>
+                            <option value="Oral Surgery">Oral Surgery</option>
+                            <option value="Cosmetic Dentistry">Cosmetic Dentistry</option>
+                            <option value="Gum Treatment">Gum Treatment</option>
+                            <option value="Aesthetic Fillings">Aesthetic Fillings</option>
+                            <option value="Full Mouth Rehabilitation">Full Mouth Rehabilitation</option>
+                            <option value="General Consultation">General Consultation</option>
+                            <option value="Emergency Treatment">Emergency Treatment</option>
+                        </select>
+                        <label for="bookingService">Service Needed</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="bookingTime" name="time" required>
+                            <option value="">Preferred Time</option>
+                            <option value="Morning (9:00 AM - 12:00 PM)">Morning (9:00 AM - 12:00 PM)</option>
+                            <option value="Afternoon (12:00 PM - 6:00 PM)">Afternoon (12:00 PM - 6:00 PM)</option>
+                            <option value="Evening (6:00 PM - 9:00 PM)">Evening (6:00 PM - 9:00 PM)</option>
+                            <option value="Any time">Any time</option>
+                        </select>
+                        <label for="bookingTime">Preferred Time</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea id="bookingNotes" name="notes" rows="3" placeholder="Any specific concerns or requests (optional)"></textarea>
+                        <label for="bookingNotes">Additional Notes</label>
+                    </div>
+                    
+                    <div class="booking-modal-actions">
+                        <button type="submit" class="booking-submit-btn">
+                            <span class="booking-btn-icon">💬</span>
+                            Continue to WhatsApp
+                        </button>
+                        <p class="booking-disclaimer">You'll be redirected to WhatsApp with your information pre-filled</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2025 Dr. Islam Elsagher - All Rights Reserved</p>
     </footer>
 
     <!-- Sticky WhatsApp Booking Button -->
-    <a href="https://wa.me/96598563711" class="sticky-book">
+    <button class="sticky-book" onclick="openBookingModal()">
         Book Appointment 💬
-    </a>
+    </button>
 
     <script>
     // Mobile Menu Toggle
@@ -487,13 +553,134 @@ export const HTML_EN = `<!DOCTYPE html>
         });
     });
 
-    // Analytics tracking
+    // Enhanced Booking Modal Functionality
+    function openBookingModal() {
+        const modal = document.getElementById('bookingModal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Focus on the first input
+        setTimeout(() => {
+            document.getElementById('bookingName').focus();
+        }, 100);
+        
+        // Track modal open event
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'booking_modal_open', {
+                'event_category': 'engagement',
+                'event_label': 'booking_modal'
+            });
+        }
+    }
+    
+    function closeBookingModal() {
+        const modal = document.getElementById('bookingModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    
+    // Close modal on outside click
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('bookingModal');
+        if (e.target === modal) {
+            closeBookingModal();
+        }
+    });
+    
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeBookingModal();
+        }
+    });
+    
+    // Handle booking form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const bookingForm = document.getElementById('bookingForm');
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const name = document.getElementById('bookingName').value;
+                const phone = document.getElementById('bookingPhone').value;
+                const service = document.getElementById('bookingService').value;
+                const time = document.getElementById('bookingTime').value;
+                const notes = document.getElementById('bookingNotes').value;
+                
+                // Create WhatsApp message
+                let message = \`Hello Dr. Islam,\\n\\n\`;
+                message += \`I would like to book an appointment:\\n\\n\`;
+                message += \`👤 Name: \${name}\\n\`;
+                message += \`📞 Phone: \${phone}\\n\`;
+                message += \`🦷 Service: \${service}\\n\`;
+                message += \`⏰ Preferred Time: \${time}\\n\`;
+                
+                if (notes.trim()) {
+                    message += \`📝 Notes: \${notes}\\n\`;
+                }
+                
+                message += \`\\nThank you!\`;
+                
+                // Encode message for URL
+                const encodedMessage = encodeURIComponent(message);
+                
+                // Create WhatsApp URL
+                const whatsappUrl = \`https://wa.me/96598563711?text=\${encodedMessage}\`;
+                
+                // Track booking attempt
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'booking_attempt', {
+                        'event_category': 'conversion',
+                        'event_label': service,
+                        'value': 1
+                    });
+                }
+                
+                // Open WhatsApp
+                window.open(whatsappUrl, '_blank');
+                
+                // Close modal and show success message
+                closeBookingModal();
+                showBookingSuccess();
+            });
+        }
+    });
+    
+    function showBookingSuccess() {
+        // Create success notification
+        const notification = document.createElement('div');
+        notification.className = 'booking-success-notification';
+        notification.innerHTML = \`
+            <div class="notification-content">
+                <span class="notification-icon">✅</span>
+                <span class="notification-text">WhatsApp opened with your booking details!</span>
+            </div>
+        \`;
+        
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+        
+        // Hide notification after 4 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 4000);
+    }
+
+    // Analytics tracking for direct WhatsApp links
     document.querySelectorAll('a[href^="https://wa.me"]').forEach(link => {
         link.addEventListener('click', function() {
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'contact', {
                     'event_category': 'engagement',
-                    'event_label': 'whatsapp_click'
+                    'event_label': 'whatsapp_direct_click'
                 });
             }
         });
