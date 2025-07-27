@@ -556,6 +556,29 @@ export const HTML_AR = `<!DOCTYPE html>
         }
     }
 
+    // Immediate navigation fix - runs as soon as script loads
+    (function() {
+        function immediateNavFix() {
+            const desktopNav = document.querySelector('nav > ul');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (desktopNav && mobileToggle && window.innerWidth >= 1025) {
+                desktopNav.style.setProperty('display', 'flex', 'important');
+                desktopNav.style.setProperty('visibility', 'visible', 'important');
+                desktopNav.style.setProperty('opacity', '1', 'important');
+                mobileToggle.style.setProperty('display', 'none', 'important');
+            }
+        }
+        
+        // Apply fix immediately
+        immediateNavFix();
+        
+        // Apply fix with small delays to ensure it works
+        setTimeout(immediateNavFix, 10);
+        setTimeout(immediateNavFix, 100);
+        setTimeout(immediateNavFix, 500);
+    })();
+
     // Ensure menu starts closed and navigation is fixed
     document.addEventListener('DOMContentLoaded', function() {
         const menu = document.getElementById('mobileMenu');
@@ -567,8 +590,9 @@ export const HTML_AR = `<!DOCTYPE html>
         ensureNavigationVisibility();
     });
     
-    // Fix navigation on window resize
+    // Fix navigation on window resize and load events
     window.addEventListener('resize', ensureNavigationVisibility);
+    window.addEventListener('load', ensureNavigationVisibility);
 
     // Mobile Menu Toggle
     function toggleMobileMenu() {
