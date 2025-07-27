@@ -63,43 +63,49 @@ export const HTML_EN = `<!DOCTYPE html>
     <!-- Google Analytics integration disabled for privacy -->
 </head>
 <body>
+    <!-- Skip Links for Keyboard Navigation -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#nav-menu" class="skip-link">Skip to navigation</a>
+    <a href="#contact" class="skip-link">Skip to contact information</a>
+
     <!-- Emergency Banner -->
-    <div class="emergency-banner">
-        <p>Dental Emergency? Call Now: <a href="tel:+96598563711">+965 98563711</a></p>
+    <div class="emergency-banner" role="banner" aria-label="Dental emergency contact information">
+        <p>Dental Emergency? Call Now: <a href="tel:+96598563711" aria-label="Call emergency number 98563711">+965 98563711</a></p>
     </div>
 
-    <header>
-        <nav>
+    <header role="banner">
+        <nav role="navigation" aria-label="Main navigation" id="nav-menu">
             <div class="logo">
                 <picture>
                     <source srcset="/assets/images/logo-main.webp" type="image/webp">
                     <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.webp" type="image/webp">
                     <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
-                    <img src="/assets/images/logo-main.png" alt="دكتور اسلام الصغير - Dr. Islam Elsagher" class="logo-img" loading="eager">
+                    <img src="/assets/images/logo-main.png" alt="Dr. Islam Elsagher - General Dentist & Implantologist logo" class="logo-img" loading="eager">
                 </picture>
             </div>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul id="mobileMenu">
-                <li><a href="#services">Services</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#gallery">Before/After</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="/ar/" class="lang-switch">العربية</a></li>
+            <ul id="mobileMenu" role="menu">
+                <li role="menuitem"><a href="#services" aria-label="Navigate to Services section">Services</a></li>
+                <li role="menuitem"><a href="#about" aria-label="Navigate to About section">About</a></li>
+                <li role="menuitem"><a href="#testimonials" aria-label="Navigate to Testimonials section">Testimonials</a></li>
+                <li role="menuitem"><a href="#gallery" aria-label="Navigate to Before/After gallery">Before/After</a></li>
+                <li role="menuitem"><a href="#faq" aria-label="Navigate to FAQ section">FAQ</a></li>
+                <li role="menuitem"><a href="#contact" aria-label="Navigate to Contact section">Contact</a></li>
+                <li role="menuitem"><a href="/ar/" class="lang-switch" aria-label="Switch to Arabic language">العربية</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="mobile-menu-backdrop" onclick="closeMobileMenu()"></div>
 
-    <section class="hero">
+    <main id="main-content" role="main">
+    <section class="hero" role="region" aria-labelledby="hero-heading">
         <div class="container">
-            <h1>Dr. Islam Elsagher</h1>
+            <h1 id="hero-heading">Dr. Islam Elsagher</h1>
             <p class="subtitle">General Dentist & Implantologist</p>
             <div class="trust-badges">
                 <span class="badge">15+ Years Experience</span>
