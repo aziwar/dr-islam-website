@@ -80,6 +80,61 @@ export const HTML_AR = `<!DOCTYPE html>
     }
     </script>
     
+    <!-- Emergency Navigation Fix for Arabic Version -->
+    <script>
+    // Bulletproof navigation fix that executes immediately
+    (function() {
+        function forceNavigationVisible() {
+            const navMenu = document.getElementById('mobileMenu');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (navMenu && window.innerWidth >= 1025) {
+                navMenu.style.setProperty('display', 'flex', 'important');
+                navMenu.style.setProperty('visibility', 'visible', 'important');
+                navMenu.style.setProperty('opacity', '1', 'important');
+                navMenu.style.setProperty('position', 'static', 'important');
+                navMenu.style.setProperty('right', 'auto', 'important');
+                navMenu.style.setProperty('top', 'auto', 'important');
+                navMenu.style.setProperty('width', 'auto', 'important');
+                navMenu.style.setProperty('height', 'auto', 'important');
+                navMenu.style.setProperty('flex-direction', 'row', 'important');
+                navMenu.style.setProperty('background', 'transparent', 'important');
+                navMenu.style.setProperty('backdrop-filter', 'none', 'important');
+                navMenu.classList.remove('active');
+                
+                if (mobileToggle) {
+                    mobileToggle.style.setProperty('display', 'none', 'important');
+                }
+                return true;
+            }
+            return false;
+        }
+        
+        // Apply immediately if DOM is ready
+        if (document.readyState !== 'loading') {
+            forceNavigationVisible();
+        }
+        
+        // Apply on DOM ready
+        document.addEventListener('DOMContentLoaded', forceNavigationVisible);
+        
+        // Apply on window load
+        window.addEventListener('load', forceNavigationVisible);
+        
+        // Apply on resize
+        window.addEventListener('resize', forceNavigationVisible);
+        
+        // Apply with progressive delays for reliability
+        setTimeout(forceNavigationVisible, 10);
+        setTimeout(forceNavigationVisible, 100);
+        setTimeout(forceNavigationVisible, 500);
+        setTimeout(forceNavigationVisible, 1000);
+        
+        // Expose for debugging
+        window.arabicNavFix = forceNavigationVisible;
+    })();
+    </script>
+    
     <!-- Google Analytics integration disabled for privacy -->
 </head>
 <body>
