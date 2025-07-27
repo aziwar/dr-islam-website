@@ -405,7 +405,8 @@ html {
 }
 
 .install-prompt button {
-    padding: 10px 20px;
+    padding: 12px 24px;
+    min-height: 44px;
     border: none;
     border-radius: 5px;
     font-size: 14px;
@@ -444,8 +445,35 @@ img[loading="lazy"] {
     background: var(--light);
 }
 
+/* Tablet specific styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Show mobile menu toggle on tablets */
+    .mobile-menu-toggle {
+        display: flex !important;
+    }
+    
+    /* Hide desktop navigation on tablets */
+    nav > ul {
+        display: none !important;
+    }
+    
+    #mobileMenu {
+        display: flex !important;
+    }
+    
+    /* Adjust tablet menu styling */
+    #mobileMenu {
+        width: 60%;
+    }
+    
+    nav a {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+    }
+}
+
 /* Desktop specific styles */
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
     /* Ensure desktop navigation is visible */
     nav > ul {
         display: flex !important;

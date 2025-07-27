@@ -63,6 +63,10 @@ h4 { font-size: 1.2rem; font-weight: 600; }
     color: var(--white);
     font-weight: bold;
     text-decoration: underline;
+    padding: 8px 4px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
 }
 
 /* Header - Modern Glassmorphism */
@@ -90,6 +94,8 @@ nav {
 .logo {
     display: flex;
     align-items: center;
+    min-height: 48px;
+    padding: 4px;
 }
 
 .logo-img {
@@ -137,7 +143,10 @@ nav a {
     transition: all 0.3s ease;
     font-size: 0.95rem;
     position: relative;
-    padding: 5px 10px;
+    padding: 8px 12px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
 }
 
 nav a::after {
@@ -274,8 +283,12 @@ nav a:hover::after {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 10px;
+    padding: 12px;
+    min-height: 48px;
+    min-width: 48px;
     z-index: 1001;
+    align-items: center;
+    justify-content: center;
 }
 
 .mobile-menu-toggle span {

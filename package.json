@@ -1,6 +1,7 @@
 {
   "name": "dr-islam-website",
   "version": "1.0.0",
+  "type": "module",
   "description": "Dr Islam Dental Clinic Website",
   "scripts": {
     "start": "powershell -ExecutionPolicy Bypass -File quick-start.ps1",

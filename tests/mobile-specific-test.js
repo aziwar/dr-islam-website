@@ -1,5 +1,5 @@
 // Mobile-Specific Test Suite for dr-elsagher.com
-const { chromium, devices } = require('playwright');
+import { chromium, devices } from 'playwright';
 
 async function testMobileSpecific() {
     console.log('📱 Starting Mobile-Specific Tests...');
@@ -154,17 +154,15 @@ async function testMobileSpecific() {
     });
     
     // Save results
-    require('fs').writeFileSync(
+    import('fs').then(fs => fs.writeFileSync(
         'mobile-test-results.json', 
         JSON.stringify(results, null, 2)
-    );
+    ));
     
     return results.overallFailed === 0;
 }
 
-// Run tests if called directly
-if (require.main === module) {
-    testMobileSpecific().catch(console.error);
-}
+// Run tests when file is executed directly
+testMobileSpecific().catch(console.error);
 
-module.exports = { testMobileSpecific };
+export { testMobileSpecific };
