@@ -3,12 +3,13 @@ import { CRITICAL_CSS } from './css/critical.css.js';
 import { COMPONENT_CSS } from './css/components.css.js';
 import { RESPONSIVE_CSS } from './css/responsive.css.js';
 import { MOBILE_UX_CSS } from './css/mobile-ux.css.js';
+import { ACCESSIBILITY_CSS } from '../accessibility-fixes.css.js';
 
 // Combine all CSS modules
-export const CSS = CRITICAL_CSS + COMPONENT_CSS + RESPONSIVE_CSS + MOBILE_UX_CSS;
+export const CSS = CRITICAL_CSS + COMPONENT_CSS + RESPONSIVE_CSS + MOBILE_UX_CSS + ACCESSIBILITY_CSS;
 
 // Export individual modules for selective loading if needed
-export { CRITICAL_CSS, COMPONENT_CSS, RESPONSIVE_CSS, MOBILE_UX_CSS };
+export { CRITICAL_CSS, COMPONENT_CSS, RESPONSIVE_CSS, MOBILE_UX_CSS, ACCESSIBILITY_CSS };
 
 // Helper function to get CSS based on device type (optional optimization)
 export function getCSSForRequest(request, isMobile) {
@@ -17,11 +18,11 @@ export function getCSSForRequest(request, isMobile) {
     
     // For mobile devices, we might want to prioritize critical and responsive CSS
     if (isActuallyMobile) {
-        return CRITICAL_CSS + MOBILE_UX_CSS + RESPONSIVE_CSS + COMPONENT_CSS;
+        return CRITICAL_CSS + MOBILE_UX_CSS + RESPONSIVE_CSS + COMPONENT_CSS + ACCESSIBILITY_CSS;
     }
     
     // For desktop, load in standard order
-    return CRITICAL_CSS + COMPONENT_CSS + RESPONSIVE_CSS;
+    return CRITICAL_CSS + COMPONENT_CSS + RESPONSIVE_CSS + ACCESSIBILITY_CSS;
 }
 
 // Performance optimization: Get minified CSS

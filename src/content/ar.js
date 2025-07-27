@@ -142,7 +142,7 @@ export const HTML_AR = `<!DOCTYPE html>
 <body>
     <!-- Emergency Banner -->
     <div class="emergency-banner">
-        <p>حالات طوارئ الأسنان؟ اتصل الآن: <a href="tel:+96598563711">98563711</a></p>
+        <p>حالات طوارئ الأسنان؟ اتصل الآن: <a href="tel:+96598563711" aria-label="رقم الطوارئ: 98563711">98563711</a></p>
     </div>
 
     <header>
@@ -155,7 +155,7 @@ export const HTML_AR = `<!DOCTYPE html>
                     <img src="/assets/images/logo-main.png" alt="دكتور اسلام الصغير - Dr. Islam Elsagher" class="logo-img" loading="eager">
                 </picture>
             </div>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="القائمة" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
