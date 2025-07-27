@@ -472,10 +472,11 @@ img[loading="lazy"] {
     }
 }
 
-/* Desktop specific styles */
+/* Desktop specific styles - Must override mobile rules */
 @media (min-width: 1025px) {
-    /* Ensure desktop navigation is visible */
-    nav > ul {
+    /* Ensure desktop navigation is visible - Override mobile display:none */
+    body nav > ul,
+    html body nav > ul {
         display: flex !important;
     }
     
