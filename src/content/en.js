@@ -60,8 +60,7 @@ export const HTML_EN = `<!DOCTYPE html>
     }
     </script>
     
-    <!-- Google Analytics - Placeholder removed for privacy -->
-    <!-- TODO: Add actual GA4 tracking ID when client provides credentials -->
+    <!-- Google Analytics integration disabled for privacy -->
 </head>
 <body>
     <!-- Emergency Banner -->
