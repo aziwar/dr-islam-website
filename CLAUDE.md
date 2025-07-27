@@ -57,4 +57,20 @@ The project now includes SuperClaude MCP server integration enabling:
 - **Evidence-Based**: All recommendations backed by analysis
 - **Performance Optimized**: Token-efficient operations
 
+## Key Project Learnings
+
+### CI/CD Troubleshooting Patterns
+- Always include `npm ci` step in deployment workflows
+- Use direct `npx` commands over GitHub Actions for better debugging
+- Add verification steps (`npx wrangler --version`, `npx wrangler whoami`)
+- Don't over-optimize by removing "unnecessary" dependencies
+
+### Debugging Methodology
+1. Test locally first (`npx wrangler --version`)
+2. Add debugging steps to workflows
+3. Use environment variables over action parameters
+4. Check GitHub repository secrets for API tokens
+5. Analyze error patterns (exit codes, timing, consistency)
+
 For detailed command documentation, see the global SuperClaude installation at `C:\Users\zewar\.claude\commands\sc\`
+For troubleshooting guidance, see `TROUBLESHOOTING.md` in this repository.
