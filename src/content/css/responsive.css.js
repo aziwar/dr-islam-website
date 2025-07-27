@@ -472,12 +472,16 @@ img[loading="lazy"] {
     }
 }
 
-/* Desktop specific styles - Must override mobile rules */
+/* Desktop specific styles - Maximum specificity to override mobile rules */
 @media (min-width: 1025px) {
-    /* Ensure desktop navigation is visible - Override mobile display:none */
-    body nav > ul,
-    html body nav > ul {
+    /* Ensure desktop navigation is visible - Override mobile display:none with maximum specificity */
+    html body header nav > ul,
+    body header nav > ul,
+    header nav > ul,
+    nav > ul {
         display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     /* Hide mobile menu on desktop */
