@@ -1,9 +1,11 @@
 // src/index.js - Optimized with Context7 best practices
 import { HTML_EN } from './content/en.js';
 import { HTML_AR } from './content/ar.js';
-import { CSS } from './content/styles.js';
+import { CSS, INLINE_CSS, DEFERRED_STYLES, getCSSForRequest } from './content/styles.js';
 import { SERVICE_WORKER_JS } from './content/sw.js';
 import { OFFLINE_HTML } from './content/offline.js';
+import { logger } from './utils/logger.js';
+import { ImageOptimizer } from './utils/image-optimizer.js';
 
 // Constants for better maintainability
 const CACHE_PROFILES = {
@@ -49,7 +51,7 @@ export default {
         const response = handleRobotsTxt();
         metrics.operation = 'robots-txt';
         metrics.duration = performance.now() - requestStart;
-        console.log(metrics);
+        logger.metric(metrics);
         return response;
       }
 
@@ -58,7 +60,7 @@ export default {
         const response = handleSitemap(url);
         metrics.operation = 'sitemap';
         metrics.duration = performance.now() - requestStart;
-        console.log(metrics);
+        logger.metric(metrics);
         return response;
       }
 
@@ -103,7 +105,7 @@ export default {
       metrics.operation = 'manifest';
       metrics.lang = manifestLang;
       metrics.duration = performance.now() - requestStart;
-      console.log(metrics);
+      logger.metric(metrics);
       return response;
     }
 
@@ -112,7 +114,7 @@ export default {
       const response = await handleContactForm(request);
       metrics.operation = 'contact-form';
       metrics.duration = performance.now() - requestStart;
-      console.log(metrics);
+      logger.metric(metrics);
       return response;
     }
 
@@ -126,7 +128,7 @@ export default {
       });
       metrics.operation = 'service-worker';
       metrics.duration = performance.now() - requestStart;
-      console.log(metrics);
+      logger.metric(metrics);
       return response;
     }
 
@@ -140,7 +142,7 @@ export default {
       });
       metrics.operation = 'offline-page';
       metrics.duration = performance.now() - requestStart;
-      console.log(metrics);
+      logger.metric(metrics);
       return response;
     }
 
@@ -155,7 +157,7 @@ export default {
       });
       metrics.operation = 'css';
       metrics.duration = performance.now() - requestStart;
-      console.log(metrics);
+      logger.metric(metrics);
       return response;
     }
 
@@ -164,7 +166,7 @@ export default {
       const response = await handleImageRequest(request, env, ctx, path);
       metrics.operation = 'image';
       metrics.totalDuration = performance.now() - requestStart;
-      console.log(metrics);
+      logger.metric(metrics);
       return response;
     }
 
@@ -172,12 +174,12 @@ export default {
       const response = await handleHTMLRequest(request, url);
       metrics.operation = 'html';
       metrics.totalDuration = performance.now() - requestStart;
-      console.log(metrics);
+      logger.metric(metrics);
       return response;
       
     } catch (error) {
       // Global error handler
-      console.error('Worker error:', error);
+      logger.error('Worker error:', error);
       
       return new Response('Internal Server Error', {
         status: 500,
@@ -268,7 +270,7 @@ async function handleImageRequest(request, env, ctx, path) {
       if (webpObject) {
         imageMetrics.source = 'r2-webp';
         imageMetrics.duration = performance.now() - imageStart;
-        console.log({ operation: 'image-fetch', ...imageMetrics });
+        logger.metric({ operation: 'image-fetch', ...imageMetrics });
         return serveR2Object(webpObject, 'image/webp');
       }
     }
@@ -281,7 +283,7 @@ async function handleImageRequest(request, env, ctx, path) {
         imageMetrics.source = 'r2-original';
         imageMetrics.r2Duration = performance.now() - r2Start;
         imageMetrics.duration = performance.now() - imageStart;
-        console.log({ operation: 'image-fetch', ...imageMetrics });
+        logger.metric({ operation: 'image-fetch', ...imageMetrics });
         const contentType = getContentType(key);
         return serveR2Object(object, contentType);
       }
@@ -296,7 +298,7 @@ async function handleImageRequest(request, env, ctx, path) {
       imageMetrics.source = 'github-fallback';
       imageMetrics.githubDuration = performance.now() - githubStart;
       imageMetrics.duration = performance.now() - imageStart;
-      console.log({ operation: 'image-fetch', ...imageMetrics });
+      logger.metric({ operation: 'image-fetch', ...imageMetrics });
       
       const headers = {
         'Content-Type': response.headers.get('Content-Type') || getContentType(key),
@@ -308,13 +310,13 @@ async function handleImageRequest(request, env, ctx, path) {
     
     imageMetrics.source = 'not-found';
     imageMetrics.duration = performance.now() - imageStart;
-    console.log({ operation: 'image-fetch', ...imageMetrics });
+    logger.metric({ operation: 'image-fetch', ...imageMetrics });
     return new Response('Image not found', { status: 404 });
   } catch (error) {
-    console.error('Image serving error:', error);
+    logger.error('Image serving error:', error);
     imageMetrics.error = error.message;
     imageMetrics.duration = performance.now() - imageStart;
-    console.log({ operation: 'image-fetch-error', ...imageMetrics });
+    logger.metric({ operation: 'image-fetch-error', ...imageMetrics });
     return new Response('Internal server error', { status: 500 });
   }
 }
@@ -365,7 +367,7 @@ function handleHTMLRequest(request, url) {
     hreflang = 'ar';
   } else if (path === '/' && preferredLang === 'ar') {
     const redirectDuration = performance.now() - htmlStart;
-    console.log({ 
+    logger.metric({ 
       operation: 'html-redirect', 
       lang: 'ar', 
       duration: redirectDuration 
@@ -392,7 +394,7 @@ function handleHTMLRequest(request, url) {
   };
   
   const htmlDuration = performance.now() - htmlStart;
-  console.log({ 
+  logger.metric({ 
     operation: 'html-generation', 
     lang: hreflang, 
     path: path,
@@ -449,7 +451,7 @@ async function handleContactForm(request) {
     }
 
     // Log the contact submission (in production, you'd send this to email/database)
-    console.log('Contact Form Submission:', {
+    logger.log('Contact Form Submission:', {
       ...contactData,
       ip: undefined, // Don't log IP for privacy
       userAgent: undefined // Don't log user agent for privacy
@@ -477,7 +479,7 @@ async function handleContactForm(request) {
     });
 
   } catch (error) {
-    console.error('Contact form error:', error);
+    logger.error('Contact form error:', error);
     
     return new Response(JSON.stringify({
       success: false,
