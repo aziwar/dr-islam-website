@@ -1,5 +1,5 @@
 // Performance testing script to measure improvements
-const { chromium } = require('playwright');
+import { chromium } from 'playwright';
 
 class PerformanceTester {
   constructor() {
@@ -227,8 +227,6 @@ async function runPerformanceTest() {
 }
 
 // Run if called directly
-if (require.main === module) {
-  runPerformanceTest().catch(console.error);
-}
+runPerformanceTest().catch(console.error);
 
-module.exports = { PerformanceTester };
+export { PerformanceTester };
