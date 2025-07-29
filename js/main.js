@@ -1628,4 +1628,772 @@ document.addEventListener('DOMContentLoaded', () => {
     new ContactFormHandler();
 });
 
-console.log('Dr. Islam Website - Enhanced Gallery System and Contact Form Loaded');
+// =================================================================
+// ENHANCED IMAGE OPTIMIZATION SYSTEM
+// =================================================================
+
+/**
+ * Advanced Image Optimization with AVIF/WebP Support
+ * Features: Progressive loading, format detection, error handling, performance monitoring
+ */
+class ImageOptimizationSystem {
+    constructor() {
+        this.imageLoadQueue = [];
+        this.loadedImages = new Set();
+        this.failedImages = new Set();
+        this.performanceMetrics = {
+            totalImages: 0,
+            loadedCount: 0,
+            errorCount: 0,
+            averageLoadTime: 0,
+            formatSupport: this.detectFormatSupport()
+        };
+        
+        this.init();
+    }
+    
+    init() {
+        // Initialize intersection observer for lazy loading
+        this.setupIntersectionObserver();
+        
+        // Process existing images
+        this.processExistingImages();
+        
+        // Set up error handlers
+        this.setupErrorHandlers();
+        
+        // Monitor performance
+        this.setupPerformanceMonitoring();
+        
+        // Add loading complete event
+        this.setupLoadingCompleteDetection();
+        
+        console.log('🖼️ Image Optimization System initialized', this.performanceMetrics);
+    }
+    
+    detectFormatSupport() {
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 1;
+        const ctx = canvas.getContext('2d');
+        
+        return {
+            avif: this.supportsAVIF(),
+            webp: this.supportsWebP(canvas),
+            modernFeatures: 'loading' in HTMLImageElement.prototype
+        };
+    }
+    
+    supportsAVIF() {
+        return new Promise((resolve) => {
+            const avif = new Image();
+            avif.onload = avif.onerror = () => resolve(avif.height === 1);
+            avif.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEAwgMg8f8D///8WfhwB8+ErK42A=';
+        });
+    }
+    
+    supportsWebP(canvas) {
+        return canvas.toDataURL('image/webp', 0.1).indexOf('data:image/webp') === 0;
+    }
+    
+    setupIntersectionObserver() {
+        const options = {
+            root: null,
+            rootMargin: '50px 0px',
+            threshold: 0.01
+        };
+        
+        this.imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.loadImage(entry.target);
+                    this.imageObserver.unobserve(entry.target);
+                }
+            });
+        }, options);
+    }
+    
+    processExistingImages() {
+        // Process picture elements with optimized-image class
+        const optimizedImages = document.querySelectorAll('.optimized-image');
+        
+        optimizedImages.forEach(picture => {
+            const img = picture.querySelector('img');
+            if (img) {
+                this.performanceMetrics.totalImages++;
+                
+                // Add to observer for lazy loading
+                if (img.loading === 'lazy') {
+                    this.imageObserver.observe(img);
+                } else {
+                    // Load immediately for critical images
+                    this.loadImage(img);
+                }
+            }
+        });
+        
+        // Process legacy img elements
+        const legacyImages = document.querySelectorAll('img:not(.optimized-image img)');
+        legacyImages.forEach(img => {
+            if (!img.complete) {
+                this.upgradeToOptimizedImage(img);
+            }
+        });
+    }
+    
+    loadImage(img) {
+        if (this.loadedImages.has(img) || this.failedImages.has(img)) {
+            return;
+        }
+        
+        const startTime = performance.now();
+        const picture = img.closest('.optimized-image');
+        
+        // Add loading class
+        picture?.classList.add('loading');
+        
+        // Set up load handlers
+        const handleLoad = () => {
+            const loadTime = performance.now() - startTime;
+            this.onImageLoad(img, picture, loadTime);
+            img.removeEventListener('load', handleLoad);
+            img.removeEventListener('error', handleError);
+        };
+        
+        const handleError = () => {
+            this.onImageError(img, picture);
+            img.removeEventListener('load', handleLoad);
+            img.removeEventListener('error', handleError);
+        };
+        
+        img.addEventListener('load', handleLoad);
+        img.addEventListener('error', handleError);
+        
+        // If image is already loaded
+        if (img.complete) {
+            handleLoad();
+        }
+    }
+    
+    onImageLoad(img, picture, loadTime) {
+        this.loadedImages.add(img);
+        this.performanceMetrics.loadedCount++;
+        
+        // Update average load time
+        const totalTime = this.performanceMetrics.averageLoadTime * (this.performanceMetrics.loadedCount - 1) + loadTime;
+        this.performanceMetrics.averageLoadTime = totalTime / this.performanceMetrics.loadedCount;
+        
+        // Add loaded class for animations
+        picture?.classList.add('loaded');
+        picture?.classList.remove('loading');
+        
+        // Dispatch custom event
+        img.dispatchEvent(new CustomEvent('imageOptimized', {
+            detail: { loadTime, formatUsed: this.getImageFormat(img) }
+        }));
+        
+        // Remove will-change for performance
+        setTimeout(() => {
+            if (picture) {
+                picture.style.willChange = 'auto';
+            }
+        }, 600);
+    }
+    
+    onImageError(img, picture) {
+        this.failedImages.add(img);
+        this.performanceMetrics.errorCount++;
+        
+        console.warn('🖼️ Image failed to load:', img.src);
+        
+        // Add error state
+        picture?.classList.add('image-error');
+        picture?.classList.remove('loading');
+        
+        // Try fallback sources
+        this.tryFallbackSources(img, picture);
+    }
+    
+    tryFallbackSources(img, picture) {
+        if (!picture) return;
+        
+        const sources = picture.querySelectorAll('source');
+        let fallbackAttempted = false;
+        
+        // Try WebP fallback if AVIF failed
+        sources.forEach(source => {
+            if (source.type === 'image/webp' && !fallbackAttempted) {
+                const webpSrc = source.srcset.split(' ')[0];
+                if (webpSrc && webpSrc !== img.src) {
+                    img.src = webpSrc;
+                    fallbackAttempted = true;
+                    
+                    // Remove from failed set to retry
+                    this.failedImages.delete(img);
+                    picture.classList.remove('image-error');
+                    
+                    // Try loading again
+                    this.loadImage(img);
+                }
+            }
+        });
+    }
+    
+    upgradeToOptimizedImage(img) {
+        // Convert legacy img to picture element with modern formats
+        const picture = document.createElement('picture');
+        picture.className = 'optimized-image';
+        
+        const baseSrc = img.src.replace(/\.(jpg|jpeg|png)$/i, '');
+        const ext = img.src.match(/\.(jpg|jpeg|png)$/i)?.[1] || 'jpg';
+        
+        // Add AVIF source
+        const avifSource = document.createElement('source');
+        avifSource.type = 'image/avif';
+        avifSource.srcset = `${baseSrc}.avif`;
+        picture.appendChild(avifSource);
+        
+        // Add WebP source
+        const webpSource = document.createElement('source');
+        webpSource.type = 'image/webp';
+        webpSource.srcset = `${baseSrc}.webp`;
+        picture.appendChild(webpSource);
+        
+        // Move original img as fallback
+        img.parentNode.insertBefore(picture, img);
+        picture.appendChild(img);
+        
+        // Add to observer
+        this.imageObserver.observe(img);
+    }
+    
+    getImageFormat(img) {
+        const src = img.currentSrc || img.src;
+        if (src.includes('.avif')) return 'avif';
+        if (src.includes('.webp')) return 'webp';
+        if (src.includes('.jpg') || src.includes('.jpeg')) return 'jpeg';
+        if (src.includes('.png')) return 'png';
+        return 'unknown';
+    }
+    
+    setupErrorHandlers() {
+        // Global image error handler
+        document.addEventListener('error', (e) => {
+            if (e.target.tagName === 'IMG') {
+                console.warn('🖼️ Global image error:', e.target.src);
+                this.onImageError(e.target, e.target.closest('.optimized-image'));
+            }
+        }, true);
+    }
+    
+    setupPerformanceMonitoring() {
+        // Monitor Core Web Vitals impact
+        if ('PerformanceObserver' in window) {
+            const observer = new PerformanceObserver((list) => {
+                list.getEntries().forEach(entry => {
+                    if (entry.entryType === 'largest-contentful-paint') {
+                        console.log('🖼️ LCP influenced by images:', entry.startTime);
+                    }
+                });
+            });
+            
+            try {
+                observer.observe({ entryTypes: ['largest-contentful-paint'] });
+            } catch (e) {
+                console.log('🖼️ Performance monitoring not available');
+            }
+        }
+    }
+    
+    setupLoadingCompleteDetection() {
+        // Detect when all images have finished loading
+        const checkComplete = () => {
+            const totalAttempted = this.performanceMetrics.loadedCount + this.performanceMetrics.errorCount;
+            
+            if (totalAttempted >= this.performanceMetrics.totalImages) {
+                const successRate = (this.performanceMetrics.loadedCount / this.performanceMetrics.totalImages) * 100;
+                
+                console.log('🖼️ Image loading complete:', {
+                    total: this.performanceMetrics.totalImages,
+                    loaded: this.performanceMetrics.loadedCount,
+                    errors: this.performanceMetrics.errorCount,
+                    successRate: `${successRate.toFixed(1)}%`,
+                    averageLoadTime: `${this.performanceMetrics.averageLoadTime.toFixed(0)}ms`
+                });
+                
+                // Dispatch completion event
+                document.dispatchEvent(new CustomEvent('allImagesLoaded', {
+                    detail: this.performanceMetrics
+                }));
+            }
+        };
+        
+        // Check periodically
+        setInterval(checkComplete, 1000);
+    }
+    
+    // Public API methods
+    preloadImage(src) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = src;
+        });
+    }
+    
+    getPerformanceMetrics() {
+        return { ...this.performanceMetrics };
+    }
+    
+    retryFailedImages() {
+        this.failedImages.forEach(img => {
+            this.failedImages.delete(img);
+            const picture = img.closest('.optimized-image');
+            picture?.classList.remove('image-error');
+            this.loadImage(img);
+        });
+    }
+}
+
+// Initialize image optimization system
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize enhanced AVIF image optimization system with accessibility features
+    try {
+        // Initialize with enhanced configuration
+        const optimizerConfig = {
+            enableDebugMode: window.location.search.includes('debug=true'),
+            retryAttempts: 3,
+            maxConcurrentLoads: navigator.hardwareConcurrency || 6,
+            fallbackTimeout: 5000
+        };
+        
+        window.imageOptimizer = new ImageOptimizationSystem(optimizerConfig);
+        
+        // Enhanced system ready event listener
+        document.addEventListener('imageSystemReady', (event) => {
+            const { formatSupport, config } = event.detail;
+            console.log('🚀 Image System Ready:', {
+                avifSupport: formatSupport.avif,
+                webpSupport: formatSupport.webp,
+                debugMode: config.enableDebugMode
+            });
+            
+            // Announce to screen readers if accessibility features are enabled
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const announcement = document.createElement('div');
+                announcement.setAttribute('aria-live', 'polite');
+                announcement.setAttribute('aria-atomic', 'true');
+                announcement.className = 'sr-only';
+                announcement.textContent = 'تم تحسين تحميل الصور للحصول على أداء أفضل';
+                document.body.appendChild(announcement);
+                
+                setTimeout(() => {
+                    document.body.removeChild(announcement);
+                }, 3000);
+            }
+        });
+        
+        // Enhanced completion event listener
+        document.addEventListener('allImagesLoaded', (event) => {
+            const { metrics, health } = event.detail;
+            
+            console.log('✅ All images optimized:', {
+                ...metrics,
+                systemHealth: health.status
+            });
+            
+            // Track Core Web Vitals improvements with enhanced metrics
+            if ('performance' in window) {
+                const paintEntries = performance.getEntriesByType('paint');
+                const lcpEntries = performance.getEntriesByType('largest-contentful-paint');
+                const clsEntries = performance.getEntriesByType('layout-shift');
+                
+                const webVitals = {
+                    fcp: paintEntries.find(e => e.name === 'first-contentful-paint')?.startTime,
+                    lcp: lcpEntries[lcpEntries.length - 1]?.startTime,
+                    cls: clsEntries.reduce((sum, entry) => sum + entry.value, 0)
+                };
+                
+                console.log('🎯 Core Web Vitals:', webVitals);
+                
+                // Report to analytics if available
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'image_optimization_complete', {
+                        custom_parameter_1: metrics.successRate,
+                        custom_parameter_2: metrics.averageLoadTime,
+                        custom_parameter_3: health.status
+                    });
+                }
+            }
+            
+            // Update loading progress indicator with completion
+            const progressEl = document.querySelector('.loading-progress');
+            if (progressEl) {
+                progressEl.style.width = '100%';
+                progressEl.setAttribute('aria-label', 'تم تحميل جميع الصور');
+                setTimeout(() => {
+                    progressEl.style.opacity = '0';
+                }, 500);
+            }
+        });
+        
+        // Enhanced individual image optimization tracking
+        document.addEventListener('imageOptimized', (event) => {
+            const { loadTime, src, format, fileSize, retries } = event.detail;
+            
+            // Performance warnings with more context
+            if (loadTime > 1000) {
+                console.warn(`⚠️ Slow image load: ${src}`, {
+                    loadTime: `${loadTime}ms`,
+                    format,
+                    estimatedSize: fileSize ? `${Math.round(fileSize/1024)}KB` : 'unknown',
+                    retries
+                });
+            }
+            
+            // Update progress indicator with accessibility
+            const progressEl = document.querySelector('.loading-progress');
+            if (progressEl) {
+                const metrics = window.imageOptimizer.getPerformanceMetrics();
+                const progress = Math.round((metrics.loadedCount / metrics.totalImages) * 100);
+                progressEl.style.width = `${progress}%`;
+                progressEl.setAttribute('aria-valuenow', progress);
+                progressEl.setAttribute('aria-label', `تم تحميل ${progress}% من الصور`);
+            }
+        });
+        
+        // Enhanced error handling
+        document.addEventListener('imageLoadError', (event) => {
+            const { src, retries, error } = event.detail;
+            console.error(`❌ Image load failed: ${src}`, {
+                retries,
+                error,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Report critical errors to analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'image_load_error', {
+                    custom_parameter_1: src,
+                    custom_parameter_2: retries
+                });
+            }
+        });
+        
+        // Enhanced optimization controls with accessibility
+        window.imageOptimizationControls = {
+            getMetrics: () => window.imageOptimizer.getPerformanceMetrics(),
+            getHealth: () => window.imageOptimizer.getSystemHealth(),
+            reinitialize: (newConfig = {}) => {
+                if (window.imageOptimizer) {
+                    window.imageOptimizer.destroy();
+                }
+                window.imageOptimizer = new ImageOptimizationSystem({
+                    ...optimizerConfig,
+                    ...newConfig
+                });
+            },
+            enableDebugMode: () => {
+                window.imageOptimizer.config.enableDebugMode = true;
+                console.log('🐛 Debug mode enabled for image optimizer');
+            },
+            pauseOptimization: () => {
+                if (window.imageOptimizer && window.imageOptimizer.performanceMetrics.intersectionObserver) {
+                    window.imageOptimizer.performanceMetrics.intersectionObserver.disconnect();
+                    console.log('⏸️ Image optimization paused');
+                }
+            },
+            resumeOptimization: () => {
+                if (window.imageOptimizer) {
+                    window.imageOptimizer._initializeLazyLoading();
+                    console.log('▶️ Image optimization resumed');
+                }
+            }
+        };
+        
+        // Accessibility: Handle reduced motion preferences
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            // Disable complex loading animations for accessibility
+            document.documentElement.classList.add('reduced-motion');
+            console.log('♿ Reduced motion mode enabled');
+        }
+        
+        // Handle color scheme preferences
+        const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleColorSchemeChange = (e) => {
+            if (e.matches) {
+                document.documentElement.classList.add('dark-mode-preferred');
+            } else {
+                document.documentElement.classList.remove('dark-mode-preferred');
+            }
+        };
+        
+        colorSchemeQuery.addListener(handleColorSchemeChange);
+        handleColorSchemeChange(colorSchemeQuery);
+        
+    } catch (error) {
+        console.error('❌ Image optimization initialization failed:', error);
+        
+        // Enhanced fallback with accessibility
+        document.querySelectorAll('.optimized-image img').forEach((img, index) => {
+            const container = img.closest('.optimized-image');
+            
+            // Stagger fallback loading for better perceived performance
+            setTimeout(() => {
+                container.classList.add('loaded');
+                
+                // Add error handling even in fallback mode
+                img.addEventListener('error', () => {
+                    container.classList.add('error');
+                    console.warn(`⚠️ Fallback image failed: ${img.src}`);
+                }, { once: true });
+                
+            }, index * 50);
+        });
+        
+        // Announce fallback mode to screen readers
+        const announcement = document.createElement('div');
+        announcement.setAttribute('aria-live', 'assertive');
+        announcement.className = 'sr-only';
+        announcement.textContent = 'يتم تحميل الصور في الوضع الاحتياطي';
+        document.body.appendChild(announcement);
+        
+        setTimeout(() => {
+            if (announcement.parentNode) {
+                document.body.removeChild(announcement);
+            }
+        }, 3000);
+    }
+});
+
+// Export for external use
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = ImageOptimizationSystem;
+}
+
+// Theme Management System
+class ThemeManager {
+    constructor() {
+        this.themeToggle = document.getElementById('theme-toggle');
+        this.storageKey = 'dr-islam-theme-preference';
+        this.themes = {
+            light: 'light',
+            dark: 'dark',
+            auto: null
+        };
+        
+        this.init();
+    }
+    
+    init() {
+        // Apply saved theme or detect system preference
+        this.applySavedTheme();
+        
+        // Set up theme toggle functionality
+        this.setupThemeToggle();
+        
+        // Listen for system theme changes
+        this.setupSystemThemeListener();
+        
+        // Add transition disable class temporarily to prevent flashing
+        this.disableTransitionsDuringLoad();
+        
+        console.log('🎨 Theme Manager initialized');
+    }
+    
+    applySavedTheme() {
+        const savedTheme = localStorage.getItem(this.storageKey);
+        
+        if (savedTheme && savedTheme !== 'auto') {
+            // Apply explicit theme preference
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            this.updateToggleState(savedTheme);
+        } else {
+            // Use system preference or default to light
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = systemPrefersDark ? 'dark' : 'light';
+            
+            // Don't set data-theme attribute for auto mode
+            if (savedTheme === 'auto') {
+                document.documentElement.removeAttribute('data-theme');
+            }
+            
+            this.updateToggleState(theme);
+        }
+    }
+    
+    setupThemeToggle() {
+        if (!this.themeToggle) {
+            console.warn('Theme toggle button not found');
+            return;
+        }
+        
+        this.themeToggle.addEventListener('click', () => {
+            this.toggleTheme();
+        });
+        
+        // Keyboard support
+        this.themeToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.toggleTheme();
+            }
+        });
+    }
+    
+    setupSystemThemeListener() {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        mediaQuery.addEventListener('change', (e) => {
+            const savedTheme = localStorage.getItem(this.storageKey);
+            
+            // Only update if user hasn't set explicit preference
+            if (!savedTheme || savedTheme === 'auto') {
+                const theme = e.matches ? 'dark' : 'light';
+                document.documentElement.removeAttribute('data-theme');
+                this.updateToggleState(theme);
+            }
+        });
+    }
+    
+    toggleTheme() {
+        const currentTheme = this.getCurrentTheme();
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        // Add transition disable class
+        document.body.classList.add('theme-transition-disable');
+        
+        // Apply new theme
+        this.setTheme(newTheme);
+        
+        // Re-enable transitions after a brief delay
+        setTimeout(() => {
+            document.body.classList.remove('theme-transition-disable');
+        }, 100);
+        
+        // Analytics tracking (if available)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'theme_toggle', {
+                event_category: 'UI',
+                event_label: newTheme,
+                value: 1
+            });
+        }
+        
+        console.log(`🎨 Theme switched to: ${newTheme}`);
+    }
+    
+    setTheme(theme) {
+        if (theme === 'auto') {
+            // Remove explicit theme and use system preference
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem(this.storageKey, 'auto');
+        } else {
+            // Set explicit theme
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem(this.storageKey, theme);
+        }
+        
+        this.updateToggleState(theme);
+        this.updateMetaThemeColor(theme);
+    }
+    
+    getCurrentTheme() {
+        const dataTheme = document.documentElement.getAttribute('data-theme');
+        
+        if (dataTheme) {
+            return dataTheme;
+        }
+        
+        // If no explicit theme, detect from system
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    
+    updateToggleState(theme) {
+        if (!this.themeToggle) return;
+        
+        // Update aria-label for accessibility
+        const labels = {
+            light: 'تبديل إلى الوضع المظلم',
+            dark: 'تبديل إلى الوضع الفاتح'
+        };
+        
+        const titles = {
+            light: 'تبديل إلى الوضع المظلم',
+            dark: 'تبديل إلى الوضع الفاتح'
+        };
+        
+        this.themeToggle.setAttribute('aria-label', labels[theme]);
+        this.themeToggle.setAttribute('title', titles[theme]);
+        
+        // Update button state for screen readers
+        this.themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    }
+    
+    updateMetaThemeColor(theme) {
+        // Update meta theme-color for mobile browsers
+        let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        
+        if (!metaThemeColor) {
+            metaThemeColor = document.createElement('meta');
+            metaThemeColor.name = 'theme-color';
+            document.head.appendChild(metaThemeColor);
+        }
+        
+        const colors = {
+            light: '#F8F7F5',
+            dark: '#121212'
+        };
+        
+        metaThemeColor.content = colors[theme];
+    }
+    
+    disableTransitionsDuringLoad() {
+        document.body.classList.add('theme-transition-disable');
+        
+        // Re-enable transitions after initial load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.body.classList.remove('theme-transition-disable');
+            }, 100);
+        });
+    }
+    
+    // Public API methods
+    getTheme() {
+        return this.getCurrentTheme();
+    }
+    
+    setLightTheme() {
+        this.setTheme('light');
+    }
+    
+    setDarkTheme() {
+        this.setTheme('dark');
+    }
+    
+    setAutoTheme() {
+        this.setTheme('auto');
+    }
+    
+    // Get theme preference statistics
+    getThemeStats() {
+        const savedTheme = localStorage.getItem(this.storageKey);
+        const currentTheme = this.getCurrentTheme();
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        return {
+            saved: savedTheme,
+            current: currentTheme,
+            system: systemPrefersDark ? 'dark' : 'light',
+            isAutoMode: !savedTheme || savedTheme === 'auto'
+        };
+    }
+}
+
+// Initialize Theme Manager
+document.addEventListener('DOMContentLoaded', () => {
+    window.themeManager = new ThemeManager();
+});
+
+console.log('Dr. Islam Website - Enhanced Gallery System, Contact Form, and Theme Management Loaded');

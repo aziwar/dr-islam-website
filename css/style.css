@@ -1,13 +1,44 @@
 /* Enhanced CSS Custom Properties for better maintainability */
 :root {
-    /* Brand Colors */
+    /* Theme Control */
+    --theme-transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Light Theme Colors (Default) */
     --primary: #BEB093;
+    --primary-hover: #A69A7E;
+    --primary-light: #D4CDB9;
+    --primary-dark: #9A8F7A;
     --secondary: #777669;
+    --secondary-hover: #646258;
+    --secondary-light: #8F8D80;
     --white: #FFFFFF;
     --light: #F8F7F5;
+    --light-alt: #F0EFE8;
     --text: #333333;
+    --text-muted: #666666;
+    --text-light: #888888;
     --emergency: #dc3545;
+    --emergency-hover: #c82333;
     --success: #28a745;
+    --success-hover: #218838;
+    --warning: #ffc107;
+    --info: #17a2b8;
+    
+    /* Surface Colors */
+    --surface-primary: #FFFFFF;
+    --surface-secondary: #F8F7F5;
+    --surface-tertiary: #F0EFE8;
+    --surface-elevated: #FFFFFF;
+    
+    /* Border Colors */
+    --border-light: rgba(0, 0, 0, 0.1);
+    --border-medium: rgba(0, 0, 0, 0.15);
+    --border-heavy: rgba(0, 0, 0, 0.2);
+    
+    /* Overlay Colors */
+    --overlay-light: rgba(0, 0, 0, 0.1);
+    --overlay-medium: rgba(0, 0, 0, 0.3);
+    --overlay-heavy: rgba(0, 0, 0, 0.6);
     
     /* Animation Durations */
     --animation-fast: 200ms;
@@ -40,6 +71,23 @@
     --radius-md: 10px;
     --radius-lg: 15px;
     --radius-full: 50px;
+    
+    /* Enhanced Glassmorphism Variables - Light Theme */
+    --glass-bg-light: rgba(255, 255, 255, 0.15);
+    --glass-bg-medium: rgba(255, 255, 255, 0.12);
+    --glass-bg-dark: rgba(255, 255, 255, 0.08);
+    --glass-bg-primary: rgba(190, 176, 147, 0.15);
+    --glass-bg-secondary: rgba(119, 118, 105, 0.12);
+    --glass-border-light: rgba(255, 255, 255, 0.25);
+    --glass-border-medium: rgba(255, 255, 255, 0.18);
+    --glass-border-dark: rgba(255, 255, 255, 0.12);
+    --glass-shadow-light: 0 8px 32px rgba(31, 38, 135, 0.15);
+    --glass-shadow-medium: 0 12px 40px rgba(31, 38, 135, 0.2);
+    --glass-shadow-heavy: 0 16px 48px rgba(31, 38, 135, 0.25);
+    --glass-blur-sm: blur(8px);
+    --glass-blur-md: blur(12px);
+    --glass-blur-lg: blur(16px);
+    --glass-blur-xl: blur(20px);
 }
 
 /* Accessibility Styles */
@@ -109,13 +157,37 @@ a:focus {
 @media (prefers-contrast: high) {
     :root {
         --primary: #8B7355;
+        --primary-hover: #755E48;
         --secondary: #5A5A5A;
         --text: #000000;
+        --text-muted: #333333;
         --emergency: #CC0000;
+        --success: #006600;
+        --border-light: rgba(0, 0, 0, 0.4);
+        --border-medium: rgba(0, 0, 0, 0.6);
+        --border-heavy: rgba(0, 0, 0, 0.8);
     }
     
-    button, .cta-button, .sticky-book {
-        border: 2px solid var(--text);
+    [data-theme="dark"] {
+        --primary: #E6D9C3;
+        --primary-hover: #F0EBD8;
+        --secondary: #CCCCCC;
+        --text: #FFFFFF;
+        --text-muted: #DDDDDD;
+        --emergency: #FF9999;
+        --success: #66FF66;
+        --border-light: rgba(255, 255, 255, 0.4);
+        --border-medium: rgba(255, 255, 255, 0.6);
+        --border-heavy: rgba(255, 255, 255, 0.8);
+    }
+    
+    button, .cta-button, .sticky-book, .theme-toggle {
+        border: 2px solid var(--text) !important;
+        box-shadow: 0 0 0 1px var(--surface-primary), 0 0 0 3px var(--text) !important;
+    }
+    
+    .theme-toggle:focus {
+        box-shadow: 0 0 0 1px var(--surface-primary), 0 0 0 5px var(--text) !important;
     }
 }
 
@@ -131,19 +203,111 @@ a:focus {
     }
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --primary: #BEB093;
-        --secondary: #A8A49A;
-        --white: #1A1A1A;
-        --light: #2A2A2A;
-        --text: #E5E5E5;
-    }
+/* Dark Theme Variables */
+[data-theme="dark"] {
+    /* Dark Theme Colors */
+    --primary: #D4CDB9;
+    --primary-hover: #E2DCC7;
+    --primary-light: #BEB093;
+    --primary-dark: #A69A7E;
+    --secondary: #9A9B8E;
+    --secondary-hover: #B0B1A4;
+    --secondary-light: #8F8D80;
+    --white: #121212;
+    --light: #1E1E1E;
+    --light-alt: #2A2A2A;
+    --text: #E5E5E5;
+    --text-muted: #B3B3B3;
+    --text-light: #999999;
+    --emergency: #FF6B6B;
+    --emergency-hover: #FF5252;
+    --success: #4CAF50;
+    --success-hover: #45A049;
+    --warning: #FFB347;
+    --info: #42A5F5;
     
-    body {
-        background-color: var(--white);
-        color: var(--text);
+    /* Dark Surface Colors */
+    --surface-primary: #121212;
+    --surface-secondary: #1E1E1E;
+    --surface-tertiary: #2A2A2A;
+    --surface-elevated: #1F1F1F;
+    
+    /* Dark Border Colors */
+    --border-light: rgba(255, 255, 255, 0.12);
+    --border-medium: rgba(255, 255, 255, 0.18);
+    --border-heavy: rgba(255, 255, 255, 0.25);
+    
+    /* Dark Overlay Colors */
+    --overlay-light: rgba(255, 255, 255, 0.1);
+    --overlay-medium: rgba(255, 255, 255, 0.2);
+    --overlay-heavy: rgba(255, 255, 255, 0.4);
+    
+    /* Dark Glassmorphism Variables */
+    --glass-bg-light: rgba(255, 255, 255, 0.08);
+    --glass-bg-medium: rgba(255, 255, 255, 0.06);
+    --glass-bg-dark: rgba(255, 255, 255, 0.04);
+    --glass-bg-primary: rgba(212, 205, 185, 0.12);
+    --glass-bg-secondary: rgba(154, 155, 142, 0.08);
+    --glass-border-light: rgba(255, 255, 255, 0.15);
+    --glass-border-medium: rgba(255, 255, 255, 0.12);
+    --glass-border-dark: rgba(255, 255, 255, 0.08);
+    --glass-shadow-light: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --glass-shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.4);
+    --glass-shadow-heavy: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+/* Automatic dark mode based on system preference */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        /* Dark Theme Colors */
+        --primary: #D4CDB9;
+        --primary-hover: #E2DCC7;
+        --primary-light: #BEB093;
+        --primary-dark: #A69A7E;
+        --secondary: #9A9B8E;
+        --secondary-hover: #B0B1A4;
+        --secondary-light: #8F8D80;
+        --white: #121212;
+        --light: #1E1E1E;
+        --light-alt: #2A2A2A;
+        --text: #E5E5E5;
+        --text-muted: #B3B3B3;
+        --text-light: #999999;
+        --emergency: #FF6B6B;
+        --emergency-hover: #FF5252;
+        --success: #4CAF50;
+        --success-hover: #45A049;
+        --warning: #FFB347;
+        --info: #42A5F5;
+        
+        /* Dark Surface Colors */
+        --surface-primary: #121212;
+        --surface-secondary: #1E1E1E;
+        --surface-tertiary: #2A2A2A;
+        --surface-elevated: #1F1F1F;
+        
+        /* Dark Border Colors */
+        --border-light: rgba(255, 255, 255, 0.12);
+        --border-medium: rgba(255, 255, 255, 0.18);
+        --border-heavy: rgba(255, 255, 255, 0.25);
+        
+        /* Dark Overlay Colors */
+        --overlay-light: rgba(255, 255, 255, 0.1);
+        --overlay-medium: rgba(255, 255, 255, 0.2);
+        --overlay-heavy: rgba(255, 255, 255, 0.4);
+        
+        /* Dark Glassmorphism Variables */
+        --glass-bg-light: rgba(255, 255, 255, 0.08);
+        --glass-bg-medium: rgba(255, 255, 255, 0.06);
+        --glass-bg-dark: rgba(255, 255, 255, 0.04);
+        --glass-bg-primary: rgba(212, 205, 185, 0.12);
+        --glass-bg-secondary: rgba(154, 155, 142, 0.08);
+        --glass-border-light: rgba(255, 255, 255, 0.15);
+        --glass-border-medium: rgba(255, 255, 255, 0.12);
+        --glass-border-dark: rgba(255, 255, 255, 0.08);
+        --glass-shadow-light: 0 8px 32px rgba(0, 0, 0, 0.3);
+        --glass-shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.4);
+        --glass-shadow-heavy: 0 16px 48px rgba(0, 0, 0, 0.5);
     }
 }
 
@@ -171,12 +335,132 @@ a:focus {
     box-sizing: border-box;
 }
 
+/* Theme Transition Support */
+* {
+    transition: var(--theme-transition);
+}
+
+/* Disable transitions during theme change to prevent flashing */
+.theme-transition-disable * {
+    transition: none !important;
+}
+
 body {
     font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+    background-color: var(--surface-primary);
     color: var(--text);
     line-height: 1.6;
     direction: rtl;
     text-align: right;
+    transition: background-color var(--theme-transition), color var(--theme-transition);
+}
+
+/* Theme Toggle Component */
+.theme-toggle-container {
+    margin-left: auto;
+    padding: 0 var(--space-sm);
+}
+
+.theme-toggle {
+    position: relative;
+    background: var(--glass-bg-medium);
+    backdrop-filter: var(--glass-blur-md);
+    border: 1px solid var(--glass-border-medium);
+    border-radius: var(--radius-full);
+    padding: var(--space-xs);
+    cursor: pointer;
+    transition: all var(--theme-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    box-shadow: var(--glass-shadow-light);
+}
+
+.theme-toggle:hover {
+    background: var(--glass-bg-light);
+    border-color: var(--glass-border-light);
+    box-shadow: var(--glass-shadow-medium);
+    transform: translateY(-2px);
+}
+
+.theme-toggle:focus {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 1px var(--surface-primary), 0 0 0 4px var(--primary);
+}
+
+.theme-toggle:active {
+    transform: translateY(0);
+    box-shadow: var(--glass-shadow-light);
+}
+
+.theme-icon {
+    position: absolute;
+    font-size: 1.2rem;
+    transition: all var(--theme-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Light theme - show sun, hide moon */
+:root .theme-icon-light,
+[data-theme="light"] .theme-icon-light {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+:root .theme-icon-dark,
+[data-theme="light"] .theme-icon-dark {
+    opacity: 0;
+    transform: rotate(180deg) scale(0.5);
+}
+
+/* Dark theme - show moon, hide sun */
+[data-theme="dark"] .theme-icon-light {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.5);
+}
+
+[data-theme="dark"] .theme-icon-dark {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+/* Auto dark mode - show moon, hide sun */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .theme-icon-light {
+        opacity: 0;
+        transform: rotate(-180deg) scale(0.5);
+    }
+    
+    :root:not([data-theme]) .theme-icon-dark {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* Mobile theme toggle adjustments */
+@media (max-width: 768px) {
+    .theme-toggle-container {
+        order: -1;
+        margin-left: 0;
+        margin-right: var(--space-sm);
+    }
+    
+    .theme-toggle {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .theme-icon {
+        font-size: 1.1rem;
+    }
 }
 
 /* RTL Improvements */
@@ -279,13 +563,44 @@ h4 { font-size: var(--font-size-xl); font-weight: 600; }
     text-decoration: underline;
 }
 
-/* Header */
+/* Enhanced Glass Header */
 header {
-    background: var(--white);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: var(--glass-bg-light);
+    backdrop-filter: var(--glass-blur-md);
+    -webkit-backdrop-filter: var(--glass-blur-md);
+    border: 1px solid var(--glass-border-light);
+    box-shadow: var(--glass-shadow-light);
     position: sticky;
     top: 40px;
     z-index: 100;
+    transition: all var(--animation-normal) ease;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: var(--glass-blur-md)) {
+    header {
+        background: var(--surface-elevated);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .theme-toggle {
+        background: var(--surface-secondary);
+        border: 1px solid var(--border-medium);
+    }
+    
+    .badge {
+        background: var(--surface-secondary);
+        border: 1px solid var(--border-light);
+    }
+}
+
+/* Enhanced glass effect on scroll */
+header.scrolled {
+    background: var(--glass-bg-medium);
+    backdrop-filter: var(--glass-blur-lg);
+    -webkit-backdrop-filter: var(--glass-blur-lg);
+    border-color: var(--glass-border-medium);
+    box-shadow: var(--glass-shadow-medium);
 }
 
 nav {
@@ -434,62 +749,122 @@ nav a:hover {
 }
 
 .badge {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--glass-bg-light);
+    backdrop-filter: var(--glass-blur-sm);
+    -webkit-backdrop-filter: var(--glass-blur-sm);
+    border: 1px solid var(--glass-border-light);
     padding: 8px 20px;
     border-radius: 25px;
     font-size: 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all var(--animation-fast) ease;
+}
+
+.badge:hover {
+    background: var(--glass-bg-medium);
+    border-color: var(--glass-border-medium);
+    transform: translateY(-1px);
+    box-shadow: var(--glass-shadow-light);
+}
+
+/* Fallback for badges */
+@supports not (backdrop-filter: var(--glass-blur-sm)) {
+    .badge {
+        background: rgba(255, 255, 255, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+    }
 }
 
 .cta-button {
     display: inline-block;
-    background: var(--white);
-    color: var(--secondary);
+    background: var(--surface-elevated);
+    color: var(--text);
+    border: 2px solid var(--primary);
     padding: 15px 30px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     text-decoration: none;
     font-weight: bold;
-    transition: transform 0.3s;
+    transition: all var(--theme-transition);
+    box-shadow: var(--shadow-sm);
 }
 
 .cta-button:hover {
+    background: var(--primary);
+    color: var(--surface-primary);
     transform: scale(1.05);
+    box-shadow: var(--shadow-md);
 }
 
-/* Sticky Booking Button - Enhanced for Mobile UX */
+.cta-button:focus {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Enhanced Glassmorphism Sticky Booking Button */
 .sticky-book {
     position: fixed;
     bottom: 100px;
     right: 30px;
-    background: var(--success);
+    background: linear-gradient(135deg, 
+        rgba(40, 167, 69, 0.9), 
+        rgba(34, 139, 34, 0.95)
+    );
+    backdrop-filter: var(--glass-blur-md);
+    -webkit-backdrop-filter: var(--glass-blur-md);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--white);
     padding: 15px 25px;
     border-radius: 50px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-    z-index: 98; /* Reduced from 999 to prevent content overlap */
+    box-shadow: var(--glass-shadow-medium), 
+                0 4px 20px rgba(40, 167, 69, 0.4);
+    z-index: 98;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s;
+    transition: all var(--animation-normal) ease;
     animation: pulse 2s infinite;
     /* Enhanced touch support */
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    min-width: 48px; /* Minimum touch target */
+    min-width: 48px;
     min-height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
+    will-change: transform, box-shadow;
+}
+
+/* Fallback for browsers without backdrop-filter */
+@supports not (backdrop-filter: var(--glass-blur-md)) {
+    .sticky-book {
+        background: var(--success);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
-    50% { box-shadow: 0 5px 30px rgba(40, 167, 69, 0.5); }
-    100% { box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+    0% { 
+        box-shadow: var(--glass-shadow-medium), 
+                    0 4px 20px rgba(40, 167, 69, 0.4); 
+    }
+    50% { 
+        box-shadow: var(--glass-shadow-heavy), 
+                    0 8px 35px rgba(40, 167, 69, 0.6); 
+    }
+    100% { 
+        box-shadow: var(--glass-shadow-medium), 
+                    0 4px 20px rgba(40, 167, 69, 0.4); 
+    }
 }
 
 .sticky-book:hover {
     transform: scale(1.1);
-    background: #218838;
+    background: linear-gradient(135deg, 
+        rgba(34, 139, 34, 0.95), 
+        rgba(25, 135, 84, 1)
+    );
+    backdrop-filter: var(--glass-blur-lg);
+    -webkit-backdrop-filter: var(--glass-blur-lg);
+    box-shadow: var(--glass-shadow-heavy), 
+                0 8px 30px rgba(40, 167, 69, 0.5);
 }
 
 /* Services */
@@ -510,21 +885,35 @@ nav a:hover {
     gap: 2rem;
 }
 
-/* Service Cards with Glassmorphism */
+/* Enhanced Glassmorphism Service Cards */
 .service-card {
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: var(--glass-bg-light);
+    backdrop-filter: var(--glass-blur-md);
+    -webkit-backdrop-filter: var(--glass-blur-md);
+    border: 1px solid var(--glass-border-light);
     padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow-light);
     text-align: center;
-    transition: transform 0.3s;
+    transition: all var(--animation-normal) ease;
+    will-change: transform, box-shadow;
+}
+
+/* Fallback for service cards */
+@supports not (backdrop-filter: var(--glass-blur-md)) {
+    .service-card {
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 3px 15px rgba(0,0,0,0.12);
+    }
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    background: var(--glass-bg-medium);
+    border-color: var(--glass-border-medium);
+    box-shadow: var(--glass-shadow-medium);
+    backdrop-filter: var(--glass-blur-lg);
+    -webkit-backdrop-filter: var(--glass-blur-lg);
 }
 
 .service-card h3 {
@@ -607,23 +996,36 @@ nav a:hover {
 }
 
 .filter-btn {
-    background: var(--white);
-    border: 2px solid var(--primary);
+    background: var(--glass-bg-light);
+    backdrop-filter: var(--glass-blur-sm);
+    -webkit-backdrop-filter: var(--glass-blur-sm);
+    border: 2px solid var(--glass-border-medium);
     color: var(--primary);
     padding: 12px 24px;
     border-radius: 25px;
     cursor: pointer;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: all var(--animation-normal) ease;
     font-size: 0.95rem;
+}
+
+/* Fallback for filter buttons */
+@supports not (backdrop-filter: var(--glass-blur-sm)) {
+    .filter-btn {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid var(--primary);
+    }
 }
 
 .filter-btn:hover,
 .filter-btn.active {
-    background: var(--primary);
+    background: var(--glass-bg-primary);
+    backdrop-filter: var(--glass-blur-md);
+    -webkit-backdrop-filter: var(--glass-blur-md);
+    border-color: var(--primary);
     color: var(--white);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(190, 176, 147, 0.3);
+    box-shadow: var(--glass-shadow-light);
 }
 
 /* Enhanced Gallery Grid */
@@ -942,16 +1344,35 @@ nav a:hover {
     background: var(--light);
 }
 
-/* Contact Form */
+/* Enhanced Glass Contact Form */
 .contact-form-container {
     max-width: 800px;
     margin: 0 auto 4rem;
-    background: var(--white);
+    background: var(--glass-bg-light);
+    backdrop-filter: var(--glass-blur-md);
+    -webkit-backdrop-filter: var(--glass-blur-md);
+    border: 1px solid var(--glass-border-light);
     padding: 3rem;
     border-radius: 15px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--glass-shadow-medium);
     text-align: right;
     direction: rtl;
+    transition: all var(--animation-normal) ease;
+}
+
+.contact-form-container:hover {
+    background: var(--glass-bg-medium);
+    border-color: var(--glass-border-medium);
+    box-shadow: var(--glass-shadow-heavy);
+    transform: translateY(-2px);
+}
+
+/* Fallback for contact form */
+@supports not (backdrop-filter: var(--glass-blur-md)) {
+    .contact-form-container {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: var(--shadow-md);
+    }
 }
 
 .contact-form {
@@ -1061,14 +1482,33 @@ nav a:hover {
     color: var(--primary);
 }
 
-/* Working Hours */
+/* Enhanced Glass Working Hours */
 .working-hours {
-    background: var(--white);
+    background: var(--glass-bg-light);
+    backdrop-filter: var(--glass-blur-md);
+    -webkit-backdrop-filter: var(--glass-blur-md);
+    border: 1px solid var(--glass-border-light);
     padding: 2rem;
     border-radius: 10px;
     max-width: 500px;
     margin: 0 auto;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    box-shadow: var(--glass-shadow-light);
+    transition: all var(--animation-normal) ease;
+}
+
+.working-hours:hover {
+    background: var(--glass-bg-medium);
+    border-color: var(--glass-border-medium);
+    box-shadow: var(--glass-shadow-medium);
+    transform: translateY(-2px);
+}
+
+/* Fallback for working hours */
+@supports not (backdrop-filter: var(--glass-blur-md)) {
+    .working-hours {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
 }
 
 .working-hours h3 {
@@ -1175,22 +1615,31 @@ footer {
         color: var(--primary);
     }
     
-    /* Mobile menu overlay - Enhanced for better UX */
+    /* Enhanced Glass Mobile Menu Overlay */
     .nav-overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.3);
+        backdrop-filter: var(--glass-blur-md);
+        -webkit-backdrop-filter: var(--glass-blur-md);
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
-        transition: all 0.3s ease;
-        z-index: 99; /* Lowered z-index to prevent form interference */
+        transition: all var(--animation-normal) ease;
+        z-index: 99;
         /* Enhanced touch support */
         touch-action: manipulation;
         -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Fallback for nav overlay */
+    @supports not (backdrop-filter: var(--glass-blur-md)) {
+        .nav-overlay {
+            background: rgba(0,0,0,0.6);
+        }
     }
     
     .nav-overlay.active {
@@ -1325,36 +1774,657 @@ body {
     100% { background-position: 200% 0; }
 }
 
-/* Image Loading States */
-.gallery-item {
+/* =================================================================
+   ENHANCED IMAGE LOADING AND OPTIMIZATION SYSTEM
+   ================================================================= */
+
+/* Optimized Image Container */
+.optimized-image {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: var(--glass-bg-light);
+    border-radius: var(--radius-sm);
+}
+
+/* Progressive Image Loading States */
+.gallery-item,
+.doctor-image,
+.timeline-institution,
+.cert-card {
     position: relative;
     overflow: hidden;
 }
 
-.gallery-item img {
-    transition: opacity 0.3s ease;
-    opacity: 0;
-}
-
-.gallery-item img.loaded {
-    opacity: 1;
-}
-
-.gallery-item::before {
+/* Loading Skeleton with Glass Effect */
+.optimized-image::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--loading-skeleton);
-    z-index: 1;
-    transition: opacity 0.3s ease;
+    background: linear-gradient(90deg, 
+        var(--glass-bg-light) 25%, 
+        var(--glass-bg-medium) 50%, 
+        var(--glass-bg-light) 75%);
+    background-size: 200% 100%;
+    animation: loading-shimmer 1.5s infinite;
+    z-index: 2;
+    border-radius: inherit;
+    opacity: 1;
+    transition: opacity var(--animation-slow) ease;
 }
 
-.gallery-item.loaded::before {
+.optimized-image.loaded::before {
     opacity: 0;
     pointer-events: none;
+}
+
+/* Enhanced Image Loading Animation */
+@keyframes loading-shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* AVIF-Enhanced Image Optimization System */
+.image-optimization-ready .optimized-image {
+    contain: layout style paint;
+    transform: translateZ(0); /* Hardware acceleration */
+}
+
+/* Loading State Management */
+.optimized-image.loading {
+    background: var(--glass-bg-medium);
+}
+
+.optimized-image.loading::before {
+    animation-duration: 1.2s;
+    animation-timing-function: ease-in-out;
+}
+
+/* Loaded State with Smooth Transition */
+.optimized-image .responsive-image {
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 600ms ease, transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+.optimized-image.loaded .responsive-image {
+    opacity: 1;
+    transform: scale(1);
+    will-change: auto; /* Remove after animation */
+}
+
+/* Error State Handling */
+.optimized-image.error {
+    background: linear-gradient(135deg, 
+        var(--glass-bg-light) 0%, 
+        var(--glass-bg-dark) 100%);
+    border: 1px dashed var(--glass-border-medium);
+}
+
+.optimized-image.error::after {
+    content: '⚠️ فشل تحميل الصورة';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    text-align: center;
+    z-index: 3;
+}
+
+/* Critical Image Optimizations */
+.critical-image .responsive-image {
+    opacity: 1;
+    transform: scale(1);
+    transition: none;
+    will-change: auto;
+}
+
+.critical-image::before {
+    display: none; /* No loading animation for critical images */
+}
+
+/* Showcase Image Enhancements */
+.showcase-image {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow-elevated);
+    background: var(--glass-bg-light);
+}
+
+.showcase-image .responsive-image {
+    border-radius: inherit;
+    transition: transform 300ms ease;
+}
+
+.showcase-image:hover .responsive-image {
+    transform: scale(1.02);
+}
+
+/* Gallery Image Optimizations */
+.gallery-item .optimized-image {
+    aspect-ratio: 4/3;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.gallery-item .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Before/After Container Enhancements */
+.before-after-container {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--glass-bg-light);
+    box-shadow: var(--glass-shadow-medium);
+}
+
+.before-after-container .optimized-image {
+    border-radius: 0;
+    background: transparent;
+}
+
+.before-after-slider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: grab;
+    transition: all var(--animation-normal) ease;
+    z-index: 10;
+}
+
+.before-after-slider:active {
+    cursor: grabbing;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.slider-handle {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+}
+
+/* Performance Optimizations for Mobile */
+@media (max-width: 768px) {
+    .optimized-image {
+        will-change: auto; /* Reduce GPU usage on mobile */
+    }
+    
+    .optimized-image .responsive-image {
+        transition-duration: 400ms; /* Faster animations on mobile */
+    }
+    
+    /* Reduce blur effects on low-end devices */
+    @media (max-width: 480px) and (max-height: 854px) {
+        .optimized-image::before {
+            background: var(--glass-bg-medium);
+            animation: none;
+        }
+    }
+}
+
+/* High Performance Mode for supported devices */
+@supports (backdrop-filter: blur(1px)) {
+    .image-optimization-ready .optimized-image {
+        backdrop-filter: blur(0.5px);
+        -webkit-backdrop-filter: blur(0.5px);
+    }
+}
+
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .optimized-image .responsive-image {
+        transition: opacity 300ms ease;
+        transform: none !important;
+    }
+    
+    .optimized-image::before {
+        animation: none;
+    }
+    
+    .loading-shimmer,
+    @keyframes loading-shimmer {
+        animation: none;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .optimized-image {
+        background: var(--surface-primary);
+        border: 2px solid var(--border-heavy);
+    }
+    
+    .optimized-image::before {
+        background: linear-gradient(90deg, 
+            var(--surface-secondary) 25%, 
+            var(--surface-tertiary) 50%, 
+            var(--surface-secondary) 75%);
+    }
+}
+
+/* Container Queries for Responsive Images */
+@container (min-width: 320px) {
+    .optimized-image {
+        border-radius: var(--radius-sm);
+    }
+}
+
+@container (min-width: 768px) {
+    .optimized-image {
+        border-radius: var(--radius-md);
+    }
+    
+    .gallery-item .optimized-image:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--glass-shadow-floating);
+    }
+}
+
+@container (min-width: 1024px) {
+    .optimized-image {
+        border-radius: var(--radius-lg);
+    }
+}
+
+/* Enhanced Accessibility Optimizations */
+.reduced-motion .optimized-image .responsive-image {
+    transition: opacity 200ms ease !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+.reduced-motion .optimized-image::before {
+    animation: none !important;
+    background: var(--glass-bg-medium) !important;
+}
+
+/* Dark Mode Preferred Optimizations */
+.dark-mode-preferred .optimized-image {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode-preferred .optimized-image::before {
+    background: linear-gradient(90deg, 
+        rgba(0, 0, 0, 0.15) 25%, 
+        rgba(0, 0, 0, 0.25) 50%, 
+        rgba(0, 0, 0, 0.15) 75%);
+}
+
+.dark-mode-preferred .optimized-image.error::after {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Loading Progress Indicator */
+.loading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transition: width 300ms ease, opacity 500ms ease;
+    z-index: 9999;
+    opacity: 1;
+}
+
+.loading-progress[aria-valuenow="100"] {
+    opacity: 0;
+    transition-delay: 500ms;
+}
+
+/* Focus Management for Keyboard Navigation */
+.optimized-image:focus-within {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.optimized-image img:focus {
+    outline: none;
+}
+
+/* Error State Enhancements */
+.optimized-image.error {
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.optimized-image.error::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: var(--space-md);
+    background: var(--glass-bg-medium);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    max-width: 200px;
+    z-index: 3;
+}
+
+/* Performance Monitoring Indicators */
+.image-performance-indicator {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    opacity: 0;
+    transition: opacity 300ms ease;
+    z-index: 4;
+}
+
+.optimized-image.loaded .image-performance-indicator {
+    opacity: 1;
+}
+
+.optimized-image.error .image-performance-indicator {
+    background: var(--emergency);
+    opacity: 1;
+}
+
+/* Debug Mode Enhancements */
+body[data-debug="true"] .optimized-image {
+    position: relative;
+    border: 2px dashed var(--primary);
+}
+
+body[data-debug="true"] .optimized-image::after {
+    content: attr(data-format) ' | ' attr(data-size);
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    padding: 2px 6px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 10px;
+    border-radius: 3px;
+    z-index: 5;
+}
+
+/* Network Adaptive Styles */
+.slow-connection .optimized-image::before {
+    animation-duration: 2s;
+    animation-timing-function: linear;
+}
+
+.slow-connection .optimized-image .responsive-image {
+    transition-duration: 800ms;
+}
+
+/* Memory-conscious optimizations */
+@media (max-device-memory: 1) {
+    .optimized-image::before {
+        background: var(--glass-bg-light) !important;
+        animation: none !important;
+    }
+    
+    .optimized-image .responsive-image {
+        transition: opacity 200ms ease !important;
+        transform: none !important;
+    }
+}
+
+/* Print Optimizations */
+@media print {
+    .optimized-image::before,
+    .loading-progress,
+    .image-performance-indicator {
+        display: none !important;
+    }
+    
+    .optimized-image .responsive-image {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .optimized-image.error::after {
+        display: none !important;
+    }
+}
+
+/* Image Fade-in Animation */
+.case-image,
+.doctor-main-image,
+.institution-logo {
+    transition: opacity var(--animation-slow) ease,
+                transform var(--animation-slow) ease;
+    opacity: 0;
+    transform: scale(1.05);
+}
+
+.loaded .case-image,
+.loaded .doctor-main-image,
+.loaded .institution-logo {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* AVIF Format Support Detection */
+@supports (background-image: url("data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEAwgMg8f8D///8WfhwB8+ErK42A=")) {
+    .avif-supported {
+        display: block;
+    }
+}
+
+/* WebP Format Fallback Styles */
+.webp-fallback {
+    display: block;
+}
+
+@supports (background-image: url("data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA")) {
+    .webp-supported {
+        display: block;
+    }
+    .webp-fallback {
+        display: none;
+    }
+}
+
+/* Responsive Image Sizing */
+.case-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.doctor-main-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.institution-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    object-position: center;
+}
+
+/* Performance Optimizations for Images */
+.optimized-image img {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Remove will-change after loading */
+.loaded .optimized-image img {
+    will-change: auto;
+}
+
+/* Critical Image Priority */
+.doctor-picture,
+.hero-image {
+    priority: high;
+}
+
+.doctor-picture img {
+    loading: eager; /* Load doctor image immediately */
+}
+
+/* Intersection Observer Enhancement */
+.lazy-load {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--animation-slow) ease,
+                transform var(--animation-slow) ease;
+}
+
+.lazy-load.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Low Quality Image Placeholder (LQIP) */
+.lqip-container {
+    position: relative;
+}
+
+.lqip-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(2px);
+    transform: scale(1.1);
+    opacity: 1;
+    transition: opacity var(--animation-slow) ease;
+    z-index: 1;
+}
+
+.lqip-container.loaded .lqip-placeholder {
+    opacity: 0;
+}
+
+/* Error State Handling */
+.image-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg-light);
+    color: var(--secondary);
+    min-height: 150px;
+    border: 2px dashed var(--glass-border-medium);
+    border-radius: var(--radius-md);
+}
+
+.image-error::before {
+    content: '🖼️';
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.image-error::after {
+    content: 'فشل في تحميل الصورة';
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+/* Dark Mode Image Adjustments */
+@media (prefers-color-scheme: dark) {
+    .optimized-image::before {
+        background: linear-gradient(90deg, 
+            rgba(40, 40, 40, 0.8) 25%, 
+            rgba(60, 60, 60, 0.8) 50%, 
+            rgba(40, 40, 40, 0.8) 75%);
+    }
+    
+    .case-image,
+    .doctor-main-image {
+        filter: brightness(0.9) contrast(1.1);
+    }
+}
+
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .optimized-image::before {
+        animation: none;
+        background: var(--glass-bg-medium);
+    }
+    
+    .case-image,
+    .doctor-main-image,
+    .institution-logo {
+        transition: opacity 0.1s ease;
+        transform: none;
+    }
+    
+    .loaded .case-image,
+    .loaded .doctor-main-image,
+    .loaded .institution-logo {
+        transform: scale(1);
+    }
+}
+
+/* High DPI Display Optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .optimized-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Print Media Optimizations */
+@media print {
+    .optimized-image::before {
+        display: none;
+    }
+    
+    .case-image,
+    .doctor-main-image {
+        filter: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Container Query Support for Responsive Images */
+@supports (container-type: inline-size) {
+    .gallery-grid {
+        container-type: inline-size;
+    }
+    
+    @container (max-width: 400px) {
+        .case-image {
+            height: 180px;
+        }
+    }
+    
+    @container (min-width: 800px) {
+        .case-image {
+            height: 250px;
+        }
+    }
 }
 
 /* Button Loading States */
@@ -1514,14 +2584,16 @@ html {
 
 /* ===== ENHANCED BOOKING MODAL STYLES ===== */
 
-/* Modal Overlay */
+/* Enhanced Glass Modal Overlay */
 .booking-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: var(--glass-blur-lg);
+    -webkit-backdrop-filter: var(--glass-blur-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1529,8 +2601,14 @@ html {
     opacity: 0;
     visibility: hidden;
     transition: all var(--animation-normal) ease;
-    backdrop-filter: blur(3px);
     padding: var(--space-sm);
+}
+
+/* Fallback for browsers without backdrop-filter */
+@supports not (backdrop-filter: var(--glass-blur-lg)) {
+    .booking-modal {
+        background: rgba(0, 0, 0, 0.75);
+    }
 }
 
 .booking-modal[style*="flex"] {
@@ -1538,18 +2616,29 @@ html {
     visibility: visible;
 }
 
-/* Modal Content */
+/* Enhanced Glass Modal Content */
 .booking-modal-content {
-    background: var(--white);
+    background: var(--glass-bg-light);
+    backdrop-filter: var(--glass-blur-xl);
+    -webkit-backdrop-filter: var(--glass-blur-xl);
+    border: 1px solid var(--glass-border-light);
     border-radius: var(--radius-lg);
     width: 100%;
     max-width: 480px;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--glass-shadow-heavy);
     transform: translateY(30px);
     transition: transform var(--animation-normal) ease;
     animation: modalSlideIn 0.3s ease forwards;
+}
+
+/* Fallback for modal content */
+@supports not (backdrop-filter: var(--glass-blur-xl)) {
+    .booking-modal-content {
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: var(--shadow-lg);
+    }
 }
 
 @keyframes modalSlideIn {
@@ -2940,5 +4029,158 @@ html {
     .contact-form-section,
     .submit-btn {
         display: none;
+    }
+}
+
+/* =================================================================
+   GLASSMORPHISM PERFORMANCE OPTIMIZATIONS
+   ================================================================= */
+
+/* GPU Acceleration for Glass Elements */
+.service-card,
+.booking-modal-content,
+.sticky-book,
+.contact-form-container,
+.working-hours,
+.badge,
+.filter-btn,
+header {
+    will-change: transform, backdrop-filter;
+    transform: translateZ(0); /* Force hardware acceleration */
+    -webkit-transform: translateZ(0);
+}
+
+/* Remove will-change after animations complete to save memory */
+.service-card:not(:hover),
+.booking-modal-content:not(.animating),
+.sticky-book:not(:hover),
+.contact-form-container:not(:hover),
+.working-hours:not(:hover),
+.badge:not(:hover),
+.filter-btn:not(:hover):not(.active) {
+    will-change: auto;
+}
+
+/* Enhanced Backdrop-Filter Performance */
+@supports (backdrop-filter: blur(1px)) {
+    /* Progressive Enhancement for Modern Browsers */
+    .glass-enhanced {
+        contain: layout style paint;
+        isolation: isolate;
+    }
+    
+    /* Optimize backdrop-filter rendering */
+    .booking-modal,
+    .nav-overlay,
+    header,
+    .service-card,
+    .contact-form-container {
+        contain: layout;
+    }
+}
+
+/* Memory Optimization for Mobile Devices */
+@media (max-width: 768px) {
+    /* Reduce blur intensity on mobile for better performance */
+    :root {
+        --glass-blur-sm: blur(6px);
+        --glass-blur-md: blur(8px);
+        --glass-blur-lg: blur(10px);
+        --glass-blur-xl: blur(12px);
+    }
+    
+    /* Disable complex glass effects on low-end devices */
+    @media (max-resolution: 150dpi) {
+        .service-card,
+        .contact-form-container,
+        .working-hours {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            background: rgba(255, 255, 255, 0.9);
+        }
+    }
+}
+
+/* High Performance Mode for Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    /* Disable backdrop-filter animations but keep the glass effect */
+    .service-card,
+    .contact-form-container,
+    .working-hours,
+    .badge,
+    .filter-btn {
+        transition: transform var(--animation-fast) ease,
+                   box-shadow var(--animation-fast) ease;
+    }
+    
+    /* Remove backdrop-filter transitions */
+    .service-card:hover,
+    .contact-form-container:hover,
+    .working-hours:hover,
+    .filter-btn:hover {
+        backdrop-filter: var(--glass-blur-md);
+        -webkit-backdrop-filter: var(--glass-blur-md);
+        transition: none;
+    }
+}
+
+/* Safari Specific Optimizations */
+@supports (-webkit-backdrop-filter: blur(1px)) and (not (backdrop-filter: blur(1px))) {
+    /* Safari-only optimizations */
+    .booking-modal,
+    .nav-overlay,
+    header {
+        -webkit-backdrop-filter: var(--glass-blur-lg);
+        backdrop-filter: none; /* Fallback for Safari */
+    }
+}
+
+/* Firefox Fallbacks */
+@supports not (backdrop-filter: blur(1px)) and not (-webkit-backdrop-filter: blur(1px)) {
+    /* Enhanced fallbacks for Firefox and older browsers */
+    .service-card {
+        background: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    
+    .booking-modal {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    .contact-form-container,
+    .working-hours {
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    
+    header {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    }
+}
+
+/* Container Queries for Advanced Layouts (Future-proofing) */
+@supports (container-type: inline-size) {
+    .services {
+        container-type: inline-size;
+    }
+    
+    @container (min-width: 768px) {
+        .service-card {
+            backdrop-filter: var(--glass-blur-lg);
+            -webkit-backdrop-filter: var(--glass-blur-lg);
+        }
+    }
+}
+
+/* Dark Mode Glass Adjustments */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --glass-bg-light: rgba(26, 26, 26, 0.7);
+        --glass-bg-medium: rgba(26, 26, 26, 0.8);
+        --glass-bg-dark: rgba(26, 26, 26, 0.9);
+        --glass-border-light: rgba(255, 255, 255, 0.15);
+        --glass-border-medium: rgba(255, 255, 255, 0.12);
+        --glass-border-dark: rgba(255, 255, 255, 0.08);
     }
 }
