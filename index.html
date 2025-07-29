@@ -114,6 +114,16 @@
                 <li role="none"><a href="#gallery" role="menuitem">قبل وبعد</a></li>
                 <li role="none"><a href="#faq" role="menuitem">أسئلة شائعة</a></li>
                 <li role="none"><a href="#contact" role="menuitem">اتصل بنا</a></li>
+                <li role="none" class="theme-toggle-container">
+                    <button id="theme-toggle" 
+                            class="theme-toggle" 
+                            aria-label="تبديل الوضع المظلم"
+                            title="تبديل بين الوضع الفاتح والمظلم">
+                        <span class="theme-icon theme-icon-light" aria-hidden="true">☀️</span>
+                        <span class="theme-icon theme-icon-dark" aria-hidden="true">🌙</span>
+                        <span class="sr-only">تبديل الوضع المظلم</span>
+                    </button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -305,8 +315,46 @@
                 <!-- Additional Cases -->
                 <div class="gallery-item" data-category="cosmetic">
                     <div class="case-images">
-                        <img src="assets/webp-optimized/case3-before.webp" alt="قبل تصميم الابتسامة" loading="lazy">
-                        <img src="assets/webp-optimized/case3-after.webp" alt="بعد تصميم الابتسامة" loading="lazy">
+                        <picture class="optimized-image">
+                            <source 
+                                srcset="assets/avif-optimized/case3-before-320w.avif 320w,
+                                       assets/avif-optimized/case3-before-768w.avif 768w,
+                                       assets/avif-optimized/case3-before.avif 1024w" 
+                                sizes="(max-width: 768px) 50vw, 25vw" 
+                                type="image/avif">
+                            <source 
+                                srcset="assets/webp-optimized/case3-before-320w.webp 320w,
+                                       assets/webp-optimized/case3-before-768w.webp 768w,
+                                       assets/webp-optimized/case3-before.webp 1024w" 
+                                sizes="(max-width: 768px) 50vw, 25vw" 
+                                type="image/webp">
+                            <img src="assets/webp-optimized/case3-before.webp" 
+                                 alt="قبل تصميم الابتسامة" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 class="case-image"
+                                 onload="this.parentElement.parentElement.classList.add('loaded')">
+                        </picture>
+                        <picture class="optimized-image">
+                            <source 
+                                srcset="assets/avif-optimized/case3-after-320w.avif 320w,
+                                       assets/avif-optimized/case3-after-768w.avif 768w,
+                                       assets/avif-optimized/case3-after.avif 1024w" 
+                                sizes="(max-width: 768px) 50vw, 25vw" 
+                                type="image/avif">
+                            <source 
+                                srcset="assets/webp-optimized/case3-after-320w.webp 320w,
+                                       assets/webp-optimized/case3-after-768w.webp 768w,
+                                       assets/webp-optimized/case3-after.webp 1024w" 
+                                sizes="(max-width: 768px) 50vw, 25vw" 
+                                type="image/webp">
+                            <img src="assets/webp-optimized/case3-after.webp" 
+                                 alt="بعد تصميم الابتسامة" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 class="case-image"
+                                 onload="this.parentElement.parentElement.classList.add('loaded')">
+                        </picture>
                     </div>
                     <div class="case-info">
                         <h4>تصميم ابتسامة رقمي</h4>
@@ -318,8 +366,46 @@
 
                 <div class="gallery-item" data-category="implants">
                     <div class="case-images">
-                        <img src="assets/webp-optimized/real-case1.webp" alt="قبل الزراعة الفورية" loading="lazy">
-                        <img src="assets/webp-optimized/real-case2.webp" alt="بعد الزراعة الفورية" loading="lazy">
+                        <picture class="optimized-image">
+                            <source 
+                                srcset="assets/avif-optimized/real-case1-320w.avif 320w,
+                                       assets/avif-optimized/real-case1-768w.avif 768w,
+                                       assets/avif-optimized/real-case1.avif 1024w" 
+                                sizes="(max-width: 768px) 50vw, 25vw" 
+                                type="image/avif">
+                            <source 
+                                srcset="assets/webp-optimized/real-case1-320w.webp 320w,
+                                       assets/webp-optimized/real-case1-768w.webp 768w,
+                                       assets/webp-optimized/real-case1.webp 1024w" 
+                                sizes="(max-width: 768px) 50vw, 25vw" 
+                                type="image/webp">
+                            <img src="assets/webp-optimized/real-case1.webp" 
+                                 alt="قبل الزراعة الفورية" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 class="case-image"
+                                 onload="this.parentElement.parentElement.classList.add('loaded')">
+                        </picture>
+                        <picture class="optimized-image">
+                            <source 
+                                srcset="assets/avif-optimized/real-case2-320w.avif 320w,
+                                       assets/avif-optimized/real-case2-768w.avif 768w,
+                                       assets/avif-optimized/real-case2.avif 1024w" 
+                                sizes="(max-width: 768px) 50vw, 25vw" 
+                                type="image/avif">
+                            <source 
+                                srcset="assets/webp-optimized/real-case2-320w.webp 320w,
+                                       assets/webp-optimized/real-case2-768w.webp 768w,
+                                       assets/webp-optimized/real-case2.webp 1024w" 
+                                sizes="(max-width: 768px) 50vw, 25vw" 
+                                type="image/webp">
+                            <img src="assets/webp-optimized/real-case2.webp" 
+                                 alt="بعد الزراعة الفورية" 
+                                 loading="lazy" 
+                                 decoding="async"
+                                 class="case-image"
+                                 onload="this.parentElement.parentElement.classList.add('loaded')">
+                        </picture>
                     </div>
                     <div class="case-info">
                         <h4>زراعة فورية بعد الخلع</h4>
@@ -343,7 +429,26 @@
         <div class="container">
             <div class="doctor-hero">
                 <div class="doctor-image">
-                    <img src="assets/webp-optimized/showcase.webp" alt="د. اسلام الصغير" loading="lazy">
+                    <picture class="optimized-image doctor-picture">
+                        <source 
+                            srcset="assets/avif-optimized/showcase-320w.avif 320w,
+                                   assets/avif-optimized/showcase-768w.avif 768w,
+                                   assets/avif-optimized/showcase.avif 1024w" 
+                            sizes="(max-width: 768px) 100vw, 50vw" 
+                            type="image/avif">
+                        <source 
+                            srcset="assets/webp-optimized/showcase-320w.webp 320w,
+                                   assets/webp-optimized/showcase-768w.webp 768w,
+                                   assets/webp-optimized/showcase.webp 1024w" 
+                            sizes="(max-width: 768px) 100vw, 50vw" 
+                            type="image/webp">
+                        <img src="assets/webp-optimized/showcase.webp" 
+                             alt="د. اسلام الصغير - طبيب أسنان أخصائي زراعة الأسنان" 
+                             loading="lazy" 
+                             decoding="async"
+                             class="doctor-main-image"
+                             onload="this.parentElement.parentElement.classList.add('loaded')">
+                    </picture>
                     <div class="image-overlay">
                         <div class="achievement-badge">
                             <span class="badge-text">أكثر من 15 عام خبرة</span>
@@ -387,7 +492,25 @@
                         <div class="timeline-year">2004-2009</div>
                         <div class="timeline-content">
                             <div class="timeline-institution">
-                                <img src="assets/webp-optimized/logo-icon.webp" alt="جامعة الإسكندرية" class="institution-logo">
+                                <picture class="optimized-image institution-picture">
+                                    <source 
+                                        srcset="assets/avif-optimized/logo-icon-320w.avif 320w,
+                                               assets/avif-optimized/logo-icon-768w.avif 768w,
+                                               assets/avif-optimized/logo-icon.avif 1024w" 
+                                        sizes="80px" 
+                                        type="image/avif">
+                                    <source 
+                                        srcset="assets/webp-optimized/logo-icon-320w.webp 320w,
+                                               assets/webp-optimized/logo-icon-768w.webp 768w,
+                                               assets/webp-optimized/logo-icon.webp 1024w" 
+                                        sizes="80px" 
+                                        type="image/webp">
+                                    <img src="assets/webp-optimized/logo-icon.webp" 
+                                         alt="جامعة الإسكندرية" 
+                                         class="institution-logo"
+                                         loading="lazy" 
+                                         decoding="async">
+                                </picture>
                                 <div class="institution-info">
                                     <h4>بكالوريوس طب وجراحة الفم والأسنان</h4>
                                     <p>جامعة الإسكندرية - كلية طب الأسنان</p>
@@ -401,7 +524,25 @@
                         <div class="timeline-year">2010-2011</div>
                         <div class="timeline-content">
                             <div class="timeline-institution">
-                                <img src="assets/webp-optimized/logo-icon.webp" alt="جامعة الإسكندرية" class="institution-logo">
+                                <picture class="optimized-image institution-picture">
+                                    <source 
+                                        srcset="assets/avif-optimized/logo-icon-320w.avif 320w,
+                                               assets/avif-optimized/logo-icon-768w.avif 768w,
+                                               assets/avif-optimized/logo-icon.avif 1024w" 
+                                        sizes="80px" 
+                                        type="image/avif">
+                                    <source 
+                                        srcset="assets/webp-optimized/logo-icon-320w.webp 320w,
+                                               assets/webp-optimized/logo-icon-768w.webp 768w,
+                                               assets/webp-optimized/logo-icon.webp 1024w" 
+                                        sizes="80px" 
+                                        type="image/webp">
+                                    <img src="assets/webp-optimized/logo-icon.webp" 
+                                         alt="جامعة الإسكندرية" 
+                                         class="institution-logo"
+                                         loading="lazy" 
+                                         decoding="async">
+                                </picture>
                                 <div class="institution-info">
                                     <h4>دبلوم زراعة الأسنان</h4>
                                     <p>جامعة الإسكندرية - قسم جراحة الفم والوجه والفكين</p>
