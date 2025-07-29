@@ -1,11 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:github.com)",
-      "Bash(echo $env:APPDATA)",
-      "Bash(powershell:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
-  },
-  "enabledMcpjsonServers": []
+  }
 }
