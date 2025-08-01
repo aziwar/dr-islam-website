@@ -2011,10 +2011,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Performance warnings with more context
             if (loadTime > 1000) {
-                console.warn(`⚠️ Slow image load: ${src}`, {
-                    loadTime: `${loadTime}ms`,
-                    format,
-                    estimatedSize: fileSize ? `${Math.round(fileSize/1024)}KB` : 'unknown',
+                /* console logging disabled */}KB` : 'unknown',
                     retries
                 });
             }
@@ -2033,10 +2030,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Enhanced error handling
         document.addEventListener('imageLoadError', (event) => {
             const { src, retries, error } = event.detail;
-            console.error(`❌ Image load failed: ${src}`, {
-                retries,
-                error,
-                timestamp: new Date().toISOString()
+            /* console logging disabled */.toISOString()
             });
             
             // Report critical errors to analytics

@@ -797,7 +797,94 @@ export class ImageOptimizationSystem {
               priority
             });
             preloadCount++;
-            this._log('info', `⚡ Preloaded: ${href}`);\n            resolve();\n          };\n          \n          link.onerror = () => {\n            this._log('warn', `❌ Failed to preload: ${href}`);\n            reject(new Error(`Failed to preload ${href}`));\n          };\n          \n          document.head.appendChild(link);\n          \n          // Cleanup timeout\n          setTimeout(() => {\n            if (link.parentNode) {\n              reject(new Error(`Preload timeout for ${href}`));\n            }\n          }, 5000);\n        });\n      };\n      \n      // Process critical images with intelligent prioritization\n      for (const element of criticalImages) {\n        if (element.tagName === 'SOURCE' && element.srcset) {\n          const srcset = element.srcset.split(',');\n          // Preload optimal size for current viewport\n          const optimalSrc = this._selectOptimalSource(srcset);\n          preloadPromises.push(preloadWithCache(optimalSrc, element.type, 'high'));\n          \n        } else if (element.tagName === 'IMG' && element.src) {\n          preloadPromises.push(preloadWithCache(element.src, null, 'high'));\n        }\n      }\n      \n      // Wait for all preloads with timeout\n      try {\n        await Promise.allSettled(preloadPromises);\n        this._log('success', `⚡ Successfully preloaded ${preloadCount} critical images`);\n      } catch (error) {\n        this._log('warn', 'Some critical images failed to preload', error);\n      }\n      \n      // Clean up old cache entries (older than 1 hour)\n      this._cleanupPreloadCache();\n      \n    } catch (error) {\n      this._log('error', 'Critical image preloading failed', error);\n    }\n  }\n  \n  // Select optimal source from srcset based on viewport\n  _selectOptimalSource(srcset) {\n    const viewport = window.innerWidth;\n    const sources = srcset.map(src => {\n      const [url, width] = src.trim().split(' ');\n      return {\n        url,\n        width: parseInt(width) || 0\n      };\n    }).sort((a, b) => a.width - b.width);\n    \n    // Find best match for current viewport\n    for (let i = 0; i < sources.length; i++) {\n      if (sources[i].width >= viewport || i === sources.length - 1) {\n        return sources[i].url;\n      }\n    }\n    \n    return sources[0]?.url || srcset.split(' ')[0];\n  }\n  \n  // Clean up old preload cache entries\n  _cleanupPreloadCache() {\n    if (!window.imagePreloadCache) return;\n    \n    const oneHourAgo = Date.now() - (60 * 60 * 1000);\n    let cleanedCount = 0;\n    \n    for (const [key, value] of window.imagePreloadCache.entries()) {\n      if (value.timestamp < oneHourAgo) {\n        window.imagePreloadCache.delete(key);\n        cleanedCount++;\n      }\n    }\n    \n    if (cleanedCount > 0) {\n      this._log('info', `🧹 Cleaned ${cleanedCount} old preload cache entries`);\n    }\n  }
+            this._log('info', `⚡ Preloaded: ${href}`);
+            resolve();
+          };
+          
+          link.onerror = () => {
+            this._log('warn', `❌ Failed to preload: ${href}`);
+            reject(new Error(`Failed to preload ${href}`));
+          };
+          
+          document.head.appendChild(link);
+          
+          // Cleanup timeout
+          setTimeout(() => {
+            if (link.parentNode) {
+              reject(new Error(`Preload timeout for ${href}`));
+            }
+          }, 5000);
+        });
+      };
+      
+      // Process critical images with intelligent prioritization
+      for (const element of criticalImages) {
+        if (element.tagName === 'SOURCE' && element.srcset) {
+          const srcset = element.srcset.split(',');
+          // Preload optimal size for current viewport
+          const optimalSrc = this._selectOptimalSource(srcset);
+          preloadPromises.push(preloadWithCache(optimalSrc, element.type, 'high'));
+          
+        } else if (element.tagName === 'IMG' && element.src) {
+          preloadPromises.push(preloadWithCache(element.src, null, 'high'));
+        }
+      }
+      
+      // Wait for all preloads with timeout
+      try {
+        await Promise.allSettled(preloadPromises);
+        this._log('success', `⚡ Successfully preloaded ${preloadCount} critical images`);
+      } catch (error) {
+        this._log('warn', 'Some critical images failed to preload', error);
+      }
+      
+      // Clean up old cache entries (older than 1 hour)
+      this._cleanupPreloadCache();
+      
+    } catch (error) {
+      this._log('error', 'Critical image preloading failed', error);
+    }
+  }
+  
+  // Select optimal source from srcset based on viewport
+  _selectOptimalSource(srcset) {
+    const viewport = window.innerWidth;
+    const sources = srcset.map(src => {
+      const [url, width] = src.trim().split(' ');
+      return {
+        url,
+        width: parseInt(width) || 0
+      };
+    }).sort((a, b) => a.width - b.width);
+    
+    // Find best match for current viewport
+    for (let i = 0; i < sources.length; i++) {
+      if (sources[i].width >= viewport || i === sources.length - 1) {
+        return sources[i].url;
+      }
+    }
+    
+    return sources[0]?.url || srcset.split(' ')[0];
+  }
+  
+  // Clean up old preload cache entries
+  _cleanupPreloadCache() {
+    if (!window.imagePreloadCache) return;
+    
+    const oneHourAgo = Date.now() - (60 * 60 * 1000);
+    let cleanedCount = 0;
+    
+    for (const [key, value] of window.imagePreloadCache.entries()) {
+      if (value.timestamp < oneHourAgo) {
+        window.imagePreloadCache.delete(key);
+        cleanedCount++;
+      }
+    }
+    
+    if (cleanedCount > 0) {
+      this._log('info', `🧹 Cleaned ${cleanedCount} old preload cache entries`);
+    }
+  }
 
   // Enhanced performance monitoring with memory management
   _setupPerformanceMonitoring() {
@@ -832,7 +919,135 @@ export class ImageOptimizationSystem {
     document.addEventListener('imageOptimized', checkAllImagesLoaded);
     
     // Monitor memory usage if available
-    if ('memory' in performance) {\n      this._startMemoryMonitoring();\n    }\n    \n    // Monitor page visibility for performance optimization\n    document.addEventListener('visibilitychange', () => {\n      if (document.hidden) {\n        this._pauseNonCriticalOperations();\n      } else {\n        this._resumeOperations();\n      }\n    });\n    \n    // Monitor connection changes\n    if ('connection' in navigator) {\n      navigator.connection.addEventListener('change', () => {\n        this._adaptToConnectionChange();\n      });\n    }\n  }\n  \n  // Memory monitoring for performance optimization\n  _startMemoryMonitoring() {\n    const monitorMemory = () => {\n      if (performance.memory) {\n        const memInfo = {\n          used: Math.round(performance.memory.usedJSHeapSize / 1048576), // MB\n          total: Math.round(performance.memory.totalJSHeapSize / 1048576),\n          limit: Math.round(performance.memory.jsHeapSizeLimit / 1048576)\n        };\n        \n        // Trigger cleanup if memory usage is high\n        if (memInfo.used / memInfo.limit > 0.8) {\n          this._log('warn', '⚠️ High memory usage detected, triggering cleanup', memInfo);\n          this._performMemoryCleanup();\n        }\n        \n        this._log('info', '💾 Memory usage', memInfo);\n      }\n    };\n    \n    // Monitor memory every 30 seconds\n    setInterval(monitorMemory, 30000);\n  }\n  \n  // Schedule memory cleanup after image loading\n  _scheduleMemoryCleanup() {\n    setTimeout(() => {\n      this._performMemoryCleanup();\n    }, 5000); // Wait 5 seconds after completion\n  }\n  \n  // Perform memory cleanup\n  _performMemoryCleanup() {\n    try {\n      // Clear completed loading queue entries\n      this.performanceMetrics.loadingQueue.clear();\n      \n      // Limit error history to last 50 entries\n      if (this.errorTracker.errorReasons.size > 50) {\n        const entries = Array.from(this.errorTracker.errorReasons.entries())\n          .sort((a, b) => b[0] - a[0])\n          .slice(0, 50);\n        this.errorTracker.errorReasons.clear();\n        entries.forEach(([key, value]) => {\n          this.errorTracker.errorReasons.set(key, value);\n        });\n      }\n      \n      // Clean up old load time data (keep last 100 entries per format)\n      Object.keys(this.performanceMetrics.loadTimeByFormat).forEach(format => {\n        const times = this.performanceMetrics.loadTimeByFormat[format];\n        if (times.length > 100) {\n          this.performanceMetrics.loadTimeByFormat[format] = times.slice(-100);\n        }\n      });\n      \n      // Clean up preload cache\n      this._cleanupPreloadCache();\n      \n      // Force garbage collection if available (dev tools)\n      if (window.gc && typeof window.gc === 'function') {\n        window.gc();\n      }\n      \n      this._log('info', '🧹 Memory cleanup completed');\n      \n    } catch (error) {\n      this._log('error', 'Memory cleanup failed', error);\n    }\n  }\n  \n  // Pause non-critical operations when page is hidden\n  _pauseNonCriticalOperations() {\n    // Disconnect observer to save resources when page is hidden\n    if (this.performanceMetrics.intersectionObserver) {\n      this.performanceMetrics.intersectionObserver.disconnect();\n      this._log('info', '⏸️ Paused image loading (page hidden)');\n    }\n  }\n  \n  // Resume operations when page becomes visible\n  _resumeOperations() {\n    // Reconnect observer when page becomes visible\n    if (!this.performanceMetrics.intersectionObserver) {\n      this._initializeLazyLoading();\n      this._log('info', '▶️ Resumed image loading (page visible)');\n    }\n  }\n  \n  // Adapt behavior based on connection changes\n  _adaptToConnectionChange() {\n    const connection = navigator.connection;\n    const isSlowConnection = connection.effectiveType === 'slow-2g' || \n                            connection.effectiveType === '2g' || \n                            connection.saveData;\n    \n    if (isSlowConnection) {\n      // Reduce concurrent loads for slow connections\n      this.config.maxConcurrentLoads = Math.min(3, this.config.maxConcurrentLoads);\n      this.config.rootMargin = '25px 0px'; // Load images closer to viewport\n      this._log('info', '🐌 Adapted to slow connection');\n    } else {\n      // Restore normal behavior for fast connections\n      this.config.maxConcurrentLoads = 6;\n      this.config.rootMargin = '50px 0px';\n      this._log('info', '🚀 Adapted to fast connection');\n    }\n  }"}, {"old_string": "    document.addEventListener('imageOptimized', checkAllImagesLoaded);\n  }", "new_string": "    document.addEventListener('imageOptimized', checkAllImagesLoaded);\n  }"}]
+    if ('memory' in performance) {
+      this._startMemoryMonitoring();
+    }
+    
+    // Monitor page visibility for performance optimization
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        this._pauseNonCriticalOperations();
+      } else {
+        this._resumeOperations();
+      }
+    });
+    
+    // Monitor connection changes
+    if ('connection' in navigator) {
+      navigator.connection.addEventListener('change', () => {
+        this._adaptToConnectionChange();
+      });
+    }
+  }
+  
+  // Memory monitoring for performance optimization
+  _startMemoryMonitoring() {
+    const monitorMemory = () => {
+      if (performance.memory) {
+        const memInfo = {
+          used: Math.round(performance.memory.usedJSHeapSize / 1048576), // MB
+          total: Math.round(performance.memory.totalJSHeapSize / 1048576),
+          limit: Math.round(performance.memory.jsHeapSizeLimit / 1048576)
+        };
+        
+        // Trigger cleanup if memory usage is high
+        if (memInfo.used / memInfo.limit > 0.8) {
+          this._log('warn', '⚠️ High memory usage detected, triggering cleanup', memInfo);
+          this._performMemoryCleanup();
+        }
+        
+        this._log('info', '💾 Memory usage', memInfo);
+      }
+    };
+    
+    // Monitor memory every 30 seconds
+    setInterval(monitorMemory, 30000);
+  }
+  
+  // Schedule memory cleanup after image loading
+  _scheduleMemoryCleanup() {
+    setTimeout(() => {
+      this._performMemoryCleanup();
+    }, 5000); // Wait 5 seconds after completion
+  }
+  
+  // Perform memory cleanup
+  _performMemoryCleanup() {
+    try {
+      // Clear completed loading queue entries
+      this.performanceMetrics.loadingQueue.clear();
+      
+      // Limit error history to last 50 entries
+      if (this.errorTracker.errorReasons.size > 50) {
+        const entries = Array.from(this.errorTracker.errorReasons.entries())
+          .sort((a, b) => b[0] - a[0])
+          .slice(0, 50);
+        this.errorTracker.errorReasons.clear();
+        entries.forEach(([key, value]) => {
+          this.errorTracker.errorReasons.set(key, value);
+        });
+      }
+      
+      // Clean up old load time data (keep last 100 entries per format)
+      Object.keys(this.performanceMetrics.loadTimeByFormat).forEach(format => {
+        const times = this.performanceMetrics.loadTimeByFormat[format];
+        if (times.length > 100) {
+          this.performanceMetrics.loadTimeByFormat[format] = times.slice(-100);
+        }
+      });
+      
+      // Clean up preload cache
+      this._cleanupPreloadCache();
+      
+      // Force garbage collection if available (dev tools)
+      if (window.gc && typeof window.gc === 'function') {
+        window.gc();
+      }
+      
+      this._log('info', '🧹 Memory cleanup completed');
+      
+    } catch (error) {
+      this._log('error', 'Memory cleanup failed', error);
+    }
+  }
+  
+  // Pause non-critical operations when page is hidden
+  _pauseNonCriticalOperations() {
+    // Disconnect observer to save resources when page is hidden
+    if (this.performanceMetrics.intersectionObserver) {
+      this.performanceMetrics.intersectionObserver.disconnect();
+      this._log('info', '⏸️ Paused image loading (page hidden)');
+    }
+  }
+  
+  // Resume operations when page becomes visible
+  _resumeOperations() {
+    // Reconnect observer when page becomes visible
+    if (!this.performanceMetrics.intersectionObserver) {
+      this._initializeLazyLoading();
+      this._log('info', '▶️ Resumed image loading (page visible)');
+    }
+  }
+  
+  // Adapt behavior based on connection changes
+  _adaptToConnectionChange() {
+    const connection = navigator.connection;
+    const isSlowConnection = connection.effectiveType === 'slow-2g' || 
+                            connection.effectiveType === '2g' || 
+                            connection.saveData;
+    
+    if (isSlowConnection) {
+      // Reduce concurrent loads for slow connections
+      this.config.maxConcurrentLoads = Math.min(3, this.config.maxConcurrentLoads);
+      this.config.rootMargin = '25px 0px'; // Load images closer to viewport
+      this._log('info', '🐌 Adapted to slow connection');
+    } else {
+      // Restore normal behavior for fast connections
+      this.config.maxConcurrentLoads = 6;
+      this.config.rootMargin = '50px 0px';
+      this._log('info', '🚀 Adapted to fast connection');
+    }
+  }"}, {"old_string": "    document.addEventListener('imageOptimized', checkAllImagesLoaded);\n  }", "new_string": "    document.addEventListener('imageOptimized', checkAllImagesLoaded);\n  }"}]
 
   // Enhanced performance metrics with detailed analytics
   getPerformanceMetrics() {
