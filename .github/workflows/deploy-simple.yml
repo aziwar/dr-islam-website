@@ -1,11 +1,11 @@
-# Alternative deployment using API Token authentication
+# Simple, reliable deployment workflow
 name: Deploy to Cloudflare Workers (API Token)
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
-  workflow_dispatch:
 
 jobs:
   deploy:
@@ -23,19 +23,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Build project (remove console.logs)
+      - name: Build project
         run: npm run build
       
-      - name: Deploy to Cloudflare Workers
+      - name: Deploy Main Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
-          
+          command: deploy --verbose
+      
       - name: Deploy Contact Form Worker
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy -c wrangler-contact.toml
+          command: deploy -c wrangler-contact.toml --verbose

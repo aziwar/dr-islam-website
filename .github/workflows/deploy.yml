@@ -3,8 +3,9 @@
 name: Deploy to Cloudflare Workers (Legacy)
 
 on:
-  # Disabled automatic triggers - use workflow_dispatch for manual testing only
-  workflow_dispatch:
+  # DISABLED - This workflow is deprecated
+  # Use debug-deploy.yml for debugging or deploy-simple.yml for actual deployment
+  # workflow_dispatch:
   # push:
   #   branches:
   #     - master
