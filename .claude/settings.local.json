@@ -19,7 +19,11 @@
       "Bash(do echo \"=== $file ===\")",
       "Bash(done)",
       "Bash(mkdir:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(gh:*)",
+      "Bash(git config:*)",
+      "Bash(dpkg:*)",
+      "Bash(npm install)"
     ],
     "deny": []
   }
