@@ -26,7 +26,8 @@
       "Bash(npm install)",
       "Bash(npm run build:*)",
       "WebFetch(domain:developers.cloudflare.com)",
-      "Bash(npx wrangler:*)"
+      "Bash(npx wrangler:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

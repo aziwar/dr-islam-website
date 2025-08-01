@@ -1,6 +1,6 @@
 # 🏥 Dr. Islam Elsagher Dental Clinic Website
 
-[![Cloudflare Workers](https://img.shields.io/badge/Deploy-Cloudflare%20Builds-orange)](https://dash.cloudflare.com/)
+[![Cloudflare Workers](https://img.shields.io/badge/Deploy-Cloudflare%20Builds-orange)](https://developers.cloudflare.com/workers/ci-cd/builds/)
 [![Performance](https://img.shields.io/badge/Performance-A%2B-brightgreen)](https://dr-elsagher.com)
 [![Security Headers](https://img.shields.io/badge/Security-A%2B-brightgreen)](https://securityheaders.com/?q=dr-elsagher.com)
 [![Mobile-First](https://img.shields.io/badge/Mobile-PWA%20Ready-blue)](https://dr-elsagher.com)
@@ -10,6 +10,7 @@
 **🌐 Live Site:** [dr-elsagher.com](https://dr-elsagher.com)  
 **📱 Arabic:** [dr-elsagher.com/ar](https://dr-elsagher.com/ar)  
 **🏗️ Architecture:** Cloudflare Workers + R2 Storage  
+**🚀 Deployment:** [Cloudflare Workers & Pages CI/CD](https://developers.cloudflare.com/workers/ci-cd/builds/)  
 
 ## ✨ Features
 
@@ -91,17 +92,21 @@ npm run test:mobile
 npm run lint:css
 ```
 
-### Environment Setup
+### Deployment Setup
+
+This project uses **Cloudflare Workers & Pages CI/CD Builds** for automatic deployment.
+
+**No manual deployment needed** - pushes to `master` automatically deploy via Cloudflare GitHub App.
+
+**Setup Instructions**: See [CLOUDFLARE-DEPLOYMENT.md](CLOUDFLARE-DEPLOYMENT.md)
+
 ```bash
-# Configure Cloudflare CLI
-npx wrangler login
-npx wrangler whoami
-
-# Deploy to staging
-npm run deploy:staging
-
-# Production deployment (auto via GitHub)
-git push origin main
+# Automatic deployment workflow:
+git push origin master
+# → Cloudflare detects push
+# → Runs npm run build  
+# → Deploys both workers
+# → Site live at dr-elsagher.com
 ```
 
 ## 📊 Performance Metrics

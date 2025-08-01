@@ -15,11 +15,8 @@
     "test:performance": "node tests/performance/performance-test.js",
     "test:accessibility": "node tests/integration/test-accessibility.js",
     "lint:css": "stylelint src/content/styles.js --fix",
-    "deploy": "npm run build && wrangler deploy",
-    "deploy:contact": "wrangler deploy -c wrangler-contact.toml",
-    "deploy:all": "npm run deploy && npm run deploy:contact",
-    "deploy:staging": "npm run build && wrangler deploy --env staging",
-    "deploy:prod": "npm run build && powershell -ExecutionPolicy Bypass -File deploy.ps1",
+    "deploy:local": "npm run build && wrangler deploy",
+    "deploy:contact:local": "wrangler deploy -c wrangler-contact.toml",
     "monitor": "wrangler deploy --config wrangler.monitor.toml"
   },
   "devDependencies": {
