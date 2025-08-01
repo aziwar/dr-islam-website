@@ -1047,7 +1047,7 @@ export class ImageOptimizationSystem {
       this.config.rootMargin = '50px 0px';
       this._log('info', '🚀 Adapted to fast connection');
     }
-  }"}, {"old_string": "    document.addEventListener('imageOptimized', checkAllImagesLoaded);\n  }", "new_string": "    document.addEventListener('imageOptimized', checkAllImagesLoaded);\n  }"}]
+  }
 
   // Enhanced performance metrics with detailed analytics
   getPerformanceMetrics() {
@@ -1428,5 +1428,4 @@ export class ImageOptimizationSystem {
       img.alt = 'عذراً، لا يمكن تحميل الصورة';
     }
   }
-}
 }
