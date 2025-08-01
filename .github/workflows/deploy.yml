@@ -1,11 +1,13 @@
-# Auto-deploy to Cloudflare Workers on push to master
-name: Deploy to Cloudflare Workers
+# DEPRECATED: Use Cloudflare Builds instead
+# This workflow is kept for backup - disable once Cloudflare Builds is working
+name: Deploy to Cloudflare Workers (Legacy)
 
 on:
-  push:
-    branches:
-      - master
+  # Disabled automatic triggers - use workflow_dispatch for manual testing only
   workflow_dispatch:
+  # push:
+  #   branches:
+  #     - master
 
 jobs:
   deploy:

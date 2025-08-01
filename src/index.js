@@ -264,36 +264,28 @@ async function handleImageRequest(request, env, ctx, path) {
     const webpKey = key.replace(/\.(jpg|png)$/i, '.webp');
     imageMetrics.webpRequested = acceptsWebP;
     
-    // Try WebP first if supported (only if R2 is configured)
+    // Try WebP first if supported
     if (acceptsWebP && env.IMAGES) {
-      try {
-        const webpObject = await env.IMAGES.get(webpKey);
-        if (webpObject) {
-          imageMetrics.source = 'r2-webp';
-          imageMetrics.duration = performance.now() - imageStart;
-          logger.metric({ operation: 'image-fetch', ...imageMetrics });
-          return serveR2Object(webpObject, 'image/webp');
-        }
-      } catch (e) {
-        logger.warn('R2 WebP fetch failed:', e);
+      const webpObject = await env.IMAGES.get(webpKey);
+      if (webpObject) {
+        imageMetrics.source = 'r2-webp';
+        imageMetrics.duration = performance.now() - imageStart;
+        logger.metric({ operation: 'image-fetch', ...imageMetrics });
+        return serveR2Object(webpObject, 'image/webp');
       }
     }
     
-    // Try original format from R2 (only if R2 is configured)
+    // Try original format from R2
     if (env.IMAGES) {
-      try {
-        const r2Start = performance.now();
-        const object = await env.IMAGES.get(key);
-        if (object) {
-          imageMetrics.source = 'r2-original';
-          imageMetrics.r2Duration = performance.now() - r2Start;
-          imageMetrics.duration = performance.now() - imageStart;
-          logger.metric({ operation: 'image-fetch', ...imageMetrics });
-          const contentType = getContentType(key);
-          return serveR2Object(object, contentType);
-        }
-      } catch (e) {
-        logger.warn('R2 original fetch failed:', e);
+      const r2Start = performance.now();
+      const object = await env.IMAGES.get(key);
+      if (object) {
+        imageMetrics.source = 'r2-original';
+        imageMetrics.r2Duration = performance.now() - r2Start;
+        imageMetrics.duration = performance.now() - imageStart;
+        logger.metric({ operation: 'image-fetch', ...imageMetrics });
+        const contentType = getContentType(key);
+        return serveR2Object(object, contentType);
       }
     }
     

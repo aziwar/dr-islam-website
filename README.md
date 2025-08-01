@@ -1,6 +1,6 @@
 # 🏥 Dr. Islam Elsagher Dental Clinic Website
 
-[![Deploy to Cloudflare Workers](https://github.com/aziwar/dr-islam-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/aziwar/dr-islam-website/actions/workflows/deploy.yml)
+[![Cloudflare Workers](https://img.shields.io/badge/Deploy-Cloudflare%20Builds-orange)](https://dash.cloudflare.com/)
 [![Performance](https://img.shields.io/badge/Performance-A%2B-brightgreen)](https://dr-elsagher.com)
 [![Security Headers](https://img.shields.io/badge/Security-A%2B-brightgreen)](https://securityheaders.com/?q=dr-elsagher.com)
 [![Mobile-First](https://img.shields.io/badge/Mobile-PWA%20Ready-blue)](https://dr-elsagher.com)
