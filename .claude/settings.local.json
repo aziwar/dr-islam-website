@@ -23,7 +23,8 @@
       "Bash(gh:*)",
       "Bash(git config:*)",
       "Bash(dpkg:*)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(npm run build:*)"
     ],
     "deny": []
   }
