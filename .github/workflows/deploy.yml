@@ -26,17 +26,21 @@ jobs:
       - name: Build project (remove console.logs)
         run: npm run build
       
-      - name: Verify Wrangler installation and GitHub App integration
+      - name: Check deployment method
         run: |
           echo "🔧 Checking Wrangler version..."
           npx wrangler --version
           
-          echo "🔗 Using Cloudflare GitHub App integration..."
-          echo "📋 Authentication will be handled automatically via GitHub App"
-          
-          # GitHub App integration doesn't require manual authentication
-          # Wrangler will automatically use the GitHub App permissions
-          echo "✅ GitHub App integration configured"
+          echo "⚠️ IMPORTANT: GitHub App Integration Issue Detected"
+          echo "📋 Cloudflare's GitHub App has known compatibility issues with Wrangler"
+          echo "🔧 This deployment might fail due to authentication problems"
+          echo ""
+          echo "🚨 Recommended Solution:"
+          echo "   1. Use the 'deploy-api-token.yml' workflow instead"
+          echo "   2. Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID secrets"
+          echo "   3. See GITHUB-APP-ISSUE.md for detailed instructions"
+          echo ""
+          echo "🔗 Attempting deployment with GitHub App integration anyway..."
           
           # Verify wrangler configuration files exist
           if [ -f "wrangler.toml" ]; then
@@ -52,16 +56,27 @@ jobs:
             echo "❌ Missing wrangler-contact.toml configuration file"
             exit 1
           fi
-          
-          echo "📦 Ready for deployment via GitHub App integration"
       
-      - name: Deploy to Cloudflare Workers (with retry)
+      - name: Deploy to Cloudflare Workers (with retry and diagnostics)
         run: |
           echo "🚀 Starting main worker deployment via GitHub App..."
+          
+          # Check for GitHub App environment
+          echo "🔍 Checking deployment environment..."
+          if [ -n "$CLOUDFLARE_API_TOKEN" ] || [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "⚠️ API Token environment variables detected - these are not needed for GitHub App"
+          fi
+          
+          # Update wrangler to latest version
+          echo "📦 Ensuring latest wrangler version..."
+          npm install wrangler@latest --no-save
+          npx wrangler --version
+          
           for i in {1..3}; do
             echo "📡 Deployment attempt $i of 3 for main worker..."
             
-            if npx wrangler deploy --verbose; then
+            # Try deployment with maximum debugging
+            if npx wrangler deploy --verbose --log-level debug 2>&1 | tee deploy.log; then
               echo "✅ Main worker deployment successful!"
               echo "🌐 Worker deployed and accessible via custom domain routing"
               break
@@ -69,8 +84,31 @@ jobs:
               DEPLOY_EXIT_CODE=$?
               echo "❌ Main worker deployment failed (exit code: $DEPLOY_EXIT_CODE)"
               
+              # Analyze the error log
+              echo "📋 Analyzing deployment logs..."
+              if grep -i "authentication" deploy.log; then
+                echo "🔐 Authentication issue detected"
+                echo "   • This might indicate GitHub App permissions are insufficient"
+              fi
+              
+              if grep -i "not found" deploy.log; then
+                echo "🔍 Resource not found error detected"
+                echo "   • Check if worker name or zone configuration is correct"
+              fi
+              
+              if grep -i "timeout" deploy.log; then
+                echo "⏱️ Timeout error detected"
+                echo "   • This might indicate network issues or API problems"
+              fi
+              
               if [ $i -eq 3 ]; then
                 echo "💥 All main worker deployment attempts failed"
+                echo ""
+                echo "📋 Diagnostic Information:"
+                echo "   • Exit code: $DEPLOY_EXIT_CODE"
+                echo "   • Wrangler version: $(npx wrangler --version)"
+                echo "   • Node version: $(node --version)"
+                echo ""
                 echo "🔍 Common causes with GitHub App integration:"
                 echo "   • GitHub App not properly connected to Cloudflare account"
                 echo "   • Missing Workers permissions in GitHub App"
@@ -82,6 +120,10 @@ jobs:
                 echo "   1. Check Cloudflare dashboard → Account → Integrations → GitHub"
                 echo "   2. Verify GitHub App has Workers deployment permissions"
                 echo "   3. Ensure your account has Workers enabled"
+                echo "   4. Try using API token authentication as fallback"
+                echo ""
+                echo "🔍 Last 50 lines of deployment log:"
+                tail -n 50 deploy.log
                 exit 1
               fi
               
@@ -90,19 +132,30 @@ jobs:
             fi
           done
       
-      - name: Deploy Contact Form Worker (with retry)
+      - name: Deploy Contact Form Worker (with retry and diagnostics)
         run: |
           echo "📧 Starting contact form worker deployment via GitHub App..."
           for i in {1..3}; do
             echo "📡 Deployment attempt $i of 3 for contact form worker..."
             
-            if npx wrangler deploy -c wrangler-contact.toml --verbose; then
+            # Try deployment with maximum debugging
+            if npx wrangler deploy -c wrangler-contact.toml --verbose --log-level debug 2>&1 | tee contact-deploy.log; then
               echo "✅ Contact form worker deployment successful!"
               echo "📬 Contact form available at: https://dr-elsagher.com/api/contact"
               break
             else
               DEPLOY_EXIT_CODE=$?
               echo "❌ Contact form worker deployment failed (exit code: $DEPLOY_EXIT_CODE)"
+              
+              # Analyze the error log
+              echo "📋 Analyzing contact form deployment logs..."
+              if grep -i "authentication" contact-deploy.log; then
+                echo "🔐 Authentication issue detected"
+              fi
+              
+              if grep -i "zone" contact-deploy.log; then
+                echo "🌐 Zone/Domain issue detected"
+              fi
               
               if [ $i -eq 3 ]; then
                 echo "💥 All contact form worker deployment attempts failed"
@@ -116,6 +169,9 @@ jobs:
                 echo "   1. Verify 'dr-elsagher.com' is in your Cloudflare account"
                 echo "   2. Check GitHub App has zone permissions"
                 echo "   3. Ensure domain is properly configured in Cloudflare"
+                echo ""
+                echo "🔍 Last 50 lines of contact form deployment log:"
+                tail -n 50 contact-deploy.log
                 exit 1
               fi
               

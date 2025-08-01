@@ -264,28 +264,36 @@ async function handleImageRequest(request, env, ctx, path) {
     const webpKey = key.replace(/\.(jpg|png)$/i, '.webp');
     imageMetrics.webpRequested = acceptsWebP;
     
-    // Try WebP first if supported
+    // Try WebP first if supported (only if R2 is configured)
     if (acceptsWebP && env.IMAGES) {
-      const webpObject = await env.IMAGES.get(webpKey);
-      if (webpObject) {
-        imageMetrics.source = 'r2-webp';
-        imageMetrics.duration = performance.now() - imageStart;
-        logger.metric({ operation: 'image-fetch', ...imageMetrics });
-        return serveR2Object(webpObject, 'image/webp');
+      try {
+        const webpObject = await env.IMAGES.get(webpKey);
+        if (webpObject) {
+          imageMetrics.source = 'r2-webp';
+          imageMetrics.duration = performance.now() - imageStart;
+          logger.metric({ operation: 'image-fetch', ...imageMetrics });
+          return serveR2Object(webpObject, 'image/webp');
+        }
+      } catch (e) {
+        logger.warn('R2 WebP fetch failed:', e);
       }
     }
     
-    // Try original format from R2
+    // Try original format from R2 (only if R2 is configured)
     if (env.IMAGES) {
-      const r2Start = performance.now();
-      const object = await env.IMAGES.get(key);
-      if (object) {
-        imageMetrics.source = 'r2-original';
-        imageMetrics.r2Duration = performance.now() - r2Start;
-        imageMetrics.duration = performance.now() - imageStart;
-        logger.metric({ operation: 'image-fetch', ...imageMetrics });
-        const contentType = getContentType(key);
-        return serveR2Object(object, contentType);
+      try {
+        const r2Start = performance.now();
+        const object = await env.IMAGES.get(key);
+        if (object) {
+          imageMetrics.source = 'r2-original';
+          imageMetrics.r2Duration = performance.now() - r2Start;
+          imageMetrics.duration = performance.now() - imageStart;
+          logger.metric({ operation: 'image-fetch', ...imageMetrics });
+          const contentType = getContentType(key);
+          return serveR2Object(object, contentType);
+        }
+      } catch (e) {
+        logger.warn('R2 original fetch failed:', e);
       }
     }
     
