@@ -261,19 +261,15 @@ export class ImageOptimizationSystem {
     
     switch (level) {
       case 'error':
-        console.error(prefix, message, data);
         // Store error for analytics
         this.errorTracker.errorReasons.set(Date.now(), { message, data });
         break;
       case 'warn':
-        console.warn(prefix, message, data);
         break;
       case 'success':
-        console.log(prefix, `✅ ${message}`, data);
         break;
       case 'info':
       default:
-        console.log(prefix, message, data);
         break;
     }
   }

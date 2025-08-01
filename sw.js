@@ -23,7 +23,6 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('[SW] Caching static assets');
         return cache.addAll(STATIC_ASSETS);
       })
       .then(() => self.skipWaiting())
@@ -149,7 +148,6 @@ self.addEventListener('sync', event => {
 async function syncContactForm() {
   // Get pending form data from IndexedDB
   // Send to server when online
-  console.log('[SW] Syncing contact form data');
 }
 
 // Push notifications support

@@ -651,7 +651,6 @@ class ImageLoader {
             }, delay);
             
             this.retryAttempts.set(img, retryCount + 1);
-            console.warn(`Image load retry ${retryCount + 1}/${maxRetries} for: ${src}`);
         } else {
             // All retries failed
             img.alt = 'فشل في تحميل الصورة';
@@ -663,7 +662,6 @@ class ImageLoader {
             
             this.loadingImages.delete(img);
             this.retryAttempts.delete(img);
-            console.error(`Failed to load image after ${maxRetries} retries: ${src}`);
         }
     }
     
@@ -1365,7 +1363,6 @@ class ContactFormHandler {
             }
             
         } catch (error) {
-            console.error('Form submission error:', error);
             this.handleError({
                 message: 'فشل في الاتصال بالخادم. يرجى التأكد من اتصال الإنترنت والمحاولة مرة أخرى.',
                 error: 'Network error'
@@ -1667,8 +1664,6 @@ class ImageOptimizationSystem {
         
         // Add loading complete event
         this.setupLoadingCompleteDetection();
-        
-        console.log('🖼️ Image Optimization System initialized', this.performanceMetrics);
     }
     
     detectFormatSupport() {
@@ -1802,9 +1797,6 @@ class ImageOptimizationSystem {
     onImageError(img, picture) {
         this.failedImages.add(img);
         this.performanceMetrics.errorCount++;
-        
-        console.warn('🖼️ Image failed to load:', img.src);
-        
         // Add error state
         picture?.classList.add('image-error');
         picture?.classList.remove('loading');
@@ -1879,7 +1871,6 @@ class ImageOptimizationSystem {
         // Global image error handler
         document.addEventListener('error', (e) => {
             if (e.target.tagName === 'IMG') {
-                console.warn('🖼️ Global image error:', e.target.src);
                 this.onImageError(e.target, e.target.closest('.optimized-image'));
             }
         }, true);
@@ -1891,7 +1882,6 @@ class ImageOptimizationSystem {
             const observer = new PerformanceObserver((list) => {
                 list.getEntries().forEach(entry => {
                     if (entry.entryType === 'largest-contentful-paint') {
-                        console.log('🖼️ LCP influenced by images:', entry.startTime);
                     }
                 });
             });
@@ -1899,7 +1889,6 @@ class ImageOptimizationSystem {
             try {
                 observer.observe({ entryTypes: ['largest-contentful-paint'] });
             } catch (e) {
-                console.log('🖼️ Performance monitoring not available');
             }
         }
     }
@@ -1912,13 +1901,7 @@ class ImageOptimizationSystem {
             if (totalAttempted >= this.performanceMetrics.totalImages) {
                 const successRate = (this.performanceMetrics.loadedCount / this.performanceMetrics.totalImages) * 100;
                 
-                console.log('🖼️ Image loading complete:', {
-                    total: this.performanceMetrics.totalImages,
-                    loaded: this.performanceMetrics.loadedCount,
-                    errors: this.performanceMetrics.errorCount,
-                    successRate: `${successRate.toFixed(1)}%`,
-                    averageLoadTime: `${this.performanceMetrics.averageLoadTime.toFixed(0)}ms`
-                });
+                // Image loading complete - production logging disabled
                 
                 // Dispatch completion event
                 document.dispatchEvent(new CustomEvent('allImagesLoaded', {
@@ -1972,12 +1955,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Enhanced system ready event listener
         document.addEventListener('imageSystemReady', (event) => {
             const { formatSupport, config } = event.detail;
-            console.log('🚀 Image System Ready:', {
-                avifSupport: formatSupport.avif,
-                webpSupport: formatSupport.webp,
-                debugMode: config.enableDebugMode
-            });
-            
             // Announce to screen readers if accessibility features are enabled
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 const announcement = document.createElement('div');
@@ -1996,12 +1973,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Enhanced completion event listener
         document.addEventListener('allImagesLoaded', (event) => {
             const { metrics, health } = event.detail;
-            
-            console.log('✅ All images optimized:', {
-                ...metrics,
-                systemHealth: health.status
-            });
-            
             // Track Core Web Vitals improvements with enhanced metrics
             if ('performance' in window) {
                 const paintEntries = performance.getEntriesByType('paint');
@@ -2013,9 +1984,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     lcp: lcpEntries[lcpEntries.length - 1]?.startTime,
                     cls: clsEntries.reduce((sum, entry) => sum + entry.value, 0)
                 };
-                
-                console.log('🎯 Core Web Vitals:', webVitals);
-                
                 // Report to analytics if available
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'image_optimization_complete', {
@@ -2095,18 +2063,15 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             enableDebugMode: () => {
                 window.imageOptimizer.config.enableDebugMode = true;
-                console.log('🐛 Debug mode enabled for image optimizer');
             },
             pauseOptimization: () => {
                 if (window.imageOptimizer && window.imageOptimizer.performanceMetrics.intersectionObserver) {
                     window.imageOptimizer.performanceMetrics.intersectionObserver.disconnect();
-                    console.log('⏸️ Image optimization paused');
                 }
             },
             resumeOptimization: () => {
                 if (window.imageOptimizer) {
                     window.imageOptimizer._initializeLazyLoading();
-                    console.log('▶️ Image optimization resumed');
                 }
             }
         };
@@ -2115,7 +2080,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             // Disable complex loading animations for accessibility
             document.documentElement.classList.add('reduced-motion');
-            console.log('♿ Reduced motion mode enabled');
         }
         
         // Handle color scheme preferences
@@ -2132,8 +2096,6 @@ document.addEventListener('DOMContentLoaded', () => {
         handleColorSchemeChange(colorSchemeQuery);
         
     } catch (error) {
-        console.error('❌ Image optimization initialization failed:', error);
-        
         // Enhanced fallback with accessibility
         document.querySelectorAll('.optimized-image img').forEach((img, index) => {
             const container = img.closest('.optimized-image');
@@ -2145,7 +2107,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Add error handling even in fallback mode
                 img.addEventListener('error', () => {
                     container.classList.add('error');
-                    console.warn(`⚠️ Fallback image failed: ${img.src}`);
                 }, { once: true });
                 
             }, index * 50);
@@ -2197,8 +2158,6 @@ class ThemeManager {
         
         // Add transition disable class temporarily to prevent flashing
         this.disableTransitionsDuringLoad();
-        
-        console.log('🎨 Theme Manager initialized');
     }
     
     applySavedTheme() {
@@ -2224,7 +2183,6 @@ class ThemeManager {
     
     setupThemeToggle() {
         if (!this.themeToggle) {
-            console.warn('Theme toggle button not found');
             return;
         }
         
@@ -2279,8 +2237,6 @@ class ThemeManager {
                 value: 1
             });
         }
-        
-        console.log(`🎨 Theme switched to: ${newTheme}`);
     }
     
     setTheme(theme) {
@@ -2396,4 +2352,4 @@ document.addEventListener('DOMContentLoaded', () => {
     window.themeManager = new ThemeManager();
 });
 
-console.log('Dr. Islam Website - Enhanced Gallery System, Contact Form, and Theme Management Loaded');
+// Dr. Islam Website - Enhanced Gallery System, Contact Form, and Theme Management Loaded

@@ -29,7 +29,6 @@ class MobileUXController {
         this.bindEvents();
         
         this.isInitialized = true;
-        console.log('Mobile UX Controller initialized');
     }
     
     // 1. Create tabbed navigation for content sections
@@ -367,7 +366,6 @@ class MobileUXController {
                 this.showToast(result.error || 'Failed to send message. Please try again.', 'error');
             }
         } catch (error) {
-            console.error('Form submission error:', error);
             this.showToast('Network error. Please check your connection and try again.', 'error');
         } finally {
             this.hideLoadingOverlay();

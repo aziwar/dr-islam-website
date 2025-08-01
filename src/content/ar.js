@@ -1327,8 +1327,6 @@ export const HTML_AR = `<!DOCTYPE html>
                     }, 5000);
                     
                 } catch (error) {
-                    console.error('Form submission error:', error);
-                    
                     removeLoadingState(submitBtn);
                     
                     // Remove any existing messages
@@ -1359,13 +1357,11 @@ export const HTML_AR = `<!DOCTYPE html>
         new PerformanceObserver((list) => {
             const entries = list.getEntries();
             const lastEntry = entries[entries.length - 1];
-            console.log('LCP:', lastEntry.renderTime || lastEntry.loadTime);
         }).observe({ entryTypes: ['largest-contentful-paint'] });
         
         // Track First Input Delay
         new PerformanceObserver((list) => {
             list.getEntries().forEach((entry) => {
-                console.log('FID:', entry.processingStart - entry.startTime);
             });
         }).observe({ entryTypes: ['first-input'] });
         
@@ -1375,7 +1371,6 @@ export const HTML_AR = `<!DOCTYPE html>
             list.getEntries().forEach((entry) => {
                 if (!entry.hadRecentInput) {
                     cls += entry.value;
-                    console.log('CLS:', cls);
                 }
             });
         }).observe({ entryTypes: ['layout-shift'] });
@@ -1426,14 +1421,12 @@ export const HTML_AR = `<!DOCTYPE html>
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/sw.js')
                 .then(registration => {
-                    console.log('ServiceWorker registered:', registration);
-                    
                     // Check for updates periodically
                     setInterval(() => {
                         registration.update();
                     }, 60000); // Check every minute
                 })
-                .catch(err => console.log('ServiceWorker registration failed:', err));
+                .catch(err => /* ServiceWorker registration failed - logging disabled */);
         });
         
         // Install prompt
@@ -1461,7 +1454,6 @@ export const HTML_AR = `<!DOCTYPE html>
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                console.log('User response: ' + outcome);
                 deferredPrompt = null;
                 document.querySelector('.install-prompt')?.remove();
             }
@@ -1582,9 +1574,6 @@ export const HTML_AR = `<!DOCTYPE html>
     document.addEventListener('DOMContentLoaded', () => {
         new GalleryFilter();
     });
-
-    console.log('Dr. Islam Website - Enhanced Gallery System Loaded');
-    
     // =================================
     // MOBILE UX ENHANCEMENTS
     // =================================

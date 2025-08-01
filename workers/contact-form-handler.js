@@ -296,7 +296,6 @@ class RateLimiter {
                 };
             }
         } catch (error) {
-            console.warn('KV storage not available, using memory fallback:', error.message);
         }
         
         // Fallback to in-memory storage (for development)
@@ -331,7 +330,6 @@ class EmailSender {
             try {
                 return await this.sendWithSendGrid(to, subject, html, text);
             } catch (error) {
-                console.warn('SendGrid failed, trying Resend:', error.message);
             }
         }
         
@@ -340,7 +338,6 @@ class EmailSender {
             try {
                 return await this.sendWithResend(to, subject, html, text);
             } catch (error) {
-                console.warn('Resend failed:', error.message);
                 throw new Error('All email providers failed');
             }
         }
@@ -628,8 +625,6 @@ export default {
             // Spam protection
             const spamCheck = SpamProtection.checkSpam(sanitizedData, request.headers);
             if (spamCheck.isSpam) {
-                console.warn('Spam detected:', spamCheck.reasons);
-                
                 return new Response(JSON.stringify({
                     success: false,
                     error: 'Spam detected',
@@ -669,8 +664,6 @@ export default {
                 results.push({ type: 'patient', ...patientResult });
                 
             } catch (emailError) {
-                console.error('Email sending failed:', emailError);
-                
                 return new Response(JSON.stringify({
                     success: false,
                     error: 'Email sending failed',
@@ -701,8 +694,6 @@ export default {
             });
             
         } catch (error) {
-            console.error('Worker error:', error);
-            
             return new Response(JSON.stringify({
                 success: false,
                 error: 'Internal server error',

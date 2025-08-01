@@ -23,6 +23,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      - name: Build project (remove console.logs)
+        run: npm run build
+      
       - name: Verify Wrangler installation and credentials
         run: |
           echo "Checking Wrangler version..."

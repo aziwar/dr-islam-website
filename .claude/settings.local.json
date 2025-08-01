@@ -7,7 +7,19 @@
       "Bash(cat:*)",
       "Bash(npx wrangler dev:*)",
       "Bash(python3:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(git push:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_install",
+      "Bash(pwsh:*)",
+      "Bash(powershell:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(for file in js/main.js src/content/ar.js src/content/en.js src/shared/common-content.js)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(done)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

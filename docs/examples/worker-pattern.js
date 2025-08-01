@@ -41,8 +41,6 @@ export default {
       
       // Log performance
       const duration = performance.now() - start;
-      console.log({ operation: "fetch", duration, url: url.pathname });
-      
       return response;
     } catch (error) {
       return new Response("Internal Error", { status: 500 });
