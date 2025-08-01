@@ -5,7 +5,7 @@ import { CSS, INLINE_CSS, DEFERRED_STYLES, getCSSForRequest } from './content/st
 import { SERVICE_WORKER_JS } from './content/sw.js';
 import { OFFLINE_HTML } from './content/offline.js';
 import { logger } from './utils/logger.js';
-import { ImageOptimizer } from './utils/image-optimizer.js';
+import { ImageOptimizationSystem } from './utils/image-optimizer.js';
 
 // Constants for better maintainability
 const CACHE_PROFILES = {
