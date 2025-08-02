@@ -62,13 +62,11 @@ async function syncImagesToR2() {
 }
 
 // Execute if run directly
-if (require.main === module) {
-    syncImagesToR2().then(success => {
-        process.exit(success ? 0 : 1);
-    }).catch(error => {
-        console.error('💥 Sync failed:', error);
-        process.exit(1);
-    });
-}
+syncImagesToR2().then(success => {
+    process.exit(success ? 0 : 1);
+}).catch(error => {
+    console.error('💥 Sync failed:', error);
+    process.exit(1);
+});
 
-module.exports = { syncImagesToR2 };
+export { syncImagesToR2 };

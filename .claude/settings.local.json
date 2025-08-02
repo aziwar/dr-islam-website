@@ -28,7 +28,11 @@
       "WebFetch(domain:developers.cloudflare.com)",
       "Bash(npx wrangler:*)",
       "Bash(rm:*)",
-      "mcp__magic__logo_search"
+      "mcp__magic__logo_search",
+      "mcp__playwright__browser_close",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_tab_list",
+      "mcp__sequential-thinking__sequentialthinking"
     ],
     "deny": []
   }
