@@ -162,7 +162,7 @@ export default {
     }
 
     // Optimized image serving with R2
-    if (path.startsWith('/assets/webp-optimized/') || path.startsWith('/assets/images/') || path.startsWith('/assets/before-after/')) {
+    if (path.startsWith('/assets/')) {
       const response = await handleImageRequest(request, env, ctx, path);
       metrics.operation = 'image';
       metrics.totalDuration = performance.now() - requestStart;

@@ -189,13 +189,13 @@ export const HTML_EN = `<!DOCTYPE html>
                     <picture>
                         <source 
                             type="image/webp"
-                            srcset="/assets/webp-optimized/real-case1-320w.webp 320w,
-                                    /assets/webp-optimized/real-case1-768w.webp 768w,
-                                    /assets/webp-optimized/real-case1.webp 1200w"
+                            srcset="/assets/real-case1-320w.webp 320w,
+                                    /assets/real-case1-768w.webp 768w,
+                                    /assets/real-case1.webp 1200w"
                             sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
                         >
                         <img 
-                            src="/assets/webp-optimized/real-case1.webp" 
+                            src="/assets/real-case1.webp" 
                             alt="Real transformation"
                             loading="lazy"
                             class="gallery-img"
@@ -207,13 +207,13 @@ export const HTML_EN = `<!DOCTYPE html>
                     <picture>
                         <source 
                             type="image/webp"
-                            srcset="/assets/webp-optimized/real-case2-320w.webp 320w,
-                                    /assets/webp-optimized/real-case2-768w.webp 768w,
-                                    /assets/webp-optimized/real-case2.webp 1200w"
+                            srcset="/assets/real-case2-320w.webp 320w,
+                                    /assets/real-case2-768w.webp 768w,
+                                    /assets/real-case2.webp 1200w"
                             sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
                         >
                         <img 
-                            src="/assets/webp-optimized/real-case2.webp" 
+                            src="/assets/real-case2.webp" 
                             alt="Treatment result"
                             loading="lazy"
                             class="gallery-img"
@@ -225,13 +225,13 @@ export const HTML_EN = `<!DOCTYPE html>
                     <picture>
                         <source 
                             type="image/webp"
-                            srcset="/assets/webp-optimized/real-case3-320w.webp 320w,
-                                    /assets/webp-optimized/real-case3-768w.webp 768w,
-                                    /assets/webp-optimized/real-case3.webp 1200w"
+                            srcset="/assets/real-case3-320w.webp 320w,
+                                    /assets/real-case3-768w.webp 768w,
+                                    /assets/real-case3.webp 1200w"
                             sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
                         >
                         <img 
-                            src="/assets/webp-optimized/real-case3.webp" 
+                            src="/assets/real-case3.webp" 
                             alt="Advanced treatment"
                             loading="lazy"
                             class="gallery-img"

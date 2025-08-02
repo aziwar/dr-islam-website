@@ -5,7 +5,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-const ASSETS_DIR = 'assets/webp-optimized';
+const ASSETS_DIR = 'assets';
 const BUCKET_NAME = 'dr-islam-images';
 
 async function syncImagesToR2() {
@@ -30,7 +30,7 @@ async function syncImagesToR2() {
     for (const file of webpFiles) {
         try {
             const localPath = path.join(ASSETS_DIR, file);
-            const r2Path = `assets/webp-optimized/${file}`;
+            const r2Path = `assets/${file}`;
             
             console.log(`⬆️  Uploading: ${file}`);
             

@@ -20,7 +20,7 @@ const REQUIRED_IMAGES = [
     'showcase.webp'
 ];
 
-const BASE_URL = 'https://dr-elsagher.com/assets/webp-optimized';
+const BASE_URL = 'https://dr-elsagher.com/assets';
 
 async function verifyImages() {
     console.log('🔍 Verifying production image serving...');

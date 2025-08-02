@@ -337,23 +337,23 @@ export class ImageOptimizationSystem {
       <picture class="optimized-image">
         <!-- AVIF sources (best compression) -->
         <source 
-          srcset="assets/avif-optimized/${baseName.split('/').pop()}-320w.avif 320w,
-                 assets/avif-optimized/${baseName.split('/').pop()}-768w.avif 768w,
-                 assets/avif-optimized/${baseName.split('/').pop()}.avif 1024w" 
+          srcset="assets/${baseName.split('/').pop()}-320w.avif 320w,
+                 assets/${baseName.split('/').pop()}-768w.avif 768w,
+                 assets/${baseName.split('/').pop()}.avif 1024w" 
           sizes="${sizes}" 
           type="image/avif">
         
         <!-- WebP fallback -->
         <source 
-          srcset="assets/webp-optimized/${baseName.split('/').pop()}-320w.webp 320w,
-                 assets/webp-optimized/${baseName.split('/').pop()}-768w.webp 768w,
-                 assets/webp-optimized/${baseName.split('/').pop()}.webp 1024w" 
+          srcset="assets/${baseName.split('/').pop()}-320w.webp 320w,
+                 assets/${baseName.split('/').pop()}-768w.webp 768w,
+                 assets/${baseName.split('/').pop()}.webp 1024w" 
           sizes="${sizes}" 
           type="image/webp">
         
         <!-- Final fallback -->
         <img 
-          src="assets/webp-optimized/${baseName.split('/').pop()}.webp" 
+          src="assets/${baseName.split('/').pop()}.webp" 
           alt="${alt}" 
           ${loadingAttr}
           ${decodingAttr}
@@ -373,21 +373,21 @@ export class ImageOptimizationSystem {
       <picture class="optimized-image critical-image">
         <!-- AVIF sources -->
         <source 
-          srcset="assets/avif-optimized/${baseName.split('/').pop()}-768w.avif 768w,
-                 assets/avif-optimized/${baseName.split('/').pop()}.avif 1024w" 
+          srcset="assets/${baseName.split('/').pop()}-768w.avif 768w,
+                 assets/${baseName.split('/').pop()}.avif 1024w" 
           sizes="${sizes}" 
           type="image/avif">
         
         <!-- WebP fallback -->
         <source 
-          srcset="assets/webp-optimized/${baseName.split('/').pop()}-768w.webp 768w,
-                 assets/webp-optimized/${baseName.split('/').pop()}.webp 1024w" 
+          srcset="assets/${baseName.split('/').pop()}-768w.webp 768w,
+                 assets/${baseName.split('/').pop()}.webp 1024w" 
           sizes="${sizes}" 
           type="image/webp">
         
         <!-- Optimized fallback -->
         <img 
-          src="assets/webp-optimized/${baseName.split('/').pop()}.webp" 
+          src="assets/${baseName.split('/').pop()}.webp" 
           alt="${alt}" 
           loading="eager"
           decoding="sync"
@@ -694,10 +694,10 @@ export class ImageOptimizationSystem {
 
   // Get fallback image source
   _getFallbackImageSrc(src) {
-    if (src.includes('/avif-optimized/')) {
-      return src.replace('/avif-optimized/', '/webp-optimized/').replace('.avif', '.webp');
-    } else if (src.includes('/webp-optimized/')) {
-      return src.replace('/webp-optimized/', '/images/').replace('.webp', '.jpg');
+    if (src.includes('/assets/')) {
+      return src.replace('/assets/', '/assets/').replace('.avif', '.webp');
+    } else if (src.includes('/assets/')) {
+      return src.replace('/assets/', '/images/').replace('.webp', '.jpg');
     }
     return null;
   }
@@ -1276,17 +1276,17 @@ export class ImageOptimizationSystem {
         <picture class="optimized-image">
           <!-- AVIF sources (best compression) -->
           <source 
-            srcset="assets/avif-optimized/${image.slug}-320w.avif 320w,
-                   assets/avif-optimized/${image.slug}-768w.avif 768w,
-                   assets/avif-optimized/${image.slug}.avif 1024w" 
+            srcset="assets/${image.slug}-320w.avif 320w,
+                   assets/${image.slug}-768w.avif 768w,
+                   assets/${image.slug}.avif 1024w" 
             sizes="(max-width: 768px) 100vw, 50vw" 
             type="image/avif">
           
           <!-- WebP fallback -->
           <source 
-            srcset="assets/webp-optimized/${image.slug}-320w.webp 320w,
-                   assets/webp-optimized/${image.slug}-768w.webp 768w,
-                   assets/webp-optimized/${image.slug}.webp 1024w" 
+            srcset="assets/${image.slug}-320w.webp 320w,
+                   assets/${image.slug}-768w.webp 768w,
+                   assets/${image.slug}.webp 1024w" 
             sizes="(max-width: 768px) 100vw, 50vw" 
             type="image/webp">
           
@@ -1322,19 +1322,19 @@ export class ImageOptimizationSystem {
         <!-- After Image -->
         <picture class="optimized-image after-img">
           <source 
-            srcset="assets/avif-optimized/${afterBaseName}-320w.avif 320w,
-                   assets/avif-optimized/${afterBaseName}-768w.avif 768w,
-                   assets/avif-optimized/${afterBaseName}.avif 1024w" 
+            srcset="assets/${afterBaseName}-320w.avif 320w,
+                   assets/${afterBaseName}-768w.avif 768w,
+                   assets/${afterBaseName}.avif 1024w" 
             sizes="(max-width: 768px) 100vw, 50vw" 
             type="image/avif">
           <source 
-            srcset="assets/webp-optimized/${afterBaseName}-320w.webp 320w,
-                   assets/webp-optimized/${afterBaseName}-768w.webp 768w,
-                   assets/webp-optimized/${afterBaseName}.webp 1024w" 
+            srcset="assets/${afterBaseName}-320w.webp 320w,
+                   assets/${afterBaseName}-768w.webp 768w,
+                   assets/${afterBaseName}.webp 1024w" 
             sizes="(max-width: 768px) 100vw, 50vw" 
             type="image/webp">
           <img 
-            src="assets/webp-optimized/${afterBaseName}.webp" 
+            src="assets/${afterBaseName}.webp" 
             alt="${alt} - بعد العلاج" 
             loading="lazy" 
             decoding="async"
@@ -1345,19 +1345,19 @@ export class ImageOptimizationSystem {
         <div class="before-img">
           <picture class="optimized-image">
             <source 
-              srcset="assets/avif-optimized/${beforeBaseName}-320w.avif 320w,
-                     assets/avif-optimized/${beforeBaseName}-768w.avif 768w,
-                     assets/avif-optimized/${beforeBaseName}.avif 1024w" 
+              srcset="assets/${beforeBaseName}-320w.avif 320w,
+                     assets/${beforeBaseName}-768w.avif 768w,
+                     assets/${beforeBaseName}.avif 1024w" 
               sizes="(max-width: 768px) 100vw, 50vw" 
               type="image/avif">
             <source 
-              srcset="assets/webp-optimized/${beforeBaseName}-320w.webp 320w,
-                     assets/webp-optimized/${beforeBaseName}-768w.webp 768w,
-                     assets/webp-optimized/${beforeBaseName}.webp 1024w" 
+              srcset="assets/${beforeBaseName}-320w.webp 320w,
+                     assets/${beforeBaseName}-768w.webp 768w,
+                     assets/${beforeBaseName}.webp 1024w" 
               sizes="(max-width: 768px) 100vw, 50vw" 
               type="image/webp">
             <img 
-              src="assets/webp-optimized/${beforeBaseName}.webp" 
+              src="assets/${beforeBaseName}.webp" 
               alt="${alt} - قبل العلاج" 
               loading="lazy" 
               decoding="async"
@@ -1385,21 +1385,21 @@ export class ImageOptimizationSystem {
       <picture class="optimized-image critical-image showcase-image">
         <!-- AVIF sources (best quality) -->
         <source 
-          srcset="assets/avif-optimized/${baseName}-768w.avif 768w,
-                 assets/avif-optimized/${baseName}.avif 1024w" 
+          srcset="assets/${baseName}-768w.avif 768w,
+                 assets/${baseName}.avif 1024w" 
           sizes="(max-width: 768px) 90vw, 60vw" 
           type="image/avif">
         
         <!-- WebP fallback -->
         <source 
-          srcset="assets/webp-optimized/${baseName}-768w.webp 768w,
-                 assets/webp-optimized/${baseName}.webp 1024w" 
+          srcset="assets/${baseName}-768w.webp 768w,
+                 assets/${baseName}.webp 1024w" 
           sizes="(max-width: 768px) 90vw, 60vw" 
           type="image/webp">
         
         <!-- High-priority image -->
         <img 
-          src="assets/webp-optimized/${baseName}.webp" 
+          src="assets/${baseName}.webp" 
           alt="${alt}" 
           loading="eager"
           decoding="sync"
@@ -1418,10 +1418,10 @@ export class ImageOptimizationSystem {
     // Try fallback formats
     if (img.src.includes('.avif')) {
       // Fallback to WebP
-      img.src = img.src.replace('/avif-optimized/', '/webp-optimized/').replace('.avif', '.webp');
+      img.src = img.src.replace('/assets/', '/assets/').replace('.avif', '.webp');
     } else if (img.src.includes('.webp')) {
       // Fallback to original
-      img.src = img.src.replace('/webp-optimized/', '/images/').replace('.webp', '.jpg');
+      img.src = img.src.replace('/assets/', '/images/').replace('.webp', '.jpg');
     } else {
       // Show error placeholder
       container.classList.add('error');

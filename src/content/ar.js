@@ -268,8 +268,8 @@ export const HTML_AR = `<!DOCTYPE html>
                 <!-- Dental Implants Cases -->
                 <div class="gallery-item" data-category="implants">
                     <div class="case-images">
-                        <img src="/assets/webp-optimized/real-case1.webp" alt="قبل زراعة الأسنان الأمامية" loading="lazy">
-                        <img src="/assets/webp-optimized/case1-after.webp" alt="بعد زراعة الأسنان الأمامية" loading="lazy">
+                        <img src="/assets/real-case1.webp" alt="قبل زراعة الأسنان الأمامية" loading="lazy">
+                        <img src="/assets/case1-after.webp" alt="بعد زراعة الأسنان الأمامية" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>زراعة أسنان أمامية فورية</h4>
@@ -281,8 +281,8 @@ export const HTML_AR = `<!DOCTYPE html>
 
                 <div class="gallery-item" data-category="implants">
                     <div class="case-images">
-                        <img src="/assets/webp-optimized/real-case2.webp" alt="قبل زراعة متعددة" loading="lazy">
-                        <img src="/assets/webp-optimized/case2-after.webp" alt="بعد زراعة متعددة" loading="lazy">
+                        <img src="/assets/real-case2.webp" alt="قبل زراعة متعددة" loading="lazy">
+                        <img src="/assets/case2-after.webp" alt="بعد زراعة متعددة" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>زراعة متعددة مع جسر ثابت</h4>
@@ -295,8 +295,8 @@ export const HTML_AR = `<!DOCTYPE html>
                 <!-- Cosmetic Cases -->
                 <div class="gallery-item" data-category="cosmetic">
                     <div class="case-images">
-                        <img src="/assets/webp-optimized/real-case3.webp" alt="قبل ابتسامة هوليوود" loading="lazy">
-                        <img src="/assets/webp-optimized/case3-after.webp" alt="بعد ابتسامة هوليوود" loading="lazy">
+                        <img src="/assets/real-case3.webp" alt="قبل ابتسامة هوليوود" loading="lazy">
+                        <img src="/assets/case3-after.webp" alt="بعد ابتسامة هوليوود" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>ابتسامة هوليوود كاملة</h4>
@@ -308,8 +308,8 @@ export const HTML_AR = `<!DOCTYPE html>
 
                 <div class="gallery-item" data-category="cosmetic">
                     <div class="case-images">
-                        <img src="/assets/webp-optimized/case1-before.webp" alt="قبل تبييض الأسنان" loading="lazy">
-                        <img src="/assets/webp-optimized/case1-after.webp" alt="بعد تبييض الأسنان" loading="lazy">
+                        <img src="/assets/case1-before.webp" alt="قبل تبييض الأسنان" loading="lazy">
+                        <img src="/assets/case1-after.webp" alt="بعد تبييض الأسنان" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>تبييض بالليزر + ترميم</h4>
@@ -322,8 +322,8 @@ export const HTML_AR = `<!DOCTYPE html>
                 <!-- Orthodontic Cases -->
                 <div class="gallery-item" data-category="orthodontic">
                     <div class="case-images">
-                        <img src="/assets/webp-optimized/case2-before.webp" alt="قبل التقويم الشفاف" loading="lazy">
-                        <img src="/assets/webp-optimized/case2-after.webp" alt="بعد التقويم الشفاف" loading="lazy">
+                        <img src="/assets/case2-before.webp" alt="قبل التقويم الشفاف" loading="lazy">
+                        <img src="/assets/case2-after.webp" alt="بعد التقويم الشفاف" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>تقويم شفاف (Invisalign)</h4>
@@ -336,8 +336,8 @@ export const HTML_AR = `<!DOCTYPE html>
                 <!-- Full Mouth Reconstruction -->
                 <div class="gallery-item" data-category="reconstruction">
                     <div class="case-images">
-                        <img src="/assets/before-after/fullmouth1-before.jpg" alt="قبل إعادة تأهيل كاملة" loading="lazy">
-                        <img src="/assets/before-after/fullmouth1-after.jpg" alt="بعد إعادة تأهيل كاملة" loading="lazy">
+                        <img src="/assets/case1-before.webp" alt="قبل إعادة تأهيل كاملة" loading="lazy">
+                        <img src="/assets/case1-after.webp" alt="بعد إعادة تأهيل كاملة" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>إعادة تأهيل كاملة للفم</h4>
