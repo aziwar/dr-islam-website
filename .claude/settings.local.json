@@ -27,7 +27,8 @@
       "Bash(npm run build:*)",
       "WebFetch(domain:developers.cloudflare.com)",
       "Bash(npx wrangler:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "mcp__magic__logo_search"
     ],
     "deny": []
   }

@@ -1,5 +1,7 @@
 // src/content/en.js
 import { MOBILE_UX_JS } from './js/mobile-ux.js';
+import { DentalLogo } from './components/DentalLogo.js';
+import { UI_ENHANCEMENTS_CSS } from './css/ui-enhancements.css.js';
 
 export const HTML_EN = `<!DOCTYPE html>
 <html lang="en">
@@ -17,20 +19,20 @@ export const HTML_EN = `<!DOCTYPE html>
     <meta name="description" content="Dr. Islam Elsagher provides comprehensive dental care in Kuwait. 15+ years experience in implants, cosmetic dentistry, and oral surgery.">
     
     <!-- Favicon and Icons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,${btoa(DentalLogo.favicon)}">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="/assets/images/favicon-48x48.png">
-    <link rel="icon" type="image/png" sizes="64x64" href="/assets/images/favicon-64x64.png">
-    <link rel="icon" type="image/png" sizes="128x128" href="/assets/images/favicon-128x128.png">
-    <link rel="icon" type="image/png" sizes="256x256" href="/assets/images/favicon-256x256.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
     
     <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
+    
+    <!-- UI/UX Enhancements -->
+    <style>
+        ${UI_ENHANCEMENTS_CSS}
+        ${DentalLogo.css}
+    </style>
     
     <!-- Schema Markup for Dentist -->
     <script type="application/ld+json">
@@ -77,13 +79,8 @@ export const HTML_EN = `<!DOCTYPE html>
 
     <header role="banner">
         <nav role="navigation" aria-label="Main navigation" id="nav-menu">
-            <div class="logo">
-                <picture>
-                    <source srcset="/assets/images/logo-main.webp" type="image/webp">
-                    <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.webp" type="image/webp">
-                    <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
-                    <img src="/assets/images/logo-main.png" alt="Dr. Islam Elsagher - General Dentist & Implantologist logo" class="logo-img" loading="eager">
-                </picture>
+            <div class="logo dental-logo">
+                ${DentalLogo.svgEn}
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
@@ -192,13 +189,13 @@ export const HTML_EN = `<!DOCTYPE html>
                     <picture>
                         <source 
                             type="image/webp"
-                            srcset="/assets/before-after/real-case1-320w.webp 320w,
-                                    /assets/before-after/real-case1-768w.webp 768w,
-                                    /assets/before-after/real-case1.webp 1200w"
+                            srcset="/assets/webp-optimized/real-case1-320w.webp 320w,
+                                    /assets/webp-optimized/real-case1-768w.webp 768w,
+                                    /assets/webp-optimized/real-case1.webp 1200w"
                             sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
                         >
                         <img 
-                            src="/assets/before-after/real-case1.png" 
+                            src="/assets/webp-optimized/real-case1.webp" 
                             alt="Real transformation"
                             loading="lazy"
                             class="gallery-img"
@@ -210,13 +207,13 @@ export const HTML_EN = `<!DOCTYPE html>
                     <picture>
                         <source 
                             type="image/webp"
-                            srcset="/assets/before-after/real-case2-320w.webp 320w,
-                                    /assets/before-after/real-case2-768w.webp 768w,
-                                    /assets/before-after/real-case2.webp 1200w"
+                            srcset="/assets/webp-optimized/real-case2-320w.webp 320w,
+                                    /assets/webp-optimized/real-case2-768w.webp 768w,
+                                    /assets/webp-optimized/real-case2.webp 1200w"
                             sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
                         >
                         <img 
-                            src="/assets/before-after/real-case2.png" 
+                            src="/assets/webp-optimized/real-case2.webp" 
                             alt="Treatment result"
                             loading="lazy"
                             class="gallery-img"
@@ -228,13 +225,13 @@ export const HTML_EN = `<!DOCTYPE html>
                     <picture>
                         <source 
                             type="image/webp"
-                            srcset="/assets/before-after/real-case3-320w.webp 320w,
-                                    /assets/before-after/real-case3-768w.webp 768w,
-                                    /assets/before-after/real-case3.webp 1200w"
+                            srcset="/assets/webp-optimized/real-case3-320w.webp 320w,
+                                    /assets/webp-optimized/real-case3-768w.webp 768w,
+                                    /assets/webp-optimized/real-case3.webp 1200w"
                             sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
                         >
                         <img 
-                            src="/assets/before-after/real-case3.png" 
+                            src="/assets/webp-optimized/real-case3.webp" 
                             alt="Advanced treatment"
                             loading="lazy"
                             class="gallery-img"

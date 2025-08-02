@@ -13,9 +13,7 @@ const STATIC_ASSETS = [
   '/styles.css',
   '/manifest-ar.json',
   '/manifest-en.json',
-  '/assets/images/logo-main.png',
-  '/assets/images/logo-mobile.png',
-  '/assets/images/favicon-32x32.png',
+  '/favicon.ico',
   OFFLINE_URL
 ];
 

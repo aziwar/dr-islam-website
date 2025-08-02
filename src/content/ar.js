@@ -1,5 +1,7 @@
 // src/content/ar.js
 import { MOBILE_UX_JS } from './js/mobile-ux.js';
+import { DentalLogo } from './components/DentalLogo.js';
+import { UI_ENHANCEMENTS_CSS } from './css/ui-enhancements.css.js';
 
 export const HTML_AR = `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -17,20 +19,21 @@ export const HTML_AR = `<!DOCTYPE html>
     <meta name="description" content="د. إسلام الصغير يقدم رعاية شاملة للأسنان في الكويت. خبرة تزيد عن 15 عامًا في الزراعة وطب الأسنان التجميلي وجراحة الفم.">
     
     <!-- Favicon and Icons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,${btoa(DentalLogo.favicon)}">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="/assets/images/favicon-48x48.png">
-    <link rel="icon" type="image/png" sizes="64x64" href="/assets/images/favicon-64x64.png">
-    <link rel="icon" type="image/png" sizes="128x128" href="/assets/images/favicon-128x128.png">
-    <link rel="icon" type="image/png" sizes="256x256" href="/assets/images/favicon-256x256.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    
     
     <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
+    
+    <!-- UI/UX Enhancements -->
+    <style>
+        ${UI_ENHANCEMENTS_CSS}
+        ${DentalLogo.css}
+    </style>
     
     <!-- Schema Markup for Dentist -->
     <script type="application/ld+json">
@@ -147,13 +150,8 @@ export const HTML_AR = `<!DOCTYPE html>
 
     <header>
         <nav>
-            <div class="logo">
-                <picture>
-                    <source srcset="/assets/images/logo-main.webp" type="image/webp">
-                    <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.webp" type="image/webp">
-                    <source media="(max-width: 768px)" srcset="/assets/images/logo-mobile.png">
-                    <img src="/assets/images/logo-main.png" alt="دكتور اسلام الصغير - Dr. Islam Elsagher" class="logo-img" loading="eager">
-                </picture>
+            <div class="logo dental-logo">
+                ${DentalLogo.svg}
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="القائمة" aria-expanded="false">
                 <span></span>
@@ -270,8 +268,8 @@ export const HTML_AR = `<!DOCTYPE html>
                 <!-- Dental Implants Cases -->
                 <div class="gallery-item" data-category="implants">
                     <div class="case-images">
-                        <img src="/assets/before-after/real-case1.png" alt="قبل زراعة الأسنان الأمامية" loading="lazy">
-                        <img src="/assets/before-after/real-case1-after.png" alt="بعد زراعة الأسنان الأمامية" loading="lazy">
+                        <img src="/assets/webp-optimized/real-case1.webp" alt="قبل زراعة الأسنان الأمامية" loading="lazy">
+                        <img src="/assets/webp-optimized/case1-after.webp" alt="بعد زراعة الأسنان الأمامية" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>زراعة أسنان أمامية فورية</h4>
@@ -283,8 +281,8 @@ export const HTML_AR = `<!DOCTYPE html>
 
                 <div class="gallery-item" data-category="implants">
                     <div class="case-images">
-                        <img src="/assets/before-after/real-case2.png" alt="قبل زراعة متعددة" loading="lazy">
-                        <img src="/assets/before-after/real-case2-after.png" alt="بعد زراعة متعددة" loading="lazy">
+                        <img src="/assets/webp-optimized/real-case2.webp" alt="قبل زراعة متعددة" loading="lazy">
+                        <img src="/assets/webp-optimized/case2-after.webp" alt="بعد زراعة متعددة" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>زراعة متعددة مع جسر ثابت</h4>
@@ -297,8 +295,8 @@ export const HTML_AR = `<!DOCTYPE html>
                 <!-- Cosmetic Cases -->
                 <div class="gallery-item" data-category="cosmetic">
                     <div class="case-images">
-                        <img src="/assets/before-after/real-case3.png" alt="قبل ابتسامة هوليوود" loading="lazy">
-                        <img src="/assets/before-after/real-case3-after.png" alt="بعد ابتسامة هوليوود" loading="lazy">
+                        <img src="/assets/webp-optimized/real-case3.webp" alt="قبل ابتسامة هوليوود" loading="lazy">
+                        <img src="/assets/webp-optimized/case3-after.webp" alt="بعد ابتسامة هوليوود" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>ابتسامة هوليوود كاملة</h4>
@@ -310,8 +308,8 @@ export const HTML_AR = `<!DOCTYPE html>
 
                 <div class="gallery-item" data-category="cosmetic">
                     <div class="case-images">
-                        <img src="/assets/before-after/whitening1-before.jpg" alt="قبل تبييض الأسنان" loading="lazy">
-                        <img src="/assets/before-after/whitening1-after.jpg" alt="بعد تبييض الأسنان" loading="lazy">
+                        <img src="/assets/webp-optimized/case1-before.webp" alt="قبل تبييض الأسنان" loading="lazy">
+                        <img src="/assets/webp-optimized/case1-after.webp" alt="بعد تبييض الأسنان" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>تبييض بالليزر + ترميم</h4>
@@ -324,8 +322,8 @@ export const HTML_AR = `<!DOCTYPE html>
                 <!-- Orthodontic Cases -->
                 <div class="gallery-item" data-category="orthodontic">
                     <div class="case-images">
-                        <img src="/assets/before-after/ortho1-before.jpg" alt="قبل التقويم الشفاف" loading="lazy">
-                        <img src="/assets/before-after/ortho1-after.jpg" alt="بعد التقويم الشفاف" loading="lazy">
+                        <img src="/assets/webp-optimized/case2-before.webp" alt="قبل التقويم الشفاف" loading="lazy">
+                        <img src="/assets/webp-optimized/case2-after.webp" alt="بعد التقويم الشفاف" loading="lazy">
                     </div>
                     <div class="case-info">
                         <h4>تقويم شفاف (Invisalign)</h4>

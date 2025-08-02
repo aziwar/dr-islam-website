@@ -127,6 +127,42 @@ nav {
     width: 180px;
 }
 
+/* Dental Logo SVG Styles */
+.dental-logo {
+    display: inline-block;
+    color: var(--primary);
+    transition: color 0.3s ease;
+}
+
+.dental-logo:hover {
+    color: var(--secondary);
+}
+
+.dental-logo svg {
+    height: auto;
+    max-width: 100%;
+}
+
+/* Responsive sizing */
+@media (max-width: 768px) {
+    .dental-logo svg {
+        width: 100px;
+        height: 33px;
+    }
+}
+
+@media (min-width: 769px) {
+    .dental-logo svg {
+        width: 120px;
+        height: 40px;
+    }
+}
+
+/* Dark mode support */
+[data-theme="dark"] .dental-logo {
+    color: #F8F7F5;
+}
+
 nav ul {
     display: flex;
     list-style: none;
@@ -347,6 +383,43 @@ button::before {
     right: -8px;
     bottom: -8px;
     left: -8px;
+}
+
+/* Enhanced Touch Targets for Mobile */
+@media (max-width: 768px) {
+    .nav-link,
+    .btn,
+    button,
+    a[role="button"],
+    input[type="submit"],
+    input[type="button"],
+    .cta-button,
+    .filter-btn,
+    .view-more-btn,
+    .submit-btn {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    
+    /* Ensure nav links have adequate spacing */
+    nav ul li {
+        margin: 8px 0;
+    }
+    
+    /* Touch-friendly mobile menu toggle */
+    .mobile-menu-toggle {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 /* Arabic Typography */
