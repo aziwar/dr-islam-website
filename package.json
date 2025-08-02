@@ -31,8 +31,5 @@
     "stylelint": "^16.0.0",
     "stylelint-config-standard": "^36.0.0",
     "wrangler": "^4.25.0"
-  },
-  "optionalDependencies": {
-    "workerd": "^1.20250802.0"
   }
 }
