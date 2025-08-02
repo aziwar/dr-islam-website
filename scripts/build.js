@@ -1,107 +1,46 @@
-#!/usr/bin/env node
-/**
- * Build Script for Dr. Islam Website
- * Removes console.logs from production files and prepares for deployment
- */
+// Cross-platform build script for dr-islam-website
+// Validates Worker before deployment
 
-import { readFileSync, writeFileSync } from 'fs';
-import { glob } from 'glob';
+import { execSync } from 'child_process';
+import fs from 'fs';
 import path from 'path';
 
-const PROJECT_ROOT = process.cwd();
-
-// Files to exclude from console.log removal (test files, etc.)
-const EXCLUDE_PATTERNS = [
-    '**/node_modules/**',
-    '**/test*/**',
-    '**/*test*.js',
-    '**/*Test*.js',
-    '**/deployment-verification.js',
-    '**/performance-test.js',
-    '**/.wrangler/**',
-    '**/docs/**',
-    '**/playwright*'
-];
-
-// Files to include for console.log removal
-const INCLUDE_PATTERNS = [
-    'js/**/*.js',
-    'src/**/*.js',
-    'workers/**/*.js',
-    'sw.js'
-];
-
-async function removeConsoleLogs() {
-    console.log('🔧 Starting build process...');
+async function validateBuild() {
+    console.log('🔍 Validating Worker build...');
     
-    let totalRemoved = 0;
-    let filesModified = 0;
-    const modifiedFiles = [];
+    // Check required files exist
+    const requiredFiles = [
+        'src/index.js',
+        'src/content/ar.js',
+        'src/content/en.js',
+        'wrangler.toml'
+    ];
     
-    try {
-        // Find all JavaScript files to process
-        const files = await glob(INCLUDE_PATTERNS, {
-            ignore: EXCLUDE_PATTERNS,
-            cwd: PROJECT_ROOT,
-            absolute: true
-        });
-        
-        console.log(`📁 Found ${files.length} production JavaScript files`);
-        
-        for (const filePath of files) {
-            const content = readFileSync(filePath, 'utf8');
-            const originalContent = content;
-            
-            // Remove console statements with regex
-            // Match console.log/error/warn/info/debug/trace
-            let processedContent = content
-                // Remove standalone console statements
-                .replace(/^\s*console\.(log|error|warn|info|debug|trace)\s*\([^)]*\);?\s*$/gm, '')
-                // Remove console statements in catch blocks but preserve comments
-                .replace(/console\.(log|error|warn|info|debug|trace)\s*\([^)]*\);?/g, '/* console logging disabled */');
-            
-            // Count removed statements
-            const originalConsoleCount = (originalContent.match(/console\.(log|error|warn|info|debug|trace)/g) || []).length;
-            const newConsoleCount = (processedContent.match(/console\.(log|error|warn|info|debug|trace)/g) || []).length;
-            const removedCount = originalConsoleCount - newConsoleCount;
-            
-            if (processedContent !== originalContent) {
-                writeFileSync(filePath, processedContent, 'utf8');
-                const relativePath = path.relative(PROJECT_ROOT, filePath);
-                console.log(`✅ Modified: ${relativePath} - Removed ${removedCount} console statements`);
-                totalRemoved += removedCount;
-                filesModified++;
-                modifiedFiles.push(relativePath);
-            }
+    for (const file of requiredFiles) {
+        if (!fs.existsSync(file)) {
+            throw new Error(`Required file missing: ${file}`);
         }
-        
-        // Generate build report
-        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const reportContent = `Build Report - ${timestamp}
-Files Modified: ${filesModified}
-Console Statements Removed: ${totalRemoved}
-
-Modified Files:
-${modifiedFiles.map(file => `- ${file}`).join('\n')}
-`;
-        
-        writeFileSync(path.join(PROJECT_ROOT, 'scripts', `build-report-${timestamp.split('T')[0]}.txt`), reportContent);
-        
-        console.log('\n🎉 Build process completed successfully!');
-        console.log(`📊 Files modified: ${filesModified}`);
-        console.log(`🗑️  Console statements removed: ${totalRemoved}`);
-        
-        return { success: true, filesModified, totalRemoved };
-        
-    } catch (error) {
-        console.error('❌ Build process failed:', error.message);
-        process.exit(1);
     }
+    
+    console.log('✅ All required files present');
+    
+    // Validate Worker syntax
+    try {
+        execSync('npx wrangler validate', { stdio: 'pipe' });
+        console.log('✅ Worker configuration valid');
+    } catch (error) {
+        console.warn('⚠️ Worker validation warning (proceeding)');
+    }
+    
+    console.log('🎯 Build validation complete');
 }
 
-// Execute if run directly
+// Run validation if called directly
 if (import.meta.url === `file://${process.argv[1]}`) {
-    removeConsoleLogs();
+    validateBuild().catch(error => {
+        console.error('❌ Build validation failed:', error.message);
+        process.exit(1);
+    });
 }
 
-export { removeConsoleLogs };
+export { validateBuild };

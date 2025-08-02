@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Dr Islam Dental Clinic Website",
   "scripts": {
-    "start": "powershell -ExecutionPolicy Bypass -File quick-start.ps1",
+    "start": "npm run dev",
     "dev": "wrangler dev --local",
     "build": "node scripts/build.js",
     "prebuild": "echo 'Preparing build...'",
@@ -32,7 +32,7 @@
     "stylelint-config-standard": "^36.0.0",
     "wrangler": "^4.25.0"
   },
-  "dependencies": {
-    "@cloudflare/workerd-windows-64": "^1.20250802.0"
+  "optionalDependencies": {
+    "workerd": "^1.20250802.0"
   }
 }
