@@ -1,808 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دكتور اسلام الصغير - طبيب أسنان وزراعة</title>
-    <meta name="description" content="Dr. Islam Elsagher - General Dentist & Implantologist in Kuwait. Specializing in endodontics, prosthodontics, and dental implants.">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" type="image/webp" sizes="16x16" href="assets/webp-optimized/favicon-16x16.webp">
-    <link rel="icon" type="image/webp" sizes="32x32" href="assets/webp-optimized/favicon-32x32.webp">
-    <link rel="icon" type="image/webp" sizes="48x48" href="assets/webp-optimized/favicon-48x48.webp">
-    <link rel="icon" type="image/webp" sizes="64x64" href="assets/webp-optimized/favicon-64x64.webp">
-    <link rel="icon" type="image/webp" sizes="128x128" href="assets/webp-optimized/favicon-128x128.webp">
-    <link rel="icon" type="image/webp" sizes="256x256" href="assets/webp-optimized/favicon-256x256.webp">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/webp-optimized/apple-touch-icon.webp">
-    <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Schema Markup for Dentist -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Dentist",
-      "name": "Dr. Islam Elsagher",
-      "alternateName": "د. اسلام الصغير",
-      "description": "طبيب أسنان عام وأخصائي زراعة الأسنان في الكويت",
-      "image": "https://dr-elsagher.com/assets/webp-optimized/showcase.webp",
-      "priceRange": "$$",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "KW"
-      },
-      "telephone": "+96598563711",
-      "url": "https://dr-elsagher.com",
-      "sameAs": [
-        "https://www.instagram.com/dr.islamelsagher/"
-      ],
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-          "opens": "09:00",
-          "closes": "21:00"
-        }
-      ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "خدمات طب الأسنان",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "زراعة الأسنان"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "علاج الجذور"
-            }
-          }
-        ]
-      }
-    }
-    </script>
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
-</head>
-<body>
-    <!-- Skip Links for Keyboard Navigation -->
-    <a href="#main-content" class="skip-link">انتقل إلى المحتوى الرئيسي</a>
-    <a href="#nav-menu" class="skip-link">انتقل إلى القائمة الرئيسية</a>
-    <a href="#contact" class="skip-link">انتقل إلى معلومات الاتصال</a>
-
-    <!-- Emergency Banner -->
-    <div class="emergency-banner" role="banner" aria-label="إعلان طوارئ الأسنان">
-        <p>حالات طوارئ الأسنان؟ اتصل الآن: <a href="tel:+96598563711">98563711</a></p>
-    </div>
-
-    <header>
-        <nav role="navigation" aria-label="التنقل الرئيسي">
-            <div class="logo">
-                <!-- Temporary text logo until PNG uploaded -->
-                <div class="logo-text">
-                    <span class="logo-name">Dr. Islam Elsagher</span>
-                    <span class="logo-arabic">د. اسلام الصغير</span>
-                </div>
-            </div>
-            
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" 
-                    aria-expanded="false" 
-                    aria-controls="mobile-menu"
-                    aria-label="القائمة">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-            
-            <!-- Navigation Menu -->
-            <ul id="mobile-menu" class="nav-menu" role="menubar">
-                <li role="none"><a href="#services" role="menuitem">الخدمات</a></li>
-                <li role="none"><a href="#about" role="menuitem">عن الطبيب</a></li>
-                <li role="none"><a href="#testimonials" role="menuitem">آراء المرضى</a></li>
-                <li role="none"><a href="#gallery" role="menuitem">قبل وبعد</a></li>
-                <li role="none"><a href="#faq" role="menuitem">أسئلة شائعة</a></li>
-                <li role="none"><a href="#contact" role="menuitem">اتصل بنا</a></li>
-                <li role="none" class="theme-toggle-container">
-                    <button id="theme-toggle" 
-                            class="theme-toggle" 
-                            aria-label="تبديل الوضع المظلم"
-                            title="تبديل بين الوضع الفاتح والمظلم">
-                        <span class="theme-icon theme-icon-light" aria-hidden="true">☀️</span>
-                        <span class="theme-icon theme-icon-dark" aria-hidden="true">🌙</span>
-                        <span class="sr-only">تبديل الوضع المظلم</span>
-                    </button>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="nav-overlay" id="nav-overlay"></div>
-
-    <section class="hero">
-        <div class="container">
-            <h1>دكتور اسلام الصغير</h1>
-            <p class="subtitle">طبيب أسنان عام / أخصائي زراعة الأسنان</p>
-            <div class="trust-badges">
-                <span class="badge">خبرة +15 عاماً</span>
-                <span class="badge">أحدث التقنيات</span>
-                <span class="badge">رضا 100% للمرضى</span>
-            </div>
-            <a href="https://wa.me/96598563711" class="cta-button">احجز موعدك الآن</a>
-        </div>
-    </section>
-
-    <section id="services" class="services">
-        <div class="container">
-            <h2>خدماتنا</h2>
-            <div class="services-grid" role="list" aria-label="قائمة الخدمات المتاحة">
-                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-1-title" aria-describedby="service-1-desc">
-                    <h3 id="service-1-title">زراعة الأسنان</h3>
-                    <p id="service-1-desc">زراعة فورية ومتأخرة بأحدث التقنيات</p>
-                </div>
-                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-2-title" aria-describedby="service-2-desc">
-                    <h3 id="service-2-title">علاج الجذور</h3>
-                    <p id="service-2-desc">علاج متخصص لقنوات الجذور</p>
-                </div>
-                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-3-title" aria-describedby="service-3-desc">
-                    <h3 id="service-3-title">التركيبات</h3>
-                    <p id="service-3-desc">تركيبات ثابتة ومتحركة</p>
-                </div>
-                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-4-title" aria-describedby="service-4-desc">
-                    <h3 id="service-4-title">جراحة الأسنان</h3>
-                    <p id="service-4-desc">خلع جراحي وعمليات متقدمة</p>
-                </div>
-                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-5-title" aria-describedby="service-5-desc">
-                    <h3 id="service-5-title">تجميل الأسنان</h3>
-                    <p id="service-5-desc">ابتسامة هوليوود وتبييض</p>
-                </div>
-                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-6-title" aria-describedby="service-6-desc">
-                    <h3 id="service-6-title">علاج اللثة</h3>
-                    <p id="service-6-desc">علاج أمراض اللثة والأنسجة</p>
-                </div>
-                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-7-title" aria-describedby="service-7-desc">
-                    <h3 id="service-7-title">الحشوات التجميلية</h3>
-                    <p id="service-7-desc">حشوات بلون الأسنان الطبيعي</p>
-                </div>
-                <div class="service-card" role="listitem" tabindex="0" aria-labelledby="service-8-title" aria-describedby="service-8-desc">
-                    <h3 id="service-8-title">إعادة التأهيل الكامل</h3>
-                    <p id="service-8-desc">علاج شامل للفم والأسنان</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials" aria-labelledby="testimonials-heading" role="region">
-        <div class="container">
-            <h2 id="testimonials-heading">ماذا يقول مرضانا</h2>
-            <div class="testimonial-grid" role="list" aria-label="آراء وتجارب المرضى">
-                <div class="testimonial-card" role="listitem" tabindex="0">
-                    <div class="stars" aria-label="تقييم 5 نجوم من 5">⭐⭐⭐⭐⭐</div>
-                    <blockquote>
-                        <p>"خدمة ممتازة وطبيب محترف جداً. الدكتور اسلام شرح لي كل خطوة في العلاج وكانت النتيجة رائعة"</p>
-                        <cite>- أحمد السالم</cite>
-                    </blockquote>
-                </div>
-                <div class="testimonial-card" role="listitem" tabindex="0">
-                    <div class="stars" aria-label="تقييم 5 نجوم من 5">⭐⭐⭐⭐⭐</div>
-                    <blockquote>
-                        <p>"أفضل تجربة زراعة أسنان. الدكتور متمكن جداً وفريق العمل متعاون. أنصح الجميع بزيارة العيادة"</p>
-                        <cite>- فاطمة العلي</cite>
-                    </blockquote>
-                </div>
-                <div class="testimonial-card" role="listitem" tabindex="0">
-                    <div class="stars" aria-label="تقييم 5 نجوم من 5">⭐⭐⭐⭐⭐</div>
-                    <blockquote>
-                        <p>"علاج احترافي ونتائج مبهرة. الدكتور اسلام حول ابتسامتي تماماً. شكراً جزيلاً"</p>
-                        <cite>- محمد الخالد</cite>
-                    </blockquote>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Enhanced Before/After Gallery -->
-    <section id="gallery" class="gallery">
-        <div class="container">
-            <h2>نتائج حقيقية تتحدث عن نفسها</h2>
-            <p class="gallery-subtitle">أكثر من 1200 حالة ناجحة وابتسامات متجددة</p>
-            
-            <!-- Gallery Filter Tabs -->
-            <div class="gallery-filters">
-                <button class="filter-btn active" data-filter="all">جميع الحالات</button>
-                <button class="filter-btn" data-filter="implants">زراعة الأسنان</button>
-                <button class="filter-btn" data-filter="cosmetic">تجميل الأسنان</button>
-                <button class="filter-btn" data-filter="orthodontic">التقويم</button>
-                <button class="filter-btn" data-filter="reconstruction">إعادة التأهيل</button>
-            </div>
-            
-            <div class="gallery-grid enhanced">
-                <!-- Dental Implants Cases -->
-                <div class="gallery-item" data-category="implants" role="article" tabindex="0" aria-labelledby="case-1-title" aria-describedby="case-1-details">
-                    <div class="case-images">
-                        <img src="assets/webp-optimized/case1-before.webp" alt="قبل زراعة الأسنان الأمامية" loading="lazy" role="img">
-                        <img src="assets/webp-optimized/case1-after.webp" alt="بعد زراعة الأسنان الأمامية" loading="lazy" role="img">
-                    </div>
-                    <div class="case-info">
-                        <h4 id="case-1-title">زراعة أسنان أمامية فورية</h4>
-                        <p class="case-details" id="case-1-details">مريض، 35 عام - زراعة فورية مع تاج خزفي</p>
-                        <p class="treatment-time">مدة العلاج: جلسة واحدة</p>
-                        <span class="case-badge implant" aria-label="نوع العلاج: زراعة">زراعة</span>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="implants">
-                    <div class="case-images">
-                        <img src="assets/webp-optimized/case2-before.webp" alt="قبل زراعة متعددة" loading="lazy">
-                        <img src="assets/webp-optimized/case2-after.webp" alt="بعد زراعة متعددة" loading="lazy">
-                    </div>
-                    <div class="case-info">
-                        <h4>زراعة متعددة مع جسر ثابت</h4>
-                        <p class="case-details">مريضة، 42 عام - استبدال 4 أسنان مفقودة</p>
-                        <p class="treatment-time">مدة العلاج: 4 أشهر</p>
-                        <span class="case-badge implant">زراعة</span>
-                    </div>
-                </div>
-
-                <!-- Cosmetic Cases -->
-                <div class="gallery-item" data-category="cosmetic">
-                    <div class="case-images">
-                        <img src="assets/webp-optimized/case3-before.webp" alt="قبل ابتسامة هوليوود" loading="lazy">
-                        <img src="assets/webp-optimized/case3-after.webp" alt="بعد ابتسامة هوليوود" loading="lazy">
-                    </div>
-                    <div class="case-info">
-                        <h4>ابتسامة هوليوود كاملة</h4>
-                        <p class="case-details">مريضة، 28 عام - فينير خزفي 16 سن</p>
-                        <p class="treatment-time">مدة العلاج: أسبوعين</p>
-                        <span class="case-badge cosmetic">تجميلي</span>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="cosmetic">
-                    <div class="case-images">
-                        <img src="assets/webp-optimized/real-case1.webp" alt="قبل تبييض الأسنان" loading="lazy">
-                        <img src="assets/webp-optimized/real-case2.webp" alt="بعد تبييض الأسنان" loading="lazy">
-                    </div>
-                    <div class="case-info">
-                        <h4>تبييض بالليزر + ترميم</h4>
-                        <p class="case-details">مريض، 31 عام - تبييض مع حشوات تجميلية</p>
-                        <p class="treatment-time">مدة العلاج: جلستين</p>
-                        <span class="case-badge cosmetic">تجميلي</span>
-                    </div>
-                </div>
-
-                <!-- Orthodontic Cases -->
-                <div class="gallery-item" data-category="orthodontic">
-                    <div class="case-images">
-                        <img src="assets/webp-optimized/real-case3.webp" alt="قبل التقويم الشفاف" loading="lazy">
-                        <img src="assets/webp-optimized/case1-after.webp" alt="بعد التقويم الشفاف" loading="lazy">
-                    </div>
-                    <div class="case-info">
-                        <h4>تقويم شفاف (Invisalign)</h4>
-                        <p class="case-details">مريضة، 24 عام - تصحيح ازدحام الأسنان</p>
-                        <p class="treatment-time">مدة العلاج: 8 أشهر</p>
-                        <span class="case-badge orthodontic">تقويم</span>
-                    </div>
-                </div>
-
-                <!-- Full Mouth Reconstruction -->
-                <div class="gallery-item" data-category="reconstruction">
-                    <div class="case-images">
-                        <img src="assets/webp-optimized/case2-before.webp" alt="قبل إعادة تأهيل كاملة" loading="lazy">
-                        <img src="assets/webp-optimized/case2-after.webp" alt="بعد إعادة تأهيل كاملة" loading="lazy">
-                    </div>
-                    <div class="case-info">
-                        <h4>إعادة تأهيل كاملة للفم</h4>
-                        <p class="case-details">مريض، 55 عام - زراعات متعددة مع تيجان</p>
-                        <p class="treatment-time">مدة العلاج: 6 أشهر</p>
-                        <span class="case-badge reconstruction">إعادة تأهيل</span>
-                    </div>
-                </div>
-
-                <!-- Additional Cases -->
-                <div class="gallery-item" data-category="cosmetic">
-                    <div class="case-images">
-                        <picture class="optimized-image">
-                            <source 
-                                srcset="assets/webp-optimized/case3-before-320w.webp 320w,
-                                       assets/webp-optimized/case3-before.webp 1024w" 
-                                sizes="(max-width: 768px) 50vw, 25vw" 
-                                type="image/webp">
-                            <img src="assets/webp-optimized/case3-before.webp" 
-                                 alt="قبل تصميم الابتسامة" 
-                                 loading="lazy" 
-                                 decoding="async"
-                                 class="case-image"
-                                 onload="this.parentElement.parentElement.classList.add('loaded')">
-                        </picture>
-                        <picture class="optimized-image">
-                            <source 
-                                srcset="assets/webp-optimized/case3-after-320w.webp 320w,
-                                       assets/webp-optimized/case3-after.webp 1024w" 
-                                sizes="(max-width: 768px) 50vw, 25vw" 
-                                type="image/webp">
-                            <img src="assets/webp-optimized/case3-after.webp" 
-                                 alt="بعد تصميم الابتسامة" 
-                                 loading="lazy" 
-                                 decoding="async"
-                                 class="case-image"
-                                 onload="this.parentElement.parentElement.classList.add('loaded')">
-                        </picture>
-                    </div>
-                    <div class="case-info">
-                        <h4>تصميم ابتسامة رقمي</h4>
-                        <p class="case-details">مريضة، 33 عام - تصميم مخصص بالكمبيوتر</p>
-                        <p class="treatment-time">مدة العلاج: 3 أسابيع</p>
-                        <span class="case-badge cosmetic">تجميلي</span>
-                    </div>
-                </div>
-
-                <div class="gallery-item" data-category="implants">
-                    <div class="case-images">
-                        <picture class="optimized-image">
-                            <source 
-                                srcset="assets/webp-optimized/real-case1-320w.webp 320w,
-                                       assets/webp-optimized/real-case1-768w.webp 768w,
-                                       assets/webp-optimized/real-case1.webp 1024w" 
-                                sizes="(max-width: 768px) 50vw, 25vw" 
-                                type="image/webp">
-                            <img src="assets/webp-optimized/real-case1.webp" 
-                                 alt="قبل الزراعة الفورية" 
-                                 loading="lazy" 
-                                 decoding="async"
-                                 class="case-image"
-                                 onload="this.parentElement.parentElement.classList.add('loaded')">
-                        </picture>
-                        <picture class="optimized-image">
-                            <source 
-                                srcset="assets/webp-optimized/real-case2-320w.webp 320w,
-                                       assets/webp-optimized/real-case2-768w.webp 768w,
-                                       assets/webp-optimized/real-case2.webp 1024w" 
-                                sizes="(max-width: 768px) 50vw, 25vw" 
-                                type="image/webp">
-                            <img src="assets/webp-optimized/real-case2.webp" 
-                                 alt="بعد الزراعة الفورية" 
-                                 loading="lazy" 
-                                 decoding="async"
-                                 class="case-image"
-                                 onload="this.parentElement.parentElement.classList.add('loaded')">
-                        </picture>
-                    </div>
-                    <div class="case-info">
-                        <h4>زراعة فورية بعد الخلع</h4>
-                        <p class="case-details">مريض، 38 عام - زراعة فورية مع تاج مؤقت</p>
-                        <p class="treatment-time">مدة العلاج: نفس اليوم</p>
-                        <span class="case-badge implant">زراعة</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- View More Button -->
-            <div class="gallery-actions">
-                <button class="view-more-btn" aria-label="عرض المزيد من حالات العلاج" aria-describedby="gallery-stats">عرض المزيد من الحالات <span class="arrow" aria-hidden="true">←</span></button>
-                <p class="gallery-stats" id="gallery-stats">+1200 حالة ناجحة | معدل نجاح 98%</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Enhanced Doctor Profile Section -->
-    <section id="about" class="about enhanced">
-        <div class="container">
-            <div class="doctor-hero">
-                <div class="doctor-image">
-                    <picture class="optimized-image doctor-picture">
-                        <source 
-                            srcset="assets/webp-optimized/showcase-320w.webp 320w,
-                                   assets/webp-optimized/showcase-768w.webp 768w,
-                                   assets/webp-optimized/showcase.webp 1024w" 
-                            sizes="(max-width: 768px) 100vw, 50vw" 
-                            type="image/webp">
-                        <img src="assets/webp-optimized/showcase.webp" 
-                             alt="د. اسلام الصغير - طبيب أسنان أخصائي زراعة الأسنان" 
-                             loading="lazy" 
-                             decoding="async"
-                             class="doctor-main-image"
-                             onload="this.parentElement.parentElement.classList.add('loaded')">
-                    </picture>
-                    <div class="image-overlay">
-                        <div class="achievement-badge">
-                            <span class="badge-text">أكثر من 15 عام خبرة</span>
-                            <span class="badge-subtext">1200+ زراعة ناجحة</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="doctor-intro">
-                    <h2>د. اسلام الصغير</h2>
-                    <p class="doctor-title">طبيب أسنان عام وأخصائي زراعة الأسنان</p>
-                    <p class="doctor-philosophy">
-                        "أؤمن بأن كل مريض يستحق ابتسامة صحية وجميلة. خبرتي التي تمتد لأكثر من 15 عامًا في مجال طب الأسنان، 
-                        مع التخصص في زراعة الأسنان وعلاج الجذور، تمكنني من تقديم أفضل رعاية لمرضاي."
-                    </p>
-                    <div class="doctor-highlights">
-                        <div class="highlight-item">
-                            <span class="highlight-icon">🏆</span>
-                            <span class="highlight-text">خبرة 15+ عام</span>
-                        </div>
-                        <div class="highlight-item">
-                            <span class="highlight-icon">🦷</span>
-                            <span class="highlight-text">1200+ زراعة ناجحة</span>
-                        </div>
-                        <div class="highlight-item">
-                            <span class="highlight-icon">👥</span>
-                            <span class="highlight-text">5000+ مريض راضٍ</span>
-                        </div>
-                        <div class="highlight-item">
-                            <span class="highlight-icon">📚</span>
-                            <span class="highlight-text">4 شهادات متخصصة</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Educational Timeline -->
-            <div class="education-timeline">
-                <h3>المسيرة التعليمية والمهنية</h3>
-                <div class="timeline">
-                    <div class="timeline-item" role="listitem" tabindex="0">
-                        <div class="timeline-year">2004-2009</div>
-                        <div class="timeline-content">
-                            <div class="timeline-institution">
-                                <picture class="optimized-image institution-picture">
-                                    <source 
-                                        srcset="assets/webp-optimized/logo-icon-320w.webp 320w,
-                                               assets/webp-optimized/logo-icon-768w.webp 768w,
-                                               assets/webp-optimized/logo-icon.webp 1024w" 
-                                        sizes="80px" 
-                                        type="image/webp">
-                                    <img src="assets/webp-optimized/logo-icon.webp" 
-                                         alt="جامعة الإسكندرية" 
-                                         class="institution-logo"
-                                         loading="lazy" 
-                                         decoding="async">
-                                </picture>
-                                <div class="institution-info">
-                                    <h4>بكالوريوس طب وجراحة الفم والأسنان</h4>
-                                    <p>جامعة الإسكندرية - كلية طب الأسنان</p>
-                                    <span class="grade">تقدير: امتياز مع مرتبة الشرف</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item" role="listitem" tabindex="0">
-                        <div class="timeline-year">2010-2011</div>
-                        <div class="timeline-content">
-                            <div class="timeline-institution">
-                                <picture class="optimized-image institution-picture">
-                                    <source 
-                                        srcset="assets/webp-optimized/logo-icon-320w.webp 320w,
-                                               assets/webp-optimized/logo-icon-768w.webp 768w,
-                                               assets/webp-optimized/logo-icon.webp 1024w" 
-                                        sizes="80px" 
-                                        type="image/webp">
-                                    <img src="assets/webp-optimized/logo-icon.webp" 
-                                         alt="جامعة الإسكندرية" 
-                                         class="institution-logo"
-                                         loading="lazy" 
-                                         decoding="async">
-                                </picture>
-                                <div class="institution-info">
-                                    <h4>دبلوم زراعة الأسنان</h4>
-                                    <p>جامعة الإسكندرية - قسم جراحة الفم والوجه والفكين</p>
-                                    <span class="specialty">تخصص: الزراعة الفورية والمتأخرة</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item" role="listitem" tabindex="0">
-                        <div class="timeline-year">2012-2014</div>
-                        <div class="timeline-content">
-                            <div class="timeline-institution">
-                                <img src="assets/webp-optimized/logo-icon.webp" alt="جامعة الأزهر" class="institution-logo">
-                                <div class="institution-info">
-                                    <h4>ماجستير أمراض اللثة</h4>
-                                    <p>جامعة الأزهر - كلية طب الأسنان</p>
-                                    <span class="thesis">الرسالة: "علاج أمراض اللثة المتقدمة بالليزر"</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item" role="listitem" tabindex="0">
-                        <div class="timeline-year">2015-2017</div>
-                        <div class="timeline-content">
-                            <div class="timeline-institution">
-                                <img src="assets/webp-optimized/logo-icon.webp" alt="جامعة القاهرة" class="institution-logo">
-                                <div class="institution-info">
-                                    <h4>ماجستير علوم الليزر في طب الأسنان</h4>
-                                    <p>جامعة القاهرة - المعهد القومي لليزر</p>
-                                    <span class="achievement">أول طبيب أسنان كويتي متخصص في الليزر</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Professional Experience -->
-            <div class="professional-experience">
-                <h3>الخبرة المهنية</h3>
-                <div class="experience-grid">
-                    <div class="experience-card">
-                        <div class="experience-period">2018 - الآن</div>
-                        <div class="experience-role">
-                            <h4>طبيب أسنان أخصائي زراعة</h4>
-                            <p class="clinic-name">عيادة خاصة - الكويت</p>
-                            <ul class="achievements">
-                                <li>أكثر من 1200 عملية زراعة أسنان ناجحة</li>
-                                <li>رائد في تقنيات الزراعة الفورية في الكويت</li>
-                                <li>معدل نجاح 98% في جميع عمليات الزراعة</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="experience-card">
-                        <div class="experience-period">2014 - 2018</div>
-                        <div class="experience-role">
-                            <h4>طبيب أسنان أول</h4>
-                            <p class="clinic-name">مستشفى الصباح - وزارة الصحة الكويتية</p>
-                            <ul class="achievements">
-                                <li>رئيس قسم علاج الجذور والزراعة</li>
-                                <li>تدريب 15+ طبيب أسنان على تقنيات الزراعة</li>
-                                <li>تطوير بروتوكولات جديدة للعلاج</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="experience-card">
-                        <div class="experience-period">2009 - 2014</div>
-                        <div class="experience-role">
-                            <h4>طبيب امتياز ومقيم</h4>
-                            <p class="clinic-name">مستشفى جامعة الإسكندرية</p>
-                            <ul class="achievements">
-                                <li>تدريب مكثف في جميع تخصصات طب الأسنان</li>
-                                <li>المشاركة في 500+ عملية جراحية</li>
-                                <li>الحصول على شهادة التميز في الأداء</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Certifications & Memberships -->
-            <div class="certifications-modern">
-                <h3>الشهادات والعضويات المهنية</h3>
-                <div class="cert-grid">
-                    <div class="cert-card">
-                        <img src="assets/webp-optimized/logo-icon.webp" alt="الجمعية الكويتية لطب الأسنان" class="cert-logo">
-                        <div class="cert-info">
-                            <h4>الجمعية الكويتية لطب الأسنان</h4>
-                            <p>عضو فعال منذ 2018</p>
-                            <span class="cert-status active">نشط</span>
-                        </div>
-                    </div>
-
-                    <div class="cert-card">
-                        <img src="assets/webp-optimized/logo-icon.webp" alt="وزارة الصحة الكويتية" class="cert-logo">
-                        <div class="cert-info">
-                            <h4>رخصة مزاولة المهنة</h4>
-                            <p>وزارة الصحة الكويتية</p>
-                            <span class="cert-status valid">ساري</span>
-                        </div>
-                    </div>
-
-                    <div class="cert-card">
-                        <img src="assets/webp-optimized/logo-icon.webp" alt="الجمعية الدولية لزراعة الأسنان" class="cert-logo">
-                        <div class="cert-info">
-                            <h4>الجمعية الدولية لزراعة الأسنان</h4>
-                            <p>عضو معتمد</p>
-                            <span class="cert-status international">دولي</span>
-                        </div>
-                    </div>
-
-                    <div class="cert-card">
-                        <img src="assets/webp-optimized/logo-icon.webp" alt="شهادة الليزر" class="cert-logo">
-                        <div class="cert-info">
-                            <h4>شهادة الليزر المتقدمة</h4>
-                            <p>معتمد من الاتحاد الأوروبي</p>
-                            <span class="cert-status certified">معتمد</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Enhanced Statistics -->
-            <div class="stats-modern">
-                <h3>إحصائيات النجاح</h3>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">👥</div>
-                        <div class="stat-number" data-count="5000">0</div>
-                        <div class="stat-label">مريض راضٍ</div>
-                        <div class="stat-growth">+15% نمو سنوي</div>
-                    </div>
-
-                    <div class="stat-card highlight">
-                        <div class="stat-icon">🦷</div>
-                        <div class="stat-number" data-count="1200">0</div>
-                        <div class="stat-label">زراعة ناجحة</div>
-                        <div class="stat-growth">98% معدل نجاح</div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon">⏱️</div>
-                        <div class="stat-number" data-count="15">0</div>
-                        <div class="stat-label">سنة خبرة</div>
-                        <div class="stat-growth">منذ 2009</div>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon">🏆</div>
-                        <div class="stat-number" data-count="4">0</div>
-                        <div class="stat-label">شهادة متخصصة</div>
-                        <div class="stat-growth">أعلى المؤهلات</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="faq">
-        <div class="container">
-            <h2>أسئلة شائعة</h2>
-            <div class="faq-list">
-                <div class="faq-item">
-                    <h3>كم تكلفة زراعة الأسنان؟</h3>
-                    <p>تختلف التكلفة حسب الحالة ونوع الزرعة المستخدمة. نقدم استشارة مجانية لتقييم حالتك وتقديم خطة علاج مفصلة مع التكلفة.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>هل الزراعة مؤلمة؟</h3>
-                    <p>نستخدم أحدث تقنيات التخدير الموضعي لضمان راحتك التامة. معظم المرضى يصفون العملية بأنها أقل ألماً من خلع الأسنان العادي.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>ما هي مدة العلاج؟</h3>
-                    <p>تعتمد مدة العلاج على الحالة. الزراعة الفورية يمكن إتمامها في جلسة واحدة، بينما الزراعة التقليدية تحتاج 3-6 أشهر للاندماج الكامل.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>هل تقبلون التأمين الصحي؟</h3>
-                    <p>نتعامل مع معظم شركات التأمين الصحي في الكويت. يرجى التواصل معنا للتأكد من قبول تأمينك الصحي.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>اتصل بنا</h2>
-            <div class="contact-wrapper">
-                <div class="contact-info" role="list" aria-label="معلومات التواصل">
-                    <div class="contact-card" role="listitem" tabindex="0">
-                        <h3>الهاتف</h3>
-                        <p><a href="tel:+96598563711" aria-label="الاتصال برقم 98563711">98563711</a></p>
-                    </div>
-                    <div class="contact-card" role="listitem" tabindex="0">
-                        <h3>البريد الإلكتروني</h3>
-                        <p><a href="mailto:dr.islam_elsagher@gmail.com" aria-label="إرسال بريد إلكتروني إلى الدكتور">dr.islam_elsagher@gmail.com</a></p>
-                    </div>
-                    <div class="contact-card" role="listitem" tabindex="0">
-                        <h3>Instagram</h3>
-                        <p><a href="https://www.instagram.com/dr.islamelsagher/" target="_blank" rel="noopener noreferrer" aria-label="زيارة حساب الإنستغرام - يفتح في نافذة جديدة">@dr.islamelsagher</a></p>
-                    </div>
-                    <div class="contact-card" role="listitem" tabindex="0">
-                        <h3>WhatsApp</h3>
-                        <p><a href="https://wa.me/96598563711" aria-label="إرسال رسالة واتساب إلى 98563711">98563711</a></p>
-                    </div>
-                </div>
-                
-                <div class="contact-form-section" role="region" aria-labelledby="form-heading">
-                    <h3 id="form-heading">أرسل لنا رسالة</h3>
-                    <form id="contactForm" class="contact-form" action="/api/contact" method="POST" novalidate>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <input type="text" id="name" name="name" required aria-describedby="name-error">
-                                <label for="name">الاسم الكامل <span class="required" aria-label="مطلوب">*</span></label>
-                                <div class="error-message" id="name-error" role="alert" aria-live="polite"></div>
-                            </div>
-                            <div class="form-group">
-                                <input type="tel" id="phone" name="phone" required aria-describedby="phone-error phone-hint">
-                                <label for="phone">رقم الهاتف <span class="required" aria-label="مطلوب">*</span></label>
-                                <div class="field-hint" id="phone-hint">مثال: 98563711 أو +96598563711</div>
-                                <div class="error-message" id="phone-error" role="alert" aria-live="polite"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <input type="email" id="email" name="email" required aria-describedby="email-error email-hint">
-                                <label for="email">البريد الإلكتروني <span class="required" aria-label="مطلوب">*</span></label>
-                                <div class="field-hint" id="email-hint">مثال: patient@example.com</div>
-                                <div class="error-message" id="email-error" role="alert" aria-live="polite"></div>
-                            </div>
-                            <div class="form-group">
-                                <select id="service" name="service" required aria-describedby="service-error">
-                                    <option value="">اختر نوع الخدمة</option>
-                                    <option value="implants">زراعة الأسنان</option>
-                                    <option value="cosmetic">تجميل الأسنان</option>
-                                    <option value="orthodontic">التقويم</option>
-                                    <option value="endodontic">علاج الجذور</option>
-                                    <option value="surgery">جراحة الأسنان</option>
-                                    <option value="general">فحص عام</option>
-                                    <option value="emergency">حالة طوارئ</option>
-                                    <option value="consultation">استشارة</option>
-                                </select>
-                                <label for="service">نوع الخدمة <span class="required" aria-label="مطلوب">*</span></label>
-                                <div class="error-message" id="service-error" role="alert" aria-live="polite"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <textarea id="message" name="message" rows="4" maxlength="1000" aria-describedby="message-hint message-count"></textarea>
-                            <label for="message">رسالتك (اختياري)</label>
-                            <div class="field-hint" id="message-hint">اكتب تفاصيل إضافية عن حالتك أو أسئلتك</div>
-                            <div class="character-count" id="message-count" aria-live="polite">0/1000</div>
-                        </div>
-                        
-                        <button type="submit" id="submitBtn" class="submit-btn" aria-describedby="submit-hint">
-                            <span class="btn-text">إرسال الرسالة</span>
-                            <span class="btn-loading" style="display: none;">
-                                <span class="loading-spinner"></span>
-                                جاري الإرسال...
-                            </span>
-                        </button>
-                        <div class="field-hint" id="submit-hint">سنرد عليك في أقرب وقت ممكن</div>
-                        
-                        <div class="form-message" id="formMessage" style="display: none;" role="alert" aria-live="assertive">
-                            <div class="message-icon"></div>
-                            <div class="message-content">
-                                <div class="message-title"></div>
-                                <div class="message-description"></div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-            <div class="working-hours" role="region" aria-labelledby="hours-heading">
-                <h3 id="hours-heading">ساعات العمل</h3>
-                <div class="hours-grid">
-                    <div class="day-hours">
-                        <span class="day">السبت - الخميس:</span>
-                        <span class="hours">9:00 صباحاً - 9:00 مساءً</span>
-                    </div>
-                    <div class="day-hours">
-                        <span class="day">الجمعة:</span>
-                        <span class="hours">مغلق</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    </main>
-
-    <footer role="contentinfo">
-        <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
-    </footer>
-
-    <!-- Sticky WhatsApp Booking Button -->
-    <a href="https://wa.me/96598563711" class="sticky-book" aria-label="احجز موعدك عبر الواتساب" role="button">
-        <span aria-hidden="true">💬</span> احجز موعد
-    </a>
-
-    <script src="js/main.js"></script>
-</body>
-</html>
