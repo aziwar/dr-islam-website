@@ -6,6 +6,7 @@ import { SERVICE_WORKER_JS } from './content/sw.js';
 import { OFFLINE_HTML } from './content/offline.js';
 import { logger } from './utils/logger.js';
 import { ImageOptimizationSystem } from './utils/image-optimizer.js';
+import { GalleryAPI } from './utils/gallery-api.js';
 
 // Constants for better maintainability
 const CACHE_PROFILES = {
@@ -32,6 +33,9 @@ export default {
     try {
       // Start performance monitoring
       const requestStart = performance.now();
+      
+      // Initialize Gallery API
+      const galleryAPI = new GalleryAPI(env.IMAGES, env.GALLERY_KV, env.ADMIN_TOKEN);
       const metrics = {
         url: request.url,
         method: request.method,
@@ -41,6 +45,15 @@ export default {
       
       const url = new URL(request.url);
       const path = url.pathname;
+      
+      // Handle Gallery API routes
+      if (path.startsWith('/api/gallery/') || path === '/admin/gallery') {
+        const response = await galleryAPI.handleRequest(request, url);
+        metrics.operation = 'gallery-api';
+        metrics.duration = performance.now() - requestStart;
+        logger.metric(metrics);
+        return response;
+      }
       
       // Dynamic versioning for cache busting
       const BUILD_DATE = new Date().toISOString().split('T')[0];
@@ -359,10 +372,14 @@ function handleHTMLRequest(request, url) {
   const preferredLang = acceptLanguage.includes('ar') ? 'ar' : 'en';
   const path = url.pathname;
   
+  // Check for language parameter in query string (e.g., ?lang=ar)
+  const langParam = url.searchParams.get('lang');
+  
   let html = HTML_EN;
   let hreflang = 'en';
   
-  if (path === '/ar' || path === '/ar/') {
+  // Determine language: query param > path > Accept-Language header
+  if (path === '/ar' || path === '/ar/' || langParam === 'ar') {
     html = HTML_AR;
     hreflang = 'ar';
   } else if (path === '/' && preferredLang === 'ar') {
