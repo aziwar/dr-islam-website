@@ -1,7 +1,8 @@
 // src/content/en.js
 import { MOBILE_UX_JS } from './js/mobile-ux.js';
 import { DentalLogo } from './components/DentalLogo.js';
-import { UI_ENHANCEMENTS_CSS } from './css/ui-enhancements.css.js';
+import { ENHANCEMENTS_CSS } from './css/enhancements.css.js';
+import { DynamicGallery } from './components/DynamicGallery.js';
 
 export const HTML_EN = `<!DOCTYPE html>
 <html lang="en">
@@ -25,12 +26,20 @@ export const HTML_EN = `<!DOCTYPE html>
     <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload critical fonts for LCP improvement -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//unpkg.com">
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
+    <noscript><link rel="stylesheet" href="/styles.css"></noscript>
     
     <!-- UI/UX Enhancements -->
     <style>
-        ${UI_ENHANCEMENTS_CSS}
+        ${ENHANCEMENTS_CSS}
         ${DentalLogo.css}
     </style>
     
@@ -101,17 +110,67 @@ export const HTML_EN = `<!DOCTYPE html>
 
     <div class="mobile-menu-backdrop" onclick="closeMobileMenu()"></div>
 
+    <!-- Breadcrumb Navigation -->
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb navigation" id="breadcrumbNav" style="display: none;">
+        <div class="container">
+            <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a href="#" onclick="scrollToSection('hero')" itemprop="item">
+                        <span itemprop="name">Home</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li class="breadcrumb-item active" id="currentBreadcrumb" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">Home</span>
+                    <meta itemprop="position" content="2" />
+                </li>
+            </ol>
+        </div>
+    </nav>
+
     <main id="main-content" role="main">
     <section class="hero" role="region" aria-labelledby="hero-heading">
         <div class="container">
-            <h1 id="hero-heading">Dr. Islam Elsagher</h1>
-            <p class="subtitle">General Dentist & Implantologist</p>
-            <div class="trust-badges">
-                <span class="badge">15+ Years Experience</span>
-                <span class="badge">Latest Technology</span>
-                <span class="badge">100% Patient Satisfaction</span>
+            <div class="hero-main">
+                <h1 id="hero-heading">Dr. Islam Elsagher</h1>
+                <p class="subtitle">General Dentist & Implantologist</p>
+                <div class="trust-badges">
+                    <span class="badge">15+ Years Experience</span>
+                    <span class="badge">Latest Technology</span>
+                    <span class="badge">100% Patient Satisfaction</span>
+                </div>
+                <button class="cta-button" onclick="openBookingModal()">Book Your Appointment</button>
             </div>
-            <button class="cta-button" onclick="openBookingModal()">Book Your Appointment</button>
+            
+            <!-- Desktop Booking Widget -->
+            <div class="desktop-booking-widget">
+                <div class="widget-header">
+                    <h3>📅 Quick Appointment</h3>
+                    <p>Book your visit in 30 seconds</p>
+                    <div class="widget-trust">
+                        <span class="trust-badge">✓ Same Day Available</span>
+                        <span class="trust-badge">✓ Free Consultation</span>
+                    </div>
+                </div>
+                <form class="quick-booking-form" onsubmit="handleQuickBooking(event)">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="tel" placeholder="📱 Phone Number" required>
+                    <select required>
+                        <option value="">🦷 Select Service</option>
+                        <option value="checkup">🔍 General Checkup</option>
+                        <option value="cleaning">✨ Teeth Cleaning</option>
+                        <option value="implant">🦷 Dental Implants</option>
+                        <option value="cosmetic">💎 Cosmetic Dentistry</option>
+                        <option value="emergency">🚨 Emergency Visit</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">
+                        📞 Book Now - Free Consultation
+                    </button>
+                </form>
+                <div class="widget-footer">
+                    <p class="availability-note">⚡ Available Today: 9:00 AM - 9:00 PM</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -152,92 +211,541 @@ export const HTML_EN = `<!DOCTYPE html>
                     <p>Comprehensive oral treatment</p>
                 </div>
             </div>
+            
+            <!-- Desktop Service Comparison Table -->
+            <div class="services-comparison">
+                <table class="comparison-table" role="table" aria-label="Service comparison table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Service</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Duration</th>
+                            <th scope="col">Price Range</th>
+                            <th scope="col">Book Now</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="service-name">Dental Implants</td>
+                            <td class="service-description">Immediate and delayed implants with latest techniques. Single tooth or full mouth restoration.</td>
+                            <td class="service-duration">60-90 min</td>
+                            <td class="service-price popular">350-800 KD</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">Book Now</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">Root Canal Treatment</td>
+                            <td class="service-description">Specialized endodontic treatment with modern rotary techniques and pain management.</td>
+                            <td class="service-duration">45-60 min</td>
+                            <td class="service-price">80-150 KD</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">Book Now</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">Cosmetic Dentistry</td>
+                            <td class="service-description">Hollywood smile, veneers, and teeth whitening for perfect aesthetics.</td>
+                            <td class="service-duration">90-120 min</td>
+                            <td class="service-price">200-600 KD</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">Book Now</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">Oral Surgery</td>
+                            <td class="service-description">Surgical extractions, wisdom teeth removal, and advanced procedures.</td>
+                            <td class="service-duration">30-45 min</td>
+                            <td class="service-price">50-200 KD</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">Book Now</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">Prosthodontics</td>
+                            <td class="service-description">Fixed and removable prosthetics, crowns, and bridges restoration.</td>
+                            <td class="service-duration">60-75 min</td>
+                            <td class="service-price">120-400 KD</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">Book Now</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">Gum Treatment</td>
+                            <td class="service-description">Periodontal disease treatment and maintenance therapy.</td>
+                            <td class="service-duration">45-60 min</td>
+                            <td class="service-price">60-120 KD</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">Book Now</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">Aesthetic Fillings</td>
+                            <td class="service-description">Natural tooth-colored fillings with advanced composite materials.</td>
+                            <td class="service-duration">30-45 min</td>
+                            <td class="service-price">25-80 KD</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">Book Now</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">Full Mouth Rehabilitation</td>
+                            <td class="service-description">Comprehensive oral treatment combining multiple specialties for complete restoration.</td>
+                            <td class="service-duration">2-3 hours</td>
+                            <td class="service-price">800-2000 KD</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">Consult</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials">
+    <!-- Service Comparison Table -->
+    <section id="service-comparison" class="service-comparison">
         <div class="container">
-            <h2>What Our Patients Say</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"Excellent service and very professional doctor. Dr. Islam explained every step of the treatment and the result was amazing"</p>
-                    <cite>- Ahmed Al-Salem</cite>
+            <div class="section-header">
+                <h2>Compare Treatment Options</h2>
+                <p class="section-subtitle">Make an informed decision with our detailed comparison</p>
+            </div>
+            
+            <div class="comparison-container">
+                <div class="comparison-table-wrapper">
+                    <table class="comparison-table" role="table" aria-label="Treatment options comparison">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="feature-column">Treatment Features</th>
+                                <th scope="col" class="option-column recommended">
+                                    <div class="option-header">
+                                        <h3>Dental Implants</h3>
+                                        <span class="recommended-badge">✨ Recommended</span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="option-column">
+                                    <div class="option-header">
+                                        <h3>Dental Bridge</h3>
+                                        <span class="option-subtitle">Traditional Option</span>
+                                    </div>
+                                </th>
+                                <th scope="col" class="option-column">
+                                    <div class="option-header">
+                                        <h3>Partial Dentures</h3>
+                                        <span class="option-subtitle">Removable Option</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature-label">
+                                    <strong>Treatment Duration</strong>
+                                    <span class="feature-desc">Time to complete treatment</span>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">3-6 months</span>
+                                        <span class="detail">Single visit for immediate implants</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-medium">
+                                    <div class="comparison-value">
+                                        <span class="value">2-3 weeks</span>
+                                        <span class="detail">Multiple appointments required</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">2-4 weeks</span>
+                                        <span class="detail">Quick fabrication process</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="feature-label">
+                                    <strong>Durability</strong>
+                                    <span class="feature-desc">Expected lifespan</span>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">25+ years</span>
+                                        <span class="detail">Lifetime with proper care</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-medium">
+                                    <div class="comparison-value">
+                                        <span class="value">10-15 years</span>
+                                        <span class="detail">May need replacement</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-low">
+                                    <div class="comparison-value">
+                                        <span class="value">5-8 years</span>
+                                        <span class="detail">Regular adjustments needed</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="feature-label">
+                                    <strong>Cost Range</strong>
+                                    <span class="feature-desc">Investment in KWD</span>
+                                </td>
+                                <td class="benefit-medium">
+                                    <div class="comparison-value">
+                                        <span class="value">200-400 KWD</span>
+                                        <span class="detail">Best long-term value</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">150-300 KWD</span>
+                                        <span class="detail">Moderate upfront cost</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">100-250 KWD</span>
+                                        <span class="detail">Lowest initial investment</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="feature-label">
+                                    <strong>Bone Preservation</strong>
+                                    <span class="feature-desc">Maintains jaw bone health</span>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">✓ Excellent</span>
+                                        <span class="detail">Stimulates natural bone growth</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-low">
+                                    <div class="comparison-value">
+                                        <span class="value">× Limited</span>
+                                        <span class="detail">May require adjacent tooth removal</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-low">
+                                    <div class="comparison-value">
+                                        <span class="value">× Poor</span>
+                                        <span class="detail">Bone loss continues over time</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="feature-label">
+                                    <strong>Maintenance</strong>
+                                    <span class="feature-desc">Daily care requirements</span>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">Like natural teeth</span>
+                                        <span class="detail">Brush and floss normally</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">Standard care</span>
+                                        <span class="detail">Regular brushing and flossing</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-medium">
+                                    <div class="comparison-value">
+                                        <span class="value">Special cleaning</span>
+                                        <span class="detail">Remove for cleaning and soaking</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="feature-label">
+                                    <strong>Success Rate</strong>
+                                    <span class="feature-desc">Treatment predictability</span>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">95-98%</span>
+                                        <span class="detail">Highly predictable outcome</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-high">
+                                    <div class="comparison-value">
+                                        <span class="value">90-95%</span>
+                                        <span class="detail">Reliable when properly done</span>
+                                    </div>
+                                </td>
+                                <td class="benefit-medium">
+                                    <div class="comparison-value">
+                                        <span class="value">85-90%</span>
+                                        <span class="detail">Fit and comfort may vary</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"Best dental implant experience. The doctor is very skilled and the team is cooperative. I recommend everyone to visit the clinic"</p>
-                    <cite>- Fatima Al-Ali</cite>
+                
+                <!-- Mobile-friendly comparison cards (hidden on desktop) -->
+                <div class="mobile-comparison">
+                    <div class="comparison-tabs">
+                        <button class="tab-btn active" onclick="showMobileComparison('implants')">Dental Implants</button>
+                        <button class="tab-btn" onclick="showMobileComparison('bridge')">Dental Bridge</button>
+                        <button class="tab-btn" onclick="showMobileComparison('dentures')">Dentures</button>
+                    </div>
+                    
+                    <div id="implants-mobile" class="mobile-comparison-card active">
+                        <div class="mobile-card-header recommended">
+                            <h3>Dental Implants</h3>
+                            <span class="recommended-badge">✨ Recommended</span>
+                        </div>
+                        <div class="mobile-features">
+                            <div class="mobile-feature">
+                                <span class="feature-name">Duration:</span>
+                                <span class="feature-value">3-6 months</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <span class="feature-name">Durability:</span>
+                                <span class="feature-value">25+ years</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <span class="feature-name">Cost:</span>
+                                <span class="feature-value">200-400 KWD</span>
+                            </div>
+                            <div class="mobile-feature highlight">
+                                <span class="feature-name">Success Rate:</span>
+                                <span class="feature-value">95-98%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="bridge-mobile" class="mobile-comparison-card">
+                        <div class="mobile-card-header">
+                            <h3>Dental Bridge</h3>
+                            <span class="option-subtitle">Traditional Option</span>
+                        </div>
+                        <div class="mobile-features">
+                            <div class="mobile-feature">
+                                <span class="feature-name">Duration:</span>
+                                <span class="feature-value">2-3 weeks</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <span class="feature-name">Durability:</span>
+                                <span class="feature-value">10-15 years</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <span class="feature-name">Cost:</span>
+                                <span class="feature-value">150-300 KWD</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <span class="feature-name">Success Rate:</span>
+                                <span class="feature-value">90-95%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="dentures-mobile" class="mobile-comparison-card">
+                        <div class="mobile-card-header">
+                            <h3>Partial Dentures</h3>
+                            <span class="option-subtitle">Removable Option</span>
+                        </div>
+                        <div class="mobile-features">
+                            <div class="mobile-feature">
+                                <span class="feature-name">Duration:</span>
+                                <span class="feature-value">2-4 weeks</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <span class="feature-name">Durability:</span>
+                                <span class="feature-value">5-8 years</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <span class="feature-name">Cost:</span>
+                                <span class="feature-value">100-250 KWD</span>
+                            </div>
+                            <div class="mobile-feature">
+                                <span class="feature-name">Success Rate:</span>
+                                <span class="feature-value">85-90%</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"Professional treatment and stunning results. Dr. Islam completely transformed my smile. Thank you so much"</p>
-                    <cite>- Mohammed Al-Khalid</cite>
+                
+                <div class="comparison-cta">
+                    <p class="cta-text">Ready to choose the best option for your needs?</p>
+                    <button class="cta-button" onclick="openBookingModal()">Get Free Consultation</button>
+                    <p class="cta-note">Dr. Islam will help you choose the perfect treatment plan</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Before/After Gallery -->
+    <!-- Enhanced Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>What Our Patients Say</h2>
+            <div class="testimonial-carousel-container">
+                <div class="testimonial-carousel" id="testimonialCarousel">
+                    <div class="testimonial-slide active">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👤</div>
+                                <div class="patient-details">
+                                    <h4>Ahmed Al-Salem</h4>
+                                    <span class="treatment-type">Dental Implants</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"Excellent service and very professional doctor. Dr. Islam explained every step of the treatment and the result was amazing. I couldn't be happier with my new smile!"</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">January 2025</span>
+                                <span class="verified">✓ Verified Patient</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👩</div>
+                                <div class="patient-details">
+                                    <h4>Fatima Al-Ali</h4>
+                                    <span class="treatment-type">Cosmetic Dentistry</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"Best dental implant experience in Kuwait. The doctor is very skilled and the team is cooperative. I recommend everyone to visit the clinic for quality treatment."</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">December 2024</span>
+                                <span class="verified">✓ Verified Patient</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👨</div>
+                                <div class="patient-details">
+                                    <h4>Mohammed Al-Khalid</h4>
+                                    <span class="treatment-type">Smile Makeover</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"Professional treatment and stunning results. Dr. Islam completely transformed my smile with Hollywood smile procedure. The technology used is state-of-the-art."</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">November 2024</span>
+                                <span class="verified">✓ Verified Patient</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👩</div>
+                                <div class="patient-details">
+                                    <h4>Sarah Al-Rashid</h4>
+                                    <span class="treatment-type">Root Canal Treatment</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"Painless root canal treatment! I was terrified but Dr. Islam made the whole experience comfortable. His gentle approach and modern equipment made all the difference."</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">October 2024</span>
+                                <span class="verified">✓ Verified Patient</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👨</div>
+                                <div class="patient-details">
+                                    <h4>Omar Al-Mutairi</h4>
+                                    <span class="treatment-type">Teeth Cleaning</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"Exceptional dental hygiene service. The clinic is very clean and modern. Dr. Islam and his team maintain the highest standards of sterilization and patient care."</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">September 2024</span>
+                                <span class="verified">✓ Verified Patient</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carousel Controls -->
+                <div class="carousel-controls">
+                    <button class="carousel-btn prev" onclick="moveTestimonialCarousel(-1)">‹</button>
+                    <div class="carousel-dots" id="testimonialDots">
+                        <button class="dot active" onclick="currentTestimonialSlide(1)"></button>
+                        <button class="dot" onclick="currentTestimonialSlide(2)"></button>
+                        <button class="dot" onclick="currentTestimonialSlide(3)"></button>
+                        <button class="dot" onclick="currentTestimonialSlide(4)"></button>
+                        <button class="dot" onclick="currentTestimonialSlide(5)"></button>
+                    </div>
+                    <button class="carousel-btn next" onclick="moveTestimonialCarousel(1)">›</button>
+                </div>
+                
+                <!-- Testimonial Summary Stats -->
+                <div class="testimonial-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">4.9</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Happy Patients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Would Recommend</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before/After Gallery with Lightbox -->
     <section id="gallery" class="gallery">
         <div class="container">
             <h2>Real Results</h2>
             <p class="gallery-subtitle">See the amazing transformation of our patients' smiles</p>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <picture>
-                        <source 
-                            type="image/webp"
-                            srcset="/assets/real-case1-320w.webp 320w,
-                                    /assets/real-case1-768w.webp 768w,
-                                    /assets/real-case1.webp 1200w"
-                            sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
-                        >
-                        <img 
-                            src="/assets/real-case1.webp" 
-                            alt="Real transformation"
-                            loading="lazy"
-                            class="gallery-img"
-                        >
-                    </picture>
-                    <p>Amazing smile transformation</p>
+            
+            <!-- Gallery Tabs -->
+            <div class="gallery-tabs">
+                <button class="gallery-tab active" data-category="all" onclick="switchGalleryCategory('all')">All Cases</button>
+                <button class="gallery-tab" data-category="implants" onclick="switchGalleryCategory('implants')">Dental Implants</button>
+                <button class="gallery-tab" data-category="cosmetic" onclick="switchGalleryCategory('cosmetic')">Cosmetic Dentistry</button>
+                <button class="gallery-tab" data-category="restoration" onclick="switchGalleryCategory('restoration')">Restoration</button>
+            </div>
+            
+            <!-- Dynamic Gallery Container -->
+            <div id="dynamic-gallery" class="dynamic-gallery">
+                <div class="gallery-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading recent cases...</p>
                 </div>
-                <div class="gallery-item">
-                    <picture>
-                        <source 
-                            type="image/webp"
-                            srcset="/assets/real-case2-320w.webp 320w,
-                                    /assets/real-case2-768w.webp 768w,
-                                    /assets/real-case2.webp 1200w"
-                            sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
-                        >
-                        <img 
-                            src="/assets/real-case2.webp" 
-                            alt="Treatment result"
-                            loading="lazy"
-                            class="gallery-img"
-                        >
-                    </picture>
-                    <p>Hollywood smile</p>
-                </div>
-                <div class="gallery-item">
-                    <picture>
-                        <source 
-                            type="image/webp"
-                            srcset="/assets/real-case3-320w.webp 320w,
-                                    /assets/real-case3-768w.webp 768w,
-                                    /assets/real-case3.webp 1200w"
-                            sizes="(max-width: 320px) 280px, (max-width: 768px) 720px, 1200px"
-                        >
-                        <img 
-                            src="/assets/real-case3.webp" 
-                            alt="Advanced treatment"
-                            loading="lazy"
-                            class="gallery-img"
-                        >
-                    </picture>
-                    <p>Orthodontic and cosmetic treatment</p>
+            </div>
+            
+            <!-- Gallery Lightbox -->
+            <div id="gallery-lightbox" class="gallery-lightbox">
+                <div class="lightbox-content">
+                    <img id="lightbox-image" class="lightbox-image" src="" alt="">
+                    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+                    <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</button>
+                    <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#8250;</button>
+                    <div class="lightbox-info">
+                        <div id="lightbox-title" class="lightbox-title"></div>
+                        <div id="lightbox-category" class="lightbox-category"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -285,34 +793,131 @@ export const HTML_EN = `<!DOCTYPE html>
         </div>
     </section>
 
-    <!-- FAQ Section -->
+    <!-- Enhanced FAQ Section with Search -->
     <section id="faq" class="faq">
         <div class="container">
             <h2>Frequently Asked Questions</h2>
-            <div class="faq-list">
-                <div class="faq-item">
+            <div class="faq-search-container">
+                <div class="faq-search-box">
+                    <input type="text" 
+                           id="faqSearch" 
+                           placeholder="🔍 Search for answers..." 
+                           class="faq-search-input"
+                           onkeyup="searchFAQs(this.value)">
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+                <div class="faq-categories">
+                    <button class="category-btn active" onclick="filterFAQs('all')">All Questions</button>
+                    <button class="category-btn" onclick="filterFAQs('cost')">💰 Cost & Insurance</button>
+                    <button class="category-btn" onclick="filterFAQs('treatment')">🦷 Treatment Process</button>
+                    <button class="category-btn" onclick="filterFAQs('pain')">😌 Pain & Comfort</button>
+                    <button class="category-btn" onclick="filterFAQs('aftercare')">🔄 Aftercare</button>
+                </div>
+            </div>
+            
+            <div class="faq-list" id="faqList">
+                <div class="faq-item" data-category="cost" data-keywords="cost price money insurance payment dental implant expensive">
                     <h3>How much does dental implant cost? <span class="faq-icon">+</span></h3>
                     <div class="faq-content">
-                        <p>The cost varies depending on the case and type of implant used. We offer free consultation to evaluate your case and provide a detailed treatment plan with costs.</p>
+                        <p>The cost varies depending on the case and type of implant used. We offer free consultation to evaluate your case and provide a detailed treatment plan with costs. Prices typically range from 150-300 KD depending on complexity.</p>
+                        <div class="faq-tags">
+                            <span class="tag">💰 Cost</span>
+                            <span class="tag">🦷 Implants</span>
+                            <span class="tag">📋 Consultation</span>
+                        </div>
                     </div>
                 </div>
-                <div class="faq-item">
+                
+                <div class="faq-item" data-category="pain" data-keywords="pain painful hurt anesthesia comfort sedation">
                     <h3>Is the implant procedure painful? <span class="faq-icon">+</span></h3>
                     <div class="faq-content">
-                        <p>We use the latest local anesthesia techniques to ensure your complete comfort. Most patients describe the procedure as less painful than a regular tooth extraction.</p>
+                        <p>We use the latest local anesthesia techniques to ensure your complete comfort. Most patients describe the procedure as less painful than a regular tooth extraction. We also offer sedation options for anxious patients.</p>
+                        <div class="faq-tags">
+                            <span class="tag">😌 Comfort</span>
+                            <span class="tag">💉 Anesthesia</span>
+                            <span class="tag">🏥 Procedure</span>
+                        </div>
                     </div>
                 </div>
-                <div class="faq-item">
+                
+                <div class="faq-item" data-category="treatment" data-keywords="time duration how long healing recovery process">
                     <h3>How long does the treatment take? <span class="faq-icon">+</span></h3>
                     <div class="faq-content">
-                        <p>Treatment duration depends on the case. Immediate implants can be completed in one session, while traditional implants need 3-6 months for complete integration.</p>
+                        <p>Treatment duration depends on the case. Immediate implants can be completed in one session, while traditional implants need 3-6 months for complete integration. We provide detailed timelines during consultation.</p>
+                        <div class="faq-tags">
+                            <span class="tag">⏰ Timeline</span>
+                            <span class="tag">🔄 Process</span>
+                            <span class="tag">🦷 Integration</span>
+                        </div>
                     </div>
                 </div>
-                <div class="faq-item">
+                
+                <div class="faq-item" data-category="cost" data-keywords="insurance health coverage medical claim reimbursement">
                     <h3>Do you accept health insurance? <span class="faq-icon">+</span></h3>
                     <div class="faq-content">
-                        <p>We work with most health insurance companies in Kuwait. Please contact us to confirm if your health insurance is accepted.</p>
+                        <p>We work with most health insurance companies in Kuwait including Watania, Al-Ahlia, and Gulf Insurance. Please contact us to confirm if your health insurance is accepted and what percentage is covered.</p>
+                        <div class="faq-tags">
+                            <span class="tag">🏥 Insurance</span>
+                            <span class="tag">💳 Coverage</span>
+                            <span class="tag">🇰🇼 Kuwait</span>
+                        </div>
                     </div>
+                </div>
+                
+                <div class="faq-item" data-category="aftercare" data-keywords="after care maintenance cleaning brush hygiene follow up">
+                    <h3>How do I care for my implants after treatment? <span class="faq-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>Implant care is similar to natural teeth - regular brushing, flossing, and dental checkups. We provide detailed aftercare instructions and schedule follow-up appointments to ensure optimal healing and long-term success.</p>
+                        <div class="faq-tags">
+                            <span class="tag">🔄 Aftercare</span>
+                            <span class="tag">🪥 Hygiene</span>
+                            <span class="tag">✅ Maintenance</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-category="treatment" data-keywords="success rate failure guarantee warranty quality">
+                    <h3>What is the success rate of dental implants? <span class="faq-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>Dental implants have a 95-98% success rate when performed by experienced professionals. Our clinic uses premium implant brands with proven track records and provides warranty coverage for your peace of mind.</p>
+                        <div class="faq-tags">
+                            <span class="tag">📊 Success Rate</span>
+                            <span class="tag">🛡️ Warranty</span>
+                            <span class="tag">⭐ Quality</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-category="treatment" data-keywords="age old young suitable candidate requirements">
+                    <h3>Am I a good candidate for dental implants? <span class="faq-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>Most healthy adults are good candidates for implants. We evaluate bone density, gum health, and overall medical condition. Age is not a limiting factor - we've successfully treated patients from 18 to 80+ years old.</p>
+                        <div class="faq-tags">
+                            <span class="tag">👤 Candidacy</span>
+                            <span class="tag">🔍 Evaluation</span>
+                            <span class="tag">🎯 Suitability</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-category="cost" data-keywords="payment plan installment financing options methods">
+                    <h3>Do you offer payment plans or financing? <span class="faq-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>Yes, we offer flexible payment plans and work with financing companies to make treatment affordable. We accept cash, credit cards, and can arrange installment plans based on your budget and treatment needs.</p>
+                        <div class="faq-tags">
+                            <span class="tag">💳 Payment Plans</span>
+                            <span class="tag">🏦 Financing</span>
+                            <span class="tag">💰 Flexible</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-no-results" id="faqNoResults" style="display: none;">
+                <div class="no-results-content">
+                    <h3>🔍 No matching questions found</h3>
+                    <p>Can't find what you're looking for? Contact us directly for personalized answers.</p>
+                    <button class="cta-button" onclick="openBookingModal()">Ask Our Expert</button>
                 </div>
             </div>
         </div>
@@ -406,6 +1011,9 @@ export const HTML_EN = `<!DOCTYPE html>
                 <p class="booking-description">We'll help you book an appointment via WhatsApp with your details pre-filled.</p>
                 
                 <form id="bookingForm" class="booking-form">
+                    <div class="form-progress">
+                        <div class="form-progress-bar"></div>
+                    </div>
                     <div class="form-group">
                         <input type="text" id="bookingName" name="name" required>
                         <label for="bookingName">Your Name</label>
@@ -465,6 +1073,46 @@ export const HTML_EN = `<!DOCTYPE html>
         <p>&copy; 2025 Dr. Islam Elsagher - All Rights Reserved</p>
     </footer>
 
+    <!-- Desktop Sidebar Widget -->
+    <div class="desktop-sidebar" id="desktopSidebar" style="display: none;">
+        <div class="sidebar-header">
+            <h4>🏥 Dr. Islam Al-Sagher</h4>
+            <p style="font-size: 0.85rem; color: var(--text-light);">Expert Dental Care</p>
+        </div>
+        <div class="sidebar-stats">
+            <div class="stat-item">
+                <span class="stat-number">15+</span>
+                <span class="stat-label">Years</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Satisfaction</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">2000+</span>
+                <span class="stat-label">Patients</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Emergency</span>
+            </div>
+        </div>
+        <div class="sidebar-actions">
+            <button class="sidebar-btn primary" onclick="openBookingModal()">
+                📞 Book Appointment
+            </button>
+            <button class="sidebar-btn secondary" onclick="openWhatsApp()">
+                💬 WhatsApp Chat
+            </button>
+        </div>
+        <div class="sidebar-contact">
+            <p style="font-size: 0.8rem; text-align: center; color: var(--text-light); margin-top: 1rem;">
+                📍 Salmiya, Kuwait<br>
+                ⏰ 9 AM - 9 PM (Sat-Thu)
+            </p>
+        </div>
+    </div>
+
     <!-- Sticky WhatsApp Booking Button -->
     <button class="sticky-book" onclick="openBookingModal()">
         Book Appointment 💬
@@ -522,6 +1170,88 @@ export const HTML_EN = `<!DOCTYPE html>
                     top: targetPosition,
                     behavior: 'smooth'
                 });
+            }
+        });
+    });
+
+    // Breadcrumb Navigation System
+    const breadcrumbNav = document.getElementById('breadcrumbNav');
+    const currentBreadcrumb = document.getElementById('currentBreadcrumb');
+    
+    // Section name mapping
+    const sectionNames = {
+        'hero': 'Home',
+        'services': 'Services',
+        'about': 'About Dr. Islam',
+        'testimonials': 'Testimonials',
+        'gallery': 'Before/After Gallery',
+        'faq': 'FAQ',
+        'contact': 'Contact Us'
+    };
+    
+    let currentSection = 'hero';
+    
+    function updateBreadcrumb(sectionId) {
+        if (sectionId && sectionNames[sectionId] && sectionId !== currentSection) {
+            currentSection = sectionId;
+            const sectionName = sectionNames[sectionId];
+            
+            // Update breadcrumb text
+            const breadcrumbSpan = currentBreadcrumb.querySelector('span[itemprop="name"]');
+            if (breadcrumbSpan) {
+                breadcrumbSpan.textContent = sectionName;
+            }
+            
+            // Show breadcrumb if not on hero section
+            if (sectionId !== 'hero') {
+                breadcrumbNav.style.display = 'block';
+                setTimeout(() => {
+                    breadcrumbNav.classList.add('visible');
+                }, 10);
+            } else {
+                breadcrumbNav.classList.remove('visible');
+                setTimeout(() => {
+                    breadcrumbNav.style.display = 'none';
+                }, 300);
+            }
+        }
+    }
+    
+    // Scroll to section function for breadcrumb home link
+    window.scrollToSection = function(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            const offset = sectionId === 'hero' ? 0 : 100;
+            const targetPosition = section.offsetTop - offset;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
+    
+    // Intersection Observer for section detection
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0.1
+    };
+    
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                updateBreadcrumb(entry.target.id);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all major sections
+    document.addEventListener('DOMContentLoaded', function() {
+        const sectionsToObserve = ['hero', 'services', 'about', 'testimonials', 'gallery', 'faq', 'contact'];
+        sectionsToObserve.forEach(sectionId => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                sectionObserver.observe(section);
             }
         });
     });
@@ -598,14 +1328,32 @@ export const HTML_EN = `<!DOCTYPE html>
         
         const faqItems = document.querySelectorAll('.faq-item');
         
-        // FAQ functionality  
+        // FAQ functionality with touch-outside-to-close
         faqItems.forEach(item => {
             const question = item.querySelector('h3');
             
             question.addEventListener('click', function() {
+                // Close other open FAQ items on mobile
+                if (window.innerWidth <= 768) {
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                }
                 item.classList.toggle('active');
             });
         });
+        
+        // Touch-outside-to-close for mobile FAQ
+        if ('ontouchstart' in window) {
+            document.addEventListener('touchstart', function(e) {
+                const activeFaq = document.querySelector('.faq-item.active');
+                if (activeFaq && !activeFaq.contains(e.target)) {
+                    activeFaq.classList.remove('active');
+                }
+            });
+        }
     });
     
     // Fix navigation on window resize and load events
@@ -669,6 +1417,46 @@ export const HTML_EN = `<!DOCTYPE html>
             closeBookingModal();
         }
     });
+    
+    // Handle Quick Booking Widget
+    function handleQuickBooking(event) {
+        event.preventDefault();
+        
+        const form = event.target;
+        const formData = new FormData(form);
+        const name = form.querySelector('input[type="text"]').value;
+        const phone = form.querySelector('input[type="tel"]').value;
+        const service = form.querySelector('select').value;
+        
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Booking...';
+        submitBtn.disabled = true;
+        
+        // Auto-fill main booking form and open modal
+        setTimeout(() => {
+            document.getElementById('bookingName').value = name;
+            document.getElementById('bookingPhone').value = phone;
+            document.getElementById('bookingService').value = service;
+            
+            // Reset widget form
+            form.reset();
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            
+            // Open main booking modal
+            openBookingModal();
+            
+            // Track quick booking usage
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'quick_booking_used', {
+                    'event_category': 'engagement',
+                    'event_label': 'desktop_widget'
+                });
+            }
+        }, 800);
+    }
     
     // Handle booking form submission
     document.addEventListener('DOMContentLoaded', function() {
@@ -885,6 +1673,11 @@ export const HTML_EN = `<!DOCTYPE html>
             gallery.addEventListener('touchend', () => {
                 isDown = false;
                 
+                // Add haptic feedback for mobile users
+                if (navigator.vibrate && 'ontouchstart' in window) {
+                    navigator.vibrate(50);
+                }
+                
                 // Snap to nearest item
                 const items = gallery.querySelectorAll('.gallery-item');
                 const itemWidth = items[0].offsetWidth;
@@ -1082,7 +1875,122 @@ export const HTML_EN = `<!DOCTYPE html>
                 });
             });
             
-            // Form submission with loading state
+    // Form Progress Tracking
+    const updateFormProgress = () => {
+        const bookingForm = document.getElementById('bookingForm');
+        if (!bookingForm) return;
+        
+        const progressBar = bookingForm.querySelector('.form-progress-bar');
+        if (!progressBar) return;
+        
+        const requiredFields = bookingForm.querySelectorAll('[required]');
+        const filledFields = Array.from(requiredFields).filter(field => field.value.trim());
+        
+        const progress = (filledFields.length / requiredFields.length) * 100;
+        progressBar.style.width = progress + '%';
+    };
+
+    // Enhanced Form Validation System
+    const setupFormValidation = () => {
+        const forms = document.querySelectorAll('form');
+        
+        forms.forEach(form => {
+            // Real-time validation on input/blur
+            const inputs = form.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                // Validate on blur
+                input.addEventListener('blur', () => validateField(input));
+                
+                // Real-time validation on input (with debounce)
+                let timeout;
+                input.addEventListener('input', () => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => validateField(input), 300);
+                });
+            });
+        });
+    };
+    
+    const validateField = (field) => {
+        const value = field.value.trim();
+        let isValid = true;
+        let errorMessage = '';
+        
+        // Remove existing error states
+        field.classList.remove('error', 'success');
+        removeFieldError(field);
+        
+        // Skip validation if field is empty and not required
+        if (!value && !field.required) return true;
+        
+        // Required field validation
+        if (field.required && !value) {
+            isValid = false;
+            errorMessage = 'This field is required';
+        }
+        
+        // Email validation
+        if (field.type === 'email' && value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'Please enter a valid email address';
+            }
+        }
+        
+        // Phone validation
+        if (field.type === 'tel' && value) {
+            const phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,}$/;
+            if (!phoneRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'Please enter a valid phone number';
+            }
+        }
+        
+        // Name validation (no numbers)
+        if (field.name === 'name' && value) {
+            const nameRegex = /^[a-zA-Z\s\u0600-\u06FF]+$/;
+            if (!nameRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'Name should only contain letters';
+            }
+        }
+        
+        // Apply validation result
+        if (isValid) {
+            field.classList.add('success');
+        } else {
+            field.classList.add('error');
+            showFieldError(field, errorMessage);
+        }
+        
+        return isValid;
+    };
+    
+    const showFieldError = (field, message) => {
+        const formGroup = field.closest('.form-group');
+        let errorDiv = formGroup.querySelector('.field-error');
+        
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            formGroup.appendChild(errorDiv);
+        }
+        
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+    };
+    
+    const removeFieldError = (field) => {
+        const formGroup = field.closest('.form-group');
+        const errorDiv = formGroup.querySelector('.field-error');
+        if (errorDiv) {
+            errorDiv.style.display = 'none';
+        }
+    };
+
+    // Form submission with loading state
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
@@ -1207,6 +2115,7 @@ export const HTML_EN = `<!DOCTYPE html>
         setupSmoothScroll();
         setupKeyboardNav();
         setupFormEnhancements();
+        setupFormValidation(); // Add real-time validation
         
         // Only monitor performance in development
         if (window.location.hostname === 'localhost') {
@@ -1288,6 +2197,744 @@ export const HTML_EN = `<!DOCTYPE html>
     // MOBILE UX ENHANCEMENTS
     // =================================
     ` + MOBILE_UX_JS + `
+
+    // =================================
+    // DESKTOP SIDEBAR FUNCTIONALITY
+    // =================================
+    
+    // Show desktop sidebar on large screens
+    function initDesktopSidebar() {
+        if (window.innerWidth >= 1200) {
+            const sidebar = document.getElementById('desktopSidebar');
+            if (sidebar) {
+                sidebar.style.display = 'block';
+            }
+        }
+    }
+    
+    // Enhanced Gallery Lightbox for Desktop
+    let currentLightboxIndex = 0;
+    let lightboxImages = [];
+    
+    function initGalleryLightbox() {
+        // Collect all gallery images
+        lightboxImages = Array.from(document.querySelectorAll('.gallery-item img')).map(img => ({
+            src: img.src,
+            alt: img.alt,
+            caption: img.closest('.gallery-item')?.querySelector('p')?.textContent || img.alt
+        }));
+        
+        // Add click handlers
+        document.querySelectorAll('.gallery-item img').forEach((img, index) => {
+            img.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentLightboxIndex = index;
+                showImageLightbox();
+            });
+            
+            // Add keyboard support
+            img.setAttribute('tabindex', '0');
+            img.setAttribute('role', 'button');
+            img.setAttribute('aria-label', 'View ' + img.alt + ' in full size');
+            
+            img.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    currentLightboxIndex = index;
+                    showImageLightbox();
+                }
+            });
+        });
+    }
+    
+    function showImageLightbox() {
+        const image = lightboxImages[currentLightboxIndex];
+        if (!image) return;
+        
+        // Create lightbox with enhanced structure
+        const lightbox = document.createElement('div');
+        lightbox.className = 'image-lightbox';
+        lightbox.setAttribute('role', 'dialog');
+        lightbox.setAttribute('aria-modal', 'true');
+        lightbox.setAttribute('aria-labelledby', 'lightbox-title');
+        
+        lightbox.innerHTML = \`
+            <div class="lightbox-backdrop" onclick="closeLightbox()" aria-hidden="true"></div>
+            <div class="lightbox-content">
+                <div class="lightbox-header">
+                    <h2 id="lightbox-title" class="sr-only">\${image.alt}</h2>
+                    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox" tabindex="0">
+                        <span aria-hidden="true">✕</span>
+                    </button>
+                </div>
+                <div class="lightbox-body">
+                    <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)" aria-label="Previous image" \${currentLightboxIndex === 0 ? 'disabled' : ''}>
+                        <span aria-hidden="true">‹</span>
+                    </button>
+                    <div class="lightbox-image-container">
+                        <img src="\${image.src}" alt="\${image.alt}" class="lightbox-image">
+                        <div class="lightbox-loading" aria-hidden="true">Loading...</div>
+                    </div>
+                    <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)" aria-label="Next image" \${currentLightboxIndex === lightboxImages.length - 1 ? 'disabled' : ''}>
+                        <span aria-hidden="true">›</span>
+                    </button>
+                </div>
+                <div class="lightbox-footer">
+                    <div class="lightbox-caption">\${image.caption}</div>
+                    <div class="lightbox-counter">\${currentLightboxIndex + 1} / \${lightboxImages.length}</div>
+                </div>
+            </div>
+        \`;
+        
+        document.body.appendChild(lightbox);
+        document.body.style.overflow = 'hidden';
+        
+        // Focus management
+        const closeButton = lightbox.querySelector('.lightbox-close');
+        closeButton.focus();
+        
+        // Trap focus within lightbox
+        trapFocus(lightbox);
+        
+        // Preload adjacent images for smooth navigation
+        preloadAdjacentImages();
+        
+        // Add keyboard listeners
+        document.addEventListener('keydown', handleLightboxKeydown);
+        
+        // Fade in animation
+        requestAnimationFrame(() => {
+            lightbox.classList.add('show');
+        });
+    }
+    
+    function navigateLightbox(direction) {
+        const newIndex = currentLightboxIndex + direction;
+        
+        if (newIndex >= 0 && newIndex < lightboxImages.length) {
+            currentLightboxIndex = newIndex;
+            updateLightboxContent();
+            preloadAdjacentImages();
+        }
+    }
+    
+    function updateLightboxContent() {
+        const lightbox = document.querySelector('.image-lightbox');
+        if (!lightbox) return;
+        
+        const image = lightboxImages[currentLightboxIndex];
+        const img = lightbox.querySelector('.lightbox-image');
+        const caption = lightbox.querySelector('.lightbox-caption');
+        const counter = lightbox.querySelector('.lightbox-counter');
+        const title = lightbox.querySelector('#lightbox-title');
+        const prevBtn = lightbox.querySelector('.lightbox-prev');
+        const nextBtn = lightbox.querySelector('.lightbox-next');
+        
+        // Show loading state
+        const loading = lightbox.querySelector('.lightbox-loading');
+        loading.style.display = 'block';
+        img.style.opacity = '0';
+        
+        // Update image
+        img.onload = () => {
+            loading.style.display = 'none';
+            img.style.opacity = '1';
+        };
+        
+        img.src = image.src;
+        img.alt = image.alt;
+        caption.textContent = image.caption;
+        counter.textContent = (currentLightboxIndex + 1) + ' / ' + lightboxImages.length;
+        title.textContent = image.alt;
+        
+        // Update navigation buttons
+        prevBtn.disabled = currentLightboxIndex === 0;
+        nextBtn.disabled = currentLightboxIndex === lightboxImages.length - 1;
+    }
+    
+    function preloadAdjacentImages() {
+        // Preload previous and next images for smooth navigation
+        [-1, 1].forEach(offset => {
+            const index = currentLightboxIndex + offset;
+            if (index >= 0 && index < lightboxImages.length) {
+                const img = new Image();
+                img.src = lightboxImages[index].src;
+            }
+        });
+    }
+    
+    function handleLightboxKeydown(e) {
+        switch (e.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                navigateLightbox(-1);
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                navigateLightbox(1);
+                break;
+        }
+    }
+    
+    function trapFocus(container) {
+        const focusableElements = container.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstFocusable = focusableElements[0];
+        const lastFocusable = focusableElements[focusableElements.length - 1];
+        
+        container.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusable) {
+                        e.preventDefault();
+                        lastFocusable.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusable) {
+                        e.preventDefault();
+                        firstFocusable.focus();
+                    }
+                }
+            }
+        });
+    }
+    
+    function closeLightbox() {
+        const lightbox = document.querySelector('.image-lightbox');
+        if (lightbox) {
+            // Fade out animation
+            lightbox.classList.add('hide');
+            
+            setTimeout(() => {
+                lightbox.remove();
+                document.body.style.overflow = '';
+                
+                // Return focus to original trigger
+                const originalImage = document.querySelectorAll('.gallery-item img')[currentLightboxIndex];
+                if (originalImage) {
+                    originalImage.focus();
+                }
+                
+                // Remove keyboard listener
+                document.removeEventListener('keydown', handleLightboxKeydown);
+            }, 200);
+        }
+    }
+    
+    // =================================
+    // TESTIMONIAL CAROUSEL FUNCTIONALITY
+    // =================================
+    
+    let currentTestimonialIndex = 0;
+    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+    const testimonialDots = document.querySelectorAll('.carousel-dots .dot');
+    let testimonialAutoSlide = null;
+    
+    function showTestimonialSlide(index) {
+        // Hide all slides
+        testimonialSlides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (testimonialDots[i]) {
+                testimonialDots[i].classList.remove('active');
+            }
+        });
+        
+        // Show current slide
+        if (testimonialSlides[index]) {
+            testimonialSlides[index].classList.add('active');
+            if (testimonialDots[index]) {
+                testimonialDots[index].classList.add('active');
+            }
+        }
+    }
+    
+    function moveTestimonialCarousel(direction) {
+        currentTestimonialIndex += direction;
+        
+        if (currentTestimonialIndex >= testimonialSlides.length) {
+            currentTestimonialIndex = 0;
+        } else if (currentTestimonialIndex < 0) {
+            currentTestimonialIndex = testimonialSlides.length - 1;
+        }
+        
+        showTestimonialSlide(currentTestimonialIndex);
+        resetTestimonialAutoSlide();
+    }
+    
+    function currentTestimonialSlide(index) {
+        currentTestimonialIndex = index - 1;
+        showTestimonialSlide(currentTestimonialIndex);
+        resetTestimonialAutoSlide();
+    }
+    
+    function startTestimonialAutoSlide() {
+        testimonialAutoSlide = setInterval(() => {
+            moveTestimonialCarousel(1);
+        }, 6000);
+    }
+    
+    function resetTestimonialAutoSlide() {
+        if (testimonialAutoSlide) {
+            clearInterval(testimonialAutoSlide);
+        }
+        startTestimonialAutoSlide();
+    }
+    
+    // Initialize testimonial carousel
+    function initTestimonialCarousel() {
+        if (testimonialSlides.length > 0) {
+            showTestimonialSlide(0);
+            startTestimonialAutoSlide();
+            
+            // Pause auto-slide on hover
+            const carousel = document.querySelector('.testimonial-carousel');
+            if (carousel) {
+                carousel.addEventListener('mouseenter', () => {
+                    if (testimonialAutoSlide) {
+                        clearInterval(testimonialAutoSlide);
+                    }
+                });
+                
+                carousel.addEventListener('mouseleave', () => {
+                    startTestimonialAutoSlide();
+                });
+            }
+        }
+    }
+    
+    // =================================
+    // FAQ SEARCH & FILTER FUNCTIONALITY
+    // =================================
+    
+    let allFAQs = [];
+    let filteredFAQs = [];
+    
+    function initFAQSearch() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        allFAQs = Array.from(faqItems).map(item => ({
+            element: item,
+            question: item.querySelector('h3').textContent.toLowerCase(),
+            answer: item.querySelector('.faq-content p').textContent.toLowerCase(),
+            keywords: item.dataset.keywords || '',
+            category: item.dataset.category || 'all'
+        }));
+        filteredFAQs = [...allFAQs];
+    }
+    
+    function searchFAQs(query) {
+        const searchTerm = query.toLowerCase().trim();
+        const faqList = document.getElementById('faqList');
+        const noResults = document.getElementById('faqNoResults');
+        
+        if (searchTerm === '') {
+            // Show all FAQs in current category filter
+            filteredFAQs.forEach(faq => {
+                faq.element.style.display = 'block';
+            });
+            noResults.style.display = 'none';
+            return;
+        }
+        
+        let visibleCount = 0;
+        
+        filteredFAQs.forEach(faq => {
+            const isMatch = faq.question.includes(searchTerm) ||
+                          faq.answer.includes(searchTerm) ||
+                          faq.keywords.includes(searchTerm);
+            
+            if (isMatch) {
+                faq.element.style.display = 'block';
+                visibleCount++;
+                
+                // Highlight search terms
+                highlightSearchTerms(faq.element, searchTerm);
+            } else {
+                faq.element.style.display = 'none';
+            }
+        });
+        
+        // Show no results message if no matches
+        if (visibleCount === 0) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+        }
+    }
+    
+    function highlightSearchTerms(element, searchTerm) {
+        // Simple highlighting - in production, use a more robust solution
+        const question = element.querySelector('h3');
+        const answer = element.querySelector('.faq-content p');
+        
+        [question, answer].forEach(el => {
+            if (el && searchTerm.length > 2) {
+                let html = el.innerHTML;
+                const regex = new RegExp('(' + searchTerm + ')', 'gi');
+                html = html.replace(regex, '<mark style="background: #ffeb3b; padding: 0 2px;">$1</mark>');
+                el.innerHTML = html;
+            }
+        });
+    }
+    
+    function filterFAQs(category) {
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const searchInput = document.getElementById('faqSearch');
+        
+        // Update active category button
+        categoryBtns.forEach(btn => {
+            btn.classList.remove('active');
+        });
+        event.target.classList.add('active');
+        
+        // Filter FAQs by category
+        if (category === 'all') {
+            filteredFAQs = [...allFAQs];
+        } else {
+            filteredFAQs = allFAQs.filter(faq => faq.category === category);
+        }
+        
+        // Clear search and show filtered results
+        searchInput.value = '';
+        searchFAQs('');
+        
+        // Hide non-matching category items
+        allFAQs.forEach(faq => {
+            if (category === 'all' || faq.category === category) {
+                faq.element.style.display = 'block';
+            } else {
+                faq.element.style.display = 'none';
+            }
+        });
+    }
+    
+    // Enhanced FAQ accordion functionality
+    function initEnhancedFAQs() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('h3');
+            const icon = question.querySelector('.faq-icon');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all FAQs on mobile, allow multiple open on desktop
+                if (window.innerWidth <= 768) {
+                    faqItems.forEach(otherItem => {
+                        otherItem.classList.remove('active');
+                        const otherIcon = otherItem.querySelector('.faq-icon');
+                        if (otherIcon) otherIcon.textContent = '+';
+                    });
+                }
+                
+                // Toggle current FAQ
+                if (!isActive) {
+                    item.classList.add('active');
+                    if (icon) icon.textContent = '−';
+                } else {
+                    item.classList.remove('active');
+                    if (icon) icon.textContent = '+';
+                }
+                
+                // Smooth scroll to question on mobile
+                if (window.innerWidth <= 768 && !isActive) {
+                    setTimeout(() => {
+                        question.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }, 200);
+                }
+            });
+        });
+    }
+
+    // Initialize all UI components
+    document.addEventListener('DOMContentLoaded', () => {
+        initTestimonialCarousel();
+        initFAQSearch();
+        initEnhancedFAQs();
+    });
+    
+    // =================================
+    // SERVICE COMPARISON TAB FUNCTIONALITY
+    // =================================
+    
+    function showComparisonTab(tabIndex, buttonElement) {
+        // Remove active class from all tabs and tab buttons
+        const allTabs = document.querySelectorAll('.tab-content');
+        const allButtons = document.querySelectorAll('.tab-btn');
+        
+        allTabs.forEach(tab => tab.classList.remove('active'));
+        allButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to selected tab and button
+        const selectedTab = document.querySelector('[data-tab="' + tabIndex + '"]');
+        if (selectedTab) {
+            selectedTab.classList.add('active');
+        }
+        
+        if (buttonElement) {
+            buttonElement.classList.add('active');
+        }
+        
+        // Smooth scroll to comparison section on mobile tab change
+        if (window.innerWidth <= 768) {
+            const comparisonSection = document.getElementById('comparison');
+            if (comparisonSection) {
+                setTimeout(() => {
+                    comparisonSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                }, 100);
+            }
+        }
+        
+        // Add haptic feedback on mobile devices
+        if (navigator.vibrate && window.innerWidth <= 768) {
+            navigator.vibrate(25);
+        }
+    }
+
+    // Gallery Lightbox Functions
+    let currentLightboxIndex = 0;
+    let galleryData = [];
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    function openLightbox(index) {
+        if (!galleryData || !galleryData[index]) return;
+        
+        currentLightboxIndex = index;
+        const case_ = galleryData[index];
+        const lightbox = document.getElementById('gallery-lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxCategory = document.getElementById('lightbox-category');
+        
+        // Set image and info
+        lightboxImage.src = '/' + case_.afterImage; // Show 'after' image by default
+        lightboxImage.alt = case_.title + ' - After';
+        lightboxTitle.textContent = case_.title;
+        lightboxCategory.textContent = case_.category;
+        
+        // Show lightbox
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+    
+    function closeLightbox() {
+        const lightbox = document.getElementById('gallery-lightbox');
+        lightbox.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+    
+    function navigateLightbox(direction) {
+        if (!galleryData) return;
+        
+        currentLightboxIndex += direction;
+        
+        // Loop around
+        if (currentLightboxIndex < 0) {
+            currentLightboxIndex = galleryData.length - 1;
+        } else if (currentLightboxIndex >= galleryData.length) {
+            currentLightboxIndex = 0;
+        }
+        
+        // Update lightbox content
+        const case_ = galleryData[currentLightboxIndex];
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const lightboxCategory = document.getElementById('lightbox-category');
+        
+        lightboxImage.src = '/' + case_.afterImage;
+        lightboxImage.alt = case_.title + ' - After';
+        lightboxTitle.textContent = case_.title;
+        lightboxCategory.textContent = case_.category;
+    }
+    
+    function switchGalleryCategory(category) {
+        // Update tab active state
+        document.querySelectorAll('.gallery-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.querySelector('[data-category="' + category + '"]').classList.add('active');
+        
+        // Reload gallery with new category
+        const container = document.getElementById('dynamic-gallery');
+        container.innerHTML = '<div class="gallery-loading"><div class="loading-spinner"></div><p>Loading ' + 
+          (category === 'all' ? 'all cases' : category + ' cases') + '...</p></div>';
+        
+        loadDynamicGallery('dynamic-gallery', category);
+    }
+    
+    async function loadDynamicGallery(containerId, category) {
+        try {
+            const response = await fetch('/api/gallery/public?category=' + category + '&limit=12');
+            const data = await response.json();
+            
+            const container = document.getElementById(containerId);
+            
+            if (!data.success || !data.cases || data.cases.length === 0) {
+                container.innerHTML = '<div class="gallery-empty"><p>No cases available at the moment.</p></div>';
+                return;
+            }
+            
+            const casesHTML = data.cases.map((case_, index) => {
+                return \`
+                  <div class="gallery-case" data-case-index="\${index}">
+                    <div class="case-images" onclick="openLightbox(\${index})" style="cursor: pointer;">
+                      <div class="before-after-container">
+                        <picture class="before-image">
+                          <img src="/\${case_.beforeImage || case_.afterImage}" 
+                               alt="\${case_.title} - Before" 
+                               loading="lazy">
+                        </picture>
+                        
+                        <picture class="after-image">
+                          <img src="/\${case_.afterImage || case_.beforeImage}" 
+                               alt="\${case_.title} - After" 
+                               loading="lazy">
+                        </picture>
+                        
+                        <div class="before-after-labels">
+                          <span class="label">Before</span>
+                          <span class="label">After</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="case-info">
+                      <h3 class="case-title">\${case_.title}</h3>
+                      <span class="case-category">\${case_.category}</span>
+                      \${case_.description ? \`<p class="case-description">\${case_.description}</p>\` : ''}
+                    </div>
+                  </div>
+                \`;
+            }).join('');
+            
+            container.innerHTML = casesHTML;
+            
+            // Store gallery data for lightbox navigation
+            galleryData = data.cases;
+            
+        } catch (error) {
+            // Failed to load gallery - show fallback content
+            const container = document.getElementById(containerId);
+            container.innerHTML = \`
+                <div class="gallery-case" onclick="openLightbox(0)">
+                    <div class="case-images" style="cursor: pointer;">
+                        <img src="/assets/real-case1.webp" alt="Amazing smile transformation" loading="lazy" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <div class="case-info">
+                        <h3 class="case-title">Amazing smile transformation</h3>
+                        <span class="case-category">cosmetic</span>
+                    </div>
+                </div>
+                <div class="gallery-case" onclick="openLightbox(1)">
+                    <div class="case-images" style="cursor: pointer;">
+                        <img src="/assets/real-case2.webp" alt="Hollywood smile" loading="lazy" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <div class="case-info">
+                        <h3 class="case-title">Hollywood smile</h3>
+                        <span class="case-category">cosmetic</span>
+                    </div>
+                </div>
+                <div class="gallery-case" onclick="openLightbox(2)">
+                    <div class="case-images" style="cursor: pointer;">
+                        <img src="/assets/real-case3.webp" alt="Orthodontic treatment" loading="lazy" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
+                    </div>
+                    <div class="case-info">
+                        <h3 class="case-title">Orthodontic treatment</h3>
+                        <span class="case-category">orthodontic</span>
+                    </div>
+                </div>
+            \`;
+            
+            // Fallback gallery data
+            galleryData = [
+                { title: 'Amazing smile transformation', category: 'cosmetic', afterImage: 'assets/real-case1.webp' },
+                { title: 'Hollywood smile', category: 'cosmetic', afterImage: 'assets/real-case2.webp' },
+                { title: 'Orthodontic treatment', category: 'orthodontic', afterImage: 'assets/real-case3.webp' }
+            ];
+        }
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        const lightbox = document.getElementById('gallery-lightbox');
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        
+        switch(e.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                navigateLightbox(-1);
+                break;
+            case 'ArrowRight':
+                navigateLightbox(1);
+                break;
+        }
+    });
+    
+    // Touch/swipe support for mobile
+    document.addEventListener('DOMContentLoaded', function() {
+        const lightbox = document.getElementById('gallery-lightbox');
+        if (!lightbox) return;
+        
+        // Click outside to close
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        // Touch events for swipe
+        lightbox.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        lightbox.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const swipeDistance = touchStartX - touchEndX;
+            const minSwipeDistance = 50;
+            
+            if (Math.abs(swipeDistance) > minSwipeDistance) {
+                if (swipeDistance > 0) {
+                    // Swipe left - next image
+                    navigateLightbox(1);
+                } else {
+                    // Swipe right - previous image
+                    navigateLightbox(-1);
+                }
+            }
+        }
+        
+        // Load initial gallery
+        loadDynamicGallery('dynamic-gallery', 'all');
+    });
+
+    // Make functions globally available
+    window.moveTestimonialCarousel = moveTestimonialCarousel;
+    window.currentTestimonialSlide = currentTestimonialSlide;
+    window.searchFAQs = searchFAQs;
+    window.filterFAQs = filterFAQs;
+    window.showComparisonTab = showComparisonTab;
+    window.openLightbox = openLightbox;
+    window.closeLightbox = closeLightbox;
+    window.navigateLightbox = navigateLightbox;
+    window.switchGalleryCategory = switchGalleryCategory;
     
     </script>
 </body>
