@@ -32,7 +32,15 @@
       "mcp__playwright__browser_close",
       "mcp__playwright__browser_take_screenshot",
       "mcp__playwright__browser_tab_list",
-      "mcp__sequential-thinking__sequentialthinking"
+      "mcp__sequential-thinking__sequentialthinking",
+      "Bash(npm run sync-r2:*)",
+      "Bash(npm run:*)",
+      "Bash(curl:*)",
+      "Bash(git rm:*)",
+      "Bash(w)",
+      "Bash(useradd:*)",
+      "Bash(usermod:*)",
+      "Bash(passwd claude)"
     ],
     "deny": []
   }

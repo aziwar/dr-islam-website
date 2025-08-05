@@ -7,6 +7,17 @@ compatibility_date = "2024-01-01"
 binding = "IMAGES"
 bucket_name = "dr-islam-images"
 
+# KV namespace for gallery metadata
+[[kv_namespaces]]
+binding = "GALLERY_KV"
+id = "28bd1e108a434cd4bf812a65f82d5526"
+preview_id = "28bd1e108a434cd4bf812a65f82d5526"
+
+# Environment variables
+[vars]
+# ADMIN_TOKEN moved to Cloudflare Dashboard Environment Variables for security
+# Access via env.ADMIN_TOKEN in worker code
+
 # Custom domain routes
 [[routes]]
 pattern = "dr-elsagher.com/*"

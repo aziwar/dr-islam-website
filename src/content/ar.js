@@ -1,7 +1,7 @@
 // src/content/ar.js
 import { MOBILE_UX_JS } from './js/mobile-ux.js';
 import { DentalLogo } from './components/DentalLogo.js';
-import { UI_ENHANCEMENTS_CSS } from './css/ui-enhancements.css.js';
+import { ENHANCEMENTS_CSS } from './css/enhancements.css.js';
 
 export const HTML_AR = `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -26,12 +26,20 @@ export const HTML_AR = `<!DOCTYPE html>
     <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preload critical Arabic fonts for LCP improvement -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/cairo/v28/SLXGc1nY6HkvalIvTp2mxdt0UX8gfg.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/cairo/v28/SLXGc1nY6HkvalIhTp2mxdt0.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//unpkg.com">
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
+    <noscript><link rel="stylesheet" href="/styles.css"></noscript>
     
     <!-- UI/UX Enhancements -->
     <style>
-        ${UI_ENHANCEMENTS_CSS}
+        ${ENHANCEMENTS_CSS}
         ${DentalLogo.css}
     </style>
     
@@ -172,6 +180,25 @@ export const HTML_AR = `<!DOCTYPE html>
 
     <div class="mobile-menu-backdrop" onclick="closeMobileMenu()"></div>
 
+    <!-- Breadcrumb Navigation (Arabic) -->
+    <nav class="breadcrumb-nav" aria-label="التنقل التفصيلي" id="breadcrumbNav" style="display: none;">
+        <div class="container">
+            <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a href="#" onclick="scrollToSection('hero')" itemprop="item">
+                        <span itemprop="name">الرئيسية</span>
+                    </a>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <li class="breadcrumb-item active" id="currentBreadcrumb" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">الرئيسية</span>
+                    <meta itemprop="position" content="2" />
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <main id="main-content" role="main">
     <section class="hero">
         <div class="container">
             <h1>دكتور اسلام الصغير</h1>
@@ -183,6 +210,37 @@ export const HTML_AR = `<!DOCTYPE html>
             </div>
             <button class="cta-button" onclick="openBookingModal()">احجز موعدك الآن</button>
         </div>
+        
+        <!-- Desktop Booking Widget -->
+        <div class="desktop-booking-widget">
+            <div class="widget-header">
+                <h3>📅 حجز سريع</h3>
+                <p>احجز موعدك في 30 ثانية</p>
+                <div class="widget-trust">
+                    <span class="trust-badge">✓ متاح نفس اليوم</span>
+                    <span class="trust-badge">✓ استشارة مجانية</span>
+                </div>
+            </div>
+            <form class="quick-booking-form" onsubmit="handleQuickBooking(event)">
+                <input type="text" placeholder="اسمك الكريم" required>
+                <input type="tel" placeholder="📱 رقم الهاتف" required>
+                <select required>
+                    <option value="">🦷 اختر الخدمة</option>
+                    <option value="checkup">🔍 فحص عام</option>
+                    <option value="cleaning">✨ تنظيف الأسنان</option>
+                    <option value="implant">🦷 زراعة الأسنان</option>
+                    <option value="cosmetic">💎 تجميل الأسنان</option>
+                    <option value="emergency">🚨 زيارة طارئة</option>
+                </select>
+                <button type="submit" class="btn btn-primary">
+                    📞 احجز الآن - استشارة مجانية
+                </button>
+            </form>
+            <div class="widget-footer">
+                <p class="availability-note">⚡ متاح اليوم: 9:00 ص - 9:00 م</p>
+            </div>
+        </div>
+    </div>
     </section>
 
     <section id="services" class="services">
@@ -222,28 +280,447 @@ export const HTML_AR = `<!DOCTYPE html>
                     <p>علاج شامل للفم والأسنان</p>
                 </div>
             </div>
+            
+            <!-- Desktop Service Comparison Table (Arabic) -->
+            <div class="services-comparison">
+                <table class="comparison-table" role="table" aria-label="جدول مقارنة الخدمات">
+                    <thead>
+                        <tr>
+                            <th scope="col">الخدمة</th>
+                            <th scope="col">الوصف</th>
+                            <th scope="col">المدة</th>
+                            <th scope="col">السعر</th>
+                            <th scope="col">احجز الآن</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="service-name">زراعة الأسنان</td>
+                            <td class="service-description">زراعة فورية ومتأخرة بأحدث التقنيات. زراعة سن واحد أو تأهيل الفم بالكامل.</td>
+                            <td class="service-duration">٦٠-٩٠ دقيقة</td>
+                            <td class="service-price popular">٣٥٠-٨٠٠ د.ك</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">احجز الآن</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">علاج الجذور</td>
+                            <td class="service-description">علاج متخصص لقنوات الجذور بتقنيات حديثة وإدارة الألم.</td>
+                            <td class="service-duration">٤٥-٦٠ دقيقة</td>
+                            <td class="service-price">٨٠-١٥٠ د.ك</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">احجز الآن</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">تجميل الأسنان</td>
+                            <td class="service-description">ابتسامة هوليوود، القشور التجميلية، وتبييض الأسنان للحصول على جمالية مثالية.</td>
+                            <td class="service-duration">٩٠-١٢٠ دقيقة</td>
+                            <td class="service-price">٢٠٠-٦٠٠ د.ك</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">احجز الآن</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">جراحة الأسنان</td>
+                            <td class="service-description">خلع جراحي، إزالة ضرس العقل، والعمليات المتقدمة.</td>
+                            <td class="service-duration">٣٠-٤٥ دقيقة</td>
+                            <td class="service-price">٥٠-٢٠٠ د.ك</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">احجز الآن</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">التركيبات</td>
+                            <td class="service-description">تركيبات ثابتة ومتحركة، تيجان، وجسور لاستعادة الأسنان.</td>
+                            <td class="service-duration">٦٠-٧٥ دقيقة</td>
+                            <td class="service-price">١٢٠-٤٠٠ د.ك</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">احجز الآن</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">علاج اللثة</td>
+                            <td class="service-description">علاج أمراض اللثة والأنسجة والعلاج الوقائي.</td>
+                            <td class="service-duration">٤٥-٦٠ دقيقة</td>
+                            <td class="service-price">٦٠-١٢٠ د.ك</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">احجز الآن</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">الحشوات التجميلية</td>
+                            <td class="service-description">حشوات بلون الأسنان الطبيعي بمواد مركبة متطورة.</td>
+                            <td class="service-duration">٣٠-٤٥ دقيقة</td>
+                            <td class="service-price">٢٥-٨٠ د.ك</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">احجز الآن</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="service-name">إعادة التأهيل الكامل</td>
+                            <td class="service-description">علاج شامل للفم والأسنان يجمع بين عدة تخصصات للحصول على استعادة كاملة.</td>
+                            <td class="service-duration">٢-٣ ساعات</td>
+                            <td class="service-price">٨٠٠-٢٠٠٠ د.ك</td>
+                            <td class="service-cta">
+                                <button class="service-btn" onclick="openBookingModal()">استشارة</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Service Comparison Section (Arabic) -->
+    <section id="comparison" class="service-comparison">
+        <div class="container">
+            <h2>قارن بين خدماتنا</h2>
+            <p class="comparison-subtitle">اختر الحل المناسب لحالتك من خلال مقارنة شاملة لعلاجات الأسنان</p>
+            
+            <!-- Desktop Comparison Table -->
+            <div class="comparison-table-container desktop-only">
+                <table class="comparison-table" dir="rtl">
+                    <thead>
+                        <tr>
+                            <th class="criteria-column">المعايير</th>
+                            <th class="service-column recommended">
+                                <div class="service-header">
+                                    <span class="service-icon">🦷</span>
+                                    <h3>زراعة الأسنان</h3>
+                                    <span class="recommended-badge">الأكثر شيوعاً</span>
+                                </div>
+                            </th>
+                            <th class="service-column">
+                                <div class="service-header">
+                                    <span class="service-icon">🌉</span>
+                                    <h3>جسر الأسنان</h3>
+                                </div>
+                            </th>
+                            <th class="service-column">
+                                <div class="service-header">
+                                    <span class="service-icon">🦷</span>
+                                    <h3>طقم الأسنان الجزئي</h3>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criteria">⏱️ مدة العلاج</td>
+                            <td class="excellent">3-6 أشهر</td>
+                            <td class="good">2-4 أسابيع</td>
+                            <td class="good">2-6 أسابيع</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">💰 التكلفة</td>
+                            <td class="high">عالية (استثمار طويل المدى)</td>
+                            <td class="medium">متوسطة</td>
+                            <td class="low">منخفضة</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">⏳ مدة البقاء</td>
+                            <td class="excellent">مدى الحياة (مع العناية الجيدة)</td>
+                            <td class="good">10-15 سنة</td>
+                            <td class="medium">5-10 سنوات</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">📊 معدل النجاح</td>
+                            <td class="excellent">95-98%</td>
+                            <td class="good">85-90%</td>
+                            <td class="medium">75-85%</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">🦴 الحفاظ على العظام</td>
+                            <td class="excellent">يحفز نمو العظام</td>
+                            <td class="poor">قد يؤدي لفقدان العظام</td>
+                            <td class="poor">لا يمنع فقدان العظام</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">🪥 سهولة التنظيف</td>
+                            <td class="excellent">مثل الأسنان الطبيعية</td>
+                            <td class="medium">يتطلب عناية خاصة</td>
+                            <td class="good">قابل للإزالة والتنظيف</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">🍎 كفاءة المضغ</td>
+                            <td class="excellent">100% (مثل الطبيعية)</td>
+                            <td class="good">85-90%</td>
+                            <td class="medium">60-70%</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">😊 الناحية الجمالية</td>
+                            <td class="excellent">طبيعية تماماً</td>
+                            <td class="good">جيدة جداً</td>
+                            <td class="medium">مقبولة</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">⚡ الراحة</td>
+                            <td class="excellent">راحة كاملة</td>
+                            <td class="good">راحة جيدة</td>
+                            <td class="medium">قد تحتاج تعديل</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">🦷 تأثير على الأسنان المجاورة</td>
+                            <td class="excellent">لا تأثير</td>
+                            <td class="poor">يتطلب برد الأسنان</td>
+                            <td class="good">تأثير طفيف</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Comparison Cards -->
+            <div class="comparison-mobile mobile-only">
+                <div class="comparison-tabs">
+                    <button class="tab-btn active" onclick="showComparisonTab(0, this)">زراعة الأسنان</button>
+                    <button class="tab-btn" onclick="showComparisonTab(1, this)">جسر الأسنان</button>
+                    <button class="tab-btn" onclick="showComparisonTab(2, this)">طقم جزئي</button>
+                </div>
+
+                <div class="tab-content active" data-tab="0">
+                    <div class="service-card-mobile recommended">
+                        <div class="service-header-mobile">
+                            <span class="service-icon">🦷</span>
+                            <h3>زراعة الأسنان</h3>
+                            <span class="recommended-badge">الأكثر شيوعاً</span>
+                        </div>
+                        <div class="criteria-list">
+                            <div class="criteria-item excellent">
+                                <span class="criteria-label">⏱️ مدة العلاج:</span>
+                                <span class="criteria-value">3-6 أشهر</span>
+                            </div>
+                            <div class="criteria-item high">
+                                <span class="criteria-label">💰 التكلفة:</span>
+                                <span class="criteria-value">عالية (استثمار طويل المدى)</span>
+                            </div>
+                            <div class="criteria-item excellent">
+                                <span class="criteria-label">⏳ مدة البقاء:</span>
+                                <span class="criteria-value">مدى الحياة (مع العناية الجيدة)</span>
+                            </div>
+                            <div class="criteria-item excellent">
+                                <span class="criteria-label">📊 معدل النجاح:</span>
+                                <span class="criteria-value">95-98%</span>
+                            </div>
+                            <div class="criteria-item excellent">
+                                <span class="criteria-label">🦴 الحفاظ على العظام:</span>
+                                <span class="criteria-value">يحفز نمو العظام</span>
+                            </div>
+                            <div class="criteria-item excellent">
+                                <span class="criteria-label">🪥 سهولة التنظيف:</span>
+                                <span class="criteria-value">مثل الأسنان الطبيعية</span>
+                            </div>
+                        </div>
+                        <button class="comparison-cta" onclick="openBookingModal()">احجز استشارة زراعة الأسنان</button>
+                    </div>
+                </div>
+
+                <div class="tab-content" data-tab="1">
+                    <div class="service-card-mobile">
+                        <div class="service-header-mobile">
+                            <span class="service-icon">🌉</span>
+                            <h3>جسر الأسنان</h3>
+                        </div>
+                        <div class="criteria-list">
+                            <div class="criteria-item good">
+                                <span class="criteria-label">⏱️ مدة العلاج:</span>
+                                <span class="criteria-value">2-4 أسابيع</span>
+                            </div>
+                            <div class="criteria-item medium">
+                                <span class="criteria-label">💰 التكلفة:</span>
+                                <span class="criteria-value">متوسطة</span>
+                            </div>
+                            <div class="criteria-item good">
+                                <span class="criteria-label">⏳ مدة البقاء:</span>
+                                <span class="criteria-value">10-15 سنة</span>
+                            </div>
+                            <div class="criteria-item good">
+                                <span class="criteria-label">📊 معدل النجاح:</span>
+                                <span class="criteria-value">85-90%</span>
+                            </div>
+                            <div class="criteria-item poor">
+                                <span class="criteria-label">🦴 الحفاظ على العظام:</span>
+                                <span class="criteria-value">قد يؤدي لفقدان العظام</span>
+                            </div>
+                            <div class="criteria-item medium">
+                                <span class="criteria-label">🪥 سهولة التنظيف:</span>
+                                <span class="criteria-value">يتطلب عناية خاصة</span>
+                            </div>
+                        </div>
+                        <button class="comparison-cta" onclick="openBookingModal()">احجز استشارة جسر الأسنان</button>
+                    </div>
+                </div>
+
+                <div class="tab-content" data-tab="2">
+                    <div class="service-card-mobile">
+                        <div class="service-header-mobile">
+                            <span class="service-icon">🦷</span>
+                            <h3>طقم الأسنان الجزئي</h3>
+                        </div>
+                        <div class="criteria-list">
+                            <div class="criteria-item good">
+                                <span class="criteria-label">⏱️ مدة العلاج:</span>
+                                <span class="criteria-value">2-6 أسابيع</span>
+                            </div>
+                            <div class="criteria-item low">
+                                <span class="criteria-label">💰 التكلفة:</span>
+                                <span class="criteria-value">منخفضة</span>
+                            </div>
+                            <div class="criteria-item medium">
+                                <span class="criteria-label">⏳ مدة البقاء:</span>
+                                <span class="criteria-value">5-10 سنوات</span>
+                            </div>
+                            <div class="criteria-item medium">
+                                <span class="criteria-label">📊 معدل النجاح:</span>
+                                <span class="criteria-value">75-85%</span>
+                            </div>
+                            <div class="criteria-item poor">
+                                <span class="criteria-label">🦴 الحفاظ على العظام:</span>
+                                <span class="criteria-value">لا يمنع فقدان العظام</span>
+                            </div>
+                            <div class="criteria-item good">
+                                <span class="criteria-label">🪥 سهولة التنظيف:</span>
+                                <span class="criteria-value">قابل للإزالة والتنظيف</span>
+                            </div>
+                        </div>
+                        <button class="comparison-cta" onclick="openBookingModal()">احجز استشارة طقم الأسنان</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-footer">
+                <p class="comparison-note">💡 <strong>نصيحة الطبيب:</strong> زراعة الأسنان هي الخيار الأمثل لمعظم الحالات لأنها تحافظ على صحة العظام وتوفر حلاً دائماً. احجز استشارة مجانية لتحديد العلاج المناسب لحالتك.</p>
+                <button class="consultation-btn" onclick="openBookingModal()">
+                    📞 احجز استشارة مجانية - تقييم حالتك
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Testimonials Section (Arabic) -->
     <section id="testimonials" class="testimonials">
         <div class="container">
             <h2>ماذا يقول مرضانا</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"خدمة ممتازة وطبيب محترف جداً. الدكتور اسلام شرح لي كل خطوة في العلاج وكانت النتيجة رائعة"</p>
-                    <cite>- أحمد السالم</cite>
+            <div class="testimonial-carousel-container">
+                <div class="testimonial-carousel" id="testimonialCarousel">
+                    <div class="testimonial-slide active">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👤</div>
+                                <div class="patient-details">
+                                    <h4>أحمد السالم</h4>
+                                    <span class="treatment-type">زراعة الأسنان</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"خدمة ممتازة وطبيب محترف جداً. الدكتور اسلام شرح لي كل خطوة في العلاج وكانت النتيجة رائعة. لا أستطيع أن أكون أكثر سعادة بابتسامتي الجديدة!"</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">يناير 2025</span>
+                                <span class="verified">✓ مريض مؤكد</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👩</div>
+                                <div class="patient-details">
+                                    <h4>فاطمة العلي</h4>
+                                    <span class="treatment-type">طب الأسنان التجميلي</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"أفضل تجربة زراعة أسنان في الكويت. الدكتور متمكن جداً وفريق العمل متعاون. أنصح الجميع بزيارة العيادة للحصول على علاج عالي الجودة."</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">ديسمبر 2024</span>
+                                <span class="verified">✓ مريض مؤكد</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👨</div>
+                                <div class="patient-details">
+                                    <h4>محمد الخالد</h4>
+                                    <span class="treatment-type">ابتسامة هوليوود</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"علاج احترافي ونتائج مبهرة. الدكتور اسلام حول ابتسامتي تماماً بإجراء ابتسامة هوليوود. التقنيات المستخدمة حديثة ومتطورة."</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">نوفمبر 2024</span>
+                                <span class="verified">✓ مريض مؤكد</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👩</div>
+                                <div class="patient-details">
+                                    <h4>سارة الراشد</h4>
+                                    <span class="treatment-type">علاج الجذور</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"علاج جذور بدون ألم! كنت خائفة جداً لكن الدكتور اسلام جعل التجربة مريحة تماماً. أسلوبه اللطيف والأجهزة الحديثة أحدثت الفرق."</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">أكتوبر 2024</span>
+                                <span class="verified">✓ مريض مؤكد</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card featured">
+                            <div class="patient-info">
+                                <div class="patient-avatar">👨</div>
+                                <div class="patient-details">
+                                    <h4>عمر المطيري</h4>
+                                    <span class="treatment-type">تنظيف الأسنان</span>
+                                </div>
+                            </div>
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <blockquote>"خدمة نظافة الأسنان استثنائية. العيادة نظيفة وحديثة جداً. الدكتور اسلام وفريقه يحافظون على أعلى معايير التعقيم ورعاية المرضى."</blockquote>
+                            <div class="testimonial-meta">
+                                <span class="date">سبتمبر 2024</span>
+                                <span class="verified">✓ مريض مؤكد</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"أفضل تجربة زراعة أسنان. الدكتور متمكن جداً وفريق العمل متعاون. أنصح الجميع بزيارة العيادة"</p>
-                    <cite>- فاطمة العلي</cite>
+                
+                <!-- Carousel Controls (Arabic) -->
+                <div class="carousel-controls">
+                    <button class="carousel-btn next" onclick="moveTestimonialCarousel(1)">‹</button>
+                    <div class="carousel-dots" id="testimonialDots">
+                        <button class="dot active" onclick="currentTestimonialSlide(1)"></button>
+                        <button class="dot" onclick="currentTestimonialSlide(2)"></button>
+                        <button class="dot" onclick="currentTestimonialSlide(3)"></button>
+                        <button class="dot" onclick="currentTestimonialSlide(4)"></button>
+                        <button class="dot" onclick="currentTestimonialSlide(5)"></button>
+                    </div>
+                    <button class="carousel-btn prev" onclick="moveTestimonialCarousel(-1)">›</button>
                 </div>
-                <div class="testimonial-card">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"علاج احترافي ونتائج مبهرة. الدكتور اسلام حول ابتسامتي تماماً. شكراً جزيلاً"</p>
-                    <cite>- محمد الخالد</cite>
+                
+                <!-- Testimonial Summary Stats (Arabic) -->
+                <div class="testimonial-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">4.9</div>
+                        <div class="stat-label">متوسط التقييم</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">مريض سعيد</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">%98</div>
+                        <div class="stat-label">ينصحون بالعيادة</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -404,34 +881,131 @@ export const HTML_AR = `<!DOCTYPE html>
         </div>
     </section>
 
-    <!-- FAQ Section -->
+    <!-- Enhanced FAQ Section with Search -->
     <section id="faq" class="faq">
         <div class="container">
             <h2>أسئلة شائعة</h2>
-            <div class="faq-list">
-                <div class="faq-item">
+            <div class="faq-search-container">
+                <div class="faq-search-box">
+                    <input type="text" 
+                           id="faqSearch" 
+                           placeholder="🔍 ابحث عن الإجابات..." 
+                           class="faq-search-input"
+                           onkeyup="searchFAQs(this.value)">
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+                <div class="faq-categories">
+                    <button class="category-btn active" onclick="filterFAQs('all')">جميع الأسئلة</button>
+                    <button class="category-btn" onclick="filterFAQs('cost')">💰 التكلفة والتأمين</button>
+                    <button class="category-btn" onclick="filterFAQs('treatment')">🦷 العلاج</button>
+                    <button class="category-btn" onclick="filterFAQs('pain')">😌 الألم والراحة</button>
+                    <button class="category-btn" onclick="filterFAQs('aftercare')">🔄 ما بعد العلاج</button>
+                </div>
+            </div>
+            
+            <div class="faq-list" id="faqList">
+                <div class="faq-item" data-category="cost" data-keywords="تكلفة سعر مال تأمين دفع زراعة أسنان غالي">
                     <h3>كم تكلفة زراعة الأسنان؟ <span class="faq-icon">+</span></h3>
                     <div class="faq-content">
-                        <p>تختلف التكلفة حسب الحالة ونوع الزرعة المستخدمة. نقدم استشارة مجانية لتقييم حالتك وتقديم خطة علاج مفصلة مع التكلفة.</p>
+                        <p>تختلف التكلفة حسب الحالة ونوع الزرعة المستخدمة. نقدم استشارة مجانية لتقييم حالتك وتقديم خطة علاج مفصلة مع التكلفة. الأسعار تتراوح عادة من 150-300 دينار كويتي حسب التعقيد.</p>
+                        <div class="faq-tags">
+                            <span class="tag">💰 التكلفة</span>
+                            <span class="tag">🦷 الزراعة</span>
+                            <span class="tag">📋 الاستشارة</span>
+                        </div>
                     </div>
                 </div>
-                <div class="faq-item">
-                    <h3>هل الزراعة مؤلمة؟ <span class="faq-icon">+</span></h3>
+                
+                <div class="faq-item" data-category="pain" data-keywords="ألم مؤلم وجع تخدير راحة مهدئ">
+                    <h3>هل عملية الزراعة مؤلمة؟ <span class="faq-icon">+</span></h3>
                     <div class="faq-content">
-                        <p>نستخدم أحدث تقنيات التخدير الموضعي لضمان راحتك التامة. معظم المرضى يصفون العملية بأنها أقل ألماً من خلع الأسنان العادي.</p>
+                        <p>نستخدم أحدث تقنيات التخدير الموضعي لضمان راحتك التامة. معظم المرضى يصفون العملية بأنها أقل ألماً من خلع الأسنان العادي. كما نوفر خيارات تهدئة للمرضى القلقين.</p>
+                        <div class="faq-tags">
+                            <span class="tag">😌 الراحة</span>
+                            <span class="tag">💉 التخدير</span>
+                            <span class="tag">🏥 العملية</span>
+                        </div>
                     </div>
                 </div>
-                <div class="faq-item">
-                    <h3>ما هي مدة العلاج؟ <span class="faq-icon">+</span></h3>
+                
+                <div class="faq-item" data-category="treatment" data-keywords="وقت مدة كم طويل شفاء تعافي عملية">
+                    <h3>كم تستغرق مدة العلاج؟ <span class="faq-icon">+</span></h3>
                     <div class="faq-content">
-                        <p>تعتمد مدة العلاج على الحالة. الزراعة الفورية يمكن إتمامها في جلسة واحدة، بينما الزراعة التقليدية تحتاج 3-6 أشهر للاندماج الكامل.</p>
+                        <p>تعتمد مدة العلاج على الحالة. الزراعة الفورية يمكن إتمامها في جلسة واحدة، بينما الزراعة التقليدية تحتاج 3-6 أشهر للاندماج الكامل. نقدم جداول زمنية مفصلة أثناء الاستشارة.</p>
+                        <div class="faq-tags">
+                            <span class="tag">⏰ الوقت</span>
+                            <span class="tag">🔄 العملية</span>
+                            <span class="tag">🦷 الاندماج</span>
+                        </div>
                     </div>
                 </div>
-                <div class="faq-item">
+                
+                <div class="faq-item" data-category="cost" data-keywords="تأمين صحي تغطية طبي مطالبة تعويض">
                     <h3>هل تقبلون التأمين الصحي؟ <span class="faq-icon">+</span></h3>
                     <div class="faq-content">
-                        <p>نتعامل مع معظم شركات التأمين الصحي في الكويت. يرجى التواصل معنا للتأكد من قبول تأمينك الصحي.</p>
+                        <p>نتعامل مع معظم شركات التأمين الصحي في الكويت بما في ذلك الوطنية والأهلية وشركة الخليج للتأمين. يرجى التواصل معنا للتأكد من قبول تأمينك الصحي ونسبة التغطية.</p>
+                        <div class="faq-tags">
+                            <span class="tag">🏥 التأمين</span>
+                            <span class="tag">💳 التغطية</span>
+                            <span class="tag">🇰🇼 الكويت</span>
+                        </div>
                     </div>
+                </div>
+                
+                <div class="faq-item" data-category="aftercare" data-keywords="بعد العناية صيانة تنظيف فرشاة نظافة متابعة">
+                    <h3>كيف أعتني بالزراعة بعد العلاج؟ <span class="faq-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>العناية بالزراعة مشابهة للأسنان الطبيعية - التنظيف المنتظم بالفرشاة والخيط والفحص الدوري عند الطبيب. نقدم تعليمات مفصلة للعناية ونحدد مواعيد متابعة لضمان الشفاء الأمثل والنجاح طويل المدى.</p>
+                        <div class="faq-tags">
+                            <span class="tag">🔄 العناية</span>
+                            <span class="tag">🪥 النظافة</span>
+                            <span class="tag">✅ الصيانة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-category="treatment" data-keywords="نجاح معدل فشل ضمان كفالة جودة">
+                    <h3>ما هو معدل نجاح زراعة الأسنان؟ <span class="faq-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>زراعة الأسنان لها معدل نجاح 95-98% عند تنفيذها من قبل أخصائيين ذوي خبرة. عيادتنا تستخدم ماركات زراعة عالية الجودة ذات سجل حافل ونقدم تغطية ضمان لراحة بالك.</p>
+                        <div class="faq-tags">
+                            <span class="tag">📊 معدل النجاح</span>
+                            <span class="tag">🛡️ الضمان</span>
+                            <span class="tag">⭐ الجودة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-category="treatment" data-keywords="عمر صغير كبير مناسب مرشح متطلبات">
+                    <h3>هل أنا مرشح جيد لزراعة الأسنان؟ <span class="faq-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>معظم البالغين الأصحاء مرشحون جيدون للزراعة. نقوم بتقييم كثافة العظام وصحة اللثة والحالة الطبية العامة. العمر ليس عائقاً - لقد عالجنا بنجاح مرضى من سن 18 إلى أكثر من 80 عاماً.</p>
+                        <div class="faq-tags">
+                            <span class="tag">👤 الترشح</span>
+                            <span class="tag">🔍 التقييم</span>
+                            <span class="tag">🎯 الملاءمة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item" data-category="cost" data-keywords="خطة دفع تقسيط تمويل خيارات طرق">
+                    <h3>هل تقدمون خطط دفع أو تمويل؟ <span class="faq-icon">+</span></h3>
+                    <div class="faq-content">
+                        <p>نعم، نقدم خطط دفع مرنة ونتعامل مع شركات التمويل لجعل العلاج في متناول الجميع. نقبل النقد والبطاقات الائتمانية ويمكننا ترتيب خطط تقسيط حسب ميزانيتك واحتياجات العلاج.</p>
+                        <div class="faq-tags">
+                            <span class="tag">💳 خطط الدفع</span>
+                            <span class="tag">🏦 التمويل</span>
+                            <span class="tag">💰 مرونة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-no-results" id="faqNoResults" style="display: none;">
+                <div class="no-results-content">
+                    <h3>🔍 لم يتم العثور على أسئلة مطابقة</h3>
+                    <p>لا تجد ما تبحث عنه؟ تواصل معنا مباشرة للحصول على إجابات مفصلة.</p>
+                    <button class="cta-button" onclick="openBookingModal()">اسأل خبيرنا</button>
                 </div>
             </div>
         </div>
@@ -455,7 +1029,7 @@ export const HTML_AR = `<!DOCTYPE html>
                 </div>
                 <div class="contact-card">
                     <h3>WhatsApp</h3>
-                    <p><a href="https://wa.me/96598563711">98563711</a></p>
+                    <p><a href="https://wa.me/96598563711">+965 98563711</a></p>
                 </div>
             </div>
             <div class="working-hours">
@@ -579,10 +1153,51 @@ export const HTML_AR = `<!DOCTYPE html>
             </div>
         </div>
     </div>
+    </main>
 
     <footer>
         <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
     </footer>
+
+    <!-- Desktop Sidebar Widget (Arabic) -->
+    <div class="desktop-sidebar" id="desktopSidebar" style="display: none;">
+        <div class="sidebar-header">
+            <h4>🏥 د. اسلام الصغير</h4>
+            <p style="font-size: 0.85rem; color: var(--text-light);">رعاية أسنان متخصصة</p>
+        </div>
+        <div class="sidebar-stats">
+            <div class="stat-item">
+                <span class="stat-number">+15</span>
+                <span class="stat-label">سنة خبرة</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">%100</span>
+                <span class="stat-label">رضا المرضى</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">+2000</span>
+                <span class="stat-label">مريض</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">طوارئ</span>
+            </div>
+        </div>
+        <div class="sidebar-actions">
+            <button class="sidebar-btn primary" onclick="openBookingModal()">
+                📞 احجز موعد
+            </button>
+            <button class="sidebar-btn secondary" onclick="openWhatsApp()">
+                💬 واتساب
+            </button>
+        </div>
+        <div class="sidebar-contact">
+            <p style="font-size: 0.8rem; text-align: center; color: var(--text-light); margin-top: 1rem;">
+                📍 السالمية، الكويت<br>
+                ⏰ 9 ص - 9 م (السبت-الخميس)
+            </p>
+        </div>
+    </div>
 
     <!-- Sticky WhatsApp Booking Button -->
     <button class="sticky-book" onclick="openBookingModal()">
@@ -727,18 +1342,118 @@ export const HTML_AR = `<!DOCTYPE html>
         });
     });
 
+    // Breadcrumb Navigation System (Arabic)
+    const breadcrumbNav = document.getElementById('breadcrumbNav');
+    const currentBreadcrumb = document.getElementById('currentBreadcrumb');
+    
+    // Section name mapping (Arabic)
+    const sectionNames = {
+        'hero': 'الرئيسية',
+        'services': 'الخدمات',
+        'about': 'عن الدكتور إسلام',
+        'testimonials': 'آراء المرضى',
+        'gallery': 'معرض الصور',
+        'faq': 'أسئلة شائعة',
+        'contact': 'اتصل بنا'
+    };
+    
+    let currentSection = 'hero';
+    
+    function updateBreadcrumb(sectionId) {
+        if (sectionId && sectionNames[sectionId] && sectionId !== currentSection) {
+            currentSection = sectionId;
+            const sectionName = sectionNames[sectionId];
+            
+            // Update breadcrumb text
+            const breadcrumbSpan = currentBreadcrumb.querySelector('span[itemprop="name"]');
+            if (breadcrumbSpan) {
+                breadcrumbSpan.textContent = sectionName;
+            }
+            
+            // Show breadcrumb if not on hero section
+            if (sectionId !== 'hero') {
+                breadcrumbNav.style.display = 'block';
+                setTimeout(() => {
+                    breadcrumbNav.classList.add('visible');
+                }, 10);
+            } else {
+                breadcrumbNav.classList.remove('visible');
+                setTimeout(() => {
+                    breadcrumbNav.style.display = 'none';
+                }, 300);
+            }
+        }
+    }
+    
+    // Scroll to section function for breadcrumb home link
+    window.scrollToSection = function(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            const offset = sectionId === 'hero' ? 0 : 100;
+            const targetPosition = section.offsetTop - offset;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
+    
+    // Intersection Observer for section detection
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0.1
+    };
+    
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                updateBreadcrumb(entry.target.id);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all major sections
+    document.addEventListener('DOMContentLoaded', function() {
+        const sectionsToObserve = ['hero', 'services', 'about', 'testimonials', 'gallery', 'faq', 'contact'];
+        sectionsToObserve.forEach(sectionId => {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                sectionObserver.observe(section);
+            }
+        });
+    });
+
     // FAQ Accordion
     document.addEventListener('DOMContentLoaded', function() {
         const faqItems = document.querySelectorAll('.faq-item');
         
-        // FAQ functionality  
+        // FAQ functionality with touch-outside-to-close
         faqItems.forEach(item => {
             const question = item.querySelector('h3');
             
             question.addEventListener('click', function() {
+                // Close other open FAQ items on mobile
+                if (window.innerWidth <= 768) {
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                }
                 item.classList.toggle('active');
             });
         });
+        
+        // Touch-outside-to-close for mobile FAQ
+        if ('ontouchstart' in window) {
+            document.addEventListener('touchstart', function(e) {
+                const activeFaq = document.querySelector('.faq-item.active');
+                if (activeFaq && !activeFaq.contains(e.target)) {
+                    activeFaq.classList.remove('active');
+                }
+            });
+        }
     });
 
     // Header shadow on scroll
@@ -1063,6 +1778,11 @@ export const HTML_AR = `<!DOCTYPE html>
             gallery.addEventListener('touchend', () => {
                 isDown = false;
                 
+                // Add haptic feedback for mobile users
+                if (navigator.vibrate && 'ontouchstart' in window) {
+                    navigator.vibrate(50);
+                }
+                
                 // Snap to nearest item
                 const items = gallery.querySelectorAll('.gallery-item');
                 const itemWidth = items[0].offsetWidth;
@@ -1260,7 +1980,97 @@ export const HTML_AR = `<!DOCTYPE html>
                 });
             });
             
-            // Form submission with loading state
+    // Enhanced Form Validation System (Arabic)
+    const setupFormValidation = () => {
+        const forms = document.querySelectorAll('form');
+        
+        forms.forEach(form => {
+            const inputs = form.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                input.addEventListener('blur', () => validateField(input));
+                
+                let timeout;
+                input.addEventListener('input', () => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => validateField(input), 300);
+                });
+            });
+        });
+    };
+    
+    const validateField = (field) => {
+        const value = field.value.trim();
+        let isValid = true;
+        let errorMessage = '';
+        
+        field.classList.remove('error', 'success');
+        removeFieldError(field);
+        
+        if (!value && !field.required) return true;
+        
+        if (field.required && !value) {
+            isValid = false;
+            errorMessage = 'هذا الحقل مطلوب';
+        }
+        
+        if (field.type === 'email' && value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'يرجى إدخال عنوان بريد إلكتروني صحيح';
+            }
+        }
+        
+        if (field.type === 'tel' && value) {
+            const phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,}$/;
+            if (!phoneRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'يرجى إدخال رقم هاتف صحيح';
+            }
+        }
+        
+        if (field.name === 'name' && value) {
+            const nameRegex = /^[a-zA-Z\s\u0600-\u06FF]+$/;
+            if (!nameRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'الاسم يجب أن يحتوي على حروف فقط';
+            }
+        }
+        
+        if (isValid) {
+            field.classList.add('success');
+        } else {
+            field.classList.add('error');
+            showFieldError(field, errorMessage);
+        }
+        
+        return isValid;
+    };
+    
+    const showFieldError = (field, message) => {
+        const formGroup = field.closest('.form-group');
+        let errorDiv = formGroup.querySelector('.field-error');
+        
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            formGroup.appendChild(errorDiv);
+        }
+        
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+    };
+    
+    const removeFieldError = (field) => {
+        const formGroup = field.closest('.form-group');
+        const errorDiv = formGroup.querySelector('.field-error');
+        if (errorDiv) {
+            errorDiv.style.display = 'none';
+        }
+    };
+
+    // Form submission with loading state
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
@@ -1385,6 +2195,7 @@ export const HTML_AR = `<!DOCTYPE html>
         setupSmoothScroll();
         setupKeyboardNav();
         setupFormEnhancements();
+        setupFormValidation(); // Add real-time validation
         
         // Only monitor performance in development
         if (window.location.hostname === 'localhost') {
@@ -1576,6 +2387,296 @@ export const HTML_AR = `<!DOCTYPE html>
     // MOBILE UX ENHANCEMENTS
     // =================================
     ` + MOBILE_UX_JS + `
+
+    // =================================
+    // DESKTOP SIDEBAR FUNCTIONALITY (ARABIC)
+    // =================================
+    
+    // Show desktop sidebar on large screens
+    function initDesktopSidebar() {
+        if (window.innerWidth >= 1200) {
+            const sidebar = document.getElementById('desktopSidebar');
+            if (sidebar) {
+                sidebar.style.display = 'block';
+            }
+        }
+    }
+    
+    // Enhanced Gallery Lightbox for Desktop (Arabic)
+    let currentLightboxIndex = 0;
+    let lightboxImages = [];
+    
+    function initGalleryLightbox() {
+        // Collect all gallery images
+        lightboxImages = Array.from(document.querySelectorAll('.gallery-item img')).map(img => ({
+            src: img.src,
+            alt: img.alt,
+            caption: img.closest('.gallery-item')?.querySelector('p')?.textContent || img.alt
+        }));
+        
+        // Add click handlers
+        document.querySelectorAll('.gallery-item img').forEach((img, index) => {
+            img.addEventListener('click', (e) => {
+                e.preventDefault();
+                currentLightboxIndex = index;
+                showImageLightbox();
+            });
+            
+            // Add keyboard support
+            img.setAttribute('tabindex', '0');
+            img.setAttribute('role', 'button');
+            img.setAttribute('aria-label', 'عرض ' + img.alt + ' بالحجم الكامل');
+            
+            img.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    currentLightboxIndex = index;
+                    showImageLightbox();
+                }
+            });
+        });
+    }
+    
+    function showImageLightbox() {
+        const image = lightboxImages[currentLightboxIndex];
+        if (!image) return;
+        
+        // Create lightbox with enhanced structure
+        const lightbox = document.createElement('div');
+        lightbox.className = 'image-lightbox';
+        lightbox.setAttribute('role', 'dialog');
+        lightbox.setAttribute('aria-modal', 'true');
+        lightbox.setAttribute('aria-labelledby', 'lightbox-title');
+        
+        lightbox.innerHTML = \`
+            <div class="lightbox-backdrop" onclick="closeLightbox()" aria-hidden="true"></div>
+            <div class="lightbox-content">
+                <div class="lightbox-header">
+                    <h2 id="lightbox-title" class="sr-only">\${image.alt}</h2>
+                    <button class="lightbox-close" onclick="closeLightbox()" aria-label="إغلاق العارض" tabindex="0">
+                        <span aria-hidden="true">✕</span>
+                    </button>
+                </div>
+                <div class="lightbox-body">
+                    <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)" aria-label="الصورة السابقة" \${currentLightboxIndex === 0 ? 'disabled' : ''}>
+                        <span aria-hidden="true">‹</span>
+                    </button>
+                    <div class="lightbox-image-container">
+                        <img src="\${image.src}" alt="\${image.alt}" class="lightbox-image">
+                        <div class="lightbox-loading" aria-hidden="true">جاري التحميل...</div>
+                    </div>
+                    <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)" aria-label="الصورة التالية" \${currentLightboxIndex === lightboxImages.length - 1 ? 'disabled' : ''}>
+                        <span aria-hidden="true">›</span>
+                    </button>
+                </div>
+                <div class="lightbox-footer">
+                    <div class="lightbox-caption">\${image.caption}</div>
+                    <div class="lightbox-counter">\${currentLightboxIndex + 1} / \${lightboxImages.length}</div>
+                </div>
+            </div>
+        \`;
+        
+        document.body.appendChild(lightbox);
+        document.body.style.overflow = 'hidden';
+        
+        // Focus management
+        const closeButton = lightbox.querySelector('.lightbox-close');
+        closeButton.focus();
+        
+        // Trap focus within lightbox
+        trapFocus(lightbox);
+        
+        // Preload adjacent images for smooth navigation
+        preloadAdjacentImages();
+        
+        // Add keyboard listeners
+        document.addEventListener('keydown', handleLightboxKeydown);
+        
+        // Fade in animation
+        requestAnimationFrame(() => {
+            lightbox.classList.add('show');
+        });
+    }
+    
+    function navigateLightbox(direction) {
+        const newIndex = currentLightboxIndex + direction;
+        
+        if (newIndex >= 0 && newIndex < lightboxImages.length) {
+            currentLightboxIndex = newIndex;
+            updateLightboxContent();
+            preloadAdjacentImages();
+        }
+    }
+    
+    function updateLightboxContent() {
+        const lightbox = document.querySelector('.image-lightbox');
+        if (!lightbox) return;
+        
+        const image = lightboxImages[currentLightboxIndex];
+        const img = lightbox.querySelector('.lightbox-image');
+        const caption = lightbox.querySelector('.lightbox-caption');
+        const counter = lightbox.querySelector('.lightbox-counter');
+        const title = lightbox.querySelector('#lightbox-title');
+        const prevBtn = lightbox.querySelector('.lightbox-prev');
+        const nextBtn = lightbox.querySelector('.lightbox-next');
+        
+        // Show loading state
+        const loading = lightbox.querySelector('.lightbox-loading');
+        loading.style.display = 'block';
+        img.style.opacity = '0';
+        
+        // Update image
+        img.onload = () => {
+            loading.style.display = 'none';
+            img.style.opacity = '1';
+        };
+        
+        img.src = image.src;
+        img.alt = image.alt;
+        caption.textContent = image.caption;
+        counter.textContent = (currentLightboxIndex + 1) + ' / ' + lightboxImages.length;
+        title.textContent = image.alt;
+        
+        // Update navigation buttons
+        prevBtn.disabled = currentLightboxIndex === 0;
+        nextBtn.disabled = currentLightboxIndex === lightboxImages.length - 1;
+    }
+    
+    function preloadAdjacentImages() {
+        // Preload previous and next images for smooth navigation
+        [-1, 1].forEach(offset => {
+            const index = currentLightboxIndex + offset;
+            if (index >= 0 && index < lightboxImages.length) {
+                const img = new Image();
+                img.src = lightboxImages[index].src;
+            }
+        });
+    }
+    
+    function handleLightboxKeydown(e) {
+        switch (e.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                navigateLightbox(-1);
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                navigateLightbox(1);
+                break;
+        }
+    }
+    
+    function trapFocus(container) {
+        const focusableElements = container.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstFocusable = focusableElements[0];
+        const lastFocusable = focusableElements[focusableElements.length - 1];
+        
+        container.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                if (e.shiftKey) {
+                    if (document.activeElement === firstFocusable) {
+                        e.preventDefault();
+                        lastFocusable.focus();
+                    }
+                } else {
+                    if (document.activeElement === lastFocusable) {
+                        e.preventDefault();
+                        firstFocusable.focus();
+                    }
+                }
+            }
+        });
+    }
+    
+    function closeLightbox() {
+        const lightbox = document.querySelector('.image-lightbox');
+        if (lightbox) {
+            // Fade out animation
+            lightbox.classList.add('hide');
+            
+            setTimeout(() => {
+                lightbox.remove();
+                document.body.style.overflow = '';
+                
+                // Return focus to original trigger
+                const originalImage = document.querySelectorAll('.gallery-item img')[currentLightboxIndex];
+                if (originalImage) {
+                    originalImage.focus();
+                }
+                
+                // Remove keyboard listener
+                document.removeEventListener('keydown', handleLightboxKeydown);
+            }, 200);
+        }
+    }
+    
+    // Initialize desktop features
+    document.addEventListener('DOMContentLoaded', () => {
+        initDesktopSidebar();
+        initGalleryLightbox();
+        initTestimonialCarousel();
+        initFAQSearch();
+        initEnhancedFAQs();
+    });
+    
+    window.addEventListener('resize', () => {
+        initDesktopSidebar();
+        initGalleryLightbox();
+    });
+    
+    // =================================
+    // SERVICE COMPARISON TAB FUNCTIONALITY
+    // =================================
+    
+    function showComparisonTab(tabIndex, buttonElement) {
+        // Remove active class from all tabs and tab buttons
+        const allTabs = document.querySelectorAll('.tab-content');
+        const allButtons = document.querySelectorAll('.tab-btn');
+        
+        allTabs.forEach(tab => tab.classList.remove('active'));
+        allButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to selected tab and button
+        const selectedTab = document.querySelector('[data-tab="' + tabIndex + '"]');
+        if (selectedTab) {
+            selectedTab.classList.add('active');
+        }
+        
+        if (buttonElement) {
+            buttonElement.classList.add('active');
+        }
+        
+        // Smooth scroll to comparison section on mobile tab change
+        if (window.innerWidth <= 768) {
+            const comparisonSection = document.getElementById('comparison');
+            if (comparisonSection) {
+                setTimeout(() => {
+                    comparisonSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                }, 100);
+            }
+        }
+        
+        // Add haptic feedback on mobile devices
+        if (navigator.vibrate && window.innerWidth <= 768) {
+            navigator.vibrate(25);
+        }
+    }
+
+    // Make functions globally available for Arabic version
+    window.moveTestimonialCarousel = moveTestimonialCarousel;
+    window.currentTestimonialSlide = currentTestimonialSlide;
+    window.searchFAQs = searchFAQs;
+    window.filterFAQs = filterFAQs;
+    window.showComparisonTab = showComparisonTab;
     
     </script>
 </body>

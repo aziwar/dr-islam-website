@@ -49,15 +49,7 @@ const manifestIcons = faviconSizes.map(size => ({
     type: "image/png"
 }));
 
-console.log('✅ Generated favicon system:');
-console.log('📁 favicon-test.html - Test page');
-console.log('🎨 SVG favicon embedded in HTML files');
-console.log('📱 Manifest icons configuration ready');
-
-console.log('\n📋 Manual steps needed:');
-console.log('1. Convert SVG to PNG files for different sizes');
-console.log('2. Update manifest.json with icon references');
-console.log('3. Test favicon display in browsers');
+// Favicon generation complete - production build
 
 // Generate a simple Apple touch icon using the SVG
 const appleTouchIcon = DentalLogo.favicon
@@ -67,7 +59,6 @@ const appleTouchIcon = DentalLogo.favicon
 
 const appleTouchIconBase64 = Buffer.from(appleTouchIcon).toString('base64');
 
-console.log('\n🍎 Apple Touch Icon (SVG):');
-console.log(`data:image/svg+xml;base64,${appleTouchIconBase64}`);
+// Apple Touch Icon generated for production
 
 export { faviconSvg, faviconBase64, manifestIcons };

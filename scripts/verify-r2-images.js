@@ -23,10 +23,6 @@ const REQUIRED_IMAGES = [
 const BASE_URL = 'https://dr-elsagher.com/assets';
 
 async function verifyImages() {
-    console.log('🔍 Verifying production image serving...');
-    console.log(`🌐 Base URL: ${BASE_URL}`);
-    console.log(`📊 Testing ${REQUIRED_IMAGES.length} critical images\n`);
-    
     let passed = 0;
     let failed = 0;
     const results = [];
@@ -39,7 +35,6 @@ async function verifyImages() {
             await checkImageUrl(url);
             
             const duration = Date.now() - start;
-            console.log(`✅ ${image.padEnd(25)} - ${duration}ms`);
             
             results.push({
                 image,
@@ -50,8 +45,6 @@ async function verifyImages() {
             passed++;
             
         } catch (error) {
-            console.log(`❌ ${image.padEnd(25)} - ${error.message}`);
-            
             results.push({
                 image,
                 status: 'FAILED',
@@ -62,21 +55,7 @@ async function verifyImages() {
         }
     }
     
-    console.log('\n📈 VERIFICATION RESULTS:');
-    console.log(`✅ Passed: ${passed}/${REQUIRED_IMAGES.length}`);
-    console.log(`❌ Failed: ${failed}/${REQUIRED_IMAGES.length}`);
-    console.log(`📊 Success Rate: ${((passed/REQUIRED_IMAGES.length)*100).toFixed(1)}%`);
-    
-    if (failed > 0) {
-        console.log('\n⚠️  FAILED IMAGES:');
-        results.filter(r => r.status === 'FAILED').forEach(r => {
-            console.log(`   • ${r.image}: ${r.error}`);
-        });
-    }
-    
     const success = failed === 0;
-    console.log(`\n🎯 Overall Status: ${success ? 'ALL IMAGES SERVING' : 'ISSUES DETECTED'}`);
-    
     return { success, results, passed, failed };
 }
 
@@ -105,6 +84,5 @@ function checkImageUrl(url) {
 verifyImages().then(({ success }) => {
     process.exit(success ? 0 : 1);
 }).catch(error => {
-    console.error('💥 Verification failed:', error);
     process.exit(1);
 });
