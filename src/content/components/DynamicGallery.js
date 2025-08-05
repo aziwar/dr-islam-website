@@ -28,9 +28,10 @@ export const DynamicGallery = {
       <style>
         .dynamic-gallery {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 20px;
-          margin: 20px 0;
+          /* Mobile-first: single column */
+          grid-template-columns: 1fr;
+          gap: 15px;
+          margin: 15px 0;
         }
         
         .gallery-loading {
@@ -162,13 +163,17 @@ export const DynamicGallery = {
           color: #666;
         }
         
-        @media (max-width: 768px) {
+        @media (min-width: 48rem) {
           .dynamic-gallery {
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin: 15px 0;
+            /* Tablet and desktop: responsive columns */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
           }
-          
+        }
+        
+        /* Previous mobile-only section converted to tablet+ */
+        @media (max-width: 47.99rem) {
           .case-images {
             height: 200px;
           }
@@ -212,13 +217,14 @@ export const DynamicGallery = {
 
         .lightbox-close {
           position: absolute;
-          top: -50px;
-          right: 0;
+          /* Mobile-first: smaller close button, easier positioning */
+          top: -40px;
+          right: -10px;
           background: rgba(255, 255, 255, 0.2);
           border: none;
           color: white;
-          width: 40px;
-          height: 40px;
+          width: 35px;
+          height: 35px;
           border-radius: 50%;
           cursor: pointer;
           font-size: 18px;
@@ -287,28 +293,34 @@ export const DynamicGallery = {
           to { opacity: 1; }
         }
 
-        @media (max-width: 768px) {
+        /* Desktop lightbox enhancements */
+        @media (min-width: 48rem) {
           .lightbox-content {
-            max-width: 95%;
-            max-height: 80%;
+            /* Desktop: smaller content area for better positioning */
+            max-width: 90%;
+            max-height: 90%;
           }
 
           .lightbox-close {
-            top: -40px;
-            right: -10px;
-            width: 35px;
-            height: 35px;
+            /* Desktop: larger close button, further positioning */
+            top: -50px;
+            right: 0;
+            width: 40px;
+            height: 40px;
           }
 
           .lightbox-nav {
-            width: 40px;
-            height: 40px;
-            font-size: 16px;
+            /* Desktop: larger navigation buttons */
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
           }
 
           .lightbox-prev {
-            left: -50px;
+            /* Desktop: further positioning */
+            left: -70px;
           }
+        }
 
           .lightbox-next {
             right: -50px;
@@ -541,18 +553,21 @@ export const DynamicGallery = {
       <style>
         .gallery-tabs {
           display: flex;
-          justify-content: center;
-          margin-bottom: 30px;
+          /* Mobile-first: left-aligned, scrollable */
+          justify-content: flex-start;
+          margin-bottom: 20px;
           border-bottom: 1px solid #eee;
           overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
         }
         
         .gallery-tab {
           background: none;
           border: none;
-          padding: 12px 24px;
+          /* Mobile-first: smaller padding and font */
+          padding: 10px 16px;
           cursor: pointer;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 500;
           color: #666;
           border-bottom: 3px solid transparent;
@@ -566,15 +581,18 @@ export const DynamicGallery = {
           border-bottom-color: #BEB093;
         }
         
-        @media (max-width: 768px) {
+        /* Desktop gallery tabs enhancements */
+        @media (min-width: 48rem) {
           .gallery-tabs {
-            justify-content: flex-start;
-            margin-bottom: 20px;
+            /* Desktop: centered, more spacing */
+            justify-content: center;
+            margin-bottom: 30px;
           }
           
           .gallery-tab {
-            padding: 10px 16px;
-            font-size: 13px;
+            /* Desktop: larger padding and font */
+            padding: 12px 24px;
+            font-size: 14px;
           }
         }
       </style>

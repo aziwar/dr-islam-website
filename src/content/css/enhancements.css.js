@@ -144,8 +144,10 @@ a:focus {
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     z-index: 1000;
+    /* Mobile first: full width with margin, centered */
+    width: calc(100% - 40px);
     max-width: 400px;
-    width: 90%;
+    text-align: center;
     display: none;
     animation: slideUp 0.3s ease-out;
     border: 1px solid var(--primary);
@@ -171,7 +173,9 @@ a:focus {
 
 .install-prompt button {
     padding: 10px 20px;
-    margin: 0 10px 0 0;
+    /* Mobile first: full width, vertical stacking */
+    margin: 5px 0;
+    width: 100%;
     border: none;
     border-radius: 5px;
     font-weight: 600;
@@ -212,17 +216,18 @@ a:focus {
     }
 }
 
-/* Mobile PWA adjustments */
-@media (max-width: 768px) {
+/* Desktop PWA enhancements */
+@media (min-width: 48rem) {
     .install-prompt {
-        width: calc(100% - 40px);
-        flex-direction: column;
-        text-align: center;
+        /* Desktop: more compact, left-aligned */
+        width: 90%;
+        text-align: left;
     }
     
     .install-prompt button {
-        width: 100%;
-        margin: 5px 0;
+        /* Desktop: inline buttons */
+        width: auto;
+        margin: 0 10px 0 0;
     }
 }
 
@@ -431,66 +436,66 @@ img[data-lazy].loaded {
     font-weight: bold;
 }
 
-/* Enhanced touch targets and mobile optimization */
-@media (max-width: 768px) {
-    /* Enhanced touch targets - 48px minimum for better accessibility */
-    .nav-link,
-    .btn,
-    button,
-    a[role="button"],
-    input[type="submit"],
-    input[type="button"],
-    .cta-button,
-    .filter-btn,
-    .view-more-btn,
-    .submit-btn,
-    .carousel-btn,
-    .gallery-item,
-    .lightbox-nav,
-    .lightbox-close {
-        min-height: 48px;
-        min-width: 48px;
-        padding: 14px 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        -webkit-tap-highlight-color: transparent;
-        touch-action: manipulation;
-    }
-    
-    /* Improved mobile menu touch area */
-    .mobile-menu-toggle {
-        min-height: 48px;
-        min-width: 48px;
-        padding: 12px;
-        border-radius: 8px;
-        transition: background-color 0.2s ease;
-    }
-    
-    .mobile-menu-toggle:active {
-        background-color: rgba(190, 176, 147, 0.1);
-    }
-    
-    /* Touch feedback */
-    .btn:active,
-    button:active,
-    .cta-button:active,
-    .filter-btn:active {
-        transform: scale(0.98);
-        transition: transform 0.1s ease;
-    }
-    
-    /* Improved form controls */
-    input,
-    textarea,
-    select {
-        font-size: 16px; /* Prevents zoom on iOS */
-        padding: 12px;
-        min-height: 44px;
-    }
-    
-    /* Mobile-specific interactions */
+/* ===== MOBILE-FIRST TOUCH TARGETS ===== */
+/* Enhanced touch targets - 48px minimum for better accessibility (default for all devices) */
+.nav-link,
+.btn,
+button,
+a[role="button"],
+input[type="submit"],
+input[type="button"],
+.cta-button,
+.filter-btn,
+.view-more-btn,
+.submit-btn,
+.carousel-btn,
+.gallery-item,
+.lightbox-nav,
+.lightbox-close {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Improved navigation touch area */
+.nav-toggle {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.nav-toggle:active {
+    background-color: rgba(190, 176, 147, 0.1);
+}
+
+/* Touch feedback (all devices benefit from this) */
+.btn:active,
+button:active,
+.cta-button:active,
+.filter-btn:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* Improved form controls (mobile-first, prevents iOS zoom) */
+input,
+textarea,
+select {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+    min-height: 44px;
+}
+
+/* Mobile-optimized interactions (show on smaller screens) */
+@media (max-width: 47.99rem) {
     .mobile-scroll-hint {
         position: absolute;
         right: 10px;
@@ -517,6 +522,12 @@ img[data-lazy].loaded {
         gap: 1rem;
         padding: 0 20px;
     }
+}
+
+/* Desktop optimizations (if needed) */
+@media (min-width: 64rem) {
+    /* Desktop can have slightly smaller touch targets if desired */
+    /* Currently keeping mobile-first approach for accessibility */
 }
 
 /* ===== UI ENHANCEMENTS ===== */
@@ -678,7 +689,7 @@ img[data-lazy].loaded {
     100% { background-position: 50px 50px; }
 }
 
-/* Modal/Dialog enhancements */
+/* Modal/Dialog enhancements - Mobile First */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -689,7 +700,9 @@ img[data-lazy].loaded {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    /* Mobile-first: proper padding for safe area */
+    padding: var(--space-md);
+    z-index: var(--z-modal);
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -702,15 +715,30 @@ img[data-lazy].loaded {
 
 .modal {
     background: white;
-    border-radius: 10px;
-    padding: 2rem;
+    /* Mobile-first: fluid design */
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
     max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
+    width: 100%;
+    max-height: 90vh;
     overflow-y: auto;
     transform: scale(0.8);
     transition: transform 0.3s ease;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    /* Safe area support */
+    padding-top: max(var(--space-lg), env(safe-area-inset-top));
+    padding-bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Desktop modal enhancements */
+@media (min-width: 48rem) {
+    .modal {
+        padding: 2rem;
+        max-height: 80vh;
+        border-radius: var(--radius-xl);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
 }
 
 .modal-overlay.active .modal {
@@ -883,23 +911,29 @@ img[data-lazy].loaded {
     }
 }
 
-/* ===== ENHANCED LIGHTBOX ===== */
+/* ===== ENHANCED LIGHTBOX - MOBILE FIRST ===== */
 .image-lightbox {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 2000;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: var(--z-modal);
     display: flex;
     align-items: center;
     justify-content: center;
+    /* Mobile-first: proper padding for safe areas */
+    padding: var(--space-md);
     opacity: 0;
     visibility: hidden;
     transform: translateZ(0);
     will-change: opacity, visibility;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     contain: layout style paint;
+    /* Safe area support for mobile devices */
+    padding-top: max(var(--space-md), env(safe-area-inset-top));
+    padding-bottom: max(var(--space-md), env(safe-area-inset-bottom));
 }
 
 .image-lightbox.show {

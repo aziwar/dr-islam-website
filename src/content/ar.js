@@ -93,60 +93,6 @@ export const HTML_AR = `<!DOCTYPE html>
     }
     </script>
     
-    <!-- Emergency Navigation Fix for Arabic Version -->
-    <script>
-    // Bulletproof navigation fix that executes immediately
-    (function() {
-        function forceNavigationVisible() {
-            const navMenu = document.getElementById('mobileMenu');
-            const mobileToggle = document.querySelector('.mobile-menu-toggle');
-            
-            if (navMenu && window.innerWidth >= 1025) {
-                navMenu.style.setProperty('display', 'flex', 'important');
-                navMenu.style.setProperty('visibility', 'visible', 'important');
-                navMenu.style.setProperty('opacity', '1', 'important');
-                navMenu.style.setProperty('position', 'static', 'important');
-                navMenu.style.setProperty('right', 'auto', 'important');
-                navMenu.style.setProperty('top', 'auto', 'important');
-                navMenu.style.setProperty('width', 'auto', 'important');
-                navMenu.style.setProperty('height', 'auto', 'important');
-                navMenu.style.setProperty('flex-direction', 'row', 'important');
-                navMenu.style.setProperty('background', 'transparent', 'important');
-                navMenu.style.setProperty('backdrop-filter', 'none', 'important');
-                navMenu.classList.remove('active');
-                
-                if (mobileToggle) {
-                    mobileToggle.style.setProperty('display', 'none', 'important');
-                }
-                return true;
-            }
-            return false;
-        }
-        
-        // Apply immediately if DOM is ready
-        if (document.readyState !== 'loading') {
-            forceNavigationVisible();
-        }
-        
-        // Apply on DOM ready
-        document.addEventListener('DOMContentLoaded', forceNavigationVisible);
-        
-        // Apply on window load
-        window.addEventListener('load', forceNavigationVisible);
-        
-        // Apply on resize
-        window.addEventListener('resize', forceNavigationVisible);
-        
-        // Apply with progressive delays for reliability
-        setTimeout(forceNavigationVisible, 10);
-        setTimeout(forceNavigationVisible, 100);
-        setTimeout(forceNavigationVisible, 500);
-        setTimeout(forceNavigationVisible, 1000);
-        
-        // Expose for debugging
-        window.arabicNavFix = forceNavigationVisible;
-    })();
-    </script>
     
     <!-- Google Analytics integration disabled for privacy -->
 </head>
@@ -161,12 +107,12 @@ export const HTML_AR = `<!DOCTYPE html>
             <div class="logo dental-logo">
                 ${DentalLogo.svg}
             </div>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="القائمة" aria-expanded="false">
+            <button class="nav-toggle" aria-label="القائمة" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul id="mobileMenu">
+            <ul class="main-nav">
                 <li><a href="#services">الخدمات</a></li>
                 <li><a href="#about">عن الطبيب</a></li>
                 <li><a href="#testimonials">آراء المرضى</a></li>
@@ -178,7 +124,7 @@ export const HTML_AR = `<!DOCTYPE html>
         </nav>
     </header>
 
-    <div class="mobile-menu-backdrop" onclick="closeMobileMenu()"></div>
+    <div class="nav-backdrop"></div>
 
     <!-- Breadcrumb Navigation (Arabic) -->
     <nav class="breadcrumb-nav" aria-label="التنقل التفصيلي" id="breadcrumbNav" style="display: none;">
@@ -1205,123 +1151,60 @@ export const HTML_AR = `<!DOCTYPE html>
     </button>
 
     <script>
-    // Navigation visibility fix - ensures menu displays correctly
-    function ensureNavigationVisibility() {
-        const navMenu = document.getElementById('mobileMenu'); // This is the only navigation menu
-        const mobileToggle = document.querySelector('.mobile-menu-toggle');
-        const viewport = window.innerWidth;
-        
-        if (navMenu && mobileToggle) {
-            if (viewport >= 1025) {
-                // Desktop: show navigation as horizontal menu, hide toggle
-                navMenu.style.setProperty('display', 'flex', 'important');
-                navMenu.style.setProperty('visibility', 'visible', 'important');
-                navMenu.style.setProperty('opacity', '1', 'important');
-                navMenu.style.setProperty('position', 'static', 'important');
-                navMenu.style.setProperty('right', 'auto', 'important');
-                navMenu.style.setProperty('top', 'auto', 'important');
-                navMenu.style.setProperty('width', 'auto', 'important');
-                navMenu.style.setProperty('height', 'auto', 'important');
-                navMenu.style.setProperty('flex-direction', 'row', 'important');
-                navMenu.style.setProperty('background', 'transparent', 'important');
-                navMenu.classList.remove('active');
-                mobileToggle.style.setProperty('display', 'none', 'important');
-            } else {
-                // Mobile/tablet: hide nav by default, show toggle
-                navMenu.style.removeProperty('display');
-                navMenu.style.removeProperty('visibility'); 
-                navMenu.style.removeProperty('opacity');
-                navMenu.style.removeProperty('position');
-                navMenu.style.removeProperty('right');
-                navMenu.style.removeProperty('top');
-                navMenu.style.removeProperty('width');
-                navMenu.style.removeProperty('height');
-                navMenu.style.removeProperty('flex-direction');
-                navMenu.style.removeProperty('background');
-                mobileToggle.style.setProperty('display', 'flex', 'important');
-            }
-        }
-    }
-
-    // Immediate navigation fix - runs as soon as script loads
-    (function() {
-        function immediateNavFix() {
-            const navMenu = document.getElementById('mobileMenu');
-            const mobileToggle = document.querySelector('.mobile-menu-toggle');
-            
-            if (navMenu && mobileToggle && window.innerWidth >= 1025) {
-                navMenu.style.setProperty('display', 'flex', 'important');
-                navMenu.style.setProperty('visibility', 'visible', 'important');
-                navMenu.style.setProperty('opacity', '1', 'important');
-                navMenu.style.setProperty('position', 'static', 'important');
-                navMenu.style.setProperty('flex-direction', 'row', 'important');
-                navMenu.style.setProperty('background', 'transparent', 'important');
-                navMenu.classList.remove('active');
-                mobileToggle.style.setProperty('display', 'none', 'important');
-            }
-        }
-        
-        // Apply fix immediately
-        immediateNavFix();
-        
-        // Apply fix with small delays to ensure it works
-        setTimeout(immediateNavFix, 10);
-        setTimeout(immediateNavFix, 100);
-        setTimeout(immediateNavFix, 500);
-    })();
-
-    // Ensure menu starts closed and navigation is fixed
-    document.addEventListener('DOMContentLoaded', function() {
-        const menu = document.getElementById('mobileMenu');
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        if (menu) menu.classList.remove('active');
-        if (toggle) toggle.classList.remove('active');
-        
-        // Fix navigation visibility on page load
-        ensureNavigationVisibility();
-    });
-    
-    // Fix navigation on window resize and load events
-    window.addEventListener('resize', ensureNavigationVisibility);
-    window.addEventListener('load', ensureNavigationVisibility);
-
-    // Mobile Menu Toggle
+    // Unified Navigation Toggle (Arabic RTL Support)
     function toggleMobileMenu() {
-        const menu = document.getElementById('mobileMenu');
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const backdrop = document.querySelector('.mobile-menu-backdrop');
-        menu.classList.toggle('active');
-        toggle.classList.toggle('active');
-        backdrop.classList.toggle('active');
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
+        
+        const isOpen = menu.classList.contains('is-open');
+        
+        menu.classList.toggle('is-open');
+        toggle.classList.toggle('is-open');
+        backdrop.classList.toggle('is-open');
+        
+        toggle.setAttribute('aria-expanded', !isOpen);
     }
 
     // Close Mobile Menu
     function closeMobileMenu() {
-        const menu = document.getElementById('mobileMenu');
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const backdrop = document.querySelector('.mobile-menu-backdrop');
-        menu.classList.remove('active');
-        toggle.classList.remove('active');
-        backdrop.classList.remove('active');
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
+        
+        menu.classList.remove('is-open');
+        toggle.classList.remove('is-open');
+        backdrop.classList.remove('is-open');
+        
+        toggle.setAttribute('aria-expanded', 'false');
     }
 
-    // Close menu when clicking outside
+    // Close menu when clicking outside or on backdrop
     document.addEventListener('click', function(e) {
-        const menu = document.getElementById('mobileMenu');
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const backdrop = document.querySelector('.mobile-menu-backdrop');
-        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.remove('active');
-            toggle.classList.remove('active');
-            backdrop.classList.remove('active');
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
+        
+        if (backdrop.contains(e.target)) {
+            closeMobileMenu();
+        } else if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+            closeMobileMenu();
         }
     });
     
     // Close menu when clicking navigation links
-    document.querySelectorAll('#mobileMenu a').forEach(link => {
+    document.querySelectorAll('.main-nav a').forEach(link => {
         link.addEventListener('click', () => {
             closeMobileMenu();
         });
+    });
+    
+    // Set up navigation toggle event listener
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggle = document.querySelector('.nav-toggle');
+        if (toggle) {
+            toggle.addEventListener('click', toggleMobileMenu);
+        }
     });
         });
     });

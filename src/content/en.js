@@ -91,12 +91,12 @@ export const HTML_EN = `<!DOCTYPE html>
             <div class="logo dental-logo">
                 ${DentalLogo.svgEn}
             </div>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false">
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
-            <ul id="mobileMenu" role="menu">
+            <ul class="main-nav" role="menu">
                 <li role="menuitem"><a href="#services" aria-label="Navigate to Services section">Services</a></li>
                 <li role="menuitem"><a href="#about" aria-label="Navigate to About section">About</a></li>
                 <li role="menuitem"><a href="#testimonials" aria-label="Navigate to Testimonials section">Testimonials</a></li>
@@ -108,7 +108,7 @@ export const HTML_EN = `<!DOCTYPE html>
         </nav>
     </header>
 
-    <div class="mobile-menu-backdrop" onclick="closeMobileMenu()"></div>
+    <div class="nav-backdrop"></div>
 
     <!-- Breadcrumb Navigation -->
     <nav class="breadcrumb-nav" aria-label="Breadcrumb navigation" id="breadcrumbNav" style="display: none;">
@@ -1119,43 +1119,60 @@ export const HTML_EN = `<!DOCTYPE html>
     </button>
 
     <script>
-    // Mobile Menu Toggle
+    // Unified Navigation Toggle
     function toggleMobileMenu() {
-        const menu = document.getElementById('mobileMenu');
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const backdrop = document.querySelector('.mobile-menu-backdrop');
-        menu.classList.toggle('active');
-        toggle.classList.toggle('active');
-        backdrop.classList.toggle('active');
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
+        
+        const isOpen = menu.classList.contains('is-open');
+        
+        menu.classList.toggle('is-open');
+        toggle.classList.toggle('is-open');
+        backdrop.classList.toggle('is-open');
+        
+        toggle.setAttribute('aria-expanded', !isOpen);
     }
 
     // Close Mobile Menu
     function closeMobileMenu() {
-        const menu = document.getElementById('mobileMenu');
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const backdrop = document.querySelector('.mobile-menu-backdrop');
-        menu.classList.remove('active');
-        toggle.classList.remove('active');
-        backdrop.classList.remove('active');
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
+        
+        menu.classList.remove('is-open');
+        toggle.classList.remove('is-open');
+        backdrop.classList.remove('is-open');
+        
+        toggle.setAttribute('aria-expanded', 'false');
     }
 
-    // Close menu when clicking outside
+    // Close menu when clicking outside or on backdrop
     document.addEventListener('click', function(e) {
-        const menu = document.getElementById('mobileMenu');
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const backdrop = document.querySelector('.mobile-menu-backdrop');
-        if (!toggle.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.remove('active');
-            toggle.classList.remove('active');
-            backdrop.classList.remove('active');
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
+        
+        if (backdrop.contains(e.target)) {
+            closeMobileMenu();
+        } else if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+            closeMobileMenu();
         }
     });
     
     // Close menu when clicking navigation links
-    document.querySelectorAll('#mobileMenu a').forEach(link => {
+    document.querySelectorAll('.main-nav a').forEach(link => {
         link.addEventListener('click', () => {
             closeMobileMenu();
         });
+    });
+    
+    // Set up navigation toggle event listener
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggle = document.querySelector('.nav-toggle');
+        if (toggle) {
+            toggle.addEventListener('click', toggleMobileMenu);
+        }
     });
 
     // Smooth scrolling
@@ -1256,75 +1273,9 @@ export const HTML_EN = `<!DOCTYPE html>
         });
     });
 
-    // Navigation visibility fix - ensures menu displays correctly
-    function ensureNavigationVisibility() {
-        const navMenu = document.getElementById('mobileMenu'); // This is the only navigation menu
-        const mobileToggle = document.querySelector('.mobile-menu-toggle');
-        const viewport = window.innerWidth;
-        
-        if (navMenu && mobileToggle) {
-            if (viewport >= 1025) {
-                // Desktop: show navigation as horizontal menu, hide toggle
-                navMenu.style.setProperty('display', 'flex', 'important');
-                navMenu.style.setProperty('visibility', 'visible', 'important');
-                navMenu.style.setProperty('opacity', '1', 'important');
-                navMenu.style.setProperty('position', 'static', 'important');
-                navMenu.style.setProperty('right', 'auto', 'important');
-                navMenu.style.setProperty('top', 'auto', 'important');
-                navMenu.style.setProperty('width', 'auto', 'important');
-                navMenu.style.setProperty('height', 'auto', 'important');
-                navMenu.style.setProperty('flex-direction', 'row', 'important');
-                navMenu.style.setProperty('background', 'transparent', 'important');
-                navMenu.classList.remove('active');
-                mobileToggle.style.setProperty('display', 'none', 'important');
-            } else {
-                // Mobile/tablet: hide nav by default, show toggle
-                navMenu.style.removeProperty('display');
-                navMenu.style.removeProperty('visibility'); 
-                navMenu.style.removeProperty('opacity');
-                navMenu.style.removeProperty('position');
-                navMenu.style.removeProperty('right');
-                navMenu.style.removeProperty('top');
-                navMenu.style.removeProperty('width');
-                navMenu.style.removeProperty('height');
-                navMenu.style.removeProperty('flex-direction');
-                navMenu.style.removeProperty('background');
-                mobileToggle.style.setProperty('display', 'flex', 'important');
-            }
-        }
-    }
-
-    // Immediate navigation fix - runs as soon as script loads
-    (function() {
-        function immediateNavFix() {
-            const navMenu = document.getElementById('mobileMenu');
-            const mobileToggle = document.querySelector('.mobile-menu-toggle');
-            
-            if (navMenu && mobileToggle && window.innerWidth >= 1025) {
-                navMenu.style.setProperty('display', 'flex', 'important');
-                navMenu.style.setProperty('visibility', 'visible', 'important');
-                navMenu.style.setProperty('opacity', '1', 'important');
-                navMenu.style.setProperty('position', 'static', 'important');
-                navMenu.style.setProperty('flex-direction', 'row', 'important');
-                navMenu.style.setProperty('background', 'transparent', 'important');
-                navMenu.classList.remove('active');
-                mobileToggle.style.setProperty('display', 'none', 'important');
-            }
-        }
-        
-        // Apply fix immediately
-        immediateNavFix();
-        
-        // Apply fix with small delays to ensure it works
-        setTimeout(immediateNavFix, 10);
-        setTimeout(immediateNavFix, 100);
-        setTimeout(immediateNavFix, 500);
-    })();
 
     // FAQ Accordion
     document.addEventListener('DOMContentLoaded', function() {
-        // Fix navigation visibility on page load
-        ensureNavigationVisibility();
         
         const faqItems = document.querySelectorAll('.faq-item');
         
@@ -1357,8 +1308,6 @@ export const HTML_EN = `<!DOCTYPE html>
     });
     
     // Fix navigation on window resize and load events
-    window.addEventListener('resize', ensureNavigationVisibility);
-    window.addEventListener('load', ensureNavigationVisibility);
 
     // Header shadow on scroll
     let scrollTimeout;

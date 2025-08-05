@@ -49,8 +49,8 @@ export const COMPONENTS_CSS = `
 }
 
 .service-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    /* Mobile-first: subtle shadow only */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
 }
 
 .service-card:hover::before {
@@ -58,16 +58,18 @@ export const COMPONENTS_CSS = `
 }
 
 .service-icon {
-    font-size: 3rem;
+    /* Fluid icon sizing */
+    font-size: var(--text-5xl);
     color: var(--primary);
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-lg);
     display: block;
 }
 
 .service-card h3 {
     color: var(--secondary);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
+    margin-bottom: var(--space-md);
+    /* Fluid heading size */
+    font-size: var(--text-xl);
     position: relative;
     z-index: 1;
 }
@@ -131,8 +133,9 @@ export const COMPONENTS_CSS = `
 .stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin: 4rem 0;
+    /* Fluid spacing */
+    gap: var(--space-xl);
+    margin: var(--space-3xl) 0;
 }
 
 .stat-card {
@@ -166,9 +169,10 @@ export const COMPONENTS_CSS = `
 }
 
 .stat-number {
-    font-size: 2.5rem;
+    /* Fluid large number typography */
+    font-size: var(--text-4xl);
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-xs);
     position: relative;
     z-index: 1;
 }
@@ -208,8 +212,8 @@ export const COMPONENTS_CSS = `
 }
 
 .testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    /* Mobile-first: subtle shadow only */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
 .testimonial-card::before {
@@ -444,8 +448,8 @@ export const COMPONENTS_CSS = `
 }
 
 .gallery-item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    /* Mobile-first: subtle shadow only */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
 .case-images {
@@ -612,17 +616,27 @@ export const COMPONENTS_CSS = `
 }
 
 .contact-cards .contact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+    /* Mobile-first: subtle shadow only */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
 .contact-form {
     max-width: 600px;
     margin: 0 auto;
     background: var(--white);
-    padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    /* Mobile-first: smaller padding and border radius */
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+/* Desktop: enhanced styling */
+@media (min-width: 48rem) {
+    .contact-form {
+        padding: 3rem;
+        border-radius: var(--radius-xl);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
 }
 
 .form-group {
@@ -914,42 +928,30 @@ export const COMPONENTS_CSS = `
     top: 20px;
 }
 
-/* Mobile-specific hover replacements */
-@media (max-width: 768px) {
+/* Desktop hover enhancements */
+@media (min-width: 48rem) {
     .service-card:hover {
-        transform: none;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        /* Desktop: add transform effects */
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
     }
     
     .gallery-item:hover {
-        transform: none;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        /* Desktop: add transform effects */
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
     }
     
     .testimonial-card:hover {
-        transform: none;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        /* Desktop: add transform effects */
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12);
     }
     
     .contact-cards .contact-card:hover {
-        transform: none;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    }
-    
-    /* Enhanced mobile touch targets */
-    .filter-btn,
-    .view-more-btn,
-    .submit-btn,
-    .carousel-btn {
-        min-height: 44px;
-        min-width: 44px;
-        padding: 12px 20px;
-    }
-    
-    .faq-item h3 {
-        min-height: 56px;
-        padding: 16px 20px;
-        font-size: 1rem;
+        /* Desktop: add transform effects */
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12);
     }
 }
 
@@ -1033,12 +1035,33 @@ export const COMPONENTS_CSS = `
     }
 }
 
-/* ===== DESKTOP BOOKING WIDGET ===== */
+/* ===== RESPONSIVE BOOKING WIDGET ===== */
+/* Mobile-first: Hidden by default, show as inline widget */
 .desktop-booking-widget {
     display: none;
 }
 
-@media (min-width: 1200px) {
+/* Tablet: Show as floating card */
+@media (min-width: 48rem) and (max-width: 74.99rem) {
+    .desktop-booking-widget {
+        display: block;
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        margin: var(--space-lg) auto;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(190, 176, 147, 0.2);
+        border-radius: var(--radius-xl);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        contain: layout style paint;
+    }
+}
+
+/* Large Desktop: Sticky sidebar widget */
+@media (min-width: 75rem) {
     .desktop-booking-widget {
         display: block;
         position: sticky;
@@ -1049,26 +1072,38 @@ export const COMPONENTS_CSS = `
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border: 1px solid rgba(190, 176, 147, 0.2);
-        border-radius: 20px;
+        border-radius: var(--radius-xl);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        z-index: 100;
+        z-index: var(--z-sticky);
         margin-left: auto;
         transform: translateZ(0);
         will-change: transform;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         contain: layout style paint;
     }
-    
+}
+
+/* Desktop hover enhancement only */
+@media (min-width: 75rem) {
     .desktop-booking-widget:hover {
         transform: translateY(-5px);
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
     }
-    
+}
+
+.widget-header {
+    /* Mobile-first: fluid padding */
+    padding: var(--space-lg);
+    text-align: center;
+    border-bottom: 1px solid rgba(190, 176, 147, 0.1);
+}
+
+/* Desktop: larger padding */
+@media (min-width: 75rem) {
     .widget-header {
         padding: 1.5rem;
-        text-align: center;
-        border-bottom: 1px solid rgba(190, 176, 147, 0.1);
     }
+}
     
     .widget-header h3 {
         margin: 0 0 0.5rem 0;
@@ -1099,13 +1134,22 @@ export const COMPONENTS_CSS = `
         border-radius: 15px;
         display: inline-block;
     }
-    
+
+.quick-booking-form {
+    /* Mobile-first: fluid padding and spacing */
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+/* Desktop: larger padding */
+@media (min-width: 75rem) {
     .quick-booking-form {
         padding: 1.5rem;
-        display: flex;
-        flex-direction: column;
         gap: 1rem;
     }
+}
     
     .quick-booking-form input,
     .quick-booking-form select {
@@ -1186,6 +1230,237 @@ export const COMPONENTS_CSS = `
 
 [dir="rtl"] .widget-trust {
     text-align: right;
+}
+
+/* ===== BOOKING MODAL SYSTEM ===== */
+/* Mobile-first modal design */
+.booking-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.booking-modal[style*="flex"] {
+    opacity: 1;
+    visibility: visible;
+}
+
+.booking-modal-content {
+    background: var(--white);
+    /* Mobile-first: full width with margin */
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+    position: relative;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: scale(0.9) translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.booking-modal-header {
+    padding: var(--space-lg);
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.booking-modal-header h3 {
+    margin: 0;
+    color: var(--primary);
+    font-size: var(--text-xl);
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: var(--text-2xl);
+    color: #999;
+    cursor: pointer;
+    padding: var(--space-xs);
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.close-modal:hover {
+    background: #f5f5f5;
+    color: #666;
+}
+
+.booking-modal-body {
+    padding: var(--space-lg);
+}
+
+.booking-description {
+    margin-bottom: var(--space-lg);
+    color: #666;
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.form-progress {
+    height: 4px;
+    background: #f0f0f0;
+    border-radius: 2px;
+    margin-bottom: var(--space-md);
+    overflow: hidden;
+}
+
+.form-progress-bar {
+    height: 100%;
+    background: var(--primary);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: var(--space-md);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    border: 2px solid #e0e0e0;
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: #fff;
+    min-height: 48px;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.2);
+}
+
+.form-group label {
+    position: absolute;
+    top: 50%;
+    left: var(--space-md);
+    transform: translateY(-50%);
+    color: #999;
+    font-size: var(--text-sm);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    background: white;
+    padding: 0 4px;
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group select:focus + label,
+.form-group select:not([value=""]) + label {
+    top: 0;
+    font-size: var(--text-xs);
+    color: var(--primary);
+}
+
+.booking-modal-actions {
+    margin-top: var(--space-lg);
+    text-align: center;
+}
+
+.booking-submit-btn {
+    background: linear-gradient(135deg, var(--primary), #a89977);
+    color: white;
+    border: none;
+    padding: var(--space-md) var(--space-xl);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    min-height: 56px;
+}
+
+.booking-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(190, 176, 147, 0.4);
+}
+
+.booking-btn-icon {
+    font-size: var(--text-xl);
+}
+
+.booking-disclaimer {
+    margin-top: var(--space-sm);
+    color: #999;
+    font-size: var(--text-sm);
+    text-align: center;
+}
+
+/* Desktop enhancements */
+@media (min-width: 48rem) {
+    .booking-modal {
+        padding: var(--space-xl);
+    }
+    
+    .booking-modal-content {
+        max-height: 80vh;
+    }
+    
+    .booking-submit-btn {
+        width: auto;
+        min-width: 200px;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .close-modal {
+    left: var(--space-lg);
+    right: auto;
+}
+
+[dir="rtl"] .form-group label {
+    left: auto;
+    right: var(--space-md);
 }
 
 [dir="rtl"] .trust-badge {
@@ -1352,17 +1627,20 @@ export const COMPONENTS_CSS = `
 }
 
 /* Show table on desktop, hide on mobile */
+/* Mobile-first: Grid layout by default */
+.services-grid {
+    display: grid;
+}
+
 .services-comparison {
     display: none;
 }
 
-@media (max-width: 1199px) {
-    .services-grid {
-        display: grid !important;
-    }
-    
+/* Large desktop: Show comparison table if available */
+@media (min-width: 75rem) {
     .services-comparison {
-        display: none !important;
+        /* Keep comparison hidden for now - could be enabled later */
+        display: none;
     }
 }
 
