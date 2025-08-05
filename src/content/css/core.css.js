@@ -589,6 +589,8 @@ img.loaded {
         display: none !important;
     }
     
+    html body .mobile-menu-toggle,
+    body .mobile-menu-toggle,
     .mobile-menu-toggle {
         display: block !important;
         visibility: visible !important;
@@ -596,6 +598,8 @@ img.loaded {
         position: relative !important;
     }
     
+    html body #mobileMenu,
+    body #mobileMenu,
     #mobileMenu {
         position: fixed;
         top: 0;
@@ -900,7 +904,7 @@ img.loaded {
         top: 75px;
     }
     
-    body .mobile-menu-toggle {
+    html body .mobile-menu-toggle,\n    body .mobile-menu-toggle {
         display: flex !important;
     }
     

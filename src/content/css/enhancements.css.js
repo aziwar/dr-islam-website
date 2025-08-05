@@ -431,9 +431,9 @@ img[data-lazy].loaded {
     font-weight: bold;
 }
 
-/* Advanced touch targets */
+/* Enhanced touch targets and mobile optimization */
 @media (max-width: 768px) {
-    /* Enhanced touch targets */
+    /* Enhanced touch targets - 48px minimum for better accessibility */
     .nav-link,
     .btn,
     button,
@@ -444,15 +444,32 @@ img[data-lazy].loaded {
     .filter-btn,
     .view-more-btn,
     .submit-btn,
-    .carousel-btn {
-        min-height: 44px;
-        min-width: 44px;
-        padding: 12px 16px;
+    .carousel-btn,
+    .gallery-item,
+    .lightbox-nav,
+    .lightbox-close {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 14px 18px;
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
         -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    /* Improved mobile menu touch area */
+    .mobile-menu-toggle {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 12px;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+    }
+    
+    .mobile-menu-toggle:active {
+        background-color: rgba(190, 176, 147, 0.1);
     }
     
     /* Touch feedback */
@@ -1087,37 +1104,70 @@ img[data-lazy].loaded {
     border: 0 !important;
 }
 
-/* Mobile lightbox adjustments */
+/* Enhanced Mobile lightbox adjustments */
 @media (max-width: 768px) {
     .lightbox-content {
-        width: 95vw;
-        height: 95vh;
+        width: 98vw;
+        height: 98vh;
         margin: 0;
+        border-radius: 0;
     }
     
     .lightbox-nav {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
+        width: 56px;
+        height: 56px;
+        font-size: 1.8rem;
+        /* Enhanced touch targets for mobile */
+        min-width: 48px;
+        min-height: 48px;
+        -webkit-tap-highlight-color: transparent;
     }
     
     .lightbox-prev {
-        left: 10px;
+        left: 8px;
     }
     
     .lightbox-next {
-        right: 10px;
+        right: 8px;
+    }
+    
+    .lightbox-close {
+        top: 8px;
+        right: 8px;
+        width: 56px;
+        height: 56px;
+        font-size: 2rem;
+        z-index: 1001;
     }
     
     .lightbox-footer {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.75rem;
         text-align: center;
+        padding: 1.5rem 1rem;
     }
     
     .lightbox-caption {
         margin-right: 0;
-        font-size: 0.9rem;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+    
+    /* Mobile swipe indicators */
+    .lightbox-body::after {
+        content: 'Swipe to navigate';
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        opacity: 0;
+        animation: swipeHint 4s ease-in-out 2s;
+        pointer-events: none;
     }
 }
 
@@ -1143,17 +1193,27 @@ img[data-lazy].loaded {
 
 @media (max-width: 768px) {
     [dir="rtl"] .lightbox-prev {
-        right: 10px;
+        right: 8px;
         left: auto;
     }
     
     [dir="rtl"] .lightbox-next {
-        left: 10px;
+        left: 8px;
         right: auto;
     }
     
     [dir="rtl"] .lightbox-caption {
         margin-left: 0;
+    }
+    
+    [dir="rtl"] .lightbox-close {
+        left: 8px;
+        right: auto;
+    }
+    
+    /* RTL swipe indicators */
+    [dir="rtl"] .lightbox-body::after {
+        content: 'اسحب للتنقل';
     }
 }
 
