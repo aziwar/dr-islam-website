@@ -1941,7 +1941,7 @@ export const HTML_EN = `<!DOCTYPE html>
         
         // Phone validation
         if (field.type === 'tel' && value) {
-            const phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,}$/;
+            const phoneRegex = /^[\+]?[0-9\s\-()]{8,}$/;
             if (!phoneRegex.test(value)) {
                 isValid = false;
                 errorMessage = 'Please enter a valid phone number';
