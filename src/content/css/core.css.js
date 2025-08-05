@@ -585,8 +585,13 @@ img.loaded {
         max-width: 150px;
     }
     
+    html body header nav > ul,
+    html body nav > ul,
+    body header nav > ul,
+    header nav > ul,
     nav > ul {
         display: none !important;
+        visibility: hidden !important;
     }
     
     html body .mobile-menu-toggle,
