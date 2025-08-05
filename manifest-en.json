@@ -1,0 +1,29 @@
+{
+  "name": "Dr. Mohamed El Sagher - Dental Specialist",
+  "short_name": "Dr. El Sagher",
+  "description": "Professional dental care services in Dubai",
+  "start_url": "/?utm_source=pwa",
+  "display": "standalone",
+  "theme_color": "#BEB091",
+  "background_color": "#FFFBF5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "lang": "en",
+  "dir": "ltr"
+}

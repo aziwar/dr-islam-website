@@ -591,39 +591,39 @@ export const HTML_EN = `<!DOCTYPE html>
             <div class="testimonial-carousel-container">
                 <div class="testimonial-carousel" id="testimonialCarousel">
                     <div class="testimonial-slide active">
-                        <div class="testimonial-card featured">
+                        <article class="testimonial-card featured" role="article" aria-labelledby="testimonial-ahmed">
                             <div class="patient-info">
-                                <div class="patient-avatar">👤</div>
+                                <div class="patient-avatar" role="img" aria-label="Patient avatar">👤</div>
                                 <div class="patient-details">
-                                    <h4>Ahmed Al-Salem</h4>
+                                    <h4 id="testimonial-ahmed">Ahmed Al-Salem</h4>
                                     <span class="treatment-type">Dental Implants</span>
                                 </div>
                             </div>
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <div class="stars" role="img" aria-label="5 out of 5 stars">⭐⭐⭐⭐⭐</div>
                             <blockquote>"Excellent service and very professional doctor. Dr. Islam explained every step of the treatment and the result was amazing. I couldn't be happier with my new smile!"</blockquote>
                             <div class="testimonial-meta">
                                 <span class="date">January 2025</span>
                                 <span class="verified">✓ Verified Patient</span>
                             </div>
-                        </div>
+                        </article>
                     </div>
                     
                     <div class="testimonial-slide">
-                        <div class="testimonial-card featured">
+                        <article class="testimonial-card featured" role="article" aria-labelledby="testimonial-fatima">
                             <div class="patient-info">
-                                <div class="patient-avatar">👩</div>
+                                <div class="patient-avatar" role="img" aria-label="Patient avatar">👩</div>
                                 <div class="patient-details">
-                                    <h4>Fatima Al-Ali</h4>
+                                    <h4 id="testimonial-fatima">Fatima Al-Ali</h4>
                                     <span class="treatment-type">Cosmetic Dentistry</span>
                                 </div>
                             </div>
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <div class="stars" role="img" aria-label="5 out of 5 stars">⭐⭐⭐⭐⭐</div>
                             <blockquote>"Best dental implant experience in Kuwait. The doctor is very skilled and the team is cooperative. I recommend everyone to visit the clinic for quality treatment."</blockquote>
                             <div class="testimonial-meta">
                                 <span class="date">December 2024</span>
                                 <span class="verified">✓ Verified Patient</span>
                             </div>
-                        </div>
+                        </article>
                     </div>
                     
                     <div class="testimonial-slide">
@@ -738,7 +738,7 @@ export const HTML_EN = `<!DOCTYPE html>
             <!-- Gallery Lightbox -->
             <div id="gallery-lightbox" class="gallery-lightbox">
                 <div class="lightbox-content">
-                    <img id="lightbox-image" class="lightbox-image" src="" alt="">
+                    <img id="lightbox-image" class="lightbox-image" src="" alt="Enlarged gallery image" role="img" aria-describedby="lightbox-title lightbox-category">
                     <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
                     <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</button>
                     <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#8250;</button>
@@ -1309,7 +1309,7 @@ export const HTML_EN = `<!DOCTYPE html>
     
     // Fix navigation on window resize and load events
 
-    // Header shadow on scroll
+    // Enhanced scroll-triggered navigation (inspired by reference projects)
     let scrollTimeout;
     window.addEventListener('scroll', function() {
         if (scrollTimeout) {
@@ -1318,10 +1318,24 @@ export const HTML_EN = `<!DOCTYPE html>
         
         scrollTimeout = window.requestAnimationFrame(function() {
             const header = document.querySelector('header');
-            if (window.scrollY > 50) {
+            const scrollY = window.scrollY;
+            
+            // Shadow effect
+            if (scrollY > 50) {
                 header.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
             } else {
                 header.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+            }
+            
+            // Enhanced navigation state (from reference project patterns)
+            if (scrollY > 150) {
+                header.classList.add('nav-scrolled');
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.classList.remove('nav-scrolled');
+                header.style.background = '';
+                header.style.backdropFilter = '';
             }
         });
     });

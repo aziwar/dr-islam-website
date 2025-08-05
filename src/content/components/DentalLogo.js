@@ -69,14 +69,14 @@ export const DentalLogo = {
     }
     
     /* Responsive sizing */
-    @media (max-width: 768px) {
+    @media (max-width: var(--breakpoint-sm-max)) {
       .dental-logo svg {
         width: 100px;
         height: 33px;
       }
     }
     
-    @media (min-width: 769px) {
+    @media (min-width: var(--breakpoint-md)) {
       .dental-logo svg {
         width: 120px;
         height: 40px;

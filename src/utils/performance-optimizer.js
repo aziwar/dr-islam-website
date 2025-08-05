@@ -196,6 +196,420 @@ export const PerformanceOptimizer = {
         <meta name="color-scheme" content="light">
         <link rel="canonical" href="https://dr-elsagher.com/">
         `;
+    },
+
+    // Advanced skeleton screens for loading states
+    generateSkeletonCSS: () => {
+        return `
+        /* Sophisticated Skeleton Loading States */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 4px;
+        }
+        
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Component-specific skeletons */
+        .skeleton-card {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .skeleton-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .skeleton-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+        
+        .skeleton-line {
+            height: 16px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        
+        .skeleton-title {
+            height: 20px;
+            width: 70%;
+            margin-bottom: 12px;
+        }
+        
+        .skeleton-subtitle {
+            height: 14px;
+            width: 50%;
+            margin-bottom: 16px;
+        }
+        
+        .skeleton-text {
+            height: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .skeleton-text.short {
+            width: 60%;
+        }
+        
+        .skeleton-text.medium {
+            width: 80%;
+        }
+        
+        .skeleton-button {
+            height: 44px;
+            width: 120px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            margin-right: 12px;
+            display: inline-block;
+        }
+        
+        .skeleton-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+        
+        /* Gallery skeleton */
+        .skeleton-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .skeleton-gallery-item {
+            aspect-ratio: 4/3;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 12px;
+        }
+        
+        /* Services skeleton */
+        .skeleton-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .skeleton-service-card {
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        /* Testimonial skeleton */
+        .skeleton-testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .skeleton-testimonial-card {
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            position: relative;
+        }
+        
+        .skeleton-quote-mark {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        
+        /* Loading states for specific components */
+        .component-loading {
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f0f0f0;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 1rem;
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        /* Progressive loading animation */
+        .progressive-load {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .progressive-load.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Staggered animation for multiple items */
+        .progressive-load:nth-child(1) { transition-delay: 0.1s; }
+        .progressive-load:nth-child(2) { transition-delay: 0.2s; }
+        .progressive-load:nth-child(3) { transition-delay: 0.3s; }
+        .progressive-load:nth-child(4) { transition-delay: 0.4s; }
+        .progressive-load:nth-child(5) { transition-delay: 0.5s; }
+        .progressive-load:nth-child(6) { transition-delay: 0.6s; }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .skeleton-services {
+                grid-template-columns: 1fr;
+            }
+            
+            .skeleton-testimonials {
+                grid-template-columns: 1fr;
+            }
+            
+            .skeleton-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+        `;
+    },
+
+    // Generate skeleton HTML templates
+    generateSkeletonTemplates: () => {
+        return {
+            serviceCard: `
+                <div class="skeleton-service-card">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text medium"></div>
+                    <div class="skeleton-text short"></div>
+                    <div class="skeleton-button"></div>
+                </div>
+            `,
+            
+            testimonialCard: `
+                <div class="skeleton-testimonial-card">
+                    <div class="skeleton-quote-mark"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text medium"></div>
+                    <div class="skeleton-text short"></div>
+                    <div class="skeleton-header">
+                        <div class="skeleton-avatar"></div>
+                        <div>
+                            <div class="skeleton-line" style="width: 120px; height: 16px;"></div>
+                            <div class="skeleton-line" style="width: 80px; height: 14px;"></div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            
+            galleryItem: `
+                <div class="skeleton-gallery-item"></div>
+            `,
+            
+            genericCard: `
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text medium"></div>
+                    <div class="skeleton-button"></div>
+                </div>
+            `
+        };
+    },
+
+    // Advanced component loading with skeleton states
+    generateAdvancedLoadingScript: () => {
+        return `
+        <script>
+        // Enhanced lazy loading with skeleton states
+        class AdvancedLoader {
+            constructor() {
+                this.skeletonTemplates = ${JSON.stringify(PerformanceOptimizer.generateSkeletonTemplates())};
+                this.init();
+            }
+            
+            init() {
+                this.setupIntersectionObserver();
+                this.setupProgressiveLoading();
+                this.setupComponentLoading();
+            }
+            
+            setupIntersectionObserver() {
+                if ('IntersectionObserver' in window) {
+                    const options = {
+                        rootMargin: '50px 0px',
+                        threshold: 0.1
+                    };
+                    
+                    this.imageObserver = new IntersectionObserver(this.handleImageIntersection.bind(this), options);
+                    this.componentObserver = new IntersectionObserver(this.handleComponentIntersection.bind(this), options);
+                    
+                    // Observe images
+                    document.querySelectorAll('img[data-src]').forEach(img => {
+                        this.imageObserver.observe(img);
+                    });
+                    
+                    // Observe components
+                    document.querySelectorAll('[data-component-load]').forEach(component => {
+                        this.componentObserver.observe(component);
+                    });
+                }
+            }
+            
+            handleImageIntersection(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        this.loadImage(img);
+                        this.imageObserver.unobserve(img);
+                    }
+                });
+            }
+            
+            handleComponentIntersection(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const component = entry.target;
+                        this.loadComponent(component);
+                        this.componentObserver.unobserve(component);
+                    }
+                });
+            }
+            
+            loadImage(img) {
+                // Show skeleton while loading
+                img.classList.add('skeleton');
+                
+                const loadImg = new Image();
+                loadImg.onload = () => {
+                    img.src = loadImg.src;
+                    img.classList.remove('skeleton');
+                    img.classList.add('progressive-load', 'loaded');
+                };
+                loadImg.onerror = () => {
+                    img.classList.remove('skeleton');
+                    img.classList.add('error');
+                };
+                loadImg.src = img.dataset.src;
+            }
+            
+            loadComponent(component) {
+                const componentType = component.dataset.componentLoad;
+                const skeletonHTML = this.generateSkeletonForComponent(componentType);
+                
+                // Show skeleton
+                component.innerHTML = skeletonHTML;
+                component.classList.add('component-loading');
+                
+                // Simulate component loading (replace with actual loading logic)
+                setTimeout(() => {
+                    this.renderComponent(component, componentType);
+                }, Math.random() * 1000 + 500); // Random delay for demo
+            }
+            
+            generateSkeletonForComponent(type) {
+                switch(type) {
+                    case 'services':
+                        return '<div class="skeleton-services">' + 
+                               Array(3).fill(this.skeletonTemplates.serviceCard).join('') + 
+                               '</div>';
+                    case 'testimonials':
+                        return '<div class="skeleton-testimonials">' + 
+                               Array(3).fill(this.skeletonTemplates.testimonialCard).join('') + 
+                               '</div>';
+                    case 'gallery':
+                        return '<div class="skeleton-gallery">' + 
+                               Array(6).fill(this.skeletonTemplates.galleryItem).join('') + 
+                               '</div>';
+                    default:
+                        return '<div class="component-loading"><div class="loading-spinner"></div><div class="loading-text">Loading...</div></div>';
+                }
+            }
+            
+            renderComponent(component, type) {
+                // Remove skeleton and loading states
+                component.classList.remove('component-loading');
+                
+                // Add progressive loading animation
+                component.classList.add('progressive-load');
+                
+                // Trigger the loaded animation
+                setTimeout(() => {
+                    component.classList.add('loaded');
+                }, 100);
+            }
+            
+            setupProgressiveLoading() {
+                // Progressive loading for content that's already visible
+                document.addEventListener('DOMContentLoaded', () => {
+                    const elements = document.querySelectorAll('.progressive-load');
+                    elements.forEach((el, index) => {
+                        setTimeout(() => {
+                            el.classList.add('loaded');
+                        }, index * 100);
+                    });
+                });
+            }
+            
+            setupComponentLoading() {
+                // Handle dynamic component loading
+                document.addEventListener('componentLoad', (e) => {
+                    const { element, type, data } = e.detail;
+                    this.loadComponent(element);
+                });
+            }
+        }
+        
+        // Initialize advanced loader
+        new AdvancedLoader();
+        </script>
+        `;
     }
 };
 
@@ -207,6 +621,7 @@ export const generateOptimizedHead = (lang = 'en') => {
     ${PerformanceOptimizer.generateFontOptimization()}
     <style>
         ${PerformanceOptimizer.inlineCriticalCSS()}
+        ${PerformanceOptimizer.generateSkeletonCSS()}
     </style>
     `;
 };
@@ -214,6 +629,7 @@ export const generateOptimizedHead = (lang = 'en') => {
 export const generateOptimizedScripts = () => {
     return `
     ${PerformanceOptimizer.generateLazyLoadScript()}
+    ${PerformanceOptimizer.generateAdvancedLoadingScript()}
     ${PerformanceOptimizer.generateServiceWorkerScript()}
     `;
 };

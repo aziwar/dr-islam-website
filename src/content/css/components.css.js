@@ -5,20 +5,44 @@
 export const COMPONENTS_CSS = `
 /* ===== SERVICES SECTION ===== */
 .services {
-    padding: 80px 5%;
+    padding: var(--space-3xl) 5%;
     background: var(--light);
 }
 
 .services h2 {
     text-align: center;
     color: var(--secondary);
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-2xl);
 }
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    /* Mobile-first: Single column */
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+/* Small mobile: Keep single column for safety */
+@media (min-width: var(--breakpoint-xs)) {
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+}
+
+/* Medium mobile and up: Safe responsive grid */
+@media (min-width: var(--breakpoint-sm)) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: var(--space-lg);
+    }
+}
+
+/* Tablet: Standard layout */
+@media (min-width: var(--breakpoint-md)) {
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
 }
 
 .service-card {
@@ -90,11 +114,20 @@ export const COMPONENTS_CSS = `
 
 .about-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    /* Mobile-first: single column */
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Tablet and up: two columns */
+@media (min-width: var(--breakpoint-md)) {
+    .about-content {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2xl);
+    }
 }
 
 .about-text h2 {
@@ -178,7 +211,7 @@ export const COMPONENTS_CSS = `
 }
 
 .stat-label {
-    font-size: 1rem;
+    font-size: var(--text-base);
     opacity: 0.9;
     position: relative;
     z-index: 1;
@@ -198,8 +231,16 @@ export const COMPONENTS_CSS = `
 
 .testimonial-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    /* Mobile-first: single column, then responsive */
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+}
+
+/* Tablet and up: safe responsive grid */
+@media (min-width: var(--breakpoint-md)) {
+    .testimonial-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
 }
 
 .testimonial-card {
@@ -218,7 +259,7 @@ export const COMPONENTS_CSS = `
 
 .testimonial-card::before {
     content: '"';
-    font-size: 4rem;
+    font-size: var(--text-4xl);
     color: var(--primary);
     position: absolute;
     top: -10px;
@@ -238,7 +279,7 @@ export const COMPONENTS_CSS = `
 .testimonial-author {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-md);
 }
 
 .author-avatar {
@@ -318,7 +359,7 @@ export const COMPONENTS_CSS = `
 .carousel-nav {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: var(--space-md);
     margin-top: 2rem;
 }
 
@@ -356,12 +397,28 @@ export const COMPONENTS_CSS = `
 }
 
 .indicator-dot {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: rgba(190, 176, 147, 0.3);
     cursor: pointer;
     transition: all 0.3s ease;
+    /* Touch target improvement */
+    min-height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.indicator-dot::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: inherit;
+    position: absolute;
 }
 
 .indicator-dot.active {
@@ -393,7 +450,7 @@ export const COMPONENTS_CSS = `
 .gallery-filters {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: var(--space-md);
     margin-bottom: 3rem;
     flex-wrap: wrap;
 }
@@ -431,10 +488,49 @@ export const COMPONENTS_CSS = `
 @supports (display: grid) {
     .gallery-grid.enhanced {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-        gap: 2.5rem;
+        /* Mobile-first: Single column, then responsive */
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
         margin: 0;
         margin-bottom: 3rem;
+    }
+    
+    /* Small mobile: Keep single column for safety */
+    @media (min-width: var(--breakpoint-xs)) {
+        .gallery-grid.enhanced {
+            grid-template-columns: 1fr;
+            gap: var(--space-lg);
+        }
+    }
+    
+    /* Medium mobile: Two columns if space allows */
+    @media (min-width: var(--breakpoint-sm)) {
+        .gallery-grid.enhanced {
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--space-lg);
+        }
+    }
+    
+    /* Tablet: Larger cards */
+    @media (min-width: var(--breakpoint-md)) {
+        .gallery-grid.enhanced {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+    }
+    
+    /* Large screens: Safe sizing */
+    @media (min-width: var(--breakpoint-xl)) {
+        .gallery-grid.enhanced {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+    }
+    
+    /* Extra large screens: Full size */
+    @media (min-width: var(--breakpoint-2xl)) {
+        .gallery-grid.enhanced {
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        }
     }
 }
 
@@ -520,7 +616,7 @@ export const COMPONENTS_CSS = `
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: var(--text-sm);
     font-weight: bold;
 }
 
@@ -535,7 +631,7 @@ export const COMPONENTS_CSS = `
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 1rem;
+    font-size: var(--text-base);
     min-height: 50px;
 }
 
@@ -560,7 +656,7 @@ export const COMPONENTS_CSS = `
 .contact-info {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
+    gap: var(--space-lg);
     text-align: center;
     margin-bottom: 3rem;
 }
@@ -597,9 +693,26 @@ export const COMPONENTS_CSS = `
 
 .contact-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    /* Mobile-first: Single column */
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
     margin-bottom: 3rem;
+}
+
+/* Small mobile: Single column for safety */
+@media (min-width: var(--breakpoint-xs)) {
+    .contact-cards {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+}
+
+/* Medium mobile and up: Responsive grid */
+@media (min-width: var(--breakpoint-sm)) {
+    .contact-cards {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: var(--space-lg);
+    }
 }
 
 .contact-cards .contact-card {
@@ -621,7 +734,7 @@ export const COMPONENTS_CSS = `
 }
 
 .contact-form {
-    max-width: 600px;
+    width: min(100%, 600px);
     margin: 0 auto;
     background: var(--white);
     /* Mobile-first: smaller padding and border radius */
@@ -631,7 +744,7 @@ export const COMPONENTS_CSS = `
 }
 
 /* Desktop: enhanced styling */
-@media (min-width: 48rem) {
+@media (min-width: var(--breakpoint-md)) {
     .contact-form {
         padding: 3rem;
         border-radius: var(--radius-xl);
@@ -657,7 +770,7 @@ export const COMPONENTS_CSS = `
     padding: 1rem;
     border: 2px solid #e1e5e9;
     border-radius: 10px;
-    font-size: 1rem;
+    font-size: var(--text-base);
     transition: all 0.3s ease;
     background: var(--white);
     color: var(--text);
@@ -706,7 +819,7 @@ export const COMPONENTS_CSS = `
 .hours-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    gap: var(--space-md);
     margin: 2rem 0;
 }
 
@@ -770,7 +883,7 @@ export const COMPONENTS_CSS = `
 }
 
 .faq-search {
-    max-width: 500px;
+    width: min(100%, 500px);
     margin: 0 auto 3rem;
     position: relative;
 }
@@ -780,7 +893,7 @@ export const COMPONENTS_CSS = `
     padding: 1rem 1rem 1rem 3rem;
     border: 2px solid #e1e5e9;
     border-radius: 25px;
-    font-size: 1rem;
+    font-size: var(--text-base);
     transition: all 0.3s ease;
 }
 
@@ -800,7 +913,7 @@ export const COMPONENTS_CSS = `
 }
 
 .faq-list {
-    max-width: 800px;
+    width: min(100%, 800px);
     margin: 0 auto;
 }
 
@@ -929,7 +1042,7 @@ export const COMPONENTS_CSS = `
 }
 
 /* Desktop hover enhancements */
-@media (min-width: 48rem) {
+@media (min-width: var(--breakpoint-md)) {
     .service-card:hover {
         /* Desktop: add transform effects */
         transform: translateY(-10px) scale(1.02);
@@ -976,10 +1089,10 @@ export const COMPONENTS_CSS = `
 }
 
 /* ===== DESKTOP ENHANCEMENTS ===== */
-@media (min-width: 1025px) {
+@media (min-width: var(--breakpoint-lg)) {
     .services-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-lg);
     }
     
     .service-card:hover {
@@ -988,12 +1101,12 @@ export const COMPONENTS_CSS = `
     }
     
     .testimonial-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
     
     .gallery-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-md);
     }
     
     .gallery-item {
@@ -1042,7 +1155,7 @@ export const COMPONENTS_CSS = `
 }
 
 /* Tablet: Show as floating card */
-@media (min-width: 48rem) and (max-width: 74.99rem) {
+@media (min-width: var(--breakpoint-md)) and (max-width: var(--breakpoint-lg-max)) {
     .desktop-booking-widget {
         display: block;
         position: relative;
@@ -1061,7 +1174,7 @@ export const COMPONENTS_CSS = `
 }
 
 /* Large Desktop: Sticky sidebar widget */
-@media (min-width: 75rem) {
+@media (min-width: var(--breakpoint-xl)) {
     .desktop-booking-widget {
         display: block;
         position: sticky;
@@ -1084,7 +1197,7 @@ export const COMPONENTS_CSS = `
 }
 
 /* Desktop hover enhancement only */
-@media (min-width: 75rem) {
+@media (min-width: var(--breakpoint-xl)) {
     .desktop-booking-widget:hover {
         transform: translateY(-5px);
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
@@ -1099,7 +1212,7 @@ export const COMPONENTS_CSS = `
 }
 
 /* Desktop: larger padding */
-@media (min-width: 75rem) {
+@media (min-width: var(--breakpoint-xl)) {
     .widget-header {
         padding: 1.5rem;
     }
@@ -1144,10 +1257,10 @@ export const COMPONENTS_CSS = `
 }
 
 /* Desktop: larger padding */
-@media (min-width: 75rem) {
+@media (min-width: var(--breakpoint-xl)) {
     .quick-booking-form {
         padding: 1.5rem;
-        gap: 1rem;
+        gap: var(--space-md);
     }
 }
     
@@ -1176,7 +1289,7 @@ export const COMPONENTS_CSS = `
         border: none;
         padding: 1.2rem;
         border-radius: 12px;
-        font-size: 1rem;
+        font-size: var(--text-base);
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -1437,7 +1550,7 @@ export const COMPONENTS_CSS = `
 }
 
 /* Desktop enhancements */
-@media (min-width: 48rem) {
+@media (min-width: var(--breakpoint-md)) {
     .booking-modal {
         padding: var(--space-xl);
     }
@@ -1468,7 +1581,7 @@ export const COMPONENTS_CSS = `
 }
 
 /* ===== SERVICE COMPARISON TABLE (DESKTOP) ===== */
-@media (min-width: 1200px) {
+@media (min-width: var(--breakpoint-xl)) {
     .services {
         position: relative;
     }
@@ -1505,7 +1618,7 @@ export const COMPONENTS_CSS = `
         background: linear-gradient(135deg, var(--primary) 0%, #a89977 100%);
         color: white;
         font-weight: 600;
-        font-size: 1rem;
+        font-size: var(--text-base);
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
@@ -1637,7 +1750,7 @@ export const COMPONENTS_CSS = `
 }
 
 /* Large desktop: Show comparison table if available */
-@media (min-width: 75rem) {
+@media (min-width: var(--breakpoint-xl)) {
     .services-comparison {
         /* Keep comparison hidden for now - could be enabled later */
         display: none;

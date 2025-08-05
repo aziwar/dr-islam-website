@@ -5,14 +5,24 @@
 export const CORE_CSS = `
 /* ===== RESPONSIVE DESIGN SYSTEM ===== */
 :root {
-    /* Brand Colors */
-    --primary: #BEB093;
-    --secondary: #777669;
+    /* Brand Colors - WCAG AA Compliant */
+    --primary: #A08F65;        /* Darker for better contrast (was #BEB093) */
+    --primary-dark: #6D5D3A;   /* Much darker for WCAG AA compliance */
+    --secondary: #3D3B32;      /* Much darker for WCAG AA compliance */
     --white: #FFFFFF;
     --light: #F8F7F5;
-    --text: #333333;
-    --emergency: #dc3545;
-    --success: #28a745;
+    --text: #1A1A1A;           /* Darker for better contrast (was #333333) */
+    --text-light: #4A4A4A;     /* Secondary text with good contrast */
+    --emergency: #C62828;      /* Darker red for better contrast */
+    --success: #1B5E20;        /* Darker green for better contrast */
+    
+    /* Accessible Color Combinations */
+    --bg-primary: var(--primary-dark);
+    --text-on-primary: var(--white);
+    --bg-secondary: var(--secondary);
+    --text-on-secondary: var(--white);
+    --bg-light: var(--light);
+    --text-on-light: var(--text);
     
     /* Fluid Spacing System (Mobile to Desktop) */
     --space-3xs: clamp(0.25rem, 1vw, 0.5rem);    /* 4px → 8px */
@@ -25,23 +35,26 @@ export const CORE_CSS = `
     --space-2xl: clamp(4rem, 10vw, 8rem);        /* 64px → 128px */
     --space-3xl: clamp(6rem, 12vw, 12rem);       /* 96px → 192px */
     
-    /* Fluid Typography Scale */
-    --text-xs: clamp(0.75rem, 2vw, 0.875rem);    /* 12px → 14px */
-    --text-sm: clamp(0.875rem, 2.5vw, 1rem);     /* 14px → 16px */
-    --text-base: clamp(1rem, 3vw, 1.125rem);     /* 16px → 18px */
-    --text-lg: clamp(1.125rem, 3.5vw, 1.25rem);  /* 18px → 20px */
-    --text-xl: clamp(1.25rem, 4vw, 1.5rem);      /* 20px → 24px */
-    --text-2xl: clamp(1.5rem, 5vw, 2rem);        /* 24px → 32px */
-    --text-3xl: clamp(2rem, 6vw, 3rem);          /* 32px → 48px */
-    --text-4xl: clamp(2.5rem, 7vw, 4rem);        /* 40px → 64px */
-    --text-5xl: clamp(3rem, 8vw, 5rem);          /* 48px → 80px */
+    /* Optimized Fluid Typography Scale - Perfect Fourth (1.333) */
+    --text-xs: clamp(0.75rem, 1vw + 0.5rem, 0.875rem);     /* 12px → 14px | Captions, labels */
+    --text-sm: clamp(0.875rem, 1.5vw + 0.5rem, 1rem);      /* 14px → 16px | Small text, meta */
+    --text-base: clamp(1rem, 2vw + 0.75rem, 1.125rem);     /* 16px → 18px | Body text (optimal) */
+    --text-lg: clamp(1.125rem, 2.5vw + 0.75rem, 1.333rem); /* 18px → 21px | Subtitles */
+    --text-xl: clamp(1.333rem, 3vw + 1rem, 1.777rem);      /* 21px → 28px | Section titles */
+    --text-2xl: clamp(1.777rem, 4vw + 1.25rem, 2.369rem);  /* 28px → 38px | Page headings */
+    --text-3xl: clamp(2.369rem, 5vw + 1.5rem, 3.157rem);   /* 38px → 51px | Hero headings */
+    --text-4xl: clamp(3.157rem, 6vw + 2rem, 4.209rem);     /* 51px → 67px | Display headings */
+    --text-5xl: clamp(4.209rem, 8vw + 2.5rem, 5.61rem);    /* 67px → 90px | Hero display */
     
-    /* Fluid Line Heights */
-    --leading-tight: 1.25;
-    --leading-snug: 1.375;
-    --leading-normal: 1.5;
-    --leading-relaxed: 1.625;
-    --leading-loose: 2;
+    /* Optimized Fluid Line Heights - Context-aware readability */
+    --leading-tight: 1.2;        /* Display headings (large text) */
+    --leading-snug: 1.3;         /* Section headings */
+    --leading-normal: 1.5;       /* Body text (optimal for reading) */
+    --leading-relaxed: 1.6;      /* Long-form content */
+    --leading-loose: 1.8;        /* Accessible reading (dyslexia-friendly) */
+    
+    /* Responsive Line Height - Adapts to text size */
+    --leading-fluid: clamp(1.4, 0.5vw + 1.2, 1.6);
     
     /* Container Sizes (Content-Based Breakpoints) */
     --container-xs: 20rem;      /* 320px - Small mobile */
@@ -51,6 +64,21 @@ export const CORE_CSS = `
     --container-xl: 64rem;      /* 1024px - Desktop */
     --container-2xl: 80rem;     /* 1280px - Large desktop */
     --container-max: 90rem;     /* 1440px - Max content width */
+    
+    /* Breakpoint Design Tokens (Media Query Standards) */
+    --breakpoint-xs: 20rem;     /* 320px - Small mobile */
+    --breakpoint-sm: 36rem;     /* 576px - Large mobile */  
+    --breakpoint-md: 48rem;     /* 768px - Tablet */
+    --breakpoint-lg: 64rem;     /* 1024px - Desktop */
+    --breakpoint-xl: 75rem;     /* 1200px - Large desktop */
+    --breakpoint-2xl: 90rem;    /* 1440px - Extra large */
+    
+    /* Max-width breakpoints (for range queries) */
+    --breakpoint-xs-max: 35.99rem;  /* 575.84px */
+    --breakpoint-sm-max: 47.99rem;  /* 767.84px */
+    --breakpoint-md-max: 63.99rem;  /* 1023.84px */
+    --breakpoint-lg-max: 74.99rem;  /* 1199.84px */
+    --breakpoint-xl-max: 89.99rem;  /* 1439.84px */
     
     /* Fluid Border Radius */
     --radius-sm: clamp(0.25rem, 1vw, 0.375rem);
@@ -275,6 +303,23 @@ nav a:hover::after {
     width: 80%;
 }
 
+/* Enhanced scroll-triggered navigation state (from reference projects) */
+header.nav-scrolled {
+    transition: all 0.3s ease-in-out;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+header.nav-scrolled nav a {
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+header.nav-scrolled .logo {
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
 /* ===== HERO SECTION ===== */
 .hero {
     background: linear-gradient(-45deg, #BEB093, #777669, #8B7F6B, #9A8E77);
@@ -472,8 +517,11 @@ footer {
     color: #007cba;
     text-decoration: none;
     transition: color 0.2s ease;
-    padding: 0.25rem 0;
+    padding: 0.75rem 1rem;
+    min-height: 48px;
     border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .breadcrumb-item a:hover {
@@ -747,7 +795,7 @@ img.loaded {
 }
 
 /* Progressive Enhancement: Tablet and Desktop */
-@media (min-width: 48rem) {
+@media (min-width: var(--breakpoint-md)) {
     .main-nav {
         /* Reset mobile styles */
         position: static;
@@ -780,7 +828,7 @@ img.loaded {
 }
 
 /* Responsive Layout Adjustments */
-@media (max-width: 47.99rem) {
+@media (max-width: var(--breakpoint-sm-max)) {
     /* Small screens: Optimize layout */
     .logo-img {
         height: clamp(32px, 8vw, 48px);
@@ -905,7 +953,8 @@ img.loaded {
 
 /* ===== RTL SUPPORT ===== */
 [dir="rtl"] .main-nav {
-    left: -100%;
+    /* Fix: Use the actual navigation width instead of 100% viewport */
+    left: calc(-1 * min(80vw, 400px));
     right: auto;
 }
 
@@ -924,8 +973,8 @@ img.loaded {
     margin: 0 var(--space-xs);
 }
 
-/* ===== SMALL MOBILE (max-width: 480px) ===== */
-@media (max-width: 480px) {
+/* ===== SMALL MOBILE ===== */
+@media (max-width: var(--breakpoint-xs-max)) {
     h1 {
         font-size: 1.75rem;
     }
@@ -956,8 +1005,8 @@ img.loaded {
     }
 }
 
-/* ===== TABLET (769px - 1024px) ===== */
-@media (min-width: 769px) and (max-width: 1024px) {
+/* ===== TABLET RANGE ===== */
+@media (min-width: var(--breakpoint-md)) and (max-width: var(--breakpoint-md-max)) {
     .breadcrumb-nav {
         top: 75px;
     }
@@ -988,7 +1037,8 @@ img.loaded {
     }
     
     .breadcrumb-item a {
-        padding: 0.375rem 0.5rem;
+        padding: 0.75rem 1rem;
+        min-height: 48px;
         border-radius: 6px;
     }
     

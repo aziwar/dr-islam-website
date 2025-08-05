@@ -55,18 +55,24 @@ export const commonFunctions = `
         });
     }
 
-    // Mobile menu functionality
+    // Mobile menu functionality (updated to match actual implementation)
     function toggleMobileMenu() {
-        const menu = document.getElementById('mobileMenu');
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const backdrop = document.querySelector('.mobile-menu-backdrop');
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
         
-        menu.classList.toggle('active');
-        toggle.classList.toggle('active');
-        backdrop.classList.toggle('active');
+        if (!menu || !toggle || !backdrop) return;
+        
+        const isOpen = menu.classList.contains('is-open');
+        
+        menu.classList.toggle('is-open');
+        toggle.classList.toggle('is-open');
+        backdrop.classList.toggle('is-open');
+        
+        toggle.setAttribute('aria-expanded', !isOpen);
         
         // Prevent body scroll when menu is open
-        if (menu.classList.contains('active')) {
+        if (!isOpen) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = '';
@@ -74,13 +80,16 @@ export const commonFunctions = `
     }
 
     function closeMobileMenu() {
-        const menu = document.getElementById('mobileMenu');
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const backdrop = document.querySelector('.mobile-menu-backdrop');
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
         
-        menu.classList.remove('active');
-        toggle.classList.remove('active');
-        backdrop.classList.remove('active');
+        if (!menu || !toggle || !backdrop) return;
+        
+        menu.classList.remove('is-open');
+        toggle.classList.remove('is-open');
+        backdrop.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
     }
 
@@ -226,7 +235,7 @@ export const commonFunctions = `
         initializePWAPrompt();
         
         // Close mobile menu when clicking on a link
-        document.querySelectorAll('#mobileMenu a').forEach(link => {
+        document.querySelectorAll('.main-nav a').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
         });
     });

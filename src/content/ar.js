@@ -97,6 +97,11 @@ export const HTML_AR = `<!DOCTYPE html>
     <!-- Google Analytics integration disabled for privacy -->
 </head>
 <body>
+    <!-- Skip Links for Keyboard Navigation -->
+    <a href="#main-content" class="skip-link">انتقل إلى المحتوى الرئيسي</a>
+    <a href="#nav-menu" class="skip-link">انتقل إلى التنقل</a>
+    <a href="#contact" class="skip-link">انتقل إلى معلومات الاتصال</a>
+
     <!-- Emergency Banner -->
     <div class="emergency-banner">
         <p>حالات طوارئ الأسنان؟ اتصل الآن: <a href="tel:+96598563711" aria-label="رقم الطوارئ: 98563711">98563711</a></p>
@@ -550,39 +555,39 @@ export const HTML_AR = `<!DOCTYPE html>
             <div class="testimonial-carousel-container">
                 <div class="testimonial-carousel" id="testimonialCarousel">
                     <div class="testimonial-slide active">
-                        <div class="testimonial-card featured">
+                        <article class="testimonial-card featured" role="article" aria-labelledby="testimonial-ahmed-ar">
                             <div class="patient-info">
-                                <div class="patient-avatar">👤</div>
+                                <div class="patient-avatar" role="img" aria-label="صورة المريض">👤</div>
                                 <div class="patient-details">
-                                    <h4>أحمد السالم</h4>
+                                    <h4 id="testimonial-ahmed-ar">أحمد السالم</h4>
                                     <span class="treatment-type">زراعة الأسنان</span>
                                 </div>
                             </div>
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <div class="stars" role="img" aria-label="5 نجوم من أصل 5">⭐⭐⭐⭐⭐</div>
                             <blockquote>"خدمة ممتازة وطبيب محترف جداً. الدكتور اسلام شرح لي كل خطوة في العلاج وكانت النتيجة رائعة. لا أستطيع أن أكون أكثر سعادة بابتسامتي الجديدة!"</blockquote>
                             <div class="testimonial-meta">
                                 <span class="date">يناير 2025</span>
                                 <span class="verified">✓ مريض مؤكد</span>
                             </div>
-                        </div>
+                        </article>
                     </div>
                     
                     <div class="testimonial-slide">
-                        <div class="testimonial-card featured">
+                        <article class="testimonial-card featured" role="article" aria-labelledby="testimonial-fatima-ar">
                             <div class="patient-info">
-                                <div class="patient-avatar">👩</div>
+                                <div class="patient-avatar" role="img" aria-label="صورة المريضة">👩</div>
                                 <div class="patient-details">
-                                    <h4>فاطمة العلي</h4>
+                                    <h4 id="testimonial-fatima-ar">فاطمة العلي</h4>
                                     <span class="treatment-type">طب الأسنان التجميلي</span>
                                 </div>
                             </div>
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <div class="stars" role="img" aria-label="5 نجوم من أصل 5">⭐⭐⭐⭐⭐</div>
                             <blockquote>"أفضل تجربة زراعة أسنان في الكويت. الدكتور متمكن جداً وفريق العمل متعاون. أنصح الجميع بزيارة العيادة للحصول على علاج عالي الجودة."</blockquote>
                             <div class="testimonial-meta">
                                 <span class="date">ديسمبر 2024</span>
                                 <span class="verified">✓ مريض مؤكد</span>
                             </div>
-                        </div>
+                        </article>
                     </div>
                     
                     <div class="testimonial-slide">
@@ -1339,7 +1344,7 @@ export const HTML_AR = `<!DOCTYPE html>
         }
     });
 
-    // Header shadow on scroll
+    // Enhanced scroll-triggered navigation (inspired by reference projects)
     let scrollTimeout;
     window.addEventListener('scroll', function() {
         if (scrollTimeout) {
@@ -1348,10 +1353,24 @@ export const HTML_AR = `<!DOCTYPE html>
         
         scrollTimeout = window.requestAnimationFrame(function() {
             const header = document.querySelector('header');
-            if (window.scrollY > 50) {
+            const scrollY = window.scrollY;
+            
+            // Shadow effect
+            if (scrollY > 50) {
                 header.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
             } else {
                 header.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+            }
+            
+            // Enhanced navigation state (from reference project patterns)
+            if (scrollY > 150) {
+                header.classList.add('nav-scrolled');
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.classList.remove('nav-scrolled');
+                header.style.background = '';
+                header.style.backdropFilter = '';
             }
         });
     });

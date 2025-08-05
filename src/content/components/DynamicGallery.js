@@ -14,10 +14,10 @@ export const DynamicGallery = {
       <!-- Gallery Lightbox -->
       <div id="gallery-lightbox" class="gallery-lightbox">
         <div class="lightbox-content">
-          <img id="lightbox-image" class="lightbox-image" src="" alt="">
-          <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
-          <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</button>
-          <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">&#8250;</button>
+          <img id="lightbox-image" class="lightbox-image" src="" alt="Enlarged gallery image" role="img" aria-describedby="lightbox-title lightbox-category">
+          <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close gallery lightbox" title="Close (Esc)">&times;</button>
+          <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)" aria-label="Previous image" title="Previous (Left Arrow)">&#8249;</button>
+          <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)" aria-label="Next image" title="Next (Right Arrow)">&#8250;</button>
           <div class="lightbox-info">
             <div id="lightbox-title" class="lightbox-title"></div>
             <div id="lightbox-category" class="lightbox-category"></div>
@@ -163,7 +163,7 @@ export const DynamicGallery = {
           color: #666;
         }
         
-        @media (min-width: 48rem) {
+        @media (min-width: var(--breakpoint-md)) {
           .dynamic-gallery {
             /* Tablet and desktop: responsive columns */
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -173,7 +173,7 @@ export const DynamicGallery = {
         }
         
         /* Previous mobile-only section converted to tablet+ */
-        @media (max-width: 47.99rem) {
+        @media (max-width: var(--breakpoint-sm-max)) {
           .case-images {
             height: 200px;
           }
@@ -294,7 +294,7 @@ export const DynamicGallery = {
         }
 
         /* Desktop lightbox enhancements */
-        @media (min-width: 48rem) {
+        @media (min-width: var(--breakpoint-md)) {
           .lightbox-content {
             /* Desktop: smaller content area for better positioning */
             max-width: 90%;
@@ -582,7 +582,7 @@ export const DynamicGallery = {
         }
         
         /* Desktop gallery tabs enhancements */
-        @media (min-width: 48rem) {
+        @media (min-width: var(--breakpoint-md)) {
           .gallery-tabs {
             /* Desktop: centered, more spacing */
             justify-content: center;

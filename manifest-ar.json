@@ -1,0 +1,29 @@
+{
+  "name": "د. محمد الصاغر - أخصائي طب الأسنان",
+  "short_name": "د. الصاغر",
+  "description": "خدمات طب الأسنان المتخصصة في دبي",
+  "start_url": "/ar/?utm_source=pwa",
+  "display": "standalone",
+  "theme_color": "#BEB091",
+  "background_color": "#FFFBF5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "lang": "ar",
+  "dir": "rtl"
+}
