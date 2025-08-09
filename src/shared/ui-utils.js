@@ -426,7 +426,11 @@ export function createUIUtilsJS() {
         // Create modal if it doesn't exist
         if (!modal) {
             console.log('Creating booking modal...');
-            createBookingModal(service);
+            const success = createBookingModal(service);
+            if (!success) {
+                console.error('Failed to create booking modal');
+                return;
+            }
             modal = document.querySelector('.booking-modal');
             overlay = document.querySelector('.modal-overlay');
         }
@@ -459,30 +463,42 @@ export function createUIUtilsJS() {
     }
     
     function createBookingModal(service = '') {
+        console.log('createBookingModal called with service:', service);
+        
+        // Check if modal already exists
+        let existingModal = document.querySelector('.booking-modal');
+        if (existingModal) {
+            console.log('Modal already exists, removing old one');
+            const existingOverlay = document.querySelector('.modal-overlay');
+            if (existingOverlay) {
+                existingOverlay.remove();
+            }
+        }
+        
         const modalHTML = \`
-        <div class="modal-overlay">
-            <div class="booking-modal" role="dialog" aria-labelledby="booking-title" aria-modal="true">
-                <div class="modal-header">
-                    <h2 id="booking-title">Book Your Appointment</h2>
-                    <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
+        <div class="modal-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+            <div class="booking-modal" role="dialog" aria-labelledby="booking-title" aria-modal="true" style="background: white; border-radius: 8px; padding: 20px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
+                <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                    <h2 id="booking-title" style="margin: 0; color: #BEB093;">Book Your Appointment</h2>
+                    <button type="button" class="modal-close" aria-label="Close modal" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
                 </div>
                 <div class="modal-body">
                     <form class="booking-form" action="/api/contact" method="POST">
-                        <div class="form-group">
-                            <label for="booking-name">Full Name *</label>
-                            <input type="text" id="booking-name" name="name" required>
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="booking-name" style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
+                            <input type="text" id="booking-name" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
                         </div>
-                        <div class="form-group">
-                            <label for="booking-phone">Phone Number *</label>
-                            <input type="tel" id="booking-phone" name="phone" required>
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="booking-phone" style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number *</label>
+                            <input type="tel" id="booking-phone" name="phone" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
                         </div>
-                        <div class="form-group">
-                            <label for="booking-email">Email</label>
-                            <input type="email" id="booking-email" name="email">
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="booking-email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email</label>
+                            <input type="email" id="booking-email" name="email" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
                         </div>
-                        <div class="form-group">
-                            <label for="booking-service">Service Needed</label>
-                            <select id="booking-service" name="service">
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="booking-service" style="display: block; margin-bottom: 5px; font-weight: bold;">Service Needed</label>
+                            <select id="booking-service" name="service" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
                                 <option value="">Select Service</option>
                                 <option value="dental-implants">Dental Implants</option>
                                 <option value="cosmetic-dentistry">Cosmetic Dentistry</option>
@@ -491,49 +507,64 @@ export function createUIUtilsJS() {
                                 <option value="emergency">Emergency Treatment</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="booking-message">Additional Information</label>
-                            <textarea id="booking-message" name="message" rows="3"></textarea>
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="booking-message" style="display: block; margin-bottom: 5px; font-weight: bold;">Additional Information</label>
+                            <textarea id="booking-message" name="message" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; resize: vertical;"></textarea>
                         </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">
-                                Send Booking Request
-                            </button>
-                            <button type="button" class="btn btn-secondary modal-close">
+                        <div class="form-actions" style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button type="button" class="btn btn-secondary modal-close" style="padding: 10px 20px; border: 1px solid #ddd; background: #f5f5f5; color: #666; border-radius: 4px; cursor: pointer;">
                                 Cancel
+                            </button>
+                            <button type="submit" class="btn btn-primary" style="padding: 10px 20px; border: none; background: #BEB093; color: white; border-radius: 4px; cursor: pointer;">
+                                Send Booking Request
                             </button>
                         </div>
                     </form>
-                    <div class="booking-success" style="display: none;">
-                        <div class="success-icon">[SUCCESS]</div>
-                        <h3>Booking Request Sent!</h3>
+                    <div class="booking-success" style="display: none; text-align: center; padding: 20px;">
+                        <div class="success-icon" style="font-size: 48px; color: #4CAF50; margin-bottom: 10px;">[SUCCESS]</div>
+                        <h3 style="color: #4CAF50; margin-bottom: 10px;">Booking Request Sent!</h3>
                         <p>Thank you! We will contact you within 2 hours to confirm your appointment.</p>
                     </div>
                 </div>
             </div>
         </div>\`;
         
+        console.log('Inserting modal HTML...');
         document.body.insertAdjacentHTML('beforeend', modalHTML);
         
+        // Verify insertion worked
+        const insertedModal = document.querySelector('.booking-modal');
+        const insertedOverlay = document.querySelector('.modal-overlay');
+        
+        if (!insertedModal || !insertedOverlay) {
+            console.error('Modal insertion failed!');
+            return false;
+        }
+        
+        console.log('Modal HTML inserted successfully');
+        
         // Bind event listeners
-        const modal = document.querySelector('.booking-modal');
-        const overlay = document.querySelector('.modal-overlay');
         const closeButtons = document.querySelectorAll('.modal-close');
         const form = document.querySelector('.booking-form');
         
+        console.log('Binding', closeButtons.length, 'close buttons');
         closeButtons.forEach(btn => {
             btn.addEventListener('click', closeBookingModal);
         });
         
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
+        insertedOverlay.addEventListener('click', (e) => {
+            if (e.target === insertedOverlay) {
                 closeBookingModal();
             }
         });
         
         if (form) {
             form.addEventListener('submit', handleBookingSubmission);
+            console.log('Form submission handler bound');
         }
+        
+        console.log('Modal creation completed successfully');
+        return true;
     }
 
     function closeBookingModal() {
