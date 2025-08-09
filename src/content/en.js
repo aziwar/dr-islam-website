@@ -3,6 +3,25 @@ import { MOBILE_UX_JS } from './js/mobile-ux.js';
 import { DentalLogo } from './components/DentalLogo.js';
 import { ENHANCEMENTS_CSS } from './css/enhancements.css.js';
 import { DynamicGallery } from './components/DynamicGallery.js';
+import { 
+    toggleMobileMenu, 
+    closeMobileMenu,
+    updateBreadcrumb,
+    openBookingModal,
+    closeBookingModal,
+    showBookingSuccess,
+    setupLazyLoading,
+    setupGalleryTouch,
+    setupBeforeAfterTouch,
+    setupSmoothScroll,
+    setupKeyboardNav,
+    setupFormEnhancements,
+    setupFormValidation,
+    addLoadingState,
+    removeLoadingState,
+    initializeUIUtils
+} from './shared/ui-utils.js';
+import { validateField, initFormValidation } from './shared/form-utils.js';
 
 export const HTML_EN = `<!DOCTYPE html>
 <html lang="en">
@@ -1119,33 +1138,6 @@ export const HTML_EN = `<!DOCTYPE html>
     </button>
 
     <script>
-    // Unified Navigation Toggle
-    function toggleMobileMenu() {
-        const menu = document.querySelector('.main-nav');
-        const toggle = document.querySelector('.nav-toggle');
-        const backdrop = document.querySelector('.nav-backdrop');
-        
-        const isOpen = menu.classList.contains('is-open');
-        
-        menu.classList.toggle('is-open');
-        toggle.classList.toggle('is-open');
-        backdrop.classList.toggle('is-open');
-        
-        toggle.setAttribute('aria-expanded', !isOpen);
-    }
-
-    // Close Mobile Menu
-    function closeMobileMenu() {
-        const menu = document.querySelector('.main-nav');
-        const toggle = document.querySelector('.nav-toggle');
-        const backdrop = document.querySelector('.nav-backdrop');
-        
-        menu.classList.remove('is-open');
-        toggle.classList.remove('is-open');
-        backdrop.classList.remove('is-open');
-        
-        toggle.setAttribute('aria-expanded', 'false');
-    }
 
     // Close menu when clicking outside or on backdrop
     document.addEventListener('click', function(e) {
@@ -1208,31 +1200,6 @@ export const HTML_EN = `<!DOCTYPE html>
     
     let currentSection = 'hero';
     
-    function updateBreadcrumb(sectionId) {
-        if (sectionId && sectionNames[sectionId] && sectionId !== currentSection) {
-            currentSection = sectionId;
-            const sectionName = sectionNames[sectionId];
-            
-            // Update breadcrumb text
-            const breadcrumbSpan = currentBreadcrumb.querySelector('span[itemprop="name"]');
-            if (breadcrumbSpan) {
-                breadcrumbSpan.textContent = sectionName;
-            }
-            
-            // Show breadcrumb if not on hero section
-            if (sectionId !== 'hero') {
-                breadcrumbNav.style.display = 'block';
-                setTimeout(() => {
-                    breadcrumbNav.classList.add('visible');
-                }, 10);
-            } else {
-                breadcrumbNav.classList.remove('visible');
-                setTimeout(() => {
-                    breadcrumbNav.style.display = 'none';
-                }, 300);
-            }
-        }
-    }
     
     // Scroll to section function for breadcrumb home link
     window.scrollToSection = function(sectionId) {
@@ -1341,30 +1308,6 @@ export const HTML_EN = `<!DOCTYPE html>
     });
 
     // Enhanced Booking Modal Functionality
-    function openBookingModal() {
-        const modal = document.getElementById('bookingModal');
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-        
-        // Focus on the first input
-        setTimeout(() => {
-            document.getElementById('bookingName').focus();
-        }, 100);
-        
-        // Track modal open event
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'booking_modal_open', {
-                'event_category': 'engagement',
-                'event_label': 'booking_modal'
-            });
-        }
-    }
-    
-    function closeBookingModal() {
-        const modal = document.getElementById('bookingModal');
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
     
     // Close modal on outside click
     document.addEventListener('click', function(e) {
@@ -1474,32 +1417,6 @@ export const HTML_EN = `<!DOCTYPE html>
         }
     });
     
-    function showBookingSuccess() {
-        // Create success notification
-        const notification = document.createElement('div');
-        notification.className = 'booking-success-notification';
-        notification.innerHTML = \`
-            <div class="notification-content">
-                <span class="notification-icon">✅</span>
-                <span class="notification-text">WhatsApp opened with your booking details!</span>
-            </div>
-        \`;
-        
-        document.body.appendChild(notification);
-        
-        // Show notification
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 100);
-        
-        // Hide notification after 4 seconds
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                notification.remove();
-            }, 300);
-        }, 4000);
-    }
 
     // Analytics tracking for direct WhatsApp links
     document.querySelectorAll('a[href^="https://wa.me"]').forEach(link => {
@@ -1576,468 +1493,38 @@ export const HTML_EN = `<!DOCTYPE html>
     // LAZY LOADING IMAGES
     // =================================
     
-    const setupLazyLoading = () => {
-        const images = document.querySelectorAll('img[loading="lazy"]');
-        
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    
-                    // Load the image
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.classList.add('loaded');
-                    }
-                    
-                    // Handle srcset for responsive images
-                    if (img.dataset.srcset) {
-                        img.srcset = img.dataset.srcset;
-                    }
-                    
-                    observer.unobserve(img);
-                }
-            });
-        }, {
-            rootMargin: '50px 0px', // Start loading 50px before visible
-            threshold: 0.01
-        });
-        
-        images.forEach(img => imageObserver.observe(img));
-    };
     
     // =================================
     // TOUCH GESTURES FOR GALLERY
     // =================================
     
-    const setupGalleryTouch = () => {
-        const galleries = document.querySelectorAll('.gallery-container');
-        
-        galleries.forEach(gallery => {
-            let startX = 0;
-            let scrollLeft = 0;
-            let isDown = false;
-            
-            gallery.addEventListener('touchstart', (e) => {
-                isDown = true;
-                startX = e.touches[0].pageX - gallery.offsetLeft;
-                scrollLeft = gallery.scrollLeft;
-            });
-            
-            gallery.addEventListener('touchmove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                
-                const x = e.touches[0].pageX - gallery.offsetLeft;
-                const walk = (x - startX) * 2;
-                gallery.scrollLeft = scrollLeft - walk;
-            });
-            
-            gallery.addEventListener('touchend', () => {
-                isDown = false;
-                
-                // Add haptic feedback for mobile users
-                if (navigator.vibrate && 'ontouchstart' in window) {
-                    navigator.vibrate(50);
-                }
-                
-                // Snap to nearest item
-                const items = gallery.querySelectorAll('.gallery-item');
-                const itemWidth = items[0].offsetWidth;
-                const scrollPos = gallery.scrollLeft;
-                const index = Math.round(scrollPos / itemWidth);
-                
-                gallery.scrollTo({
-                    left: index * itemWidth,
-                    behavior: 'smooth'
-                });
-            });
-        });
-    };
     
     // =================================
     // BEFORE/AFTER SLIDER TOUCH
     // =================================
     
-    const setupBeforeAfterTouch = () => {
-        const sliders = document.querySelectorAll('.before-after-slider');
-        
-        sliders.forEach(slider => {
-            const container = slider.parentElement;
-            const before = container.querySelector('.before');
-            
-            let isMoving = false;
-            
-            const moveSlider = (clientX) => {
-                const rect = container.getBoundingClientRect();
-                const x = clientX - rect.left;
-                const percent = (x / rect.width) * 100;
-                
-                // Clamp between 5% and 95%
-                const clampedPercent = Math.max(5, Math.min(95, percent));
-                
-                slider.style.left = \`\${clampedPercent}%\`;
-                before.style.clipPath = \`inset(0 \${100 - clampedPercent}% 0 0)\`;
-            };
-            
-            // Touch events
-            slider.addEventListener('touchstart', (e) => {
-                isMoving = true;
-                e.preventDefault();
-            });
-            
-            document.addEventListener('touchmove', (e) => {
-                if (isMoving) {
-                    moveSlider(e.touches[0].clientX);
-                }
-            });
-            
-            document.addEventListener('touchend', () => {
-                isMoving = false;
-            });
-            
-            // Mouse events for desktop
-            slider.addEventListener('mousedown', () => {
-                isMoving = true;
-            });
-            
-            document.addEventListener('mousemove', (e) => {
-                if (isMoving) {
-                    moveSlider(e.clientX);
-                }
-            });
-            
-            document.addEventListener('mouseup', () => {
-                isMoving = false;
-            });
-        });
-    };
     
     // =================================
     // SMOOTH SCROLL ENHANCEMENTS
     // =================================
     
-    const setupSmoothScroll = () => {
-        // Add offset for fixed header
-        const headerHeight = document.querySelector('header').offsetHeight;
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const top = target.offsetTop - headerHeight - 20;
-                    
-                    window.scrollTo({
-                        top: top,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Update URL without jumping
-                    history.pushState(null, null, this.getAttribute('href'));
-                }
-            });
-        });
-    };
     
     // =================================
     // KEYBOARD NAVIGATION
     // =================================
     
-    const setupKeyboardNav = () => {
-        // FAQ keyboard navigation
-        const faqItems = document.querySelectorAll('.faq-item h3');
-        
-        faqItems.forEach((item, index) => {
-            item.setAttribute('tabindex', '0');
-            item.setAttribute('role', 'button');
-            item.setAttribute('aria-expanded', 'false');
-            
-            item.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    item.click();
-                }
-                
-                // Arrow key navigation
-                if (e.key === 'ArrowDown' && faqItems[index + 1]) {
-                    faqItems[index + 1].focus();
-                }
-                
-                if (e.key === 'ArrowUp' && faqItems[index - 1]) {
-                    faqItems[index - 1].focus();
-                }
-            });
-        });
-        
-        // Gallery keyboard navigation
-        const galleryButtons = document.querySelectorAll('.gallery-nav button');
-        galleryButtons.forEach(btn => {
-            btn.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowLeft') {
-                    const prevBtn = btn.previousElementSibling;
-                    if (prevBtn && prevBtn.tagName === 'BUTTON') {
-                        prevBtn.focus();
-                    }
-                }
-                
-                if (e.key === 'ArrowRight') {
-                    const nextBtn = btn.nextElementSibling;
-                    if (nextBtn && nextBtn.tagName === 'BUTTON') {
-                        nextBtn.focus();
-                    }
-                }
-            });
-        });
-    };
     
     // =================================
     // LOADING STATES
     // =================================
     
-    const addLoadingState = (element) => {
-        element.classList.add('loading');
-        element.setAttribute('aria-busy', 'true');
-        element.disabled = true;
-    };
-    
-    const removeLoadingState = (element) => {
-        element.classList.remove('loading');
-        element.setAttribute('aria-busy', 'false');
-        element.disabled = false;
-    };
     
     // =================================
     // FORM ENHANCEMENTS
     // =================================
     
-    const setupFormEnhancements = () => {
-        const forms = document.querySelectorAll('form');
-        
-        forms.forEach(form => {
-            // Add floating labels
-            const inputs = form.querySelectorAll('input, textarea');
-            
-            inputs.forEach(input => {
-                if (input.value) {
-                    input.classList.add('has-value');
-                }
-                
-                input.addEventListener('focus', () => {
-                    input.classList.add('focused');
-                });
-                
-                input.addEventListener('blur', () => {
-                    input.classList.remove('focused');
-                    if (input.value) {
-                        input.classList.add('has-value');
-                    } else {
-                        input.classList.remove('has-value');
-                    }
-                });
-            });
-            
-    // Form Progress Tracking
-    const updateFormProgress = () => {
-        const bookingForm = document.getElementById('bookingForm');
-        if (!bookingForm) return;
-        
-        const progressBar = bookingForm.querySelector('.form-progress-bar');
-        if (!progressBar) return;
-        
-        const requiredFields = bookingForm.querySelectorAll('[required]');
-        const filledFields = Array.from(requiredFields).filter(field => field.value.trim());
-        
-        const progress = (filledFields.length / requiredFields.length) * 100;
-        progressBar.style.width = progress + '%';
-    };
 
-    // Enhanced Form Validation System
-    const setupFormValidation = () => {
-        const forms = document.querySelectorAll('form');
-        
-        forms.forEach(form => {
-            // Real-time validation on input/blur
-            const inputs = form.querySelectorAll('input, select, textarea');
-            
-            inputs.forEach(input => {
-                // Validate on blur
-                input.addEventListener('blur', () => validateField(input));
-                
-                // Real-time validation on input (with debounce)
-                let timeout;
-                input.addEventListener('input', () => {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => validateField(input), 300);
-                });
-            });
-        });
-    };
-    
-    const validateField = (field) => {
-        const value = field.value.trim();
-        let isValid = true;
-        let errorMessage = '';
-        
-        // Remove existing error states
-        field.classList.remove('error', 'success');
-        removeFieldError(field);
-        
-        // Skip validation if field is empty and not required
-        if (!value && !field.required) return true;
-        
-        // Required field validation
-        if (field.required && !value) {
-            isValid = false;
-            errorMessage = 'This field is required';
-        }
-        
-        // Email validation
-        if (field.type === 'email' && value) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(value)) {
-                isValid = false;
-                errorMessage = 'Please enter a valid email address';
-            }
-        }
-        
-        // Phone validation
-        if (field.type === 'tel' && value) {
-            const phoneRegex = /^[\+]?[0-9\s\-()]{8,}$/;
-            if (!phoneRegex.test(value)) {
-                isValid = false;
-                errorMessage = 'Please enter a valid phone number';
-            }
-        }
-        
-        // Name validation (no numbers)
-        if (field.name === 'name' && value) {
-            const nameRegex = /^[a-zA-Z\s\u0600-\u06FF]+$/;
-            if (!nameRegex.test(value)) {
-                isValid = false;
-                errorMessage = 'Name should only contain letters';
-            }
-        }
-        
-        // Apply validation result
-        if (isValid) {
-            field.classList.add('success');
-        } else {
-            field.classList.add('error');
-            showFieldError(field, errorMessage);
-        }
-        
-        return isValid;
-    };
-    
-    const showFieldError = (field, message) => {
-        const formGroup = field.closest('.form-group');
-        let errorDiv = formGroup.querySelector('.field-error');
-        
-        if (!errorDiv) {
-            errorDiv = document.createElement('div');
-            errorDiv.className = 'field-error';
-            formGroup.appendChild(errorDiv);
-        }
-        
-        errorDiv.textContent = message;
-        errorDiv.style.display = 'block';
-    };
-    
-    const removeFieldError = (field) => {
-        const formGroup = field.closest('.form-group');
-        const errorDiv = formGroup.querySelector('.field-error');
-        if (errorDiv) {
-            errorDiv.style.display = 'none';
-        }
-    };
 
-    // Form submission with loading state
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                // Only handle contact form
-                if (form.id !== 'contactForm') return;
-                
-                const submitBtn = form.querySelector('[type="submit"]');
-                addLoadingState(submitBtn);
-                
-                try {
-                    // Prepare form data
-                    const formData = new FormData(form);
-                    
-                    // Send to backend
-                    const response = await fetch('/api/contact', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    const result = await response.json();
-                    
-                    removeLoadingState(submitBtn);
-                    
-                    // Remove any existing messages
-                    const existingMsg = form.querySelector('.form-message');
-                    if (existingMsg) existingMsg.remove();
-                    
-                    // Create message element
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = 'form-message';
-                    
-                    if (result.success) {
-                        messageDiv.classList.add('success');
-                        messageDiv.textContent = result.message || 'Your message has been sent successfully!';
-                        
-                        // Reset form on success
-                        form.reset();
-                        
-                        // Remove has-value classes from inputs
-                        form.querySelectorAll('input, textarea').forEach(input => {
-                            input.classList.remove('has-value');
-                        });
-                        
-                        // Track conversion event
-                        if (typeof gtag !== 'undefined') {
-                            gtag('event', 'form_submit', {
-                                'event_category': 'engagement',
-                                'event_label': 'contact_form'
-                            });
-                        }
-                    } else {
-                        messageDiv.classList.add('error');
-                        messageDiv.textContent = result.error || 'There was an error sending your message. Please try again.';
-                    }
-                    
-                    // Insert message at top of form
-                    form.insertBefore(messageDiv, form.firstChild);
-                    
-                    // Remove message after 5 seconds
-                    setTimeout(() => {
-                        messageDiv.remove();
-                    }, 5000);
-                    
-                } catch (error) {
-                    removeLoadingState(submitBtn);
-                    
-                    // Remove any existing messages
-                    const existingMsg = form.querySelector('.form-message');
-                    if (existingMsg) existingMsg.remove();
-                    
-                    // Show error message
-                    const errorDiv = document.createElement('div');
-                    errorDiv.className = 'form-message error';
-                    errorDiv.textContent = 'Network error. Please check your connection and try again.';
-                    form.insertBefore(errorDiv, form.firstChild);
-                    
-                    // Remove error message after 5 seconds
-                    setTimeout(() => {
-                        errorDiv.remove();
-                    }, 5000);
-                }
-            });
-        });
-    };
     
     // =================================
     // PERFORMANCE MONITORING
