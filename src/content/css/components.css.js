@@ -2,6 +2,8 @@
 // Consolidates: services.css.js + gallery.css.js + forms.css.js + ui-components.css.js + mobile-interactions.css.js
 // ~1500 lines → Complete UI component library
 
+import { DESIGN_TOKENS } from '../../shared/design-tokens.js';
+
 export const COMPONENTS_CSS = `
 /* ===== SERVICES SECTION ===== */
 .services {

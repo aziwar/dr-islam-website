@@ -1,6 +1,8 @@
 // A11Y.CSS.JS - WCAG 2.1 AA Accessibility Enhancements
 // Comprehensive accessibility improvements for better user experience
 
+import { DESIGN_TOKENS } from '../../shared/design-tokens.js';
+
 export const A11Y_CSS = `
 /* ===== WCAG 2.1 AA ACCESSIBILITY STYLES ===== */
 

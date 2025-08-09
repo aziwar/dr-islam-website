@@ -2,102 +2,10 @@
 // Consolidates: critical.css.js + critical-inline.css.js + responsive.css.js
 // ~2000 lines → Critical path foundation
 
+import { DESIGN_TOKENS } from '../../shared/design-tokens.js';
+
 export const CORE_CSS = `
-/* ===== RESPONSIVE DESIGN SYSTEM ===== */
-:root {
-    /* Brand Colors - WCAG AA Compliant */
-    --primary: #A08F65;        /* Darker for better contrast (was #BEB093) */
-    --primary-dark: #6D5D3A;   /* Much darker for WCAG AA compliance */
-    --secondary: #3D3B32;      /* Much darker for WCAG AA compliance */
-    --white: #FFFFFF;
-    --light: #F8F7F5;
-    --text: #1A1A1A;           /* Darker for better contrast (was #333333) */
-    --text-light: #4A4A4A;     /* Secondary text with good contrast */
-    --emergency: #C62828;      /* Darker red for better contrast */
-    --success: #1B5E20;        /* Darker green for better contrast */
-    
-    /* Accessible Color Combinations */
-    --bg-primary: var(--primary-dark);
-    --text-on-primary: var(--white);
-    --bg-secondary: var(--secondary);
-    --text-on-secondary: var(--white);
-    --bg-light: var(--light);
-    --text-on-light: var(--text);
-    
-    /* Fluid Spacing System (Mobile to Desktop) */
-    --space-3xs: clamp(0.25rem, 1vw, 0.5rem);    /* 4px → 8px */
-    --space-2xs: clamp(0.5rem, 1.5vw, 0.75rem);  /* 8px → 12px */
-    --space-xs: clamp(0.75rem, 2vw, 1rem);       /* 12px → 16px */
-    --space-sm: clamp(1rem, 3vw, 1.5rem);        /* 16px → 24px */
-    --space-md: clamp(1.5rem, 4vw, 2.5rem);      /* 24px → 40px */
-    --space-lg: clamp(2rem, 6vw, 4rem);          /* 32px → 64px */
-    --space-xl: clamp(3rem, 8vw, 6rem);          /* 48px → 96px */
-    --space-2xl: clamp(4rem, 10vw, 8rem);        /* 64px → 128px */
-    --space-3xl: clamp(6rem, 12vw, 12rem);       /* 96px → 192px */
-    
-    /* Optimized Fluid Typography Scale - Perfect Fourth (1.333) */
-    --text-xs: clamp(0.75rem, 1vw + 0.5rem, 0.875rem);     /* 12px → 14px | Captions, labels */
-    --text-sm: clamp(0.875rem, 1.5vw + 0.5rem, 1rem);      /* 14px → 16px | Small text, meta */
-    --text-base: clamp(1rem, 2vw + 0.75rem, 1.125rem);     /* 16px → 18px | Body text (optimal) */
-    --text-lg: clamp(1.125rem, 2.5vw + 0.75rem, 1.333rem); /* 18px → 21px | Subtitles */
-    --text-xl: clamp(1.333rem, 3vw + 1rem, 1.777rem);      /* 21px → 28px | Section titles */
-    --text-2xl: clamp(1.777rem, 4vw + 1.25rem, 2.369rem);  /* 28px → 38px | Page headings */
-    --text-3xl: clamp(2.369rem, 5vw + 1.5rem, 3.157rem);   /* 38px → 51px | Hero headings */
-    --text-4xl: clamp(3.157rem, 6vw + 2rem, 4.209rem);     /* 51px → 67px | Display headings */
-    --text-5xl: clamp(4.209rem, 8vw + 2.5rem, 5.61rem);    /* 67px → 90px | Hero display */
-    
-    /* Optimized Fluid Line Heights - Context-aware readability */
-    --leading-tight: 1.2;        /* Display headings (large text) */
-    --leading-snug: 1.3;         /* Section headings */
-    --leading-normal: 1.5;       /* Body text (optimal for reading) */
-    --leading-relaxed: 1.6;      /* Long-form content */
-    --leading-loose: 1.8;        /* Accessible reading (dyslexia-friendly) */
-    
-    /* Responsive Line Height - Adapts to text size */
-    --leading-fluid: clamp(1.4, 0.5vw + 1.2, 1.6);
-    
-    /* Container Sizes (Content-Based Breakpoints) */
-    --container-xs: 20rem;      /* 320px - Small mobile */
-    --container-sm: 24rem;      /* 384px - Mobile */
-    --container-md: 32rem;      /* 512px - Large mobile/Small tablet */
-    --container-lg: 48rem;      /* 768px - Tablet */
-    --container-xl: 64rem;      /* 1024px - Desktop */
-    --container-2xl: 80rem;     /* 1280px - Large desktop */
-    --container-max: 90rem;     /* 1440px - Max content width */
-    
-    /* Breakpoint Design Tokens (Media Query Standards) */
-    --breakpoint-xs: 20rem;     /* 320px - Small mobile */
-    --breakpoint-sm: 36rem;     /* 576px - Large mobile */  
-    --breakpoint-md: 48rem;     /* 768px - Tablet */
-    --breakpoint-lg: 64rem;     /* 1024px - Desktop */
-    --breakpoint-xl: 75rem;     /* 1200px - Large desktop */
-    --breakpoint-2xl: 90rem;    /* 1440px - Extra large */
-    
-    /* Max-width breakpoints (for range queries) */
-    --breakpoint-xs-max: 35.99rem;  /* 575.84px */
-    --breakpoint-sm-max: 47.99rem;  /* 767.84px */
-    --breakpoint-md-max: 63.99rem;  /* 1023.84px */
-    --breakpoint-lg-max: 74.99rem;  /* 1199.84px */
-    --breakpoint-xl-max: 89.99rem;  /* 1439.84px */
-    
-    /* Fluid Border Radius */
-    --radius-sm: clamp(0.25rem, 1vw, 0.375rem);
-    --radius-md: clamp(0.375rem, 2vw, 0.5rem);
-    --radius-lg: clamp(0.5rem, 3vw, 0.75rem);
-    --radius-xl: clamp(0.75rem, 4vw, 1rem);
-    --radius-2xl: clamp(1rem, 5vw, 1.5rem);
-    --radius-full: 9999px;
-    
-    /* Z-Index Scale */
-    --z-dropdown: 1000;
-    --z-sticky: 1020;
-    --z-fixed: 1030;
-    --z-modal-backdrop: 1040;
-    --z-modal: 1050;
-    --z-popover: 1060;
-    --z-tooltip: 1070;
-    --z-toast: 1080;
-}
+${DESIGN_TOKENS}
 
 html {
     font-size: 16px;
