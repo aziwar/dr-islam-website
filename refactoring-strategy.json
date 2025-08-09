@@ -1,0 +1,306 @@
+{
+  "refactoring_campaign": {
+    "id": "dr-islam-refactor-2025-01",
+    "timestamp": "2025-01-09T04:11:00Z",
+    "discovery_summary": {
+      "javascript_functions": 16,
+      "component_patterns": 7,
+      "css_variables": "45+",
+      "total_reduction_potential": "60-80%"
+    }
+  },
+
+  "execution_strategy": {
+    "wave_approach": "progressive_enhancement",
+    "risk_tolerance": "conservative",
+    "parallel_batches": true,
+    "max_concurrent_agents": 8,
+    "checkpoint_frequency": "per_wave"
+  },
+
+  "priority_matrix": {
+    "p1_critical": [
+      {
+        "task": "extract_identical_functions",
+        "impact": "high",
+        "risk": "low",
+        "effort": "medium",
+        "functions": [
+          "updateBreadcrumb",
+          "openBookingModal", 
+          "closeBookingModal",
+          "showBookingSuccess",
+          "setupLazyLoading",
+          "setupGalleryTouch",
+          "setupBeforeAfterTouch",
+          "setupSmoothScroll",
+          "setupKeyboardNav",
+          "setupFormEnhancements",
+          "setupFormValidation",
+          "addLoadingState",
+          "removeLoadingState"
+        ],
+        "target": "/src/shared/ui-utils.js",
+        "estimated_lines_saved": 400
+      }
+    ],
+    "p2_high": [
+      {
+        "task": "consolidate_css_variables",
+        "impact": "high",
+        "risk": "medium",
+        "effort": "high",
+        "variables": [
+          "--primary", "--secondary", "--text",
+          "--space-*", "--text-*", "--radius-*",
+          "--breakpoint-*"
+        ],
+        "target": "/src/shared/design-tokens.js",
+        "estimated_lines_saved": 200
+      },
+      {
+        "task": "extract_form_validation",
+        "impact": "medium",
+        "risk": "low", 
+        "effort": "medium",
+        "functions": ["validateField"],
+        "target": "/src/shared/form-utils.js",
+        "requires_localization": true,
+        "estimated_lines_saved": 100
+      }
+    ],
+    "p3_medium": [
+      {
+        "task": "consolidate_component_templates",
+        "impact": "medium",
+        "risk": "medium",
+        "effort": "high",
+        "components": [
+          "service_cards",
+          "contact_cards", 
+          "hero_sections",
+          "notification_system"
+        ],
+        "target": "/src/shared/component-templates.js",
+        "estimated_lines_saved": 600
+      }
+    ]
+  },
+
+  "dependency_graph": {
+    "wave_1_discovery": {
+      "status": "completed",
+      "outputs": [
+        "javascript_duplication_analysis.json",
+        "component_structure_analysis.json", 
+        "css_duplication_analysis.json"
+      ]
+    },
+    "wave_2_planning": {
+      "status": "in_progress",
+      "dependencies": ["wave_1_discovery"],
+      "outputs": ["refactoring-strategy.json", "execution-plan.json"]
+    },
+    "wave_3_execution": {
+      "status": "pending",
+      "dependencies": ["wave_2_planning"],
+      "batches": {
+        "batch_1_utilities": {
+          "parallel": true,
+          "tasks": ["extract_identical_functions", "extract_form_validation"],
+          "risk": "low",
+          "estimated_duration": "45 minutes"
+        },
+        "batch_2_consolidation": {
+          "parallel": false,
+          "depends_on": "batch_1_utilities",
+          "tasks": ["consolidate_css_variables", "consolidate_component_templates"],
+          "risk": "medium",
+          "estimated_duration": "90 minutes"
+        }
+      }
+    },
+    "wave_4_validation": {
+      "status": "pending", 
+      "dependencies": ["wave_3_execution"],
+      "validation_types": ["functional", "visual", "performance", "accessibility"]
+    }
+  },
+
+  "execution_plan": {
+    "batch_1_utilities": {
+      "agent": "execution-agent",
+      "parallel_safe": true,
+      "tasks": [
+        {
+          "id": "extract_ui_utils",
+          "description": "Extract 13 identical UI utility functions",
+          "source_files": ["src/content/ar.js", "src/content/en.js"],
+          "target_file": "/src/shared/ui-utils.js",
+          "functions": [
+            "updateBreadcrumb",
+            "openBookingModal",
+            "closeBookingModal", 
+            "showBookingSuccess",
+            "setupLazyLoading",
+            "setupGalleryTouch",
+            "setupBeforeAfterTouch",
+            "setupSmoothScroll",
+            "setupKeyboardNav",
+            "setupFormEnhancements",
+            "setupFormValidation",
+            "addLoadingState",
+            "removeLoadingState"
+          ],
+          "method": "extract_and_import"
+        },
+        {
+          "id": "extract_form_utils",
+          "description": "Extract form validation with localization",
+          "source_files": ["src/content/ar.js", "src/content/en.js"],
+          "target_file": "/src/shared/form-utils.js",
+          "functions": ["validateField"],
+          "method": "extract_with_i18n",
+          "i18n_config": {
+            "error_messages": {
+              "en": "error messages in English",
+              "ar": "رسائل الخطأ بالعربية"
+            }
+          }
+        }
+      ]
+    },
+
+    "batch_2_consolidation": {
+      "agent": "execution-agent",
+      "parallel_safe": false,
+      "depends_on": "batch_1_utilities",
+      "tasks": [
+        {
+          "id": "unify_css_variables",
+          "description": "Create unified design token system",
+          "source_files": [
+            "src/content/css/core.css.js",
+            "src/content/css/components.css.js", 
+            "src/content/css/a11y.css.js"
+          ],
+          "target_file": "/src/shared/design-tokens.js",
+          "method": "extract_and_consolidate",
+          "consolidation_map": {
+            "colors": ["--primary", "--secondary", "--text", "--white", "--light"],
+            "spacing": ["--space-xs", "--space-sm", "--space-md", "--space-lg", "--space-xl"],
+            "typography": ["--text-xs", "--text-sm", "--text-base", "--text-lg", "--text-xl"],
+            "radius": ["--radius-sm", "--radius-md", "--radius-lg", "--radius-xl"],
+            "breakpoints": ["--breakpoint-xs", "--breakpoint-sm", "--breakpoint-md", "--breakpoint-lg"]
+          }
+        },
+        {
+          "id": "consolidate_components",
+          "description": "Extract component templates",
+          "source_files": ["src/content/ar.js", "src/content/en.js"],
+          "target_file": "/src/shared/component-templates.js",
+          "components": [
+            {
+              "name": "ServiceCard",
+              "template": "service-card HTML structure",
+              "parameters": ["title", "description", "language"]
+            },
+            {
+              "name": "ContactCard", 
+              "template": "contact-card HTML structure",
+              "parameters": ["type", "value", "icon", "language"]
+            },
+            {
+              "name": "NotificationSystem",
+              "template": "notification creation and management",
+              "parameters": ["message", "type", "duration"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+
+  "validation_plan": {
+    "functional_tests": [
+      "All forms submit correctly",
+      "Mobile menu opens/closes",
+      "Booking modal functions",
+      "Gallery navigation works",
+      "Language switching preserved"
+    ],
+    "visual_tests": [
+      "No visual regressions",
+      "Responsive design intact",
+      "Arabic RTL layout correct",
+      "Component styling preserved"
+    ],
+    "performance_tests": [
+      "Bundle size reduction verified",
+      "Load time within 10% of baseline",
+      "CSS parsing improved"
+    ],
+    "accessibility_tests": [
+      "WCAG compliance maintained",
+      "Keyboard navigation works",
+      "Screen reader compatibility",
+      "Focus management intact"
+    ]
+  },
+
+  "rollback_plan": {
+    "checkpoints": [
+      {
+        "name": "pre_refactoring",
+        "command": "git stash push -m 'Pre-refactoring checkpoint'",
+        "status": "created",
+        "timestamp": "2025-01-09T04:11:03Z"
+      },
+      {
+        "name": "post_batch_1",
+        "command": "git add . && git commit -m 'Batch 1: UI utilities extracted'",
+        "status": "pending"
+      },
+      {
+        "name": "post_batch_2", 
+        "command": "git add . && git commit -m 'Batch 2: CSS and components consolidated'",
+        "status": "pending"
+      }
+    ],
+    "rollback_commands": [
+      "git reset --hard HEAD~n",
+      "git stash pop",
+      "npm run dev # verify recovery"
+    ]
+  },
+
+  "success_metrics": {
+    "code_reduction": {
+      "target": "60%",
+      "measurement": "lines_of_code_removed / total_lines * 100"
+    },
+    "duplication_elimination": {
+      "target": "90%",
+      "measurement": "duplicate_functions_removed / total_duplicates * 100" 
+    },
+    "performance_improvement": {
+      "target": "20%",
+      "measurement": "bundle_size_reduction + parse_time_improvement"
+    },
+    "maintainability": {
+      "target": "significant",
+      "measurement": "single_source_of_truth_established"
+    }
+  },
+
+  "resource_allocation": {
+    "estimated_duration": "3-4 hours",
+    "token_budget": "40K tokens",
+    "agent_distribution": {
+      "discovery": "3 agents (completed)",
+      "planning": "1 agent (in_progress)", 
+      "execution": "4 agents (pending)",
+      "validation": "3 agents (pending)"
+    }
+  }
+}
