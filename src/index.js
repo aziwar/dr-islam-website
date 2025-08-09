@@ -174,6 +174,40 @@ export default {
       return response;
     }
 
+    // JavaScript serving - CRITICAL FOR WAVE 1
+    if (path === '/js/ui-utils.js') {
+      const { createUIUtilsJS } = await import('./shared/ui-utils.js');
+      const jsContent = createUIUtilsJS();
+      
+      const response = new Response(jsContent, {
+        headers: {
+          'Content-Type': CONTENT_TYPES.JS,
+          'Cache-Control': CACHE_PROFILES.CSS,
+          'ETag': `"ui-utils-${CSS_VERSION}"`
+        }
+      });
+      metrics.operation = 'javascript-ui-utils';
+      metrics.duration = performance.now() - requestStart;
+      logger.metric(metrics);
+      return response;
+    }
+
+    if (path === '/js/mobile-ux.js') {
+      const { MOBILE_UX_JS } = await import('./content/js/mobile-ux.js');
+      
+      const response = new Response(MOBILE_UX_JS, {
+        headers: {
+          'Content-Type': CONTENT_TYPES.JS,
+          'Cache-Control': CACHE_PROFILES.CSS,
+          'ETag': `"mobile-ux-${CSS_VERSION}"`
+        }
+      });
+      metrics.operation = 'javascript-mobile-ux';
+      metrics.duration = performance.now() - requestStart;
+      logger.metric(metrics);
+      return response;
+    }
+
     // Optimized image serving with R2
     if (path.startsWith('/assets/')) {
       const response = await handleImageRequest(request, env, ctx, path);

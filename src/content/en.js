@@ -2387,5 +2387,9 @@ export const HTML_EN = `<!DOCTYPE html>
     window.switchGalleryCategory = switchGalleryCategory;
     
     </script>
+    
+    <!-- WAVE 1: Critical JavaScript Foundation -->
+    <script src="/js/ui-utils.js" defer></script>
+    
 </body>
 </html>`;

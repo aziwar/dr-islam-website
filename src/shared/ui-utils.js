@@ -334,3 +334,335 @@ export function initializeUIUtils() {
 if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', initializeUIUtils);
 }
+
+/**
+ * Create browser-compatible JavaScript for serving to client
+ * Converts ES6 module to immediately-invoked function for browser
+ */
+export function createUIUtilsJS() {
+    return `
+// UI-UTILS.JS - Browser JavaScript for Dr. Islam Website
+// Wave 1 Foundation Repair - Eliminates "function not defined" errors
+(function() {
+    'use strict';
+    
+    console.log('Dr. Islam UI Utils loading...');
+    
+    /**
+     * Breadcrumb Management
+     */
+    function updateBreadcrumb() {
+        const breadcrumb = document.querySelector('.breadcrumb');
+        const currentPath = window.location.hash || '#home';
+        const pathMap = {
+            '#home': 'الرئيسية / Home',
+            '#services': 'الخدمات / Services', 
+            '#about': 'عن الطبيب / About',
+            '#contact': 'اتصل بنا / Contact',
+            '#gallery': 'المعرض / Gallery'
+        };
+        
+        if (breadcrumb && pathMap[currentPath]) {
+            breadcrumb.textContent = pathMap[currentPath];
+        }
+    }
+
+    /**
+     * Mobile Navigation Functions
+     */
+    function toggleMobileMenu() {
+        console.log('toggleMobileMenu called');
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle, .mobile-menu-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
+        
+        if (!menu) {
+            console.error('Mobile menu not found');
+            return;
+        }
+        
+        const isOpen = menu.classList.contains('is-open');
+        
+        menu.classList.toggle('is-open');
+        if (toggle) {
+            toggle.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', !isOpen);
+        }
+        if (backdrop) {
+            backdrop.classList.toggle('is-open');
+        }
+        
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = !isOpen ? 'hidden' : '';
+        
+        console.log('Mobile menu toggled:', !isOpen);
+    }
+
+    function closeMobileMenu() {
+        const menu = document.querySelector('.main-nav');
+        const toggle = document.querySelector('.nav-toggle, .mobile-menu-toggle');
+        const backdrop = document.querySelector('.nav-backdrop');
+        
+        if (menu) menu.classList.remove('is-open');
+        if (toggle) {
+            toggle.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+        if (backdrop) backdrop.classList.remove('is-open');
+        
+        document.body.style.overflow = '';
+    }
+
+    /**
+     * Modal Management Functions - CRITICAL FOR BOOKING SYSTEM
+     */
+    function openBookingModal(service = '') {
+        console.log('openBookingModal called with service:', service);
+        
+        // Try to find existing modal
+        let modal = document.querySelector('.booking-modal');
+        let overlay = document.querySelector('.modal-overlay');
+        
+        // Create modal if it doesn't exist
+        if (!modal) {
+            console.log('Creating booking modal...');
+            createBookingModal(service);
+            modal = document.querySelector('.booking-modal');
+            overlay = document.querySelector('.modal-overlay');
+        }
+        
+        if (modal && overlay) {
+            modal.classList.add('is-active');
+            overlay.classList.add('is-active');
+            document.body.style.overflow = 'hidden';
+            
+            // Pre-fill service if provided
+            if (service) {
+                const serviceSelect = modal.querySelector('select[name="service"]');
+                if (serviceSelect) {
+                    serviceSelect.value = service;
+                }
+            }
+            
+            // Focus on first form field
+            setTimeout(() => {
+                const firstInput = modal.querySelector('input:not([type="hidden"])');
+                if (firstInput) {
+                    firstInput.focus();
+                }
+            }, 100);
+            
+            console.log('Booking modal opened');
+        } else {
+            console.error('Could not open booking modal');
+        }
+    }
+    
+    function createBookingModal(service = '') {
+        const modalHTML = \`
+        <div class="modal-overlay">
+            <div class="booking-modal" role="dialog" aria-labelledby="booking-title" aria-modal="true">
+                <div class="modal-header">
+                    <h2 id="booking-title">📅 Book Your Appointment</h2>
+                    <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form class="booking-form" action="/api/contact" method="POST">
+                        <div class="form-group">
+                            <label for="booking-name">Full Name *</label>
+                            <input type="text" id="booking-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-phone">Phone Number *</label>
+                            <input type="tel" id="booking-phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-email">Email</label>
+                            <input type="email" id="booking-email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-service">Service Needed</label>
+                            <select id="booking-service" name="service">
+                                <option value="">Select Service</option>
+                                <option value="dental-implants">Dental Implants</option>
+                                <option value="cosmetic-dentistry">Cosmetic Dentistry</option>
+                                <option value="root-canal">Root Canal Treatment</option>
+                                <option value="general-checkup">General Checkup</option>
+                                <option value="emergency">Emergency Treatment</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="booking-message">Additional Information</label>
+                            <textarea id="booking-message" name="message" rows="3"></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                📞 Send Booking Request
+                            </button>
+                            <button type="button" class="btn btn-secondary modal-close">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                    <div class="booking-success" style="display: none;">
+                        <div class="success-icon">✅</div>
+                        <h3>Booking Request Sent!</h3>
+                        <p>Thank you! We will contact you within 2 hours to confirm your appointment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>\`;
+        
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Bind event listeners
+        const modal = document.querySelector('.booking-modal');
+        const overlay = document.querySelector('.modal-overlay');
+        const closeButtons = document.querySelectorAll('.modal-close');
+        const form = document.querySelector('.booking-form');
+        
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', closeBookingModal);
+        });
+        
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                closeBookingModal();
+            }
+        });
+        
+        if (form) {
+            form.addEventListener('submit', handleBookingSubmission);
+        }
+    }
+
+    function closeBookingModal() {
+        const modal = document.querySelector('.booking-modal');
+        const overlay = document.querySelector('.modal-overlay');
+        
+        if (modal && overlay) {
+            modal.classList.remove('is-active');
+            overlay.classList.remove('is-active');
+            document.body.style.overflow = '';
+            console.log('Booking modal closed');
+        }
+    }
+
+    function showBookingSuccess() {
+        const modal = document.querySelector('.booking-modal');
+        const form = modal?.querySelector('.booking-form');
+        const successMessage = modal?.querySelector('.booking-success');
+        
+        if (form && successMessage) {
+            form.style.display = 'none';
+            successMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                closeBookingModal();
+                form.style.display = 'block';
+                successMessage.style.display = 'none';
+                form.reset();
+            }, 5000);
+        }
+    }
+    
+    async function handleBookingSubmission(e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        // Add loading state
+        submitBtn.textContent = '⏳ Sending...';
+        submitBtn.disabled = true;
+        
+        try {
+            const formData = new FormData(form);
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                showBookingSuccess();
+                console.log('Booking submitted successfully');
+            } else {
+                alert('Error: ' + result.error);
+                console.error('Booking submission error:', result.error);
+            }
+        } catch (error) {
+            alert('Network error. Please try again.');
+            console.error('Booking submission network error:', error);
+        } finally {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
+    }
+
+    /**
+     * Initialize all functionality on page load
+     */
+    function initializeUIUtils() {
+        console.log('Initializing Dr. Islam UI Utils...');
+        
+        // Set up mobile menu
+        const menuToggle = document.querySelector('.nav-toggle, .mobile-menu-toggle');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', toggleMobileMenu);
+            console.log('Mobile menu toggle bound');
+        }
+        
+        // Set up all booking buttons
+        const bookingButtons = document.querySelectorAll('[onclick*="openBookingModal"], .btn-book, .book-btn, .cta-button');
+        bookingButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const service = btn.dataset.service || btn.getAttribute('data-service') || '';
+                openBookingModal(service);
+            });
+            // Remove inline onclick handlers
+            btn.removeAttribute('onclick');
+            console.log('Booking button bound:', btn);
+        });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const activeModal = document.querySelector('.booking-modal.is-active');
+                if (activeModal) {
+                    closeBookingModal();
+                    return;
+                }
+                
+                const mobileMenu = document.querySelector('.main-nav.is-open');
+                if (mobileMenu) {
+                    closeMobileMenu();
+                    return;
+                }
+            }
+        });
+        
+        console.log('✅ Dr. Islam UI Utils initialized successfully');
+    }
+
+    // Make functions globally available for onclick handlers
+    window.openBookingModal = openBookingModal;
+    window.closeBookingModal = closeBookingModal;
+    window.toggleMobileMenu = toggleMobileMenu;
+    window.closeMobileMenu = closeMobileMenu;
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeUIUtils);
+    } else {
+        initializeUIUtils();
+    }
+
+})();
+
+console.log('✅ Dr. Islam UI Utils loaded successfully');
+`;
+}

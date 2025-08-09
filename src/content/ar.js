@@ -2106,5 +2106,9 @@ export const HTML_AR = `<!DOCTYPE html>
     window.showComparisonTab = showComparisonTab;
     
     </script>
+    
+    <!-- WAVE 1: Critical JavaScript Foundation -->
+    <script src="/js/ui-utils.js" defer></script>
+    
 </body>
 </html>`;
