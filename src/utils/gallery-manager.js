@@ -231,7 +231,7 @@ export class GalleryManager {
 
     // Check for suspiciously high entropy (encrypted/packed content)
     const entropy = this._calculateEntropy(bytes.slice(0, Math.min(1024, bytes.length)));
-    if (entropy > 7.5) {
+    if (entropy > 7.5 && typeof window !== 'undefined' && window.location.hostname === 'localhost') {
       console.warn('High entropy detected in file - potential packed/encrypted content');
     }
   }

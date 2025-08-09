@@ -1174,8 +1174,8 @@ export const HTML_AR = `<!DOCTYPE html>
         addLoadingState,
         removeLoadingState,
         initializeUIUtils
-    } from '/src/shared/ui-utils.js';
-    import { validateField, initFormValidation } from '/src/shared/form-utils.js';
+    } from '../shared/ui-utils.js';
+    import { validateField, initFormValidation } from '../shared/form-utils.js';
 
     // Make functions globally available for inline event handlers
     window.toggleMobileMenu = toggleMobileMenu;

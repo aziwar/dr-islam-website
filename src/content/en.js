@@ -20,8 +20,8 @@ import {
     addLoadingState,
     removeLoadingState,
     initializeUIUtils
-} from './shared/ui-utils.js';
-import { validateField, initFormValidation } from './shared/form-utils.js';
+} from '../shared/ui-utils.js';
+import { validateField, initFormValidation } from '../shared/form-utils.js';
 
 export const HTML_EN = `<!DOCTYPE html>
 <html lang="en">
