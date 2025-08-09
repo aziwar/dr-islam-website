@@ -355,11 +355,11 @@ export function createUIUtilsJS() {
         const breadcrumb = document.querySelector('.breadcrumb');
         const currentPath = window.location.hash || '#home';
         const pathMap = {
-            '#home': 'الرئيسية / Home',
-            '#services': 'الخدمات / Services', 
-            '#about': 'عن الطبيب / About',
-            '#contact': 'اتصل بنا / Contact',
-            '#gallery': 'المعرض / Gallery'
+            '#home': 'Home',
+            '#services': 'Services', 
+            '#about': 'About',
+            '#contact': 'Contact',
+            '#gallery': 'Gallery'
         };
         
         if (breadcrumb && pathMap[currentPath]) {
@@ -463,7 +463,7 @@ export function createUIUtilsJS() {
         <div class="modal-overlay">
             <div class="booking-modal" role="dialog" aria-labelledby="booking-title" aria-modal="true">
                 <div class="modal-header">
-                    <h2 id="booking-title">📅 Book Your Appointment</h2>
+                    <h2 id="booking-title">Book Your Appointment</h2>
                     <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -497,7 +497,7 @@ export function createUIUtilsJS() {
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">
-                                📞 Send Booking Request
+                                Send Booking Request
                             </button>
                             <button type="button" class="btn btn-secondary modal-close">
                                 Cancel
@@ -505,7 +505,7 @@ export function createUIUtilsJS() {
                         </div>
                     </form>
                     <div class="booking-success" style="display: none;">
-                        <div class="success-icon">✅</div>
+                        <div class="success-icon">[SUCCESS]</div>
                         <h3>Booking Request Sent!</h3>
                         <p>Thank you! We will contact you within 2 hours to confirm your appointment.</p>
                     </div>
@@ -574,7 +574,7 @@ export function createUIUtilsJS() {
         const originalText = submitBtn.textContent;
         
         // Add loading state
-        submitBtn.textContent = '⏳ Sending...';
+        submitBtn.textContent = 'Sending...';
         submitBtn.disabled = true;
         
         try {
@@ -645,7 +645,7 @@ export function createUIUtilsJS() {
             }
         });
         
-        console.log('✅ Dr. Islam UI Utils initialized successfully');
+        console.log('[SUCCESS] Dr. Islam UI Utils initialized successfully');
     }
 
     // Make functions globally available for onclick handlers
@@ -663,6 +663,6 @@ export function createUIUtilsJS() {
 
 })();
 
-console.log('✅ Dr. Islam UI Utils loaded successfully');
+console.log('[SUCCESS] Dr. Islam UI Utils loaded successfully');
 `;
 }
