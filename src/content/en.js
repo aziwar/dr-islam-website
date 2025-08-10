@@ -1834,7 +1834,7 @@ export const HTML_EN = `<!DOCTYPE html>
         if (!data.phone) {
             invalidFields.push('phone');
             message = 'Please enter your phone number';
-        } else if (!/^[+]?[\d\-\s()]{8,}$/.test(data.phone)) {
+        } else if (!/^[+]?[\\d\\-\\s()]{8,}$/.test(data.phone)) {
             invalidFields.push('phone');
             message = 'Please enter a valid phone number';
         }
