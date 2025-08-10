@@ -72,27 +72,126 @@ body.ar,
     letter-spacing: 0;
 }
 
-/* ===== EMERGENCY BANNER ===== */
+/* ===== EMERGENCY BANNER - MODERN 2024/2025 ===== */
 .emergency-banner {
-    background: var(--emergency);
+    background: linear-gradient(135deg, var(--emergency) 0%, #C53030 100%);
     color: var(--white);
     text-align: center;
-    padding: 10px;
+    padding: clamp(12px, 2.5vw, 16px) clamp(16px, 4vw, 24px);
     font-weight: 500;
-    font-size: 1.125rem;
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
     position: sticky;
     top: 0;
     z-index: 101;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    contain: layout style paint;
+    will-change: transform;
+    line-height: 1.4;
+}
+
+.emergency-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 100%);
+    pointer-events: none;
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
 }
 
 .emergency-banner a {
     color: var(--white);
-    font-weight: bold;
+    font-weight: 600;
     text-decoration: underline;
-    padding: 8px 4px;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+    padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 16px);
     min-height: 44px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.emergency-banner a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.emergency-banner a:hover::before,
+.emergency-banner a:focus::before {
+    transform: scaleX(1);
+}
+
+.emergency-banner a:hover,
+.emergency-banner a:focus {
+    text-decoration-color: rgba(255, 255, 255, 0.8);
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+.emergency-banner a:active {
+    transform: scale(0.98);
+}
+
+/* Dark mode support for emergency banner */
+@media (prefers-color-scheme: dark) {
+    .emergency-banner {
+        background: linear-gradient(135deg, #B91C1C 0%, #991B1B 100%);
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .emergency-banner {
+        background: #000;
+        color: #fff;
+        border: 3px solid #fff;
+        border-bottom: 3px solid #fff;
+    }
+    
+    .emergency-banner a {
+        text-decoration-thickness: 3px;
+        outline: 2px solid #fff;
+    }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .emergency-banner::before {
+        animation: none;
+    }
+    
+    .emergency-banner a::before,
+    .emergency-banner a {
+        transition: none;
+    }
 }
 
 /* ===== HEADER & NAVIGATION ===== */
@@ -1241,10 +1340,16 @@ img.loaded {
 }
 
 .emergency-banner {
-    font-size: var(--text-lg);
-    padding: var(--space-xs) var(--space-sm);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    padding: clamp(10px, 2vw, 14px) clamp(12px, 3vw, 20px);
     min-height: 40px;
-    line-height: var(--leading-normal);
+    line-height: 1.4;
+    backdrop-filter: blur(6px);
+}
+
+.emergency-banner a {
+    padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
+    border-radius: 6px;
 }
 
 /* ===== RTL SUPPORT ===== */
@@ -1292,10 +1397,19 @@ img.loaded {
     }
     
     .emergency-banner {
-        font-size: 0.75rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-size: clamp(0.75rem, 3vw, 0.9rem);
+        padding: clamp(8px, 2vw, 12px) clamp(10px, 3vw, 16px);
+        backdrop-filter: blur(4px);
+        /* Remove text overflow for better accessibility */
+        white-space: normal;
+        line-height: 1.3;
+    }
+    
+    .emergency-banner a {
+        padding: clamp(4px, 1vw, 8px) clamp(6px, 2vw, 10px);
+        font-size: clamp(0.75rem, 3vw, 0.9rem);
+        min-height: 40px;
+        border-radius: 4px;
     }
     
     .gallery-item {

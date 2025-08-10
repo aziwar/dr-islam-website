@@ -770,24 +770,56 @@ export class PWAManager {
    * Show update available notification
    */
   showUpdateAvailable() {
+    // Inject modern update banner CSS
+    this.injectUpdateBannerCSS();
+
     const updateBanner = document.createElement('div');
     updateBanner.className = 'pwa-update-banner';
+    updateBanner.setAttribute('role', 'banner');
+    updateBanner.setAttribute('aria-label', 'App update notification');
     updateBanner.innerHTML = `
       <div class="update-banner-content">
-        <span>🔄 App update available</span>
-        <button class="btn btn--small btn--primary" id="update-app-btn">Update Now</button>
-        <button class="btn btn--small btn--ghost" id="dismiss-update-btn">×</button>
+        <div class="update-banner-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 4l1.41 1.41L7.83 11H20v2H7.83l5.58 5.59L12 20l-8-8 8-8z" transform="rotate(270 12 12)"/>
+          </svg>
+        </div>
+        <div class="update-banner-text">
+          <span class="update-title">App update available</span>
+          <span class="update-subtitle">Get the latest features and improvements</span>
+        </div>
+        <div class="update-banner-actions">
+          <button class="btn btn--update-primary" id="update-app-btn" aria-label="Update app now">
+            Update Now
+          </button>
+          <button class="btn btn--update-dismiss" id="dismiss-update-btn" aria-label="Dismiss update notification">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
       </div>
     `;
 
     document.body.appendChild(updateBanner);
 
+    // Add smooth entrance animation
+    requestAnimationFrame(() => {
+      updateBanner.classList.add('show');
+    });
+
     document.getElementById('update-app-btn').addEventListener('click', () => {
-      window.location.reload();
+      updateBanner.classList.add('updating');
+      setTimeout(() => {
+        window.location.reload();
+      }, 300);
     });
 
     document.getElementById('dismiss-update-btn').addEventListener('click', () => {
-      updateBanner.remove();
+      updateBanner.classList.add('dismissing');
+      setTimeout(() => {
+        updateBanner.remove();
+      }, 300);
     });
   }
 
@@ -872,6 +904,253 @@ export class PWAManager {
     `;
     
     this.injectCSS(css, 'pwa-install-styles');
+  }
+
+  /**
+   * Inject modern update banner CSS
+   */
+  injectUpdateBannerCSS() {
+    const css = `
+      .pwa-update-banner {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        max-width: 400px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        box-shadow: 
+          0 20px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04),
+          0 0 0 1px rgba(0, 0, 0, 0.05);
+        z-index: 10001;
+        transform: translateX(calc(100% + 40px));
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform, opacity;
+        contain: layout style;
+      }
+
+      .pwa-update-banner.show {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      .pwa-update-banner.updating {
+        transform: scale(0.95);
+        opacity: 0.7;
+      }
+
+      .pwa-update-banner.dismissing {
+        transform: translateX(calc(100% + 40px)) scale(0.9);
+        opacity: 0;
+      }
+
+      .update-banner-content {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px;
+      }
+
+      .update-banner-icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #BEB093 0%, #D4C5A3 100%);
+        border-radius: 12px;
+        color: white;
+        box-shadow: 0 4px 8px rgba(190, 176, 147, 0.3);
+      }
+
+      .update-banner-text {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .update-title {
+        display: block;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 4px;
+        line-height: 1.4;
+      }
+
+      .update-subtitle {
+        display: block;
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.4;
+      }
+
+      .update-banner-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      .btn--update-primary {
+        background: linear-gradient(135deg, #BEB093 0%, #D4C5A3 100%);
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(190, 176, 147, 0.2);
+        min-width: 100px;
+      }
+
+      .btn--update-primary:hover {
+        background: linear-gradient(135deg, #A69A81 0%, #C2B391 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(190, 176, 147, 0.3);
+      }
+
+      .btn--update-primary:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(190, 176, 147, 0.2);
+      }
+
+      .btn--update-dismiss {
+        background: transparent;
+        border: 1px solid #e5e7eb;
+        color: #6b7280;
+        padding: 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+      }
+
+      .btn--update-dismiss:hover {
+        background: #f3f4f6;
+        border-color: #d1d5db;
+        color: #374151;
+      }
+
+      .btn--update-dismiss:active {
+        background: #e5e7eb;
+        transform: scale(0.95);
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .pwa-update-banner {
+          top: 10px;
+          right: 10px;
+          left: 10px;
+          max-width: none;
+          transform: translateY(-100%);
+        }
+
+        .pwa-update-banner.show {
+          transform: translateY(0);
+        }
+
+        .pwa-update-banner.dismissing {
+          transform: translateY(-100%) scale(0.95);
+        }
+
+        .update-banner-content {
+          padding: 16px;
+          gap: 12px;
+        }
+
+        .update-banner-icon {
+          width: 36px;
+          height: 36px;
+        }
+
+        .update-banner-actions {
+          flex-direction: row;
+        }
+
+        .btn--update-primary {
+          font-size: 0.8rem;
+          padding: 8px 12px;
+          min-width: 80px;
+        }
+      }
+
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        .pwa-update-banner {
+          background: rgba(31, 41, 55, 0.95);
+          border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+
+        .update-title {
+          color: #f9fafb;
+        }
+
+        .update-subtitle {
+          color: #d1d5db;
+        }
+
+        .btn--update-dismiss {
+          border-color: #374151;
+          color: #9ca3af;
+        }
+
+        .btn--update-dismiss:hover {
+          background: #374151;
+          border-color: #4b5563;
+          color: #d1d5db;
+        }
+      }
+
+      /* High contrast mode */
+      @media (prefers-contrast: high) {
+        .pwa-update-banner {
+          border: 2px solid #000;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .update-title {
+          color: #000;
+          font-weight: 700;
+        }
+
+        .btn--update-primary {
+          background: #000;
+          color: #fff;
+          border: 2px solid #000;
+        }
+
+        .btn--update-dismiss {
+          border: 2px solid #000;
+          color: #000;
+        }
+      }
+
+      /* Reduce motion */
+      @media (prefers-reduced-motion: reduce) {
+        .pwa-update-banner {
+          transition: opacity 0.2s ease;
+        }
+
+        .pwa-update-banner.updating,
+        .pwa-update-banner.dismissing {
+          transform: none;
+        }
+      }
+    `;
+
+    this.injectCSS(css, 'pwa-update-banner-styles');
   }
 
   injectCSS(css, id) {

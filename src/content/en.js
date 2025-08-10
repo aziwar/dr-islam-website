@@ -2062,39 +2062,8 @@ Please confirm my appointment. Thank you! 🙏\`;
                 .catch(err => /* ServiceWorker registration failed - logging disabled */);
         });
         
-        // Install prompt
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // Show install button after 30 seconds
-            setTimeout(() => {
-                if (deferredPrompt) {
-                    const installBanner = document.createElement('div');
-                    installBanner.className = 'install-prompt';
-                    installBanner.innerHTML = \`
-                        <p>Install the app for quick access</p>
-                        <button onclick="installPWA()">Install</button>
-                        <button onclick="dismissInstall()">Later</button>
-                    \`;
-                    document.body.appendChild(installBanner);
-                }
-            }, 30000);
-        });
-        
-        window.installPWA = async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                deferredPrompt = null;
-                document.querySelector('.install-prompt')?.remove();
-            }
-        };
-        
-        window.dismissInstall = () => {
-            document.querySelector('.install-prompt')?.remove();
-        };
+        // PWA Install prompts are now handled by PWA Manager
+        // (Legacy implementation removed to prevent conflicts with modern PWA Manager)
     }
     
     // =================================
