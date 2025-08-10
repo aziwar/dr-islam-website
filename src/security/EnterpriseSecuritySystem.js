@@ -104,7 +104,6 @@ export class EnterpriseSecuritySystem {
    */
   async init() {
     try {
-      console.log('🔐 Initializing Enterprise Security System...');
       
       // Initialize core security components
       await this.initializeCryptographicManager();
@@ -1036,7 +1035,6 @@ export class EnterpriseSecuritySystem {
     if (this.auditLogger) {
       return this.auditLogger.logEvent(event, details);
     }
-    console.log(`🔐 Security Event: ${event}`, details);
   }
 
   handleSecurityError(type, error) {
@@ -1172,7 +1170,6 @@ export class EnterpriseSecuritySystem {
     this.state.securityIncidents = [];
     this.state.activeThreats = [];
     
-    console.log('🔐 Enterprise Security System destroyed');
   }
 }
 

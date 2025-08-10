@@ -180,10 +180,8 @@ export const commonFunctions = `
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js')
                 .then(registration => {
-                    // Success - no console.log in production
                 })
                 .catch(err => {
-                    // Error - no console.log in production
                 });
         }
     }

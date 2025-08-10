@@ -213,7 +213,6 @@ export class ModuleSystem {
 
     link.onload = () => {
       this.preloadedModules.add(modulePath);
-      console.log(`📦 Module preloaded: ${modulePath}`);
     };
 
     link.onerror = (error) => {
@@ -236,7 +235,6 @@ export class ModuleSystem {
     link.as = 'script';
 
     link.onload = () => {
-      console.log(`🔮 Module prefetched: ${modulePath}`);
     };
 
     document.head.appendChild(link);
@@ -255,7 +253,6 @@ export class ModuleSystem {
     // Try fallback if provided
     if (fallback) {
       try {
-        console.log(`🔄 Attempting fallback for: ${modulePath}`);
         return await this.loadModule(fallback.path, fallback.options);
       } catch (fallbackError) {
         console.error(`❌ Fallback failed: ${fallback.path}`, fallbackError);
@@ -720,7 +717,6 @@ export class ModuleSystem {
             }
             
             reportMetric(name, value) {
-              console.log(\`📊 \${name}: \${Math.round(value)}ms\`);
               
               // Send to analytics if available
               if (typeof gtag !== 'undefined') {
@@ -843,7 +839,6 @@ export class ModuleSystem {
               }
             });
             
-            console.log('🗓️ Booking system loaded');
             return bookingModule;
           } catch (error) {
             console.error('❌ Failed to load booking system:', error);
@@ -923,7 +918,6 @@ export class ModuleSystem {
         }
         
         async buildAll() {
-          console.log('⚡ Starting JavaScript module optimization...');
           
           await fs.mkdir(path.join(this.outputDir, 'chunks'), { recursive: true });
           
@@ -978,7 +972,6 @@ export class ModuleSystem {
           await bundle.close();
           
           const stats = await fs.stat(outputOptions.file);
-          console.log(\`📦 \${chunkName}: \${(stats.size / 1024).toFixed(1)}KB\`);
         }
         
         async buildModuleSystem() {

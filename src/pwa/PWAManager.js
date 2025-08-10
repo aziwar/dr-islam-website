@@ -379,7 +379,7 @@ export class PWAManager {
 
     try {
       // Register service worker
-      const registration = await navigator.serviceWorker.register('/src/performance/ServiceWorker.js');
+      const registration = await navigator.serviceWorker.register('/sw.js');
       
       console.log('✅ Service Worker registered:', registration);
       
@@ -710,7 +710,6 @@ export class PWAManager {
       if (e.target.closest('.btn--emergency, [data-emergency="true"]')) {
         try {
           this.state.wakeLock = await navigator.wakeLock.request('screen');
-          console.log('🔒 Screen wake lock activated for emergency');
           
           // Release after 5 minutes or when user closes emergency
           setTimeout(() => {

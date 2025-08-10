@@ -74,7 +74,6 @@ export class AccessibilitySystem {
    */
   async init() {
     try {
-      console.log('♿ Initializing Accessibility System...');
       
       // Core accessibility setup
       this.setupSemanticStructure();
@@ -141,7 +140,6 @@ export class AccessibilitySystem {
     // Ensure lang attribute exists
     if (!doc.lang) {
       doc.lang = this.config.primaryLanguage;
-      console.log('♿ Added lang attribute to document');
     }
     
     // Ensure dir attribute for RTL support
@@ -153,7 +151,6 @@ export class AccessibilitySystem {
     const title = document.querySelector('title');
     if (title && (!title.textContent || title.textContent.trim().length < 10)) {
       title.textContent = 'Dr. Islam Dental Practice - Professional Dental Care Services';
-      console.log('♿ Enhanced page title for accessibility');
     }
   }
 
@@ -470,7 +467,6 @@ export class AccessibilitySystem {
     if (hasScreenReader) {
       this.state.screenReaderActive = true;
       document.body.classList.add('screen-reader-active');
-      console.log('♿ Screen reader detected');
     }
 
     // Enhanced detection through interaction patterns
@@ -485,7 +481,6 @@ export class AccessibilitySystem {
           potentialScreenReaderUser = true;
           this.state.screenReaderActive = true;
           document.body.classList.add('screen-reader-active');
-          console.log('♿ Screen reader usage inferred from navigation patterns');
         }
       }
     });
@@ -748,7 +743,6 @@ export class AccessibilitySystem {
     // Update ARIA labels and descriptions for new language
     this.updateLanguageDependentARIA(newLang);
     
-    console.log(`♿ Language switched from ${oldLang} to ${newLang}`);
   }
 
   /**
@@ -890,7 +884,6 @@ export class AccessibilitySystem {
       console.warn('♿ Accessibility Warnings:', auditResults.warnings);
     }
 
-    console.log(`♿ Accessibility Audit Complete: ${auditResults.summary.complianceScore}% compliant`);
     
     return auditResults;
   }
@@ -1067,7 +1060,6 @@ export class AccessibilitySystem {
       this.removeFocusTrap(trap);
     });
     
-    console.log('♿ Accessibility System destroyed');
   }
 }
 

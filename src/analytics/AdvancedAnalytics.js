@@ -109,7 +109,6 @@ export class AdvancedAnalytics {
    */
   async init() {
     try {
-      console.log('📊 Initializing Advanced Analytics...');
       
       // Check privacy compliance
       await this.setupPrivacyCompliance();
@@ -152,7 +151,6 @@ export class AdvancedAnalytics {
   async setupPrivacyCompliance() {
     // Check Do Not Track
     if (this.config.respectDoNotTrack && navigator.doNotTrack === '1') {
-      console.log('🔒 Do Not Track detected - Analytics disabled');
       this.state.trackingDisabled = true;
       return;
     }
@@ -770,7 +768,6 @@ export class AdvancedAnalytics {
     
     // Debug logging
     if (this.config.debug) {
-      console.log('📊 Analytics Event:', event);
     }
   }
 
@@ -878,7 +875,6 @@ export class AdvancedAnalytics {
       }
 
       if (this.config.debug) {
-        console.log('📊 Analytics batch sent:', batch.length, 'events');
       }
 
     } catch (error) {
@@ -1121,7 +1117,6 @@ export class AdvancedAnalytics {
     this.eventQueue = [];
     this.batchedEvents = [];
     
-    console.log('📊 Analytics data cleared');
   }
 
   /**
@@ -1144,7 +1139,6 @@ export class AdvancedAnalytics {
       dashboard.remove();
     }
     
-    console.log('📊 Advanced Analytics destroyed');
   }
 }
 

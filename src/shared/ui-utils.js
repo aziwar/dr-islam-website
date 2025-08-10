@@ -346,14 +346,12 @@ export function createUIUtilsJS() {
 (function() {
     'use strict';
     
-    console.log('Dr. Islam UI Utils loading...');
     
     // Regex safety check to prevent runtime errors
     try {
         // Test phone validation patterns with safe character classes
         /^[+]?[\d\-\s()]{8,}$/.test('test');
         /^[0-9+\-\s()]{10,}$/.test('test');
-        console.log('Phone regex patterns validated successfully');
     } catch (regexError) {
         console.error('Regex pattern error detected:', regexError);
     }
@@ -381,7 +379,6 @@ export function createUIUtilsJS() {
      * Mobile Navigation Functions
      */
     function toggleMobileMenu() {
-        console.log('toggleMobileMenu called');
         const menu = document.querySelector('.main-nav');
         const toggle = document.querySelector('.nav-toggle, .mobile-menu-toggle');
         const backdrop = document.querySelector('.nav-backdrop');
@@ -405,7 +402,6 @@ export function createUIUtilsJS() {
         // Prevent body scroll when menu is open
         document.body.style.overflow = !isOpen ? 'hidden' : '';
         
-        console.log('Mobile menu toggled:', !isOpen);
     }
 
     function closeMobileMenu() {
@@ -427,7 +423,6 @@ export function createUIUtilsJS() {
      * Modal Management Functions - CRITICAL FOR BOOKING SYSTEM
      */
     function openBookingModal(service = '') {
-        console.log('openBookingModal called with service:', service);
         
         // Try to find existing modal
         let modal = document.querySelector('.booking-modal');
@@ -435,7 +430,6 @@ export function createUIUtilsJS() {
         
         // Create modal if it doesn't exist
         if (!modal) {
-            console.log('Creating booking modal...');
             const success = createBookingModal(service);
             if (!success) {
                 console.error('Failed to create booking modal');
@@ -466,19 +460,16 @@ export function createUIUtilsJS() {
                 }
             }, 100);
             
-            console.log('Booking modal opened');
         } else {
             console.error('Could not open booking modal');
         }
     }
     
     function createBookingModal(service = '') {
-        console.log('createBookingModal called with service:', service);
         
         // Check if modal already exists
         let existingModal = document.querySelector('.booking-modal');
         if (existingModal) {
-            console.log('Modal already exists, removing old one');
             const existingOverlay = document.querySelector('.modal-overlay');
             if (existingOverlay) {
                 existingOverlay.remove();
@@ -594,7 +585,6 @@ export function createUIUtilsJS() {
             }
         </style>\`;
         
-        console.log('Inserting modal HTML...');
         document.body.insertAdjacentHTML('beforeend', modalHTML);
         
         // Verify insertion worked
@@ -606,13 +596,11 @@ export function createUIUtilsJS() {
             return false;
         }
         
-        console.log('Modal HTML inserted successfully');
         
         // Bind event listeners
         const closeButtons = document.querySelectorAll('.modal-close');
         const form = document.querySelector('.booking-form');
         
-        console.log('Binding', closeButtons.length, 'close buttons');
         closeButtons.forEach(btn => {
             btn.addEventListener('click', closeBookingModal);
         });
@@ -628,10 +616,8 @@ export function createUIUtilsJS() {
             
             // Add real-time validation
             setupFormValidation(form);
-            console.log('Form submission handler and validation bound');
         }
         
-        console.log('Modal creation completed successfully');
         return true;
     }
 
@@ -643,7 +629,6 @@ export function createUIUtilsJS() {
             modal.classList.remove('is-active');
             overlay.classList.remove('is-active');
             document.body.style.overflow = '';
-            console.log('Booking modal closed');
         }
     }
 
@@ -778,7 +763,6 @@ export function createUIUtilsJS() {
         
         // Validate form before submission
         if (!validateFormBeforeSubmit(form)) {
-            console.log('Form validation failed');
             return;
         }
         
@@ -798,7 +782,6 @@ export function createUIUtilsJS() {
             
             if (result.success) {
                 showBookingSuccess();
-                console.log('Booking submitted successfully');
                 
                 // Reset form after successful submission
                 setTimeout(() => {
@@ -847,13 +830,11 @@ export function createUIUtilsJS() {
      * Initialize all functionality on page load
      */
     function initializeUIUtils() {
-        console.log('Initializing Dr. Islam UI Utils...');
         
         // Set up mobile menu
         const menuToggle = document.querySelector('.nav-toggle, .mobile-menu-toggle');
         if (menuToggle) {
             menuToggle.addEventListener('click', toggleMobileMenu);
-            console.log('Mobile menu toggle bound');
         }
         
         // Set up all booking buttons
@@ -866,7 +847,6 @@ export function createUIUtilsJS() {
             });
             // Remove inline onclick handlers
             btn.removeAttribute('onclick');
-            console.log('Booking button bound:', btn);
         });
         
         // Keyboard shortcuts
@@ -886,7 +866,6 @@ export function createUIUtilsJS() {
             }
         });
         
-        console.log('[SUCCESS] Dr. Islam UI Utils initialized successfully');
     }
 
     // Make functions globally available for onclick handlers - CRITICAL FIX
@@ -897,10 +876,6 @@ export function createUIUtilsJS() {
     window.createBookingModal = createBookingModal;
     
     // Debug: Verify global functions are assigned
-    console.log('Global function assignments:');
-    console.log('- openBookingModal:', typeof window.openBookingModal);
-    console.log('- createBookingModal:', typeof window.createBookingModal);
-    console.log('- toggleMobileMenu:', typeof window.toggleMobileMenu);
 
     // Initialize when DOM is ready
     if (document.readyState === 'loading') {
@@ -978,6 +953,5 @@ export function createUIUtilsJS() {
 
 })();
 
-console.log('[SUCCESS] Dr. Islam UI Utils loaded successfully');
 `;
 }

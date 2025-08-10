@@ -456,14 +456,12 @@ export class ImageOptimizer {
         }
         
         async processAllImages() {
-          console.log('🖼️  Starting image optimization...');
           
           // Ensure output directory exists
           await fs.mkdir(this.outputDir, { recursive: true });
           
           // Find all images
           const imageFiles = glob.sync(\`\${this.inputDir}/**/*.{jpg,jpeg,png,webp}\`);
-          console.log(\`Found \${imageFiles.length} images to process\`);
           
           let processed = 0;
           const startTime = Date.now();
@@ -474,7 +472,6 @@ export class ImageOptimizer {
             
             if (processed % 5 === 0) {
               const elapsed = (Date.now() - startTime) / 1000;
-              console.log(\`⏳ Processed \${processed}/\${imageFiles.length} images (\${elapsed.toFixed(1)}s)\`);
             }
           }
           

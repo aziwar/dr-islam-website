@@ -581,7 +581,6 @@ export class CSSOptimizer {
         }
         
         async buildAll() {
-          console.log('🎨 Starting CSS optimization...');
           
           // Ensure output directory
           await fs.mkdir(this.outputDir, { recursive: true });
@@ -620,7 +619,6 @@ export class CSSOptimizer {
             processed.css
           );
           
-          console.log(\`📦 Critical CSS: \${(processed.css.length / 1024).toFixed(1)}KB\`);
         }
         
         async buildComponentChunks() {
@@ -645,7 +643,6 @@ export class CSSOptimizer {
               processed.css
             );
             
-            console.log(\`📦 \${chunkName}: \${(processed.css.length / 1024).toFixed(1)}KB\`);
           }
         }
         

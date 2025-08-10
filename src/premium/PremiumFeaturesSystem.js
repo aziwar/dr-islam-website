@@ -109,7 +109,6 @@ export class PremiumFeaturesSystem {
    */
   async init() {
     try {
-      console.log('🌟 Initializing Premium Features System...');
       
       // Initialize core premium features
       if (this.config.enableVirtualConsultations) {
@@ -218,7 +217,6 @@ export class PremiumFeaturesSystem {
             timestamp: Date.now()
           });
           
-          console.log(`📹 Virtual consultation started: ${consultationId}`);
           return session;
           
         } catch (error) {
@@ -901,7 +899,6 @@ export class PremiumFeaturesSystem {
         // Update usage statistics
         this.updateUsageStatistics(feature, action);
         
-        console.log(`🌟 Premium Feature Used: ${feature}.${action}`, metadata);
       },
 
       getUsageReport: (timeframe = '30d') => {
@@ -1268,7 +1265,6 @@ export class PremiumFeaturesSystem {
       clearInterval(this.performanceMonitor);
     }
     
-    console.log('🌟 Premium Features System destroyed');
   }
 }
 

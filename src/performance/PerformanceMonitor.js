@@ -72,7 +72,6 @@ export class PerformanceMonitor {
    */
   async init() {
     try {
-      console.log('🚀 Initializing Performance Monitor...');
       
       // Set up performance observers
       this.setupCoreWebVitalsTracking();
@@ -119,7 +118,6 @@ export class PerformanceMonitor {
       this.metrics.coreWebVitals.lcp = lastEntry.startTime;
       this.evaluateMetric('LCP', lastEntry.startTime, this.config.thresholds.lcp);
       
-      console.log(`📊 LCP: ${Math.round(lastEntry.startTime)}ms`);
     });
 
     try {
@@ -137,7 +135,6 @@ export class PerformanceMonitor {
         this.metrics.coreWebVitals.fid = fid;
         this.evaluateMetric('FID', fid, this.config.thresholds.fid);
         
-        console.log(`📊 FID: ${Math.round(fid)}ms`);
       });
     });
 
@@ -161,7 +158,6 @@ export class PerformanceMonitor {
       });
       
       if (clsValue > 0) {
-        console.log(`📊 CLS: ${clsValue.toFixed(3)}`);
       }
     });
 
@@ -180,7 +176,6 @@ export class PerformanceMonitor {
           this.metrics.coreWebVitals.fcp = entry.startTime;
           this.evaluateMetric('FCP', entry.startTime, this.config.thresholds.fcp);
           
-          console.log(`📊 FCP: ${Math.round(entry.startTime)}ms`);
         }
       });
     });
@@ -312,7 +307,6 @@ export class PerformanceMonitor {
         this.trackCSSLoadingPerformance();
       }
       
-      console.log('🔗 Performance Monitor integrations initialized');
       
     } catch (error) {
       console.warn('⚠️ Some integrations failed to initialize:', error);
@@ -561,7 +555,6 @@ export class PerformanceMonitor {
       this.metrics.coreWebVitals.tti = tti;
       this.evaluateMetric('TTI', tti, this.config.thresholds.tti);
       
-      console.log(`📊 TTI (estimated): ${Math.round(tti)}ms`);
     };
 
     // Calculate TTI after page load
@@ -718,7 +711,6 @@ export class PerformanceMonitor {
     
     // Log to console in development
     if (this.isDevelopment()) {
-      console.log('📊 Performance Report:', report);
     }
     
     return report;
@@ -938,7 +930,6 @@ export class PerformanceMonitor {
       alerts: []
     };
     
-    console.log('🧹 Performance data cleared');
   }
 
   /**
@@ -957,7 +948,6 @@ export class PerformanceMonitor {
       this.reportingTimer = null;
     }
 
-    console.log('🔥 Performance Monitor destroyed');
   }
 }
 
