@@ -6,28 +6,7 @@ import { DESIGN_TOKENS } from '../../shared/design-tokens.js';
 export const A11Y_CSS = `
 /* ===== WCAG 2.1 AA ACCESSIBILITY STYLES ===== */
 
-/* Skip Links - High contrast and visible when focused */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: var(--text);
-    color: var(--white);
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 0 0 4px 4px;
-    font-weight: 600;
-    font-size: 14px;
-    z-index: 10000;
-    transition: top 0.3s ease;
-    border: 2px solid var(--primary);
-}
-
-.skip-link:focus {
-    top: 0;
-    outline: 3px solid var(--primary);
-    outline-offset: 2px;
-}
+/* Skip Links removed per user request */
 
 /* Focus Indicators - WCAG 2.4.7 Focus Visible */
 *:focus {
@@ -353,7 +332,6 @@ p {
 
 /* Print Styles for Accessibility */
 @media print {
-    .skip-link,
     .nav-toggle,
     .cta-button,
     .social-links {
@@ -373,10 +351,7 @@ p {
 }
 
 /* RTL Support Enhancements */
-[dir="rtl"] .skip-link {
-    right: 6px;
-    left: auto;
-}
+/* RTL skip-link styles removed */
 
 [dir="rtl"] .contrast-aa::after {
     right: auto;
@@ -437,10 +412,6 @@ p {
         --primary-dark: #A08F65;
     }
     
-    .skip-link {
-        background: var(--white);
-        color: var(--text);
-        border-color: var(--primary);
-    }
+    /* skip-link styles removed */
 }
 `;

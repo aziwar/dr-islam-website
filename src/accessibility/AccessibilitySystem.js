@@ -16,7 +16,7 @@ export class AccessibilitySystem {
       
       // Keyboard navigation
       enableKeyboardTraps: true,
-      enableSkipLinks: true,
+      enableSkipLinks: false,
       enableFocusManagement: true,
       customFocusIndicators: true,
       

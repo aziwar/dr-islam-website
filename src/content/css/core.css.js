@@ -925,21 +925,7 @@ button::before {
 }
 
 /* ===== ACCESSIBILITY ===== */
-.skip-nav {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--primary);
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 0 0 4px 0;
-    z-index: 1000;
-}
-
-.skip-nav:focus {
-    top: 0;
-}
+/* Skip navigation removed per user request */
 
 :focus {
     outline: 3px solid var(--primary);

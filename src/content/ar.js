@@ -98,9 +98,6 @@ export const HTML_AR = `<!DOCTYPE html>
     <!-- Google Analytics integration disabled for privacy -->
 </head>
 <body>
-    <!-- Skip Links for Keyboard Navigation -->
-    <a href="#main-content" class="skip-link">انتقل إلى المحتوى الرئيسي</a>
-    <a href="#nav-menu" class="skip-link">انتقل إلى التنقل</a>
 
     <!-- Emergency Banner -->
     <div class="emergency-banner">

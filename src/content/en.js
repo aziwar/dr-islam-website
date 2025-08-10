@@ -96,9 +96,6 @@ export const HTML_EN = `<!DOCTYPE html>
     <!-- Google Analytics integration disabled for privacy -->
 </head>
 <body>
-    <!-- Skip Links for Keyboard Navigation -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-    <a href="#nav-menu" class="skip-link">Skip to navigation</a>
 
     <!-- Emergency Banner -->
     <div class="emergency-banner" role="banner" aria-label="Dental emergency contact information">

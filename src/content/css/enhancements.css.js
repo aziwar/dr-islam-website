@@ -199,23 +199,7 @@ a:focus {
     border: 0 !important;
 }
 
-/* Skip navigation */
-.skip-nav {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--primary);
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 0 0 4px 0;
-    z-index: 1000;
-    transition: top 0.3s ease;
-}
-
-.skip-nav:focus {
-    top: 0;
-}
+/* Skip navigation removed per user request */
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
