@@ -476,29 +476,38 @@ export function createUIUtilsJS() {
         }
         
         const modalHTML = \`
-        <div class="modal-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center;">
-            <div class="booking-modal" role="dialog" aria-labelledby="booking-title" aria-modal="true" style="background: white; border-radius: 8px; padding: 20px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
-                <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
-                    <h2 id="booking-title" style="margin: 0; color: #BEB093;">Book Your Appointment</h2>
-                    <button type="button" class="modal-close" aria-label="Close modal" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
+        <div class="modal-overlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+            <div class="booking-modal" role="dialog" aria-labelledby="booking-title" aria-modal="true" style="background: white; border-radius: 12px; padding: 25px; max-width: 520px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                    <h2 id="booking-title" style="margin: 0; color: #BEB093; font-size: 1.5rem;">Book Your Appointment</h2>
+                    <button type="button" class="modal-close" aria-label="Close modal" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #666; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s;">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form class="booking-form" action="/api/contact" method="POST">
-                        <div class="form-group" style="margin-bottom: 15px;">
-                            <label for="booking-name" style="display: block; margin-bottom: 5px; font-weight: bold;">Full Name *</label>
-                            <input type="text" id="booking-name" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    <form class="booking-form" action="/api/contact" method="POST" novalidate>
+                        <div class="form-group" style="margin-bottom: 20px; position: relative;">
+                            <label for="booking-name" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Full Name *</label>
+                            <input type="text" id="booking-name" name="name" required 
+                                   style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; transition: border-color 0.3s; box-sizing: border-box;"
+                                   aria-describedby="name-error">
+                            <div class="error-message" id="name-error" role="alert" style="color: #e74c3c; font-size: 14px; margin-top: 5px; display: none;"></div>
                         </div>
-                        <div class="form-group" style="margin-bottom: 15px;">
-                            <label for="booking-phone" style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number *</label>
-                            <input type="tel" id="booking-phone" name="phone" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                        <div class="form-group" style="margin-bottom: 20px; position: relative;">
+                            <label for="booking-phone" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Phone Number *</label>
+                            <input type="tel" id="booking-phone" name="phone" required 
+                                   style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; transition: border-color 0.3s; box-sizing: border-box;"
+                                   aria-describedby="phone-error" placeholder="01X-XXXX-XXXX">
+                            <div class="error-message" id="phone-error" role="alert" style="color: #e74c3c; font-size: 14px; margin-top: 5px; display: none;"></div>
                         </div>
-                        <div class="form-group" style="margin-bottom: 15px;">
-                            <label for="booking-email" style="display: block; margin-bottom: 5px; font-weight: bold;">Email</label>
-                            <input type="email" id="booking-email" name="email" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                        <div class="form-group" style="margin-bottom: 20px; position: relative;">
+                            <label for="booking-email" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Email</label>
+                            <input type="email" id="booking-email" name="email" 
+                                   style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; transition: border-color 0.3s; box-sizing: border-box;"
+                                   aria-describedby="email-error" placeholder="your@email.com">
+                            <div class="error-message" id="email-error" role="alert" style="color: #e74c3c; font-size: 14px; margin-top: 5px; display: none;"></div>
                         </div>
-                        <div class="form-group" style="margin-bottom: 15px;">
-                            <label for="booking-service" style="display: block; margin-bottom: 5px; font-weight: bold;">Service Needed</label>
-                            <select id="booking-service" name="service" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label for="booking-service" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Service Needed</label>
+                            <select id="booking-service" name="service" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box;">
                                 <option value="">Select Service</option>
                                 <option value="dental-implants">Dental Implants</option>
                                 <option value="cosmetic-dentistry">Cosmetic Dentistry</option>
@@ -507,27 +516,73 @@ export function createUIUtilsJS() {
                                 <option value="emergency">Emergency Treatment</option>
                             </select>
                         </div>
-                        <div class="form-group" style="margin-bottom: 15px;">
-                            <label for="booking-message" style="display: block; margin-bottom: 5px; font-weight: bold;">Additional Information</label>
-                            <textarea id="booking-message" name="message" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; resize: vertical;"></textarea>
+                        <div class="form-group" style="margin-bottom: 25px;">
+                            <label for="booking-message" style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Additional Information</label>
+                            <textarea id="booking-message" name="message" rows="4" 
+                                     style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px; resize: vertical; font-size: 16px; font-family: inherit; box-sizing: border-box;"
+                                     placeholder="Any specific concerns or preferred appointment times..."></textarea>
                         </div>
-                        <div class="form-actions" style="display: flex; gap: 10px; justify-content: flex-end;">
-                            <button type="button" class="btn btn-secondary modal-close" style="padding: 10px 20px; border: 1px solid #ddd; background: #f5f5f5; color: #666; border-radius: 4px; cursor: pointer;">
+                        <div class="form-actions" style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button type="button" class="btn btn-secondary modal-close" 
+                                   style="padding: 12px 24px; border: 2px solid #ddd; background: #f8f9fa; color: #666; border-radius: 6px; cursor: pointer; font-size: 16px; transition: all 0.3s;">
                                 Cancel
                             </button>
-                            <button type="submit" class="btn btn-primary" style="padding: 10px 20px; border: none; background: #BEB093; color: white; border-radius: 4px; cursor: pointer;">
-                                Send Booking Request
+                            <button type="submit" class="btn btn-primary" 
+                                   style="padding: 12px 24px; border: none; background: #BEB093; color: white; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600; transition: all 0.3s; position: relative; min-width: 180px;">
+                                <span class="btn-text">Send Booking Request</span>
+                                <div class="loading-spinner" style="display: none; width: 20px; height: 20px; border: 2px solid transparent; border-top: 2px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;">
+                                </div>
                             </button>
                         </div>
                     </form>
-                    <div class="booking-success" style="display: none; text-align: center; padding: 20px;">
-                        <div class="success-icon" style="font-size: 48px; color: #4CAF50; margin-bottom: 10px;">[SUCCESS]</div>
-                        <h3 style="color: #4CAF50; margin-bottom: 10px;">Booking Request Sent!</h3>
-                        <p>Thank you! We will contact you within 2 hours to confirm your appointment.</p>
+                    <div class="booking-success" style="display: none; text-align: center; padding: 30px 20px;">
+                        <div class="success-icon" style="width: 64px; height: 64px; background: #4CAF50; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; font-weight: bold;">✓</div>
+                        <h3 style="color: #4CAF50; margin-bottom: 15px; font-size: 1.4rem;">Booking Request Sent!</h3>
+                        <p style="color: #666; line-height: 1.5;">Thank you! We will contact you within 2 hours to confirm your appointment.</p>
+                    </div>
+                    <div class="booking-error" style="display: none; text-align: center; padding: 20px; background: #fef2f2; border-radius: 6px; border-left: 4px solid #e74c3c;">
+                        <h4 style="color: #e74c3c; margin: 0 0 10px 0;">Booking Failed</h4>
+                        <p class="error-text" style="color: #666; margin: 0;"></p>
+                        <button type="button" class="retry-btn" style="margin-top: 15px; padding: 8px 16px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">Try Again</button>
                     </div>
                 </div>
             </div>
-        </div>\`;
+        </div>
+        <style>
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            .booking-form input:focus, .booking-form textarea:focus, .booking-form select:focus {
+                outline: none;
+                border-color: #BEB093 !important;
+                box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.1) !important;
+            }
+            .booking-form input.valid {
+                border-color: #27ae60 !important;
+            }
+            .booking-form input.invalid {
+                border-color: #e74c3c !important;
+                background-color: #fef9f9 !important;
+            }
+            .modal-close:hover {
+                background: #f5f5f5 !important;
+            }
+            .btn:hover {
+                transform: translateY(-1px);
+            }
+            .btn-secondary:hover {
+                background: #e9ecef !important;
+            }
+            .btn-primary:hover {
+                background: #a89680 !important;
+            }
+            .btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none !important;
+            }
+        </style>\`;
         
         console.log('Inserting modal HTML...');
         document.body.insertAdjacentHTML('beforeend', modalHTML);
@@ -560,7 +615,10 @@ export function createUIUtilsJS() {
         
         if (form) {
             form.addEventListener('submit', handleBookingSubmission);
-            console.log('Form submission handler bound');
+            
+            // Add real-time validation
+            setupFormValidation(form);
+            console.log('Form submission handler and validation bound');
         }
         
         console.log('Modal creation completed successfully');
@@ -597,15 +655,126 @@ export function createUIUtilsJS() {
         }
     }
     
+    // Enhanced form validation functions
+    function setupFormValidation(form) {
+        const nameInput = form.querySelector('#booking-name');
+        const phoneInput = form.querySelector('#booking-phone');
+        const emailInput = form.querySelector('#booking-email');
+        
+        if (nameInput) {
+            nameInput.addEventListener('blur', () => validateName(nameInput));
+            nameInput.addEventListener('input', () => clearValidation(nameInput));
+        }
+        
+        if (phoneInput) {
+            phoneInput.addEventListener('blur', () => validatePhone(phoneInput));
+            phoneInput.addEventListener('input', () => clearValidation(phoneInput));
+        }
+        
+        if (emailInput) {
+            emailInput.addEventListener('blur', () => validateEmail(emailInput));
+            emailInput.addEventListener('input', () => clearValidation(emailInput));
+        }
+    }
+    
+    function validateName(input) {
+        const value = input.value.trim();
+        const errorDiv = document.getElementById('name-error');
+        
+        if (!value) {
+            showFieldError(input, errorDiv, 'Full name is required');
+            return false;
+        } else if (value.length < 2) {
+            showFieldError(input, errorDiv, 'Please enter your full name');
+            return false;
+        } else {
+            showFieldSuccess(input, errorDiv);
+            return true;
+        }
+    }
+    
+    function validatePhone(input) {
+        const value = input.value.trim();
+        const errorDiv = document.getElementById('phone-error');
+        
+        if (!value) {
+            showFieldError(input, errorDiv, 'Phone number is required');
+            return false;
+        } else if (!/^[0-9+\-\s\(\)]{10,}$/.test(value)) {
+            showFieldError(input, errorDiv, 'Please enter a valid phone number');
+            return false;
+        } else {
+            showFieldSuccess(input, errorDiv);
+            return true;
+        }
+    }
+    
+    function validateEmail(input) {
+        const value = input.value.trim();
+        const errorDiv = document.getElementById('email-error');
+        
+        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            showFieldError(input, errorDiv, 'Please enter a valid email address');
+            return false;
+        } else {
+            showFieldSuccess(input, errorDiv);
+            return true;
+        }
+    }
+    
+    function showFieldError(input, errorDiv, message) {
+        input.classList.remove('valid');
+        input.classList.add('invalid');
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        input.setAttribute('aria-invalid', 'true');
+    }
+    
+    function showFieldSuccess(input, errorDiv) {
+        input.classList.remove('invalid');
+        input.classList.add('valid');
+        errorDiv.style.display = 'none';
+        input.setAttribute('aria-invalid', 'false');
+    }
+    
+    function clearValidation(input) {
+        input.classList.remove('invalid', 'valid');
+        const errorDiv = input.nextElementSibling;
+        if (errorDiv && errorDiv.classList.contains('error-message')) {
+            errorDiv.style.display = 'none';
+        }
+        input.removeAttribute('aria-invalid');
+    }
+    
+    function validateFormBeforeSubmit(form) {
+        const nameInput = form.querySelector('#booking-name');
+        const phoneInput = form.querySelector('#booking-phone');
+        const emailInput = form.querySelector('#booking-email');
+        
+        const nameValid = validateName(nameInput);
+        const phoneValid = validatePhone(phoneInput);
+        const emailValid = validateEmail(emailInput);
+        
+        return nameValid && phoneValid && emailValid;
+    }
+
     async function handleBookingSubmission(e) {
         e.preventDefault();
         
         const form = e.target;
         const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
+        const btnText = submitBtn.querySelector('.btn-text');
+        const spinner = submitBtn.querySelector('.loading-spinner');
         
-        // Add loading state
-        submitBtn.textContent = 'Sending...';
+        // Validate form before submission
+        if (!validateFormBeforeSubmit(form)) {
+            console.log('Form validation failed');
+            return;
+        }
+        
+        // Enhanced loading state
+        btnText.style.display = 'none';
+        spinner.style.display = 'block';
         submitBtn.disabled = true;
         
         try {
@@ -620,17 +789,48 @@ export function createUIUtilsJS() {
             if (result.success) {
                 showBookingSuccess();
                 console.log('Booking submitted successfully');
+                
+                // Reset form after successful submission
+                setTimeout(() => {
+                    form.reset();
+                    clearAllValidation(form);
+                }, 2000);
             } else {
-                alert('Error: ' + result.error);
+                showBookingError(result.error || 'Submission failed. Please try again.');
                 console.error('Booking submission error:', result.error);
             }
         } catch (error) {
-            alert('Network error. Please try again.');
+            showBookingError('Network error. Please check your connection and try again.');
             console.error('Booking submission network error:', error);
         } finally {
-            submitBtn.textContent = originalText;
+            // Restore button state
+            btnText.style.display = 'inline';
+            spinner.style.display = 'none';
             submitBtn.disabled = false;
         }
+    }
+    
+    function showBookingError(message) {
+        const form = document.querySelector('.booking-form');
+        const errorDiv = document.querySelector('.booking-error');
+        const errorText = errorDiv.querySelector('.error-text');
+        const retryBtn = errorDiv.querySelector('.retry-btn');
+        
+        if (form && errorDiv && errorText) {
+            form.style.display = 'none';
+            errorText.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            retryBtn.onclick = () => {
+                errorDiv.style.display = 'none';
+                form.style.display = 'block';
+            };
+        }
+    }
+    
+    function clearAllValidation(form) {
+        const inputs = form.querySelectorAll('input, textarea');
+        inputs.forEach(input => clearValidation(input));
     }
 
     /**
@@ -679,11 +879,18 @@ export function createUIUtilsJS() {
         console.log('[SUCCESS] Dr. Islam UI Utils initialized successfully');
     }
 
-    // Make functions globally available for onclick handlers
+    // Make functions globally available for onclick handlers - CRITICAL FIX
     window.openBookingModal = openBookingModal;
     window.closeBookingModal = closeBookingModal;
     window.toggleMobileMenu = toggleMobileMenu;
     window.closeMobileMenu = closeMobileMenu;
+    window.createBookingModal = createBookingModal;
+    
+    // Debug: Verify global functions are assigned
+    console.log('Global function assignments:');
+    console.log('- openBookingModal:', typeof window.openBookingModal);
+    console.log('- createBookingModal:', typeof window.createBookingModal);
+    console.log('- toggleMobileMenu:', typeof window.toggleMobileMenu);
 
     // Initialize when DOM is ready
     if (document.readyState === 'loading') {

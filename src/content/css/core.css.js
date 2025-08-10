@@ -94,15 +94,23 @@ body.ar,
 
 /* ===== HEADER & NAVIGATION ===== */
 header {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    /* Enhanced Glassmorphism Effect */
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 1px 0px rgba(255, 255, 255, 0.8) inset,
+        0 -1px 0px rgba(0, 0, 0, 0.02) inset;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     position: sticky;
     top: 40px;
     z-index: 100;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-radius: 12px;
+    margin: 0 20px;
+    overflow: hidden;
 }
 
 nav {
@@ -283,6 +291,9 @@ header.nav-scrolled .logo {
     box-shadow: 0 5px 25px rgba(190, 176, 147, 0.3);
     position: relative;
     overflow: hidden;
+    will-change: transform, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .cta-button::after {
@@ -606,9 +617,14 @@ img.loaded {
     right: -100%;
     width: min(80vw, 400px);
     height: 100vh;
-    background: rgba(255, 255, 255, 0.98);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    /* Enhanced Mobile Navigation Glassmorphism */
+    background: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(25px) saturate(180%) brightness(1.1);
+    backdrop-filter: blur(25px) saturate(180%) brightness(1.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        -10px 0 50px rgba(0, 0, 0, 0.15),
+        -1px 0 0 rgba(255, 255, 255, 0.6) inset;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -623,6 +639,17 @@ img.loaded {
 
 .main-nav.is-open {
     right: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Smooth slide-in animation */
+.main-nav {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateX(100%);
+}
+
+.main-nav.is-open {
+    transform: translateX(0);
 }
 
 .main-nav a {
@@ -683,13 +710,17 @@ img.loaded {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* Navigation Backdrop */
+/* Navigation Backdrop - Enhanced Glassmorphism */
 .nav-backdrop {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
+    /* Enhanced Backdrop Effect */
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px) saturate(120%);
+    -webkit-backdrop-filter: blur(8px) saturate(120%);
     background: rgba(0, 0, 0, 0.5);
     z-index: calc(var(--z-modal) - 10);
     opacity: 0;

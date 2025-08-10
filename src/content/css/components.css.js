@@ -59,6 +59,9 @@ export const COMPONENTS_CSS = `
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     overflow: hidden;
+    will-change: transform, box-shadow;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .service-card::before {
@@ -75,8 +78,17 @@ export const COMPONENTS_CSS = `
 }
 
 .service-card:hover {
-    /* Mobile-first: subtle shadow only */
-    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    border-color: rgba(190, 176, 147, 0.4);
+}
+
+/* Enhanced desktop hover effects */
+@media (min-width: var(--breakpoint-md)) {
+    .service-card:hover {
+        transform: translateY(-15px) scale(1.03);
+        box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+    }
 }
 
 .service-card:hover::before {
@@ -89,6 +101,13 @@ export const COMPONENTS_CSS = `
     color: var(--primary);
     margin-bottom: var(--space-lg);
     display: block;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    will-change: transform, color;
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.1) rotate(5deg);
+    color: var(--secondary);
 }
 
 .service-card h3 {
@@ -478,6 +497,93 @@ export const COMPONENTS_CSS = `
     color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(190, 176, 147, 0.3);
+    will-change: transform, box-shadow;
+}
+
+/* Enhanced Gallery Animations - Wave 5 */
+.gallery-item {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: galleryItemFadeIn 0.6s ease-out;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    position: relative;
+}
+
+.gallery-item.filtered-out {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    transition: all 0.3s ease-out;
+}
+
+.gallery-item.filtered-in {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: filterFadeIn 0.6s ease-out;
+}
+
+@keyframes galleryItemFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes filterFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.case-images {
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.case-images img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+}
+
+.gallery-item:hover .case-images img {
+    transform: scale(1.05);
+}
+
+.case-info h4 {
+    transition: color 0.3s ease;
+}
+
+.gallery-item:hover .case-info h4 {
+    color: var(--primary);
+}
+
+.case-badge {
+    transition: all 0.3s ease;
+    will-change: transform;
+}
+
+.gallery-item:hover .case-badge {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .gallery-grid.enhanced {
