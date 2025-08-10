@@ -72,6 +72,36 @@ export const PlaceholderImages = {
         </svg>
     `,
 
+    // Case study before/after placeholder
+    caseStudy: (caseNumber, type = "before", width = 300, height = 200) => `
+        <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="caseGradient${caseNumber}${type}" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:${type === 'before' ? '#E8E8E8' : '#BEB093'};stop-opacity:0.8" />
+                    <stop offset="100%" style="stop-color:${type === 'before' ? '#D3D3D3' : '#D4C5A3'};stop-opacity:0.6" />
+                </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#caseGradient${caseNumber}${type})"/>
+            <rect x="20" y="20" width="${width-40}" height="${height-40}" fill="white" opacity="0.9" rx="10"/>
+            
+            <!-- Tooth icon -->
+            <path d="M${width/2-15} 40 C${width/2-10} 35, ${width/2+10} 35, ${width/2+15} 40 
+                     C${width/2+17} 45, ${width/2+17} 60, ${width/2+15} 75 
+                     C${width/2+10} 85, ${width/2-10} 85, ${width/2-15} 75 
+                     C${width/2-17} 60, ${width/2-17} 45, ${width/2-15} 40 Z" 
+                  fill="${type === 'before' ? '#999' : '#BEB093'}" opacity="0.8"/>
+            
+            <text x="${width/2}" y="${height*0.65}" text-anchor="middle" fill="#333" 
+                  font-family="Arial" font-size="14" font-weight="bold">
+                Case ${caseNumber} - ${type.charAt(0).toUpperCase() + type.slice(1)}
+            </text>
+            <text x="${width/2}" y="${height*0.8}" text-anchor="middle" fill="#666" 
+                  font-family="Arial" font-size="12">
+                ${type === 'before' ? 'Initial Condition' : 'Treatment Result'}
+            </text>
+        </svg>
+    `,
+
     // Convert SVG to data URL
     toDataUrl: (svg) => `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
 };
@@ -83,6 +113,16 @@ export const generatePlaceholders = () => {
         'logo-icon.webp': PlaceholderImages.toDataUrl(PlaceholderImages.institutionLogo('University', 120, 120)),
         'before-1.jpg': PlaceholderImages.toDataUrl(PlaceholderImages.treatmentPhoto('before', 300, 200)),
         'after-1.jpg': PlaceholderImages.toDataUrl(PlaceholderImages.treatmentPhoto('after', 300, 200)),
-        'certificate-1.jpg': PlaceholderImages.toDataUrl(PlaceholderImages.certificate('Dental License', 300, 200))
+        'certificate-1.jpg': PlaceholderImages.toDataUrl(PlaceholderImages.certificate('Dental License', 300, 200)),
+        
+        // Case study images that were missing
+        'real-case1.webp': PlaceholderImages.toDataUrl(PlaceholderImages.caseStudy(1, 'before', 300, 200)),
+        'case1-after.webp': PlaceholderImages.toDataUrl(PlaceholderImages.caseStudy(1, 'after', 300, 200)),
+        'real-case2.webp': PlaceholderImages.toDataUrl(PlaceholderImages.caseStudy(2, 'before', 300, 200)),
+        'case2-after.webp': PlaceholderImages.toDataUrl(PlaceholderImages.caseStudy(2, 'after', 300, 200)),
+        'real-case3.webp': PlaceholderImages.toDataUrl(PlaceholderImages.caseStudy(3, 'before', 300, 200)),
+        'case1-before.webp': PlaceholderImages.toDataUrl(PlaceholderImages.caseStudy(1, 'before', 300, 200)),
+        'case2-before.webp': PlaceholderImages.toDataUrl(PlaceholderImages.caseStudy(2, 'before', 300, 200)),
+        'case3-after.webp': PlaceholderImages.toDataUrl(PlaceholderImages.caseStudy(3, 'after', 300, 200))
     };
 };

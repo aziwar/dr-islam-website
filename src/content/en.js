@@ -1352,6 +1352,97 @@ export const HTML_EN = `<!DOCTYPE html>
 
     <script>
 
+    // Global variables for testimonials and gallery
+    let currentTestimonialIndex = 0;
+    let testimonialSlides = null;
+    let testimonialDots = null;
+    let testimonialAutoSlide = null;
+    
+    // Global testimonial functions (available immediately)
+    function moveTestimonialCarousel(direction) {
+        if (!testimonialSlides) {
+            testimonialSlides = document.querySelectorAll('.testimonial-slide');
+            testimonialDots = document.querySelectorAll('.carousel-dots .dot');
+        }
+        
+        currentTestimonialIndex += direction;
+        
+        if (currentTestimonialIndex >= testimonialSlides.length) {
+            currentTestimonialIndex = 0;
+        } else if (currentTestimonialIndex < 0) {
+            currentTestimonialIndex = testimonialSlides.length - 1;
+        }
+        
+        showTestimonialSlide(currentTestimonialIndex);
+        resetTestimonialAutoSlide();
+    }
+    
+    function currentTestimonialSlide(index) {
+        if (!testimonialSlides) {
+            testimonialSlides = document.querySelectorAll('.testimonial-slide');
+            testimonialDots = document.querySelectorAll('.carousel-dots .dot');
+        }
+        
+        currentTestimonialIndex = index - 1;
+        showTestimonialSlide(currentTestimonialIndex);
+        resetTestimonialAutoSlide();
+    }
+    
+    function showTestimonialSlide(index) {
+        if (!testimonialSlides) return;
+        
+        // Hide all slides
+        testimonialSlides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (testimonialDots[i]) {
+                testimonialDots[i].classList.remove('active');
+            }
+        });
+        
+        // Show current slide
+        if (testimonialSlides[index]) {
+            testimonialSlides[index].classList.add('active');
+            if (testimonialDots[index]) {
+                testimonialDots[index].classList.add('active');
+            }
+        }
+    }
+    
+    function resetTestimonialAutoSlide() {
+        if (testimonialAutoSlide) {
+            clearInterval(testimonialAutoSlide);
+        }
+        startTestimonialAutoSlide();
+    }
+    
+    function startTestimonialAutoSlide() {
+        testimonialAutoSlide = setInterval(() => {
+            moveTestimonialCarousel(1);
+        }, 6000);
+    }
+    
+    // Global gallery function
+    function switchGalleryCategory(category) {
+        // Update tab active state
+        document.querySelectorAll('.gallery-tab').forEach(tab => {
+            tab.classList.remove('active');
+            if (tab.dataset.category === category) {
+                tab.classList.add('active');
+            }
+        });
+        
+        // Filter gallery items
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            if (category === 'all' || item.dataset.category === category) {
+                item.style.display = 'block';
+                setTimeout(() => item.classList.add('visible'), 10);
+            } else {
+                item.classList.remove('visible');
+                setTimeout(() => item.style.display = 'none', 300);
+            }
+        });
+    }
+
     // Close menu when clicking outside or on backdrop
     document.addEventListener('click', function(e) {
         const menu = document.querySelector('.main-nav');
@@ -1743,7 +1834,7 @@ export const HTML_EN = `<!DOCTYPE html>
         if (!data.phone) {
             invalidFields.push('phone');
             message = 'Please enter your phone number';
-        } else if (!/^[\+]?[\d\s\-\(\)]{8,}$/.test(data.phone)) {
+        } else if (!/^[\+]?[\d\s\-()]{8,}$/.test(data.phone)) {
             invalidFields.push('phone');
             message = 'Please enter a valid phone number';
         }
