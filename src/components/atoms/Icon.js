@@ -280,6 +280,98 @@ export const IconLibrary = {
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z"/>
     </svg>
+  `,
+
+  // Dental Service Icons
+  
+  // Dental Implant
+  'dental-implant': `
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C8.5 2 6 4.5 6 8c0 2 1 3.5 2 4.5v7c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-7c1-1 2-2.5 2-4.5 0-3.5-2.5-6-6-6z" fill="currentColor"/>
+      <circle cx="10" cy="7" r="1" fill="white" opacity="0.9"/>
+      <circle cx="14" cy="7" r="1" fill="white" opacity="0.9"/>
+      <path d="M8 15h8v2H8v-2z" fill="white" opacity="0.7"/>
+      <rect x="11" y="18" width="2" height="3" fill="#BEB093"/>
+    </svg>
+  `,
+
+  // Root Canal
+  'root-canal': `
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C8.5 2 6 4.5 6 8c0 2 1 3.5 2 4.5v9c0 .5.5 1 1 1h6c.5 0 1-.5 1-1v-9c1-1 2-2.5 2-4.5 0-3.5-2.5-6-6-6z" fill="currentColor"/>
+      <path d="M10 14v6h1v-6h-1zm3 0v6h1v-6h-1z" fill="white"/>
+      <circle cx="12" cy="8" r="2" fill="none" stroke="white" stroke-width="1"/>
+      <path d="M12 6v4" stroke="white" stroke-width="1"/>
+    </svg>
+  `,
+
+  // Prosthodontics (Crown)
+  'prosthodontics': `
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2L8 6v3c0 3 2 5.5 4 6 2-.5 4-3 4-6V6l-4-4z" fill="currentColor"/>
+      <path d="M10 8h4v2h-4v-2z" fill="white" opacity="0.8"/>
+      <circle cx="10" cy="6" r="0.5" fill="white"/>
+      <circle cx="14" cy="6" r="0.5" fill="white"/>
+      <path d="M8 16c0 2 2 4 4 4s4-2 4-4" stroke="currentColor" stroke-width="2" fill="none"/>
+    </svg>
+  `,
+
+  // Oral Surgery
+  'oral-surgery': `
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C8.5 2 6 4.5 6 8c0 2 1 3.5 2 4.5v7c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-7c1-1 2-2.5 2-4.5 0-3.5-2.5-6-6-6z" fill="currentColor"/>
+      <path d="M14 4l4 2-2 4-4-2 2-4z" fill="white" opacity="0.9"/>
+      <path d="M16 6l2 1-1 2-2-1 1-2z" fill="#BEB093"/>
+      <circle cx="9" cy="7" r="1" fill="white" opacity="0.7"/>
+    </svg>
+  `,
+
+  // Cosmetic Dentistry (Smile)
+  'cosmetic-dentistry': `
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="8" cy="9" r="1.5" fill="currentColor"/>
+      <circle cx="16" cy="9" r="1.5" fill="currentColor"/>
+      <path d="M7 14c2 4 8 4 10 0" stroke="currentColor" stroke-width="2" fill="none"/>
+      <path d="M8 16h8" stroke="white" stroke-width="1"/>
+      <path d="M9 17h6" stroke="white" stroke-width="0.5"/>
+    </svg>
+  `,
+
+  // Gum Treatment (Periodontal)
+  'gum-treatment': `
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 14c2-2 4-1 6 0 2-1 4-2 6 0v6c0 1-1 2-2 2H7c-1 0-2-1-2-2v-6z" fill="currentColor"/>
+      <path d="M6 12c1-3 2-4 3-4s2 1 3 4c1-3 2-4 3-4s2 1 3 4" stroke="currentColor" stroke-width="1" fill="none"/>
+      <rect x="8" y="16" width="8" height="1" fill="white" opacity="0.8"/>
+      <rect x="9" y="17" width="6" height="1" fill="white" opacity="0.6"/>
+      <circle cx="12" cy="6" r="2" fill="none" stroke="#ff6b6b" stroke-width="1"/>
+    </svg>
+  `,
+
+  // Aesthetic Fillings
+  'aesthetic-fillings': `
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C8.5 2 6 4.5 6 8c0 2 1 3.5 2 4.5v7c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-7c1-1 2-2.5 2-4.5 0-3.5-2.5-6-6-6z" fill="currentColor"/>
+      <circle cx="12" cy="8" r="2" fill="white"/>
+      <circle cx="12" cy="8" r="1" fill="#BEB093"/>
+      <path d="M10 12h4v2h-4v-2z" fill="white" opacity="0.8"/>
+      <path d="M10.5 14h3v1h-3v-1z" fill="white" opacity="0.6"/>
+    </svg>
+  `,
+
+  // Full Mouth Rehabilitation
+  'full-mouth-rehab': `
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M6 8c2-1 4-1 6 0 2-1 4-1 6 0" stroke="currentColor" stroke-width="1" fill="none"/>
+      <path d="M6 16c2 1 4 1 6 0 2 1 4 1 6 0" stroke="currentColor" stroke-width="1" fill="none"/>
+      <circle cx="8" cy="10" r="1" fill="currentColor"/>
+      <circle cx="12" cy="10" r="1" fill="currentColor"/>
+      <circle cx="16" cy="10" r="1" fill="currentColor"/>
+      <rect x="8" y="12" width="8" height="2" fill="currentColor" opacity="0.6"/>
+      <path d="M5 12c3-2 6-2 9 0 3-2 6-2 9 0" stroke="#BEB093" stroke-width="1" fill="none"/>
+    </svg>
   `
 };
 

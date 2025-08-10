@@ -91,24 +91,296 @@ export const COMPONENTS_CSS = `
     }
 }
 
+/* Service Card Icons */
+.service-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem auto;
+    background: linear-gradient(135deg, #BEB093 0%, #D4C5A3 100%);
+    border-radius: 50%;
+    box-shadow: 0 8px 25px rgba(190, 176, 147, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.service-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.service-icon svg {
+    width: 40px;
+    height: 40px;
+    color: white;
+    z-index: 1;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 35px rgba(190, 176, 147, 0.4);
+    background: linear-gradient(135deg, #D4C5A3 0%, #BEB093 100%);
+}
+
+.service-card:hover .service-icon svg {
+    transform: scale(1.1);
+}
+
+/* ===== FORM FEEDBACK STATES ===== */
+
+/* Form Loading State */
+.form-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.form-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+    border-radius: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 3px solid rgba(190, 176, 147, 0.3);
+    border-top-color: #BEB093;
+    border-radius: 50%;
+    animation: formSpinner 0.8s linear infinite;
+    z-index: 11;
+}
+
+@keyframes formSpinner {
+    to { transform: rotate(360deg); }
+}
+
+/* Form Messages */
+.form-message {
+    padding: 16px;
+    border-radius: 12px;
+    margin: 16px 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.form-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-message-success {
+    background: rgba(72, 187, 120, 0.1);
+    border: 1px solid rgba(72, 187, 120, 0.3);
+    color: #2D5A27;
+}
+
+.form-message-error {
+    background: rgba(245, 101, 101, 0.1);
+    border: 1px solid rgba(245, 101, 101, 0.3);
+    color: #C41E3A;
+}
+
+.form-message-info {
+    background: rgba(66, 153, 225, 0.1);
+    border: 1px solid rgba(66, 153, 225, 0.3);
+    color: #1F4E79;
+}
+
+.form-message-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+/* Button Loading State */
+.btn-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+.btn-loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: btnSpinner 0.6s linear infinite;
+}
+
+@keyframes btnSpinner {
+    to { transform: rotate(360deg); }
+}
+
+/* Form Progress Bar */
+.form-progress {
+    height: 4px;
+    background: rgba(190, 176, 147, 0.2);
+    border-radius: 2px;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.form-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #BEB093, #D4C5A3);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+.form-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: progressShimmer 1.5s infinite;
+}
+
+@keyframes progressShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Input States Enhancement */
+.form-group input.success,
+.form-group textarea.success,
+.form-group select.success {
+    border-color: #48BB78;
+    background-color: rgba(72, 187, 120, 0.05);
+}
+
+.form-group input.error,
+.form-group textarea.error,
+.form-group select.error {
+    border-color: #F56565;
+    background-color: rgba(245, 101, 101, 0.05);
+    animation: inputShake 0.5s ease-in-out;
+}
+
+@keyframes inputShake {
+    0%, 20%, 40%, 60%, 80% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+}
+
+.form-group .field-feedback {
+    font-size: 0.85rem;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+}
+
+.form-group .field-feedback.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-group .field-feedback.success {
+    color: #2D5A27;
+}
+
+.form-group .field-feedback.error {
+    color: #C41E3A;
+}
+
+/* Service Actions */
+.service-actions {
+    margin-top: 1.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card:hover .service-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.service-learn-more {
+    background: linear-gradient(135deg, var(--primary) 0%, #a89680 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(190, 176, 147, 0.3);
+    min-height: 44px;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-learn-more::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.service-learn-more:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(190, 176, 147, 0.4);
+    background: linear-gradient(135deg, #D4C5A3 0%, var(--primary) 100%);
+}
+
+.service-learn-more:hover::before {
+    left: 100%;
+}
+
 .service-card:hover::before {
     opacity: 1;
 }
 
-.service-icon {
-    /* Fluid icon sizing */
-    font-size: var(--text-5xl);
-    color: var(--primary);
-    margin-bottom: var(--space-lg);
-    display: block;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    will-change: transform, color;
-}
-
-.service-card:hover .service-icon {
-    transform: scale(1.1) rotate(5deg);
-    color: var(--secondary);
-}
 
 .service-card h3 {
     color: var(--secondary);

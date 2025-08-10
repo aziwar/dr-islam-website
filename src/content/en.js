@@ -3,6 +3,7 @@ import { MOBILE_UX_JS } from './js/mobile-ux.js';
 import { DentalLogo } from './components/DentalLogo.js';
 import { ENHANCEMENTS_CSS } from './css/enhancements.css.js';
 import { DynamicGallery } from './components/DynamicGallery.js';
+import { Icon } from '../components/atoms/Icon.js';
 import { 
     toggleMobileMenu, 
     closeMobileMenu,
@@ -197,37 +198,85 @@ export const HTML_EN = `<!DOCTYPE html>
         <div class="container">
             <h2>Our Services</h2>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card" data-service="dental-implants">
+                    <div class="service-icon">
+                        ${Icon.create({ name: 'dental-implant', size: 'xl', ariaLabel: 'Dental Implants Icon' })}
+                    </div>
                     <h3>Dental Implants</h3>
                     <p>Immediate and delayed implants with latest techniques</p>
+                    <div class="service-actions">
+                        <button class="service-learn-more" onclick="showServiceDetails('dental-implants')">Learn More</button>
+                    </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-service="root-canal">
+                    <div class="service-icon">
+                        ${Icon.create({ name: 'root-canal', size: 'xl', ariaLabel: 'Root Canal Treatment Icon' })}
+                    </div>
                     <h3>Root Canal Treatment</h3>
                     <p>Specialized endodontic treatment</p>
+                    <div class="service-actions">
+                        <button class="service-learn-more" onclick="showServiceDetails('root-canal')">Learn More</button>
+                    </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-service="prosthodontics">
+                    <div class="service-icon">
+                        ${Icon.create({ name: 'prosthodontics', size: 'xl', ariaLabel: 'Prosthodontics Icon' })}
+                    </div>
                     <h3>Prosthodontics</h3>
                     <p>Fixed and removable prosthetics</p>
+                    <div class="service-actions">
+                        <button class="service-learn-more" onclick="showServiceDetails('prosthodontics')">Learn More</button>
+                    </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-service="oral-surgery">
+                    <div class="service-icon">
+                        ${Icon.create({ name: 'oral-surgery', size: 'xl', ariaLabel: 'Oral Surgery Icon' })}
+                    </div>
                     <h3>Oral Surgery</h3>
                     <p>Surgical extractions and advanced procedures</p>
+                    <div class="service-actions">
+                        <button class="service-learn-more" onclick="showServiceDetails('oral-surgery')">Learn More</button>
+                    </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-service="cosmetic-dentistry">
+                    <div class="service-icon">
+                        ${Icon.create({ name: 'cosmetic-dentistry', size: 'xl', ariaLabel: 'Cosmetic Dentistry Icon' })}
+                    </div>
                     <h3>Cosmetic Dentistry</h3>
                     <p>Hollywood smile and whitening</p>
+                    <div class="service-actions">
+                        <button class="service-learn-more" onclick="showServiceDetails('cosmetic-dentistry')">Learn More</button>
+                    </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-service="gum-treatment">
+                    <div class="service-icon">
+                        ${Icon.create({ name: 'gum-treatment', size: 'xl', ariaLabel: 'Gum Treatment Icon' })}
+                    </div>
                     <h3>Gum Treatment</h3>
                     <p>Periodontal disease treatment</p>
+                    <div class="service-actions">
+                        <button class="service-learn-more" onclick="showServiceDetails('gum-treatment')">Learn More</button>
+                    </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-service="aesthetic-fillings">
+                    <div class="service-icon">
+                        ${Icon.create({ name: 'aesthetic-fillings', size: 'xl', ariaLabel: 'Aesthetic Fillings Icon' })}
+                    </div>
                     <h3>Aesthetic Fillings</h3>
                     <p>Natural tooth-colored fillings</p>
+                    <div class="service-actions">
+                        <button class="service-learn-more" onclick="showServiceDetails('aesthetic-fillings')">Learn More</button>
+                    </div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-service="full-mouth-rehab">
+                    <div class="service-icon">
+                        ${Icon.create({ name: 'full-mouth-rehab', size: 'xl', ariaLabel: 'Full Mouth Rehabilitation Icon' })}
+                    </div>
                     <h3>Full Mouth Rehabilitation</h3>
                     <p>Comprehensive oral treatment</p>
+                    <div class="service-actions">
+                        <button class="service-learn-more" onclick="showServiceDetails('full-mouth-rehab')">Learn More</button>
+                    </div>
                 </div>
             </div>
             
@@ -1125,6 +1174,11 @@ export const HTML_EN = `<!DOCTYPE html>
                     <div class="form-progress">
                         <div class="form-progress-bar"></div>
                     </div>
+                    
+                    <div id="formMessage" class="form-message" style="display: none;">
+                        <span class="form-message-icon"></span>
+                        <div class="form-message-text"></div>
+                    </div>
                     <div class="form-group">
                         <input type="text" id="bookingName" name="name" required>
                         <label for="bookingName">Your Name</label>
@@ -1180,8 +1234,75 @@ export const HTML_EN = `<!DOCTYPE html>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2025 Dr. Islam Elsagher - All Rights Reserved</p>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            ${Icon.dentalLogo({ size: 'xl', className: 'footer-logo-icon' })}
+                            <div class="footer-brand-text">
+                                <h3>Dr. Islam Elsagher</h3>
+                                <p>Excellence in Dental Care</p>
+                            </div>
+                        </div>
+                        <p class="footer-description">
+                            Over 15 years of experience providing comprehensive dental care in Kuwait. 
+                            Specializing in dental implants, cosmetic dentistry, and oral surgery.
+                        </p>
+                    </div>
+                    
+                    <div class="footer-contact">
+                        <h4>Contact Information</h4>
+                        <div class="contact-items">
+                            <div class="contact-item">
+                                ${Icon.create({ name: 'phone', size: 'sm', color: 'primary' })}
+                                <span>+965 9856 3711</span>
+                            </div>
+                            <div class="contact-item">
+                                ${Icon.create({ name: 'phone', size: 'sm', color: 'primary' })}
+                                <span>+965 6600 6699</span>
+                            </div>
+                            <div class="contact-item">
+                                ${Icon.create({ name: 'location', size: 'sm', color: 'primary' })}
+                                <span>Hawally, Kuwait</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-hours">
+                        <h4>Working Hours</h4>
+                        <div class="hours-schedule">
+                            <div class="schedule-item">
+                                ${Icon.create({ name: 'clock', size: 'sm', color: 'primary' })}
+                                <div class="schedule-text">
+                                    <span>Saturday - Thursday</span>
+                                    <span>9:00 AM - 9:00 PM</span>
+                                </div>
+                            </div>
+                            <div class="schedule-item">
+                                <div class="availability-badge">
+                                    <span class="status-indicator"></span>
+                                    <span>Available Today</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <div class="footer-links">
+                        <a href="#services">Services</a>
+                        <a href="#gallery">Gallery</a>
+                        <a href="#faq">FAQ</a>
+                        <a href="?lang=ar">العربية</a>
+                    </div>
+                    <div class="footer-copyright">
+                        <p>&copy; 2025 Dr. Islam Elsagher - All Rights Reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <!-- Desktop Sidebar Widget -->
@@ -1462,52 +1583,203 @@ export const HTML_EN = `<!DOCTYPE html>
         if (bookingForm) {
             bookingForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+                handleBookingSubmission();
+            });
+        }
+    });
+
+    // Form submission handler with feedback states
+    function handleBookingSubmission() {
+        const form = document.getElementById('bookingForm');
+        const submitButton = form.querySelector('.booking-submit-btn');
+        const progressBar = form.querySelector('.form-progress-bar');
+        const messageContainer = document.getElementById('formMessage');
+        const messageIcon = messageContainer.querySelector('.form-message-icon');
+        const messageText = messageContainer.querySelector('.form-message-text');
+        
+        // Get form data
+        const formData = {
+            name: form.bookingName.value.trim(),
+            phone: form.bookingPhone.value.trim(),
+            service: form.bookingService.value,
+            time: form.bookingTime.value,
+            notes: form.bookingNotes.value.trim()
+        };
+        
+        // Validate required fields
+        const validation = validateBookingForm(formData);
+        if (!validation.isValid) {
+            showFormMessage('error', validation.message);
+            highlightInvalidFields(validation.fields);
+            return;
+        }
+        
+        // Start loading state
+        showLoadingState();
+        
+        // Simulate form processing with progress updates
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 25;
+            if (progress > 90) progress = 90;
+            updateProgressBar(progress);
+        }, 200);
+        
+        // Process submission (simulate network delay)
+        setTimeout(() => {
+            clearInterval(progressInterval);
+            updateProgressBar(100);
+            
+            // Build WhatsApp message
+            const whatsappMessage = buildWhatsAppMessage(formData);
+            const whatsappURL = \`https://wa.me/96566006699?text=\${encodeURIComponent(whatsappMessage)}\`;
+            
+            // Show success state
+            setTimeout(() => {
+                showFormMessage('success', '✅ Form submitted! Redirecting to WhatsApp...');
+                hideLoadingState();
                 
-                // Get form data
-                const name = document.getElementById('bookingName').value;
-                const phone = document.getElementById('bookingPhone').value;
-                const service = document.getElementById('bookingService').value;
-                const time = document.getElementById('bookingTime').value;
-                const notes = document.getElementById('bookingNotes').value;
-                
-                // Create WhatsApp message
-                let message = \`Hello Dr. Islam,\\n\\n\`;
-                message += \`I would like to book an appointment:\\n\\n\`;
-                message += \`👤 Name: \${name}\\n\`;
-                message += \`📞 Phone: \${phone}\\n\`;
-                message += \`🦷 Service: \${service}\\n\`;
-                message += \`⏰ Preferred Time: \${time}\\n\`;
-                
-                if (notes.trim()) {
-                    message += \`📝 Notes: \${notes}\\n\`;
-                }
-                
-                message += \`\\nThank you!\`;
-                
-                // Encode message for URL
-                const encodedMessage = encodeURIComponent(message);
-                
-                // Create WhatsApp URL
-                const whatsappUrl = \`https://wa.me/96598563711?text=\${encodedMessage}\`;
-                
-                // Track booking attempt
+                // Track successful submission
                 if (typeof gtag !== 'undefined') {
-                    gtag('event', 'booking_attempt', {
-                        'event_category': 'conversion',
-                        'event_label': service,
+                    gtag('event', 'form_submit', {
+                        'event_category': 'engagement',
+                        'event_label': 'booking_form',
                         'value': 1
                     });
                 }
                 
-                // Open WhatsApp
-                window.open(whatsappUrl, '_blank');
+                // Redirect to WhatsApp
+                setTimeout(() => {
+                    window.open(whatsappURL, '_blank');
+                    closeBookingModal();
+                    resetForm();
+                }, 1500);
                 
-                // Close modal and show success message
-                closeBookingModal();
-                showBookingSuccess();
+            }, 500);
+            
+        }, 2000 + Math.random() * 1000);
+        
+        // Functions for form feedback
+        function showLoadingState() {
+            form.classList.add('form-loading');
+            submitButton.disabled = true;
+            submitButton.innerHTML = \`
+                <span class="booking-btn-icon icon--spin">⏳</span>
+                Preparing WhatsApp...
+            \`;
+            hideFormMessage();
+        }
+        
+        function hideLoadingState() {
+            form.classList.remove('form-loading');
+            submitButton.disabled = false;
+            submitButton.innerHTML = \`
+                <span class="booking-btn-icon">💬</span>
+                Continue to WhatsApp
+            \`;
+        }
+        
+        function updateProgressBar(percent) {
+            progressBar.style.width = percent + '%';
+        }
+        
+        function showFormMessage(type, message) {
+            messageContainer.className = \`form-message form-message-\${type}\`;
+            messageIcon.innerHTML = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            messageText.textContent = message;
+            messageContainer.style.display = 'flex';
+        }
+        
+        function hideFormMessage() {
+            messageContainer.style.display = 'none';
+        }
+        
+        function resetForm() {
+            form.reset();
+            form.classList.remove('form-loading');
+            progressBar.style.width = '0%';
+            hideFormMessage();
+            clearFieldValidation();
+        }
+        
+        function highlightInvalidFields(fields) {
+            // Clear previous validation
+            clearFieldValidation();
+            
+            // Highlight invalid fields
+            fields.forEach(fieldName => {
+                const field = form.querySelector(\`[name="\${fieldName}"]\`);
+                if (field) {
+                    field.classList.add('form-field-error');
+                    field.addEventListener('input', clearFieldError, { once: true });
+                }
             });
         }
-    });
+        
+        function clearFieldValidation() {
+            form.querySelectorAll('.form-field-error').forEach(field => {
+                field.classList.remove('form-field-error');
+            });
+        }
+        
+        function clearFieldError(e) {
+            e.target.classList.remove('form-field-error');
+        }
+    }
+    
+    // Form validation function
+    function validateBookingForm(data) {
+        const invalidFields = [];
+        let message = '';
+        
+        if (!data.name) {
+            invalidFields.push('name');
+            message = 'Please enter your name';
+        } else if (data.name.length < 2) {
+            invalidFields.push('name');
+            message = 'Name must be at least 2 characters';
+        }
+        
+        if (!data.phone) {
+            invalidFields.push('phone');
+            message = 'Please enter your phone number';
+        } else if (!/^[\+]?[\d\s\-\(\)]{8,}$/.test(data.phone)) {
+            invalidFields.push('phone');
+            message = 'Please enter a valid phone number';
+        }
+        
+        if (!data.service) {
+            invalidFields.push('service');
+            message = 'Please select a service';
+        }
+        
+        if (!data.time) {
+            invalidFields.push('time');
+            message = 'Please select your preferred time';
+        }
+        
+        return {
+            isValid: invalidFields.length === 0,
+            fields: invalidFields,
+            message: message
+        };
+    }
+    
+    // Build WhatsApp message from form data
+    function buildWhatsAppMessage(data) {
+        return \`🦷 *Booking Request - Dr. Islam Elsagher*
+
+👤 *Name:* \${data.name}
+📱 *Phone:* \${data.phone}
+🩺 *Service:* \${data.service}
+⏰ *Preferred Time:* \${data.time}
+\${data.notes ? \`📝 *Notes:* \${data.notes}\` : ''}
+
+📍 *Clinic Location:* Hawally, Kuwait
+🕐 *Working Hours:* 9:00 AM - 9:00 PM
+
+Please confirm my appointment. Thank you! 🙏\`;
+    }
     
 
     // Analytics tracking for direct WhatsApp links

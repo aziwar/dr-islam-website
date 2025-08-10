@@ -26,15 +26,16 @@ export const HTML_AR = `<!DOCTYPE html>
     <!-- Performance Optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Preload critical Arabic fonts for LCP improvement -->
+    <!-- Preload critical Arabic brand fonts for LCP improvement -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/amiri/v27/J7aHnp1uDWRBEqV98dVQjhukTg.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/ibmplexsansarabic/v13/Qw3MZQNVEjzh-Fl5nUUsVjePl6I6LSFovCz67P8_wao.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="https://fonts.gstatic.com/s/cairo/v28/SLXGc1nY6HkvalIvTp2mxdt0UX8gfg.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://fonts.gstatic.com/s/cairo/v28/SLXGc1nY6HkvalIhTp2mxdt0.woff2" as="font" type="font/woff2" crossorigin>
     <!-- DNS prefetch for external resources -->
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="//unpkg.com">
     <!-- Preload critical CSS -->
     <link rel="preload" href="/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Kufi+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <noscript><link rel="stylesheet" href="/styles.css"></noscript>
     
     <!-- UI/UX Enhancements -->

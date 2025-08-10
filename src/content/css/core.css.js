@@ -7,6 +7,9 @@ import { DESIGN_TOKENS } from '../../shared/design-tokens.js';
 export const CORE_CSS = `
 ${DESIGN_TOKENS}
 
+/* ===== BRAND FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+Pro:wght@400;600&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
 html {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
@@ -53,10 +56,10 @@ h4 {
     line-height: var(--leading-snug);
 }
 
-/* Arabic Typography */
+/* Arabic Typography - Brand Fonts */
 body.ar,
 .ar body {
-    font-family: 'Cairo', 'Tajawal', 'Noto Kufi Arabic', -apple-system, sans-serif;
+    font-family: 'IBM Plex Sans Arabic', 'Cairo', 'Tajawal', 'Noto Kufi Arabic', -apple-system, sans-serif;
     font-weight: 400;
     letter-spacing: 0;
     word-spacing: 0.1em;
@@ -64,7 +67,7 @@ body.ar,
 }
 
 .ar h1, .ar h2, .ar h3, .ar h4, .ar h5, .ar h6 {
-    font-family: 'Cairo', 'Tajawal', sans-serif;
+    font-family: 'Amiri', 'Cairo', 'Tajawal', sans-serif;
     font-weight: 700;
     letter-spacing: 0;
 }
@@ -106,7 +109,7 @@ header {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     position: sticky;
     top: 40px;
-    z-index: 100;
+    z-index: 999;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-radius: 12px;
     margin: 0 20px;
@@ -247,6 +250,71 @@ header.nav-scrolled .logo {
     min-height: clamp(60vh, 80vh, 100vh);
 }
 
+/* Hero Typography - Brand Display Font */
+.hero h1,
+#hero-heading {
+    font-family: 'Playfair Display', 'Source Serif Pro', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+}
+
+.hero .subtitle {
+    font-family: 'Source Serif Pro', 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    opacity: 0.95;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.01em;
+}
+
+/* Arabic Hero Typography - Brand Display Font */
+.ar .hero h1,
+.ar #hero-heading {
+    font-family: 'Amiri', 'Cairo', 'Tajawal', serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--white);
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+}
+
+.ar .hero .subtitle {
+    font-family: 'IBM Plex Sans Arabic', 'Cairo', 'Tajawal', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    opacity: 0.95;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0;
+}
+
+/* Arabic CTA and Interactive Elements - Brand Typography */
+.ar .cta-button,
+.ar .booking-submit-btn,
+.ar button,
+.ar .btn {
+    font-family: 'IBM Plex Sans Arabic', 'Cairo', 'Tajawal', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+/* Arabic Form Elements - Brand Typography */
+.ar input,
+.ar select,
+.ar textarea,
+.ar label {
+    font-family: 'IBM Plex Sans Arabic', 'Cairo', 'Tajawal', sans-serif;
+}
+
 @keyframes gradientShift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -281,19 +349,28 @@ header.nav-scrolled .logo {
 
 .cta-button {
     display: inline-block;
-    background: linear-gradient(135deg, var(--primary) 0%, #a89680 100%);
+    background: linear-gradient(135deg, #BEB093 0%, #D4C5A3 100%);
     color: var(--white);
-    padding: 18px 40px;
+    padding: 20px 45px;
     border-radius: 50px;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 5px 25px rgba(190, 176, 147, 0.3);
+    box-shadow: 
+        0 8px 30px rgba(190, 176, 147, 0.4),
+        0 4px 15px rgba(190, 176, 147, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     position: relative;
     overflow: hidden;
     will-change: transform, box-shadow;
     transform: translateZ(0);
     backface-visibility: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    text-align: center;
 }
 
 .cta-button::after {
@@ -310,8 +387,13 @@ header.nav-scrolled .logo {
 }
 
 .cta-button:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 10px 35px rgba(190, 176, 147, 0.4);
+    transform: translateY(-4px) scale(1.06);
+    background: linear-gradient(135deg, #D4C5A3 0%, #BEB093 100%);
+    box-shadow: 
+        0 15px 40px rgba(190, 176, 147, 0.5),
+        0 8px 20px rgba(190, 176, 147, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 .cta-button:hover::after {
@@ -382,12 +464,274 @@ header.nav-scrolled .logo {
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* ===== FOOTER ===== */
-footer {
-    background: var(--secondary);
+/* ===== ENHANCED FOOTER ===== */
+.site-footer {
+    background: linear-gradient(135deg, #2C2C2C 0%, #1A1A1A 100%);
     color: var(--white);
+    padding: 60px 0 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #BEB093 0%, #D4C5A3 50%, #BEB093 100%);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.footer-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+}
+
+.footer-brand {
+    max-width: 100%;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.footer-logo-icon {
+    color: #BEB093;
+    filter: drop-shadow(0 2px 8px rgba(190, 176, 147, 0.3));
+}
+
+.footer-brand-text h3 {
+    font-family: 'Playfair Display', 'Source Serif Pro', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.footer-brand-text p {
+    font-size: 0.9rem;
+    color: #BEB093;
+    margin: 4px 0 0 0;
+    font-weight: 500;
+}
+
+.footer-description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.footer-contact h4,
+.footer-hours h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: #BEB093;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+}
+
+.contact-item .icon {
+    color: #BEB093;
+    flex-shrink: 0;
+}
+
+.hours-schedule {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.schedule-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.schedule-text span:first-child {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.schedule-text span:last-child {
+    color: #BEB093;
+    font-weight: 600;
+}
+
+.availability-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(34, 197, 94, 0.1);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    background: #22C55E;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.availability-badge span:last-child {
+    color: #22C55E;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(190, 176, 147, 0.2);
+    align-items: center;
     text-align: center;
-    padding: 20px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.footer-links a:hover {
+    color: #BEB093;
+    background: rgba(190, 176, 147, 0.1);
+    transform: translateY(-1px);
+}
+
+.footer-copyright {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
+/* Tablet Responsive */
+@media (min-width: 768px) {
+    .footer-main {
+        grid-template-columns: 1fr 300px;
+        gap: 60px;
+    }
+    
+    .footer-contact {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    
+    .footer-hours {
+        grid-column: 2;
+        grid-row: 2;
+    }
+    
+    .footer-brand {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+    
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+}
+
+/* Desktop Responsive */
+@media (min-width: 1024px) {
+    .site-footer {
+        padding: 80px 0 30px;
+    }
+    
+    .footer-main {
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 80px;
+    }
+    
+    .footer-brand {
+        grid-column: 1;
+        grid-row: 1;
+        max-width: 400px;
+    }
+    
+    .footer-contact {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    
+    .footer-hours {
+        grid-column: 3;
+        grid-row: 1;
+    }
+    
+    .footer-logo-icon {
+        transform: scale(1.1);
+    }
+    
+    .footer-brand-text h3 {
+        font-size: 1.75rem;
+    }
+}
+
+/* Arabic Footer Styles */
+.ar .site-footer {
+    direction: rtl;
+}
+
+.ar .footer-brand-text h3 {
+    font-family: 'Amiri', 'Cairo', 'Tajawal', serif;
+}
+
+.ar .footer-contact h4,
+.ar .footer-hours h4 {
+    font-family: 'Amiri', 'Cairo', serif;
 }
 
 /* ===== BREADCRUMB NAVIGATION ===== */
@@ -632,7 +976,7 @@ img.loaded {
     gap: var(--space-lg);
     padding: var(--space-xl) var(--space-md);
     transition: right 0.3s ease;
-    z-index: var(--z-modal);
+    z-index: 1000;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
@@ -684,7 +1028,7 @@ img.loaded {
     min-width: 48px;
     align-items: center;
     justify-content: center;
-    z-index: calc(var(--z-modal) + 10);
+    z-index: 1001;
     position: relative;
 }
 
@@ -774,19 +1118,32 @@ img.loaded {
         max-width: clamp(120px, 30vw, 180px);
     }
     
-    .hero h1 {
-        font-size: var(--text-3xl);
-        line-height: var(--leading-tight);
+    .hero h1,
+    #hero-heading {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: clamp(2rem, 8vw, 2.8rem);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
     
     .hero .subtitle {
-        font-size: var(--text-base);
+        font-family: 'Source Serif Pro', Georgia, serif;
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        font-weight: 400;
+        line-height: 1.4;
+        opacity: 0.95;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     
     .cta-button {
-        padding: var(--space-md) var(--space-lg);
-        font-size: var(--text-lg);
+        padding: 18px 35px;
+        font-size: 1rem;
+        font-weight: 700;
         min-height: 56px;
+        min-width: 180px;
+        letter-spacing: 0.3px;
     }
     
     /* Grid layouts become single column */
@@ -920,7 +1277,10 @@ img.loaded {
     
     .cta-button {
         width: 100%;
-        max-width: 300px;
+        max-width: 280px;
+        padding: 16px 30px;
+        font-size: 0.95rem;
+        font-weight: 700;
     }
     
     .service-card {
@@ -1033,25 +1393,41 @@ img.loaded {
         max-width: none;
     }
     
-    .hero h1 {
-        font-size: 3.5rem;
-        line-height: 1.2;
+    .hero h1,
+    #hero-heading {
+        font-family: 'Playfair Display', 'Source Serif Pro', Georgia, serif;
+        font-size: clamp(3.5rem, 5vw, 4.8rem);
+        font-weight: 600;
+        line-height: 1.1;
         margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        font-feature-settings: 'kern' 1, 'liga' 1, 'swsh' 1;
     }
     
-    .hero p {
-        font-size: 1.25rem;
+    .hero p,
+    .hero .subtitle {
+        font-family: 'Source Serif Pro', 'Playfair Display', Georgia, serif;
+        font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+        font-weight: 400;
+        line-height: 1.4;
         margin-bottom: 2rem;
         max-width: 600px;
+        opacity: 0.95;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        letter-spacing: 0.01em;
     }
     
     .cta-button {
-        padding: 1rem 2.5rem;
-        font-size: 1.1rem;
+        padding: 22px 50px;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
         border-radius: 50px;
         position: relative;
         overflow: hidden;
         transition: all 0.3s ease;
+        min-width: 220px;
     }
     
     .cta-button::before {
