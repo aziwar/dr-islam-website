@@ -350,9 +350,9 @@ export function createUIUtilsJS() {
     
     // Regex safety check to prevent runtime errors
     try {
-        // Test phone validation patterns to ensure they work
-        /^[+]?[\d\s\-()]{8,}$/.test('test');
-        /^[0-9+\s\-()]{10,}$/.test('test');
+        // Test phone validation patterns with safe character classes
+        /^[+]?[\d\-\s()]{8,}$/.test('test');
+        /^[0-9+\-\s()]{10,}$/.test('test');
         console.log('Phone regex patterns validated successfully');
     } catch (regexError) {
         console.error('Regex pattern error detected:', regexError);
@@ -710,7 +710,7 @@ export function createUIUtilsJS() {
         if (!value) {
             showFieldError(input, errorDiv, 'Phone number is required');
             return false;
-        } else if (!/^[0-9+\s\-()]{10,}$/.test(value)) {
+        } else if (!/^[0-9+\-\s()]{10,}$/.test(value)) {
             showFieldError(input, errorDiv, 'Please enter a valid phone number');
             return false;
         } else {
