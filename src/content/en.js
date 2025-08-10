@@ -99,7 +99,6 @@ export const HTML_EN = `<!DOCTYPE html>
     <!-- Skip Links for Keyboard Navigation -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <a href="#nav-menu" class="skip-link">Skip to navigation</a>
-    <a href="#contact" class="skip-link">Skip to contact information</a>
 
     <!-- Emergency Banner -->
     <div class="emergency-banner" role="banner" aria-label="Dental emergency contact information">
