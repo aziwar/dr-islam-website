@@ -143,6 +143,79 @@ export const SERVICECARD_CSS = `
 }
 
 /* ===== CARD VARIANTS ===== */
+
+/* ===== PRIORITY-BASED HIERARCHY VARIANTS ===== */
+/* Primary Services (Implants, Cosmetic) - Highest Priority */
+.service-card--primary {
+  border-left: 4px solid var(--primary);
+  background: rgba(160, 143, 101, 0.05);
+  transform: scale(1.02);
+  border: 1px solid rgba(160, 143, 101, 0.2);
+  box-shadow: 0 4px 12px rgba(160, 143, 101, 0.15);
+}
+
+.service-card--primary .service-card__icon {
+  background: linear-gradient(135deg, var(--primary) 0%, #a89680 100%);
+  box-shadow: 0 4px 15px rgba(160, 143, 101, 0.25);
+}
+
+.service-card--primary .service-card__title {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.service-card--primary:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(160, 143, 101, 0.2);
+  border-color: var(--primary);
+}
+
+/* Standard Services (Root Canal, Surgery) - Medium Priority */
+.service-card--standard {
+  border-left: 4px solid var(--secondary);
+  background: var(--white);
+  border: 1px solid rgba(61, 59, 50, 0.1);
+}
+
+.service-card--standard .service-card__icon {
+  background: linear-gradient(135deg, var(--secondary) 0%, #4a4740 100%);
+}
+
+.service-card--standard .service-card__title {
+  color: var(--secondary);
+  font-weight: 500;
+}
+
+.service-card--standard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(61, 59, 50, 0.12);
+  border-color: var(--secondary);
+}
+
+/* Preventive Services - Lower Priority */
+.service-card--preventive {
+  border-left: 2px solid var(--text-light);
+  background: var(--bg-light);
+  opacity: 0.95;
+  border: 1px solid rgba(102, 102, 102, 0.1);
+}
+
+.service-card--preventive .service-card__icon {
+  background: linear-gradient(135deg, var(--text-light) 0%, #777777 100%);
+}
+
+.service-card--preventive .service-card__title {
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.service-card--preventive:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+  box-shadow: 0 6px 15px rgba(102, 102, 102, 0.08);
+}
+
+/* ===== ORIGINAL FEATURED VARIANT (PRESERVED) ===== */
 .service-card--featured {
   background: linear-gradient(135deg, var(--primary) 0%, #a89680 100%);
   color: var(--white);
@@ -567,7 +640,59 @@ export const ServiceCard = {
   },
 
   /**
-   * Create featured service card
+   * Create primary priority service card (Implants, Cosmetic)
+   * @param {string} title - Card title
+   * @param {string} description - Card description
+   * @param {string} icon - Icon name
+   * @param {Object} options - Additional options
+   */
+  async primary(title, description, icon, options = {}) {
+    return this.create({
+      title,
+      description,
+      icon,
+      variant: 'primary',
+      badge: options.badge || 'Popular',
+      ...options
+    });
+  },
+
+  /**
+   * Create standard priority service card (Root Canal, Surgery)
+   * @param {string} title - Card title
+   * @param {string} description - Card description
+   * @param {string} icon - Icon name
+   * @param {Object} options - Additional options
+   */
+  async standard(title, description, icon, options = {}) {
+    return this.create({
+      title,
+      description,
+      icon,
+      variant: 'standard',
+      ...options
+    });
+  },
+
+  /**
+   * Create preventive service card (Cleanings, Check-ups)
+   * @param {string} title - Card title
+   * @param {string} description - Card description
+   * @param {string} icon - Icon name
+   * @param {Object} options - Additional options
+   */
+  async preventive(title, description, icon, options = {}) {
+    return this.create({
+      title,
+      description,
+      icon,
+      variant: 'preventive',
+      ...options
+    });
+  },
+
+  /**
+   * Create featured service card (preserved for backward compatibility)
    * @param {string} title - Card title
    * @param {string} description - Card description
    * @param {string} icon - Icon name
