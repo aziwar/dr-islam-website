@@ -162,30 +162,15 @@ export const HTML_AR = `<!DOCTYPE html>
         <!-- Desktop Booking Widget -->
         <div class="desktop-booking-widget">
             <div class="widget-header">
-                <h3>📅 حجز سريع</h3>
-                <p>احجز موعدك في 30 ثانية</p>
-                <div class="widget-trust">
-                    <span class="trust-badge">✓ متاح نفس اليوم</span>
-                    <span class="trust-badge">✓ استشارة مجانية</span>
-                </div>
+                <h3>احجز موعدك الآن</h3>
             </div>
-            <form class="quick-booking-form" onsubmit="handleQuickBooking(event)">
-                <input type="text" placeholder="اسمك الكريم" required>
-                <input type="tel" placeholder="📱 رقم الهاتف" required>
-                <select required>
-                    <option value="">🦷 اختر الخدمة</option>
-                    <option value="checkup">🔍 فحص عام</option>
-                    <option value="cleaning">✨ تنظيف الأسنان</option>
-                    <option value="implant">🦷 زراعة الأسنان</option>
-                    <option value="cosmetic">💎 تجميل الأسنان</option>
-                    <option value="emergency">🚨 زيارة طارئة</option>
-                </select>
-                <button type="submit" class="btn btn-primary">
-                    📞 احجز الآن - استشارة مجانية
-                </button>
-            </form>
-            <div class="widget-footer">
-                <p class="availability-note">⚡ متاح اليوم: 9:00 ص - 9:00 م</p>
+            <div class="widget-trust">
+                <span class="trust-badge">خبرة +15 عاماً</span>
+                <span class="trust-badge">رضا 100% للمرضى</span>
+            </div>
+            <div class="booking-widget-actions">
+                <button class="cta-button" onclick="openBookingModal()">احجز موعدك الآن</button>
+                <a href="https://wa.me/96598563711" target="_blank" class="cta-button secondary">واتساب</a>
             </div>
         </div>
     </div>
@@ -1107,45 +1092,6 @@ export const HTML_AR = `<!DOCTYPE html>
         <p>&copy; 2025 دكتور اسلام الصغير - جميع الحقوق محفوظة</p>
     </footer>
 
-    <!-- Desktop Sidebar Widget (Arabic) -->
-    <div class="desktop-sidebar" id="desktopSidebar" style="display: none;">
-        <div class="sidebar-header">
-            <h4>🏥 د. اسلام الصغير</h4>
-            <p style="font-size: 0.85rem; color: var(--text-light);">رعاية أسنان متخصصة</p>
-        </div>
-        <div class="sidebar-stats">
-            <div class="stat-item">
-                <span class="stat-number">+15</span>
-                <span class="stat-label">سنة خبرة</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">%100</span>
-                <span class="stat-label">رضا المرضى</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">+2000</span>
-                <span class="stat-label">مريض</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">24/7</span>
-                <span class="stat-label">طوارئ</span>
-            </div>
-        </div>
-        <div class="sidebar-actions">
-            <button class="sidebar-btn primary" onclick="openBookingModal()">
-                📞 احجز موعد
-            </button>
-            <button class="sidebar-btn secondary" onclick="openWhatsApp()">
-                💬 واتساب
-            </button>
-        </div>
-        <div class="sidebar-contact">
-            <p style="font-size: 0.8rem; text-align: center; color: var(--text-light); margin-top: 1rem;">
-                📍 السالمية، الكويت<br>
-                ⏰ 9 ص - 9 م (السبت-الخميس)
-            </p>
-        </div>
-    </div>
 
     <!-- Sticky WhatsApp Booking Button -->
     <button class="sticky-book" onclick="openBookingModal()">

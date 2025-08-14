@@ -158,30 +158,15 @@ export const HTML_EN = `<!DOCTYPE html>
             <!-- Desktop Booking Widget -->
             <div class="desktop-booking-widget">
                 <div class="widget-header">
-                    <h3>📅 Quick Appointment</h3>
-                    <p>Book your visit in 30 seconds</p>
-                    <div class="widget-trust">
-                        <span class="trust-badge">✓ Same Day Available</span>
-                        <span class="trust-badge">✓ Free Consultation</span>
-                    </div>
+                    <h3>Book an Appointment</h3>
                 </div>
-                <form class="quick-booking-form" onsubmit="handleQuickBooking(event)">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="tel" placeholder="📱 Phone Number" required>
-                    <select required>
-                        <option value="">🦷 Select Service</option>
-                        <option value="checkup">🔍 General Checkup</option>
-                        <option value="cleaning">✨ Teeth Cleaning</option>
-                        <option value="implant">🦷 Dental Implants</option>
-                        <option value="cosmetic">💎 Cosmetic Dentistry</option>
-                        <option value="emergency">🚨 Emergency Visit</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary">
-                        📞 Book Now - Free Consultation
-                    </button>
-                </form>
-                <div class="widget-footer">
-                    <p class="availability-note">⚡ Available Today: 9:00 AM - 9:00 PM</p>
+                <div class="widget-trust">
+                    <span class="trust-badge">15+ Years</span>
+                    <span class="trust-badge">100% Satisfaction</span>
+                </div>
+                <div class="booking-widget-actions">
+                    <button class="cta-button" onclick="openBookingModal()">Book Appointment</button>
+                    <a href="https://wa.me/96598563711" target="_blank" class="cta-button secondary">WhatsApp Chat</a>
                 </div>
             </div>
         </div>
@@ -1298,45 +1283,6 @@ export const HTML_EN = `<!DOCTYPE html>
         </div>
     </footer>
 
-    <!-- Desktop Sidebar Widget -->
-    <div class="desktop-sidebar" id="desktopSidebar" style="display: none;">
-        <div class="sidebar-header">
-            <h4>🏥 Dr. Islam Al-Sagher</h4>
-            <p style="font-size: 0.85rem; color: var(--text-light);">Expert Dental Care</p>
-        </div>
-        <div class="sidebar-stats">
-            <div class="stat-item">
-                <span class="stat-number">15+</span>
-                <span class="stat-label">Years</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">100%</span>
-                <span class="stat-label">Satisfaction</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">2000+</span>
-                <span class="stat-label">Patients</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">24/7</span>
-                <span class="stat-label">Emergency</span>
-            </div>
-        </div>
-        <div class="sidebar-actions">
-            <button class="sidebar-btn primary" onclick="openBookingModal()">
-                📞 Book Appointment
-            </button>
-            <button class="sidebar-btn secondary" onclick="openWhatsApp()">
-                💬 WhatsApp Chat
-            </button>
-        </div>
-        <div class="sidebar-contact">
-            <p style="font-size: 0.8rem; text-align: center; color: var(--text-light); margin-top: 1rem;">
-                📍 Salmiya, Kuwait<br>
-                ⏰ 9 AM - 9 PM (Sat-Thu)
-            </p>
-        </div>
-    </div>
 
     <!-- Sticky WhatsApp Booking Button -->
     <button class="sticky-book" onclick="openBookingModal()">

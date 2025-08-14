@@ -3,16 +3,17 @@ import { CORE_CSS } from './css/core.css.js';
 import { COMPONENTS_CSS } from './css/components.css.js';
 import { ENHANCEMENTS_CSS } from './css/enhancements.css.js';
 import { A11Y_CSS } from './css/a11y.css.js';
+import { HEADER_CSS } from './css/header.css.js';
 import { PerformanceOptimizer } from '../utils/performance-optimizer.js';
 
 // Critical CSS for inline inclusion (above-the-fold)
 export const INLINE_CSS = extractCriticalCSS();
 
 // Deferred CSS for progressive loading
-export const DEFERRED_STYLES = COMPONENTS_CSS + ENHANCEMENTS_CSS;
+export const DEFERRED_STYLES = COMPONENTS_CSS + ENHANCEMENTS_CSS + HEADER_CSS;
 
 // Full CSS for legacy support with accessibility enhancements
-export const CSS = CORE_CSS + COMPONENTS_CSS + ENHANCEMENTS_CSS + A11Y_CSS + PerformanceOptimizer.generateSkeletonCSS();
+export const CSS = CORE_CSS + COMPONENTS_CSS + ENHANCEMENTS_CSS + A11Y_CSS + HEADER_CSS + PerformanceOptimizer.generateSkeletonCSS();
 
 // Export consolidated modules
 export { CORE_CSS, COMPONENTS_CSS, ENHANCEMENTS_CSS };
