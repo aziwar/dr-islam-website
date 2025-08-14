@@ -1,6 +1,6 @@
 // src/index.js - Optimized with Context7 best practices
-import { HTML_EN } from './content/en.js';
-import { HTML_AR } from './content/ar.js';
+import { HTML_EN } from './content/en-refactored.js';
+import { HTML_AR } from './content/ar-refactored.js';
 import { CSS, INLINE_CSS, DEFERRED_STYLES, getCSSForRequest } from './content/styles.js';
 import { SERVICE_WORKER_JS } from './content/sw.js';
 import { OFFLINE_HTML } from './content/offline.js';
