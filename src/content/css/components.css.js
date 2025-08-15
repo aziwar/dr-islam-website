@@ -493,9 +493,22 @@ export const COMPONENTS_CSS = `
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: var(--breakpoint-md)) {
     .professional-services-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-md); /* Reduce gap on smaller screens */
+    }
+
+    .professional-service-card {
+        padding: var(--space-md); /* Reduce padding */
+    }
+
+    .professional-service-card .service-title {
+        font-size: var(--text-lg); /* Adjust font size for mobile */
+    }
+
+    .professional-service-card .service-description {
+        min-height: 0; /* Allow height to be flexible on mobile */
     }
 }
 
