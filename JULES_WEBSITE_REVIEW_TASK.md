@@ -6,10 +6,14 @@
 
 ## 📋 Review Instructions for Jules:
 
-### 1. Website URLs to Review:
-- **English Version**: https://dr-elsagher.com
-- **Arabic Version**: https://dr-elsagher.com/?lang=ar
-- **Development Server**: http://127.0.0.1:8787 (if available)
+### 1. Website URLs to Review (SANDBOX ENVIRONMENT ONLY):
+
+**CRITICAL: Test in Jules sandbox environment, NOT live website**
+
+- **Development Server**: Start `npm run dev` and test http://127.0.0.1:8787
+- **English Version**: http://127.0.0.1:8787 (default)
+- **Arabic Version**: http://127.0.0.1:8787/?lang=ar
+- **DO NOT test live website** (https://dr-elsagher.com) - sandbox only!
 
 ### 2. Device Testing Requirements:
 - **Mobile**: 375px width (iPhone SE)
@@ -77,35 +81,56 @@
 
 Create a comprehensive report with:
 
-### Section 1: Critical Issues (High Priority)
-- Issues that break functionality or severely impact user experience
-- Accessibility violations
+### Section 1: Development Environment Issues (Critical)
+- Server startup problems or build errors
+- Missing dependencies or broken imports
+- Console errors preventing functionality
+- Development-specific configuration problems
+
+### Section 2: Code Implementation Issues (High Priority)
+- Broken functionality or UI elements
 - Mobile responsiveness problems
+- Arabic RTL layout issues
+- JavaScript errors or failed animations
 
-### Section 2: Visual Improvements (Medium Priority)  
-- Styling inconsistencies
-- Layout improvements
-- Typography enhancements
+### Section 3: Visual & UX Issues (Medium Priority)  
+- Styling inconsistencies between sections
+- Layout improvements needed
+- Typography rendering problems
 - Color and spacing adjustments
+- Brand consistency issues
 
-### Section 3: Enhancement Opportunities (Low Priority)
-- Additional features that could improve user experience
-- Performance optimizations
-- Advanced animations or interactions
-- Additional content suggestions
+### Section 4: Enhancement Opportunities (Low Priority)
+- Performance optimizations for development
+- Additional interactive features
+- Accessibility improvements
+- Content organization suggestions
 
-### Section 4: Screenshots & Evidence
-- Take screenshots of identified issues
-- Provide before/after recommendations
-- Include specific CSS selectors or elements causing problems
+### Section 5: Environment Analysis & Evidence
+- Screenshot comparisons between what works/doesn't work
+- Console error logs with timestamps
+- Performance metrics from development server
+- Specific file paths and line numbers causing issues
+- Classification: Local environment vs code implementation problems
 
 ## 🔧 Technical Requirements:
 
+### Jules Sandbox Environment Setup:
+1. **Start Development Server**: Run `npm run dev` in project directory
+2. **Wait for Server**: Ensure http://127.0.0.1:8787 is accessible before testing
+3. **Test Local Only**: All testing must be done on localhost development server
+4. **Capture Local Issues**: Identify if problems are from:
+   - Local development environment
+   - Code implementation issues  
+   - Missing dependencies or assets
+   - Build process problems
+
 ### Jules Browser Automation:
 - Use Playwright integration for comprehensive testing
-- Test across multiple browsers (Chrome, Firefox, Safari if available)
-- Capture console errors and performance metrics
+- Test in sandbox Chrome browser (Jules environment)
+- Capture console errors and performance metrics  
 - Take screenshots of issues for documentation
+- Document if issues are environment-specific or code-related
 
 ### Report Generation:
 - Create detailed GitHub issue for each major problem found
