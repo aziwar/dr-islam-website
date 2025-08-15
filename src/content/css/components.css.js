@@ -493,9 +493,22 @@ export const COMPONENTS_CSS = `
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: var(--breakpoint-md)) {
     .professional-services-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-md); /* Reduce gap on smaller screens */
+    }
+
+    .professional-service-card {
+        padding: var(--space-md); /* Reduce padding */
+    }
+
+    .professional-service-card .service-title {
+        font-size: var(--text-lg); /* Adjust font size for mobile */
+    }
+
+    .professional-service-card .service-description {
+        min-height: 0; /* Allow height to be flexible on mobile */
     }
 }
 
@@ -2216,5 +2229,32 @@ export const COMPONENTS_CSS = `
         box-shadow: none;
         border: 1px solid #ccc;
     }
+}
+
+/* ===== RTL TESTIMONIAL FIXES ===== */
+[dir="rtl"] .testimonial-card,
+[dir="rtl"] .patient-testimonial {
+    text-align: right;
+}
+
+[dir="rtl"] .testimonial-card::before {
+    left: auto;
+    right: 20px;
+}
+
+[dir="rtl"] .testimonial-author,
+[dir="rtl"] .patient-info,
+[dir="rtl"] .testimonial-header {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .testimonial-rating {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .author-info,
+[dir="rtl"] .patient-details {
+    text-align: right;
 }
 `;
