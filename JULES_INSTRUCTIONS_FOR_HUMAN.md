@@ -1,15 +1,15 @@
-# Jules AI Instructions - Dr. Islam Website Enhancement
+# AUTONOMOUS JULES AI INSTRUCTIONS - Dr. Islam Website
 
-## 🎯 Project Overview
-We're enhancing the Dr. Islam dental website by applying Herrington theme's professional design patterns while keeping the existing brand identity and architecture.
+## 🚨 JULES: WORK INDEPENDENTLY - NO QUESTIONS ALLOWED
+**You have ALL information needed in this repository. DO NOT ask the user anything. Find answers in:**
+- `CLAUDE.md` - Current project context, patterns, commands
+- `src/` directory - All existing code and components  
+- `HERRINGTON_ADAPTATION_STRATEGY.md` - Complete design guidelines
+- This file - Complete task specifications
 
-## 🎨 CRITICAL: Keep Existing Brand Colors
-**DO NOT change the brand colors!** The Dr. Islam brand uses these specific colors:
-- **Primary Gold**: `#BEB093` (the main brand color)
-- **Secondary Gold**: `#D4C5A3` (lighter variation)
-- **Accent Dark**: `#8B7F6B` (darker variation)
-
-These colors are already throughout the website and must be preserved.
+## 🎨 MANDATORY: Use ONLY Existing Brand Colors
+**Primary Gold**: `#BEB093` | **Secondary Gold**: `#D4C5A3` | **Accent Dark**: `#8B7F6B`
+**DO NOT create new colors. DO NOT ask about colors.**
 
 ## 📋 Task 1: Professional Service Cards (PRIORITY 1)
 
