@@ -74,20 +74,25 @@ export class PatientTestimonial {
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
 
     let starsHTML = '';
+    const starSVG = `
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27z" fill="currentColor"/>
+      </svg>
+    `;
     
     // Full stars
     for (let i = 0; i < fullStars; i++) {
-      starsHTML += '<span class="rating-star filled" aria-hidden="true">⭐</span>';
+      starsHTML += `<span class="rating-star filled" aria-hidden="true">${starSVG}</span>`;
     }
     
-    // Half star
+    // Half star (not implemented in this version, but could be)
     if (hasHalfStar) {
-      starsHTML += '<span class="rating-star half" aria-hidden="true">⭐</span>';
+       starsHTML += `<span class="rating-star half" aria-hidden="true">${starSVG}</span>`;
     }
     
     // Empty stars
     for (let i = 0; i < emptyStars; i++) {
-      starsHTML += '<span class="rating-star empty" aria-hidden="true">☆</span>';
+      starsHTML += `<span class="rating-star empty" aria-hidden="true">${starSVG}</span>`;
     }
 
     return starsHTML;
@@ -195,6 +200,78 @@ export class PatientTestimonial {
         testimonial: 'Dr. Islam is wonderful with children! Our kids actually look forward to dental visits now. The clinic is child-friendly and staff is amazing.',
         treatment: 'Pediatric Dentistry',
         date: '2024-12-05',
+        verified: true
+      }
+    ];
+  }
+
+  // Predefined new patient testimonials
+  static getNewTestimonials() {
+    return [
+      {
+        id: 'sarah-a-implant',
+        name: 'Sarah A.',
+        photo: '/images/patients/default.jpg',
+        rating: 5,
+        testimonial: 'Dr. Islam replaced my missing teeth with implants that look completely natural. The process was comfortable and the results are amazing!',
+        treatment: 'Dental Implants',
+        date: '2025-03-15',
+        verified: true,
+      },
+      {
+        id: 'ahmed-m-cosmetic',
+        name: 'Ahmed M.',
+        photo: '/images/patients/default.jpg',
+        rating: 5,
+        testimonial: 'Professional teeth whitening and bonding gave me the confident smile I always wanted. Excellent service and results!',
+        treatment: 'Cosmetic Dentistry',
+        date: '2025-02-20',
+        verified: true
+      },
+      {
+        id: 'fatima-h-family',
+        name: 'Fatima H.',
+        photo: '/images/patients/default.jpg',
+        rating: 5,
+        testimonial: 'Dr. Islam takes care of our whole family. Great with kids and always explains everything clearly. Highly recommend!',
+        treatment: 'Family Dentistry',
+        date: '2025-01-10',
+        verified: true
+      }
+    ];
+  }
+
+  // Arabic versions of new testimonials
+  static getNewTestimonialsArabic() {
+    return [
+      {
+        id: 'sarah-a-implant-ar',
+        name: 'سارة أ.',
+        photo: '/images/patients/default.jpg',
+        rating: 5,
+        testimonial: 'قام الدكتور إسلام باستبدال أسناني المفقودة بزراعات تبدو طبيعية تمامًا. كانت العملية مريحة والنتائج مذهلة!',
+        treatment: 'زراعة الأسنان',
+        date: '2025-03-15',
+        verified: true
+      },
+      {
+        id: 'ahmed-m-cosmetic-ar',
+        name: 'أحمد م.',
+        photo: '/images/patients/default.jpg',
+        rating: 5,
+        testimonial: 'تبييض الأسنان الاحترافي والترابط أعطاني الابتسامة الواثقة التي طالما أردتها. خدمة ونتائج ممتازة!',
+        treatment: 'تجميل الأسنان',
+        date: '2025-02-20',
+        verified: true
+      },
+      {
+        id: 'fatima-h-family-ar',
+        name: 'فاطمة ح.',
+        photo: '/images/patients/default.jpg',
+        rating: 5,
+        testimonial: 'الدكتور إسلام يعتني بعائلتنا بأكملها. رائع مع الأطفال ويشرح كل شيء بوضوح دائمًا. أوصي به بشدة!',
+        treatment: 'طب أسنان الأسرة',
+        date: '2025-01-10',
         verified: true
       }
     ];
