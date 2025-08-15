@@ -2230,4 +2230,31 @@ export const COMPONENTS_CSS = `
         border: 1px solid #ccc;
     }
 }
+
+/* ===== RTL TESTIMONIAL FIXES ===== */
+[dir="rtl"] .testimonial-card,
+[dir="rtl"] .patient-testimonial {
+    text-align: right;
+}
+
+[dir="rtl"] .testimonial-card::before {
+    left: auto;
+    right: 20px;
+}
+
+[dir="rtl"] .testimonial-author,
+[dir="rtl"] .patient-info,
+[dir="rtl"] .testimonial-header {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .testimonial-rating {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .author-info,
+[dir="rtl"] .patient-details {
+    text-align: right;
+}
 `;
