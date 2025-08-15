@@ -1,9 +1,24 @@
-// Arabic Header and Navigation Section
+// Arabic Header and Navigation Section - Modern 2024/2025 Standards
+// Enhanced with accessibility, responsive design, RTL support, and modern interactions
 import { DentalLogo } from '../../content/components/DentalLogo.js';
+import { createModernArabicHeader } from '../shared/modern-header.js';
 
+/**
+ * Get Arabic Header - Legacy compatibility wrapper
+ * Now uses modern header architecture with 2024/2025 standards and full RTL support
+ */
 export function getArabicHeader() {
+  // Use modern header component
+  return createModernArabicHeader();
+}
+
+/**
+ * Legacy header for backward compatibility (if needed)
+ * @deprecated Use getArabicHeader() which now returns modern header
+ */
+export function getLegacyArabicHeader() {
   return `
-    <!-- Emergency Banner -->
+    <!-- Legacy Emergency Banner -->
     <div class="emergency-banner">
         <p>حالات طوارئ الأسنان؟ اتصل الآن: <a href="tel:+96598563711" aria-label="رقم الطوارئ: 98563711">98563711</a></p>
     </div>

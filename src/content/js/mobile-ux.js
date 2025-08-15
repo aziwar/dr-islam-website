@@ -1,5 +1,450 @@
 // Mobile UX JavaScript - Enhanced interactions and functionality
 export const MOBILE_UX_JS = `
+/* Navigation Dropdown Controller */
+class NavigationDropdownController {
+    constructor() {
+        this.dropdowns = [];
+        this.init();
+    }
+    
+    init() {
+        this.setupDropdowns();
+        this.setupMobileToggle();
+        this.bindEvents();
+    }
+    
+    setupDropdowns() {
+        const dropdownElements = document.querySelectorAll('.dropdown');
+        dropdownElements.forEach(dropdown => {
+            const trigger = dropdown.querySelector('.nav-link');
+            const menu = dropdown.querySelector('.dropdown-menu');
+            
+            if (trigger && menu) {
+                this.dropdowns.push({ element: dropdown, trigger, menu });
+                
+                // Add click handler for mobile
+                trigger.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 1024) {
+                        e.preventDefault();
+                        this.toggleDropdown(dropdown);
+                    }
+                });
+                
+                // Add keyboard support
+                trigger.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.toggleDropdown(dropdown);
+                    }
+                });
+            }
+        });
+    }
+    
+    setupMobileToggle() {
+        const navToggle = document.querySelector('.nav-toggle');
+        const mainNav = document.querySelector('.main-nav');
+        const navBackdrop = document.querySelector('.nav-backdrop');
+        
+        if (navToggle && mainNav) {
+            navToggle.addEventListener('click', () => {
+                const isOpen = mainNav.classList.contains('is-open');
+                
+                if (isOpen) {
+                    this.closeNav(navToggle, mainNav, navBackdrop);
+                } else {
+                    this.openNav(navToggle, mainNav, navBackdrop);
+                }
+            });
+        }
+        
+        // Close nav when backdrop is clicked
+        if (navBackdrop) {
+            navBackdrop.addEventListener('click', () => {
+                this.closeNav(navToggle, mainNav, navBackdrop);
+            });
+        }
+    }
+    
+    toggleDropdown(dropdown) {
+        const isOpen = dropdown.classList.contains('is-open');
+        
+        // Close other dropdowns
+        this.dropdowns.forEach(({ element }) => {
+            if (element !== dropdown) {
+                element.classList.remove('is-open');
+                element.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
+            }
+        });
+        
+        // Toggle current dropdown
+        if (isOpen) {
+            dropdown.classList.remove('is-open');
+            dropdown.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
+        } else {
+            dropdown.classList.add('is-open');
+            dropdown.querySelector('.nav-link').setAttribute('aria-expanded', 'true');
+        }
+    }
+    
+    openNav(toggle, nav, backdrop) {
+        toggle.classList.add('is-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        nav.classList.add('is-open');
+        if (backdrop) backdrop.classList.add('is-open');
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+    }
+    
+    closeNav(toggle, nav, backdrop) {
+        toggle.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        nav.classList.remove('is-open');
+        if (backdrop) backdrop.classList.remove('is-open');
+        
+        // Close all dropdowns
+        this.dropdowns.forEach(({ element }) => {
+            element.classList.remove('is-open');
+            element.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
+        });
+        
+        // Restore body scroll
+        document.body.style.overflow = '';
+    }
+    
+    bindEvents() {
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            const isInsideDropdown = e.target.closest('.dropdown');
+            if (!isInsideDropdown) {
+                this.dropdowns.forEach(({ element }) => {
+                    element.classList.remove('is-open');
+                    element.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+        
+        // Close dropdowns on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                this.dropdowns.forEach(({ element }) => {
+                    element.classList.remove('is-open');
+                    element.querySelector('.nav-link').setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+    }
+}
+
+// Initialize navigation when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new NavigationDropdownController();
+});
+
+/* ===== ENHANCED HERO BOOKING WIDGET - WAVE 2 ===== */
+// Multi-step booking form controller
+class HeroBookingController {
+    constructor() {
+        this.currentStep = 1;
+        this.totalSteps = 2;
+        this.formData = {};
+        this.init();
+    }
+    
+    init() {
+        this.bindEvents();
+        this.updateProgress();
+    }
+    
+    bindEvents() {
+        // Form navigation
+        const nextBtn = document.querySelector('.btn-next');
+        const prevBtn = document.querySelector('.btn-prev');
+        const submitBtn = document.querySelector('.btn-submit');
+        
+        if (nextBtn) nextBtn.addEventListener('click', () => this.nextStep());
+        if (prevBtn) prevBtn.addEventListener('click', () => this.previousStep());
+        
+        // Form validation on input change
+        const inputs = document.querySelectorAll('.enhanced-form input, .enhanced-form select');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => this.validateStep());
+            input.addEventListener('blur', () => this.validateField(input));
+        });
+    }
+    
+    nextStep() {
+        if (this.validateStep() && this.currentStep < this.totalSteps) {
+            this.currentStep++;
+            this.updateUI();
+        }
+    }
+    
+    previousStep() {
+        if (this.currentStep > 1) {
+            this.currentStep--;
+            this.updateUI();
+        }
+    }
+    
+    updateUI() {
+        // Update form steps
+        const steps = document.querySelectorAll('.form-step');
+        steps.forEach((step, index) => {
+            const stepNumber = index + 1;
+            step.classList.toggle('active', stepNumber === this.currentStep);
+        });
+        
+        // Update navigation buttons
+        const nextBtn = document.querySelector('.btn-next');
+        const prevBtn = document.querySelector('.btn-prev');
+        const submitBtn = document.querySelector('.btn-submit');
+        
+        if (prevBtn) {
+            prevBtn.style.display = this.currentStep === 1 ? 'none' : 'flex';
+        }
+        
+        if (nextBtn && submitBtn) {
+            if (this.currentStep === this.totalSteps) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'flex';
+            } else {
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+            }
+        }
+        
+        this.updateProgress();
+    }
+    
+    updateProgress() {
+        const progressFill = document.querySelector('.progress-fill');
+        const progressText = document.querySelector('.progress-text');
+        
+        const percentage = (this.currentStep / this.totalSteps) * 100;
+        
+        if (progressFill) {
+            progressFill.style.width = percentage + '%';
+        }
+        
+        if (progressText) {
+            progressText.textContent = \`Step \${this.currentStep} of \${this.totalSteps}\`;
+        }
+    }
+    
+    validateStep() {
+        const currentStepElement = document.querySelector(\`.form-step[data-step="\${this.currentStep}"].active\`);
+        if (!currentStepElement) return false;
+        
+        const requiredFields = currentStepElement.querySelectorAll('input[required], select[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!this.validateField(field)) {
+                isValid = false;
+            }
+        });
+        
+        return isValid;
+    }
+    
+    validateField(field) {
+        const fieldGroup = field.closest('.form-group');
+        const isValid = field.value.trim() !== '';
+        
+        // Remove previous validation classes
+        fieldGroup?.classList.remove('field-valid', 'field-invalid');
+        
+        // Add appropriate validation class
+        if (field.value.trim() !== '') {
+            fieldGroup?.classList.add(isValid ? 'field-valid' : 'field-invalid');
+        }
+        
+        return isValid;
+    }
+    
+    collectFormData() {
+        const form = document.querySelector('.enhanced-form');
+        const formData = new FormData(form);
+        const data = {};
+        
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+        
+        return data;
+    }
+}
+
+// Global functions for backward compatibility
+window.nextStep = function() {
+    if (window.heroBookingController) {
+        window.heroBookingController.nextStep();
+    }
+};
+
+window.previousStep = function() {
+    if (window.heroBookingController) {
+        window.heroBookingController.previousStep();
+    }
+};
+
+// Enhanced booking form submission
+window.handleQuickBooking = async function(event) {
+    event.preventDefault();
+    
+    const controller = window.heroBookingController;
+    if (!controller || !controller.validateStep()) {
+        return;
+    }
+    
+    const formData = controller.collectFormData();
+    
+    // Show loading state
+    const submitBtn = event.target.querySelector('.btn-submit');
+    const originalText = submitBtn.innerHTML;
+    
+    submitBtn.innerHTML = \`
+        <svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-opacity="0.3"/>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="4"/>
+        </svg>
+        Processing...
+    \`;
+    submitBtn.disabled = true;
+    
+    try {
+        const response = await fetch('/api/book-appointment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // Show success message
+            showNotification('Appointment request sent successfully! We will contact you within 30 minutes.', 'success');
+            
+            // Reset form
+            document.querySelector('.enhanced-form').reset();
+            controller.currentStep = 1;
+            controller.updateUI();
+            
+            // Track conversion
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL'
+                });
+            }
+        } else {
+            throw new Error(result.message || 'Failed to submit appointment request');
+        }
+    } catch (error) {
+        console.error('Booking error:', error);
+        showNotification('Failed to submit request. Please try calling us directly at +965 98563711', 'error');
+    } finally {
+        // Restore button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+};
+
+// Enhanced notification system
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = \`hero-notification \${type} show\`;
+    notification.innerHTML = \`
+        <div class="notification-content">
+            <div class="notification-icon">
+                \${type === 'success' ? 
+                    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' :
+                    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/><line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/></svg>'
+                }
+            </div>
+            <span class="notification-message">\${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+    \`;
+    
+    document.body.appendChild(notification);
+    
+    // Auto-remove after 8 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, 8000);
+}
+
+// Initialize enhanced booking controller
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.enhanced-form')) {
+        window.heroBookingController = new HeroBookingController();
+    }
+});
+
+// Tooltip functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+    
+    tooltipElements.forEach(element => {
+        let tooltip = null;
+        
+        element.addEventListener('mouseenter', () => {
+            tooltip = document.createElement('div');
+            tooltip.className = 'custom-tooltip';
+            tooltip.textContent = element.dataset.tooltip;
+            document.body.appendChild(tooltip);
+            
+            const rect = element.getBoundingClientRect();
+            tooltip.style.left = rect.left + rect.width / 2 - tooltip.offsetWidth / 2 + 'px';
+            tooltip.style.top = rect.top - tooltip.offsetHeight - 8 + 'px';
+            
+            setTimeout(() => tooltip.classList.add('show'), 10);
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            if (tooltip) {
+                tooltip.classList.remove('show');
+                setTimeout(() => {
+                    if (tooltip.parentElement) {
+                        tooltip.remove();
+                    }
+                }, 200);
+                tooltip = null;
+            }
+        });
+    });
+});
+
+// CTA interaction analytics
+document.addEventListener('click', (e) => {
+    if (e.target.matches('[data-action]')) {
+        const action = e.target.dataset.action;
+        
+        // Track CTA clicks
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'click', {
+                'event_category': 'Hero CTA',
+                'event_label': action,
+                'value': 1
+            });
+        }
+        
+        // Add interaction feedback
+        e.target.classList.add('cta-clicked');
+        setTimeout(() => {
+            e.target.classList.remove('cta-clicked');
+        }, 200);
+    }
+});
+
+/* ===== END ENHANCED HERO BOOKING WIDGET ===== */
 /* =================================================================
    MOBILE UX JAVASCRIPT ENHANCEMENTS
    Progressive disclosure, form validation, and smooth interactions

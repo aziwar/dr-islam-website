@@ -4,6 +4,8 @@ import { DentalLogo } from './components/DentalLogo.js';
 import { ENHANCEMENTS_CSS } from './css/enhancements.css.js';
 import { DynamicGallery } from './components/DynamicGallery.js';
 import { Icon } from '../components/atoms/Icon.js';
+import { createModernEnglishHeader } from '../templates/shared/modern-header.js';
+import { MODERN_HEADER_CSS } from './css/modern-header.css.js';
 import { 
     toggleMobileMenu, 
     closeMobileMenu,
@@ -56,6 +58,7 @@ export const HTML_EN = `<!DOCTYPE html>
     
     <!-- UI/UX Enhancements -->
     <style>
+        ${MODERN_HEADER_CSS}
         ${ENHANCEMENTS_CSS}
         ${DentalLogo.css}
     </style>
@@ -94,99 +97,294 @@ export const HTML_EN = `<!DOCTYPE html>
 </head>
 <body>
 
-    <!-- Emergency Banner -->
-    <div class="emergency-banner" role="banner" aria-label="Dental emergency contact information">
-        <p>Dental Emergency? Call Now: <a href="tel:+96598563711" aria-label="Call emergency number 98563711">+965 98563711</a></p>
-    </div>
-
-    <header role="banner">
-        <nav role="navigation" aria-label="Main navigation" id="nav-menu">
-            <div class="logo dental-logo">
-                ${DentalLogo.svgEn}
-            </div>
-            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="main-nav" role="menu">
-                <li role="menuitem"><a href="#services" aria-label="Navigate to Services section">Services</a></li>
-                <li role="menuitem"><a href="#about" aria-label="Navigate to About section">About</a></li>
-                <li role="menuitem"><a href="#testimonials" aria-label="Navigate to Testimonials section">Testimonials</a></li>
-                <li role="menuitem"><a href="#gallery" aria-label="Navigate to Before/After gallery">Before/After</a></li>
-                <li role="menuitem"><a href="#faq" aria-label="Navigate to FAQ section">FAQ</a></li>
-                <li role="menuitem"><a href="#contact" aria-label="Navigate to Contact section">Contact</a></li>
-                <li role="menuitem"><a href="/ar/" class="lang-switch" aria-label="Switch to Arabic language">العربية</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <div class="nav-backdrop"></div>
-
-    <!-- Breadcrumb Navigation -->
-    <nav class="breadcrumb-nav" aria-label="Breadcrumb navigation" id="breadcrumbNav" style="display: none;">
-        <div class="container">
-            <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
-                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                    <a href="#" onclick="scrollToSection('hero')" itemprop="item">
-                        <span itemprop="name">Home</span>
-                    </a>
-                    <meta itemprop="position" content="1" />
-                </li>
-                <li class="breadcrumb-item active" id="currentBreadcrumb" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                    <span itemprop="name">Home</span>
-                    <meta itemprop="position" content="2" />
-                </li>
-            </ol>
-        </div>
-    </nav>
+    <!-- Modern Header with 2024/2025 Standards -->
+    ${createModernEnglishHeader()}
 
     <main id="main-content" role="main">
-    <section class="hero" role="region" aria-labelledby="hero-heading">
+    <!-- Modern Hero Section with Dr. Islam's Brand Colors -->
+    <section class="hero modern-hero" role="region" aria-labelledby="hero-heading">
+        <!-- Hero Background with Glow Effects -->
+        <div class="hero-background">
+            <div class="hero-glow hero-glow-1"></div>
+            <div class="hero-glow hero-glow-2"></div>
+        </div>
+        
         <div class="container">
-            <div class="hero-main">
-                <h1 id="hero-heading">Dr. Islam Elsagher</h1>
-                <p class="subtitle">General Dentist & Implantologist</p>
-                <div class="trust-badges">
-                    <span class="badge">15+ Years Experience</span>
-                    <span class="badge">Latest Technology</span>
-                    <span class="badge">100% Patient Satisfaction</span>
-                </div>
-                <button class="cta-button" onclick="openBookingModal()">Book Your Appointment</button>
-            </div>
-            
-            <!-- Desktop Booking Widget -->
-            <div class="desktop-booking-widget">
-                <div class="widget-header">
-                    <h3>📅 Quick Appointment</h3>
-                    <p>Book your visit in 30 seconds</p>
-                    <div class="widget-trust">
-                        <span class="trust-badge">✓ Same Day Available</span>
-                        <span class="trust-badge">✓ Free Consultation</span>
+            <div class="hero-content">
+                <!-- Main Hero Content -->
+                <div class="hero-main animate-appear">
+                    <!-- Professional Badge -->
+                    <div class="hero-badge-wrapper">
+                        <span class="hero-badge">
+                            <svg class="badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Board Certified Dentist & Implantologist
+                        </span>
+                    </div>
+
+                    <!-- Main Heading with Gradient -->
+                    <h1 id="hero-heading" class="hero-title">
+                        <span class="title-line">Transform Your Smile with</span>
+                        <span class="title-highlight">Dr. Islam Elsagher</span>
+                        <span class="title-subtitle">Leading Dental Excellence in Kuwait</span>
+                    </h1>
+
+                    <!-- Enhanced Description -->
+                    <p class="hero-description">
+                        Experience world-class dental care with advanced technology, compassionate treatment, 
+                        and proven results. Your perfect smile journey starts here.
+                    </p>
+
+                    <!-- Interactive Trust Indicators -->
+                    <div class="trust-indicators">
+                        <div class="trust-item" data-tooltip="15+ years of professional excellence">
+                            <div class="trust-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="trust-content">
+                                <span class="trust-number">15+</span>
+                                <span class="trust-label">Years Experience</span>
+                            </div>
+                        </div>
+
+                        <div class="trust-item" data-tooltip="Advanced dental technology and techniques">
+                            <div class="trust-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="trust-content">
+                                <span class="trust-number">100%</span>
+                                <span class="trust-label">Latest Technology</span>
+                            </div>
+                        </div>
+
+                        <div class="trust-item" data-tooltip="Verified patient satisfaction ratings">
+                            <div class="trust-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="trust-content">
+                                <span class="trust-number">2500+</span>
+                                <span class="trust-label">Happy Patients</span>
+                            </div>
+                        </div>
+
+                        <div class="trust-item" data-tooltip="Same-day emergency appointments available">
+                            <div class="trust-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="trust-content">
+                                <span class="trust-number">Same Day</span>
+                                <span class="trust-label">Appointments</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive CTA Buttons -->
+                    <div class="hero-cta-section">
+                        <!-- Primary CTA -->
+                        <button class="cta-primary interactive-cta" onclick="openBookingModal()" data-action="book-appointment">
+                            <span class="cta-content">
+                                <svg class="cta-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Book Free Consultation
+                            </span>
+                            <span class="cta-shine"></span>
+                        </button>
+
+                        <!-- Secondary CTA -->
+                        <button class="cta-secondary interactive-cta" onclick="scrollToSection('services')" data-action="view-services">
+                            <span class="cta-content">
+                                <svg class="cta-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                View Our Services
+                            </span>
+                        </button>
+
+                        <!-- Emergency CTA -->
+                        <a href="tel:+96598563711" class="cta-emergency" data-action="emergency-call">
+                            <div class="emergency-pulse"></div>
+                            <span class="emergency-text">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Emergency? Call Now
+                            </span>
+                        </a>
+                    </div>
+
+                    <!-- Social Proof -->
+                    <div class="social-proof">
+                        <div class="social-proof-avatars">
+                            <div class="avatar-group">
+                                <div class="avatar"></div>
+                                <div class="avatar"></div>
+                                <div class="avatar"></div>
+                                <div class="avatar"></div>
+                                <div class="avatar-more">+2500</div>
+                            </div>
+                        </div>
+                        <div class="social-proof-text">
+                            <p><strong>2,500+ patients</strong> trust Dr. Elsagher for their dental care</p>
+                            <div class="rating-stars">
+                                <span class="stars">★★★★★</span>
+                                <span class="rating-text">4.9/5 patient satisfaction</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <form class="quick-booking-form" onsubmit="handleQuickBooking(event)">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="tel" placeholder="📱 Phone Number" required>
-                    <select required>
-                        <option value="">🦷 Select Service</option>
-                        <option value="checkup">🔍 General Checkup</option>
-                        <option value="cleaning">✨ Teeth Cleaning</option>
-                        <option value="implant">🦷 Dental Implants</option>
-                        <option value="cosmetic">💎 Cosmetic Dentistry</option>
-                        <option value="emergency">🚨 Emergency Visit</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary">
-                        📞 Book Now - Free Consultation
-                    </button>
-                </form>
-                <div class="widget-footer">
-                    <p class="availability-note">⚡ Available Today: 9:00 AM - 9:00 PM</p>
+                
+                <!-- Enhanced Desktop Booking Widget -->
+                <div class="desktop-booking-widget enhanced-widget">
+                    <div class="widget-glow"></div>
+                    
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <svg class="widget-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <h3>Quick Appointment</h3>
+                        </div>
+                        <p class="widget-subtitle">Book your visit in under 30 seconds</p>
+                        
+                        <div class="widget-benefits">
+                            <div class="benefit-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Same Day Available</span>
+                            </div>
+                            <div class="benefit-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Free Consultation</span>
+                            </div>
+                            <div class="benefit-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>No Waiting List</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="quick-booking-form enhanced-form" onsubmit="handleQuickBooking(event)">
+                        <div class="form-step active" data-step="1">
+                            <div class="form-group">
+                                <label for="hero-name">Full Name</label>
+                                <input type="text" id="hero-name" name="name" placeholder="Enter your full name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="hero-phone">Phone Number</label>
+                                <input type="tel" id="hero-phone" name="phone" placeholder="+965 XXXX XXXX" required>
+                            </div>
+                        </div>
+
+                        <div class="form-step" data-step="2">
+                            <div class="form-group">
+                                <label for="hero-service">Select Service</label>
+                                <select id="hero-service" name="service" required>
+                                    <option value="">Choose your treatment</option>
+                                    <option value="checkup" data-icon="🔍">General Checkup</option>
+                                    <option value="cleaning" data-icon="✨">Professional Cleaning</option>
+                                    <option value="implant" data-icon="🦷">Dental Implants</option>
+                                    <option value="cosmetic" data-icon="💎">Cosmetic Dentistry</option>
+                                    <option value="emergency" data-icon="🚨">Emergency Care</option>
+                                    <option value="consultation" data-icon="💬">Free Consultation</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hero-time">Preferred Time</label>
+                                <select id="hero-time" name="preferred_time">
+                                    <option value="">Any time</option>
+                                    <option value="morning">Morning (9AM - 12PM)</option>
+                                    <option value="afternoon">Afternoon (12PM - 6PM)</option>
+                                    <option value="evening">Evening (6PM - 9PM)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-navigation">
+                            <button type="button" class="btn-step btn-prev" onclick="previousStep()" style="display: none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="m15 18-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Previous
+                            </button>
+                            
+                            <button type="button" class="btn-step btn-next" onclick="nextStep()">
+                                Next Step
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="m9 18 6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            
+                            <button type="submit" class="btn-submit" style="display: none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Book Free Consultation
+                            </button>
+                        </div>
+
+                        <div class="form-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 50%;"></div>
+                            </div>
+                            <span class="progress-text">Step 1 of 2</span>
+                        </div>
+                    </form>
+
+                    <div class="widget-footer">
+                        <div class="availability-indicator">
+                            <div class="status-dot available"></div>
+                            <span class="availability-text">Available Today: 9:00 AM - 9:00 PM</span>
+                        </div>
+                        
+                        <div class="widget-guarantee">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>100% Secure & Private</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
+        <!-- Floating Action Button for Mobile -->
+        <div class="hero-fab">
+            <button class="fab-button" onclick="openBookingModal()" aria-label="Quick booking">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                    <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                    <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </button>
+            <div class="fab-tooltip">Quick Book</div>
+        </div>
+    </section>
     <section id="services" class="services">
         <div class="container">
             <h2>Our Services</h2>
@@ -1716,7 +1914,7 @@ export const HTML_EN = `<!DOCTYPE html>
             
             // Build WhatsApp message
             const whatsappMessage = buildWhatsAppMessage(formData);
-            const whatsappURL = \`https://wa.me/96566006699?text=\${encodeURIComponent(whatsappMessage)}\`;
+            const whatsappURL = `https://wa.me/96566006699?text=${encodeURIComponent(whatsappMessage)}`;
             
             // Show success state
             setTimeout(() => {
@@ -1747,20 +1945,20 @@ export const HTML_EN = `<!DOCTYPE html>
         function showLoadingState() {
             form.classList.add('form-loading');
             submitButton.disabled = true;
-            submitButton.innerHTML = \`
+            submitButton.innerHTML = `
                 <span class="booking-btn-icon icon--spin">⏳</span>
                 Preparing WhatsApp...
-            \`;
+            `;
             hideFormMessage();
         }
         
         function hideLoadingState() {
             form.classList.remove('form-loading');
             submitButton.disabled = false;
-            submitButton.innerHTML = \`
+            submitButton.innerHTML = `
                 <span class="booking-btn-icon">💬</span>
                 Continue to WhatsApp
-            \`;
+            `;
         }
         
         function updateProgressBar(percent) {
@@ -1768,7 +1966,7 @@ export const HTML_EN = `<!DOCTYPE html>
         }
         
         function showFormMessage(type, message) {
-            messageContainer.className = \`form-message form-message-\${type}\`;
+            messageContainer.className = `form-message form-message-${type}`;
             messageIcon.innerHTML = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
             messageText.textContent = message;
             messageContainer.style.display = 'flex';
@@ -1792,7 +1990,7 @@ export const HTML_EN = `<!DOCTYPE html>
             
             // Highlight invalid fields
             fields.forEach(fieldName => {
-                const field = form.querySelector(\`[name="\${fieldName}"]\`);
+                const field = form.querySelector(`[name="${fieldName}"]`);
                 if (field) {
                     field.classList.add('form-field-error');
                     field.addEventListener('input', clearFieldError, { once: true });
@@ -1851,18 +2049,18 @@ export const HTML_EN = `<!DOCTYPE html>
     
     // Build WhatsApp message from form data
     function buildWhatsAppMessage(data) {
-        return \`🦷 *Booking Request - Dr. Islam Elsagher*
+        return `🦷 *Booking Request - Dr. Islam Elsagher*
 
-👤 *Name:* \${data.name}
-📱 *Phone:* \${data.phone}
-🩺 *Service:* \${data.service}
-⏰ *Preferred Time:* \${data.time}
-\${data.notes ? \`📝 *Notes:* \${data.notes}\` : ''}
+👤 *Name:* ${data.name}
+📱 *Phone:* ${data.phone}
+🩺 *Service:* ${data.service}
+⏰ *Preferred Time:* ${data.time}
+${data.notes ? `📝 *Notes:* ${data.notes}` : ''}
 
 📍 *Clinic Location:* Hawally, Kuwait
 🕐 *Working Hours:* 9:00 AM - 9:00 PM
 
-Please confirm my appointment. Thank you! 🙏\`;
+Please confirm my appointment. Thank you! 🙏`;
     }
     
 
@@ -1901,7 +2099,7 @@ Please confirm my appointment. Thank you! 🙏\`;
                         const x = e.clientX - rect.left;
                         const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
                         slider.style.left = percent + '%';
-                        beforeImg.style.clipPath = \`inset(0 \${100 - percent}% 0 0)\`;
+                        beforeImg.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
                     });
                     
                     // Touch support
@@ -1913,7 +2111,7 @@ Please confirm my appointment. Thank you! 🙏\`;
                         const x = e.touches[0].clientX - rect.left;
                         const percent = Math.max(0, Math.min(100, (x / rect.width) * 100));
                         slider.style.left = percent + '%';
-                        beforeImg.style.clipPath = \`inset(0 \${100 - percent}% 0 0)\`;
+                        beforeImg.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
                     });
                 }
             }
@@ -2125,33 +2323,32 @@ Please confirm my appointment. Thank you! 🙏\`;
         lightbox.setAttribute('aria-modal', 'true');
         lightbox.setAttribute('aria-labelledby', 'lightbox-title');
         
-        lightbox.innerHTML = \`
-            <div class="lightbox-backdrop" onclick="closeLightbox()" aria-hidden="true"></div>
-            <div class="lightbox-content">
-                <div class="lightbox-header">
-                    <h2 id="lightbox-title" class="sr-only">\${image.alt}</h2>
-                    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox" tabindex="0">
-                        <span aria-hidden="true">✕</span>
-                    </button>
-                </div>
-                <div class="lightbox-body">
-                    <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)" aria-label="Previous image" \${currentLightboxIndex === 0 ? 'disabled' : ''}>
-                        <span aria-hidden="true">‹</span>
-                    </button>
-                    <div class="lightbox-image-container">
-                        <img src="\${image.src}" alt="\${image.alt}" class="lightbox-image">
-                        <div class="lightbox-loading" aria-hidden="true">Loading...</div>
-                    </div>
-                    <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)" aria-label="Next image" \${currentLightboxIndex === lightboxImages.length - 1 ? 'disabled' : ''}>
-                        <span aria-hidden="true">›</span>
-                    </button>
-                </div>
-                <div class="lightbox-footer">
-                    <div class="lightbox-caption">\${image.caption}</div>
-                    <div class="lightbox-counter">\${currentLightboxIndex + 1} / \${lightboxImages.length}</div>
-                </div>
-            </div>
-        \`;
+        lightbox.innerHTML = 
+            '<div class="lightbox-backdrop" onclick="closeLightbox()" aria-hidden="true"></div>' +
+            '<div class="lightbox-content">' +
+                '<div class="lightbox-header">' +
+                    '<h2 id="lightbox-title" class="sr-only">' + image.alt + '</h2>' +
+                    '<button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox" tabindex="0">' +
+                        '<span aria-hidden="true">✕</span>' +
+                    '</button>' +
+                '</div>' +
+                '<div class="lightbox-body">' +
+                    '<button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)" aria-label="Previous image" ' + (currentLightboxIndex === 0 ? 'disabled' : '') + '>' +
+                        '<span aria-hidden="true">‹</span>' +
+                    '</button>' +
+                    '<div class="lightbox-image-container">' +
+                        '<img src="' + image.src + '" alt="' + image.alt + '" class="lightbox-image">' +
+                        '<div class="lightbox-loading" aria-hidden="true">Loading...</div>' +
+                    '</div>' +
+                    '<button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)" aria-label="Next image" ' + (currentLightboxIndex === lightboxImages.length - 1 ? 'disabled' : '') + '>' +
+                        '<span aria-hidden="true">›</span>' +
+                    '</button>' +
+                '</div>' +
+                '<div class="lightbox-footer">' +
+                    '<div class="lightbox-caption">' + image.caption + '</div>' +
+                    '<div class="lightbox-counter">' + (currentLightboxIndex + 1) + ' / ' + lightboxImages.length + '</div>' +
+                '</div>' +
+            '</div>';
         
         document.body.appendChild(lightbox);
         document.body.style.overflow = 'hidden';
@@ -2654,36 +2851,34 @@ Please confirm my appointment. Thank you! 🙏\`;
             }
             
             const casesHTML = data.cases.map((case_, index) => {
-                return \`
-                  <div class="gallery-case" data-case-index="\${index}">
-                    <div class="case-images" onclick="openLightbox(\${index})" style="cursor: pointer;">
-                      <div class="before-after-container">
-                        <picture class="before-image">
-                          <img src="/\${case_.beforeImage || case_.afterImage}" 
-                               alt="\${case_.title} - Before" 
-                               loading="lazy">
-                        </picture>
+                return '<div class="gallery-case" data-case-index="' + index + '">' +
+                    '<div class="case-images" onclick="openLightbox(' + index + ')" style="cursor: pointer;">' +
+                      '<div class="before-after-container">' +
+                        '<picture class="before-image">' +
+                          '<img src="/' + (case_.beforeImage || case_.afterImage) + '" ' +
+                               'alt="' + case_.title + ' - Before" ' +
+                               'loading="lazy">' +
+                        '</picture>' +
                         
-                        <picture class="after-image">
-                          <img src="/\${case_.afterImage || case_.beforeImage}" 
-                               alt="\${case_.title} - After" 
-                               loading="lazy">
-                        </picture>
+                        '<picture class="after-image">' +
+                          '<img src="/' + (case_.afterImage || case_.beforeImage) + '" ' +
+                               'alt="' + case_.title + ' - After" ' +
+                               'loading="lazy">' +
+                        '</picture>' +
                         
-                        <div class="before-after-labels">
-                          <span class="label">Before</span>
-                          <span class="label">After</span>
-                        </div>
-                      </div>
-                    </div>
+                        '<div class="before-after-labels">' +
+                          '<span class="label">Before</span>' +
+                          '<span class="label">After</span>' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>' +
                     
-                    <div class="case-info">
-                      <h3 class="case-title">\${case_.title}</h3>
-                      <span class="case-category">\${case_.category}</span>
-                      \${case_.description ? \`<p class="case-description">\${case_.description}</p>\` : ''}
-                    </div>
-                  </div>
-                \`;
+                    '<div class="case-info">' +
+                      '<h3 class="case-title">' + case_.title + '</h3>' +
+                      '<span class="case-category">' + case_.category + '</span>' +
+                      (case_.description ? '<p class="case-description">' + case_.description + '</p>' : '') +
+                    '</div>' +
+                  '</div>';
             }).join('');
             
             container.innerHTML = casesHTML;
@@ -2694,7 +2889,7 @@ Please confirm my appointment. Thank you! 🙏\`;
         } catch (error) {
             // Failed to load gallery - show fallback content
             const container = document.getElementById(containerId);
-            container.innerHTML = \`
+            container.innerHTML = `
                 <div class="gallery-case" onclick="openLightbox(0)">
                     <div class="case-images" style="cursor: pointer;">
                         <img src="/assets/real-case1.webp" alt="Amazing smile transformation" loading="lazy" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
@@ -2722,7 +2917,7 @@ Please confirm my appointment. Thank you! 🙏\`;
                         <span class="case-category">orthodontic</span>
                     </div>
                 </div>
-            \`;
+            `;
             
             // Fallback gallery data
             galleryData = [
