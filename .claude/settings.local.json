@@ -40,7 +40,9 @@
       "Bash(w)",
       "Bash(useradd:*)",
       "Bash(usermod:*)",
-      "Bash(passwd claude)"
+      "Bash(passwd claude)",
+      "WebFetch(domain:jules.google)",
+      "WebSearch"
     ],
     "deny": []
   }
