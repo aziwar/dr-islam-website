@@ -9,7 +9,8 @@ export const HERRINGTON_MEDICAL_CSS = `
   /* Primary Medical Colors */
   --medical-primary: #2c5aa0;        /* Professional blue (trust) */
   --medical-secondary: #4a9d5f;      /* Health green */
-  --medical-accent: #d4af37;         /* Premium gold */
+  --medical-accent: #BEB093;         /* Premium gold - Dr. Islam Brand Color */
+  --medical-accent-secondary: #D4C5A3; /* Premium gold highlight - Dr. Islam Brand Color */
   --medical-emergency: #dc3545;      /* Emergency red */
   
   /* Neutral Scale */
@@ -232,6 +233,12 @@ export const HERRINGTON_MEDICAL_CSS = `
 .rating-star {
   color: var(--medical-accent);
   font-size: 1.2rem;
+  line-height: 1;
+}
+
+.rating-star svg {
+    width: 20px;
+    height: 20px;
 }
 
 .rating-star.empty {
