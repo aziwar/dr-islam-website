@@ -1614,8 +1614,12 @@ export const COMPONENTS_CSS = `
     
     .widget-trust {
         display: flex;
-        flex-direction: column;
         gap: 0.5rem;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 1rem;
+        padding-bottom: 0;
     }
     
     .trust-badge {
@@ -1628,75 +1632,25 @@ export const COMPONENTS_CSS = `
         display: inline-block;
     }
 
-.quick-booking-form {
-    /* Mobile-first: fluid padding and spacing */
-    padding: var(--space-lg);
+.booking-widget-actions {
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: 0.5rem;
 }
 
-/* Desktop: larger padding */
-@media (min-width: var(--breakpoint-xl)) {
-    .quick-booking-form {
-        padding: 1.5rem;
-        gap: var(--space-md);
-    }
+.booking-widget-actions .cta-button {
+    width: 100%;
+    text-decoration: none;
 }
-    
-    .quick-booking-form input,
-    .quick-booking-form select {
-        padding: 1rem;
-        border: 2px solid rgba(190, 176, 147, 0.2);
-        border-radius: 12px;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.8);
-        min-height: 48px;
-    }
-    
-    .quick-booking-form input:focus,
-    .quick-booking-form select:focus {
-        outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.2);
-        background: rgba(255, 255, 255, 1);
-    }
-    
-    .quick-booking-form button {
-        background: linear-gradient(135deg, var(--primary) 0%, #a89977 100%);
-        color: white;
-        border: none;
-        padding: 1.2rem;
-        border-radius: 12px;
-        font-size: var(--text-base);
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        min-height: 48px;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .quick-booking-form button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        transition: left 0.5s ease;
-    }
-    
-    .quick-booking-form button:hover::before {
-        left: 100%;
-    }
-    
-    .quick-booking-form button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(190, 176, 147, 0.4);
-    }
+
+.booking-widget-actions .cta-button.secondary {
+    background-color: #777669;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
     
     .widget-footer {
         padding: 1rem 1.5rem;

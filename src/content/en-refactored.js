@@ -29,11 +29,13 @@ import { getEnglishHead } from '../templates/en/head.js';
 import { getEnglishHeader } from '../templates/en/header.js';
 import { getEnglishHeroSection } from '../templates/en/sections/hero.js';
 import { getEnglishServicesSection } from '../templates/en/sections/services.js';
+import { getEnglishServiceComparisonSection } from '../templates/en/sections/service-comparison.js';
+import { getEnglishTestimonialsSection } from '../templates/en/sections/testimonials.js';
+import { getEnglishGallerySection } from '../templates/en/sections/gallery.js';
 import { getEnglishAboutSection } from '../templates/en/sections/about.js';
-
-// TODO: Extract remaining sections (testimonials, gallery, FAQ, contact, footer)
-// TODO: Extract JavaScript modules
-// TODO: Replace original en.js with this refactored version
+import { getEnglishFaqSection } from '../templates/en/sections/faq.js';
+import { getEnglishContactSection } from '../templates/en/sections/contact.js';
+import { getEnglishFooter } from '../templates/en/footer.js';
 
 export const HTML_EN = `<!DOCTYPE html>
 <html lang="en">
@@ -46,26 +48,18 @@ export const HTML_EN = `<!DOCTYPE html>
     <main id="main-content" role="main">
         ${getEnglishHeroSection()}
         ${getEnglishServicesSection()}
+        ${getEnglishServiceComparisonSection()}
+        ${getEnglishTestimonialsSection()}
+        ${getEnglishGallerySection()}
         ${getEnglishAboutSection()}
-        
-        <!-- TODO: Complete extraction of remaining sections:
-             - Service comparison section
-             - Testimonials section  
-             - Gallery section
-             - FAQ section
-             - Contact section
-             - Footer section -->
-        
-        <!-- Temporary: Include remaining content from original file -->
-        <!-- This will be replaced with proper extracted components -->
-        
+        ${getEnglishFaqSection()}
+        ${getEnglishContactSection()}
     </main>
     
-    <!-- TODO: Extract JavaScript into separate modules -->
+    ${getEnglishFooter()}
+
+    <script src="/js/main.js"></script>
     <script>
-        // Temporary: Essential JavaScript will be modularized
-        ${MOBILE_UX_JS}
-        
         // Initialize UI utilities
         document.addEventListener('DOMContentLoaded', () => {
             initializeUIUtils();
