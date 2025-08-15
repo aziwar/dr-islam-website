@@ -399,6 +399,106 @@ export const COMPONENTS_CSS = `
     z-index: 1;
 }
 
+/* ===== PROFESSIONAL SERVICES SECTION ===== */
+.professional-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+
+.professional-service-card {
+    --hover-scale: 1;
+    --hover-translate-y: 0;
+
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-lg);
+    text-align: center;
+    border: 1px solid var(--primary-alpha);
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: translateY(var(--hover-translate-y)) scale(var(--hover-scale));
+    will-change: transform, box-shadow;
+}
+
+.professional-service-card:hover {
+    box-shadow: var(--shadow-2xl);
+}
+
+.professional-service-card .service-icon {
+    font-size: var(--text-3xl);
+    line-height: 1;
+    margin-bottom: var(--space-md);
+    color: var(--primary-dark);
+}
+
+.professional-service-card .service-title {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    color: var(--secondary);
+    margin-bottom: var(--space-sm);
+}
+
+.professional-service-card .service-description {
+    color: var(--text-light);
+    margin-bottom: var(--space-lg);
+    min-height: 2.5em; /* Prevents layout shift */
+}
+
+.professional-service-card .service-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--primary);
+    color: var(--white);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-weight: var(--weight-semibold);
+    transition: var(--transition-normal);
+}
+
+.professional-service-card .service-cta:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+.professional-service-card .service-cta svg {
+    transition: transform 0.3s ease;
+}
+
+.professional-service-card .service-cta:hover svg {
+    transform: translateX(4px);
+}
+
+/* RTL Support */
+[dir="rtl"] .professional-service-card .service-cta svg {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .professional-service-card .service-cta:hover svg {
+    transform: scaleX(-1) translateX(-4px);
+}
+
+/* Scroll Animation */
+.professional-service-card.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.professional-service-card.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .professional-services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* About Section */
 .about {
     padding: 80px 5%;
