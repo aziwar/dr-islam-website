@@ -7,8 +7,8 @@ import { DESIGN_TOKENS } from '../../shared/design-tokens.js';
 export const CORE_CSS = `
 ${DESIGN_TOKENS}
 
-/* ===== BRAND FONTS ===== */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Serif+Pro:wght@400;600&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+/* ===== PROFESSIONAL FONTS (Herrington-Inspired) ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 
 html {
     font-size: 16px;
@@ -24,18 +24,26 @@ html {
 }
 
 body {
-    font-family: 'Noto Kufi Arabic', 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Inter', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: var(--text);
     line-height: 1.6;
     direction: rtl;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* ===== TYPOGRAPHY ===== */
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', 'Amiri', Georgia, serif;
     font-weight: 600;
     margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+/* Body text uses Inter for better readability */
+p, span, div, a, button, input, textarea, label {
+    font-family: 'Inter', 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 h1 { 
