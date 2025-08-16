@@ -58,19 +58,28 @@ export const HTML_EN = `<!DOCTYPE html>
     
     ${getEnglishFooter()}
 
-    <script src="/js/main.js"></script>
+    <script type="module" src="/js/main.js"></script>
     <script>
-        // Initialize UI utilities
+        // Initialize UI utilities - Updated with error handling
         document.addEventListener('DOMContentLoaded', () => {
-            initializeUIUtils();
-            setupLazyLoading();
-            setupSmoothScroll();
-            setupKeyboardNav();
-            setupFormEnhancements();
-            setupFormValidation();
-            setupGalleryTouch();
-            setupBeforeAfterTouch();
-            initFormValidation();
+            // Core functionality that should always work
+            if (typeof initializeUIUtils === 'function') {
+                initializeUIUtils();
+            } else {
+                console.warn('initializeUIUtils not available');
+            }
+            
+            // Optional enhancements with fallbacks
+            if (typeof setupLazyLoading === 'function') setupLazyLoading();
+            if (typeof setupSmoothScroll === 'function') setupSmoothScroll();
+            if (typeof setupKeyboardNav === 'function') setupKeyboardNav();
+            if (typeof setupFormEnhancements === 'function') setupFormEnhancements();
+            if (typeof setupFormValidation === 'function') setupFormValidation();
+            if (typeof setupGalleryTouch === 'function') setupGalleryTouch();
+            if (typeof setupBeforeAfterTouch === 'function') setupBeforeAfterTouch();
+            if (typeof initFormValidation === 'function') initFormValidation();
+            
+            console.log('UI initialization completed');
         });
     </script>
 </body>

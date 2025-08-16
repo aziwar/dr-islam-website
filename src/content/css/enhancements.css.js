@@ -1036,6 +1036,531 @@ select {
     }
 }
 
+/* ===== MODERN MICRO-INTERACTIONS ===== */
+
+/* Enhanced Button Animations */
+.btn,
+.cta-button,
+.nav-cta-button,
+.filter-btn,
+button[type="submit"] {
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(0);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+}
+
+/* Ripple effect for buttons */
+.btn::before,
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.btn:hover::before,
+.cta-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Enhanced button hover states */
+.btn:hover,
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(190, 176, 147, 0.3);
+}
+
+.btn:active,
+.cta-button:active {
+    transform: translateY(0);
+    transition: transform 0.1s ease;
+}
+
+/* Modern Form Input Enhancements */
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea,
+select {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(190, 176, 147, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.2);
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 1);
+}
+
+/* Floating label effect */
+.form-group.floating-label {
+    position: relative;
+}
+
+.form-group.floating-label label {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    color: #999;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 0.5rem;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group.floating-label input:focus + label,
+.form-group.floating-label input:not(:placeholder-shown) + label {
+    top: -0.5rem;
+    left: 0.75rem;
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* Enhanced Card Interactions */
+.service-card,
+.testimonial-card,
+.gallery-item,
+.contact-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+    cursor: pointer;
+}
+
+.service-card:hover,
+.testimonial-card:hover,
+.gallery-item:hover,
+.contact-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Tilt effect for cards */
+.service-card:hover {
+    transform: translateY(-8px) perspective(1000px) rotateX(2deg);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-8px) perspective(1000px) rotateY(1deg);
+}
+
+/* Enhanced Loading States */
+.loading-dots {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.loading-dots::after,
+.loading-dots::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: loadingDots 1.4s infinite ease-in-out;
+}
+
+.loading-dots::after {
+    animation-delay: 0.16s;
+}
+
+.loading-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: loadingDots 1.4s infinite ease-in-out;
+    animation-delay: 0.32s;
+}
+
+@keyframes loadingDots {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Pulse Loading Animation */
+.pulse-loader {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+
+.pulse-loader::before,
+.pulse-loader::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: pulseWave 2s infinite ease-out;
+}
+
+.pulse-loader::after {
+    animation-delay: 1s;
+}
+
+@keyframes pulseWave {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/* Enhanced Navigation Link Animations */
+.nav-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Smooth Reveal Animations */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered reveal for multiple items */
+.reveal-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+.reveal-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+.reveal-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+.reveal-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+.reveal-on-scroll:nth-child(5) { transition-delay: 0.5s; }
+.reveal-on-scroll:nth-child(6) { transition-delay: 0.6s; }
+
+/* Modern Toggle Switches */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ccc;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 34px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .toggle-slider {
+    background: var(--primary);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+/* Enhanced Badge Animations */
+.badge,
+.case-category {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.badge::before,
+.case-category::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.badge:hover::before,
+.case-category:hover::before {
+    left: 100%;
+}
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 20px rgba(190, 176, 147, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    transform: translateZ(0);
+    will-change: transform, box-shadow;
+}
+
+.fab:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 8px 30px rgba(190, 176, 147, 0.6);
+}
+
+.fab:active {
+    transform: scale(0.95);
+}
+
+/* Progress Ring */
+.progress-ring {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    transform: rotate(-90deg);
+}
+
+.progress-ring circle {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+    r: 35;
+    cx: 40;
+    cy: 40;
+}
+
+.progress-ring .progress-bg {
+    stroke: rgba(190, 176, 147, 0.2);
+}
+
+.progress-ring .progress-fill {
+    stroke: var(--primary);
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    transition: stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Notification Toast Enhanced */
+.toast {
+    transform: translateX(400px) scale(0.8);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.toast.show {
+    transform: translateX(0) scale(1);
+}
+
+.toast::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--primary);
+    border-radius: 2px 0 0 2px;
+}
+
+.toast.success::before {
+    background: var(--success);
+}
+
+.toast.error::before {
+    background: var(--emergency);
+}
+
+/* Modern Skeleton Loader */
+.skeleton-modern {
+    background: linear-gradient(
+        90deg,
+        rgba(190, 176, 147, 0.1) 0%,
+        rgba(190, 176, 147, 0.2) 50%,
+        rgba(190, 176, 147, 0.1) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s infinite;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-modern::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    animation: skeletonSweep 2s infinite;
+}
+
+@keyframes skeletonShimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+@keyframes skeletonSweep {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Interactive Element States */
+.interactive {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    user-select: none;
+}
+
+.interactive:hover {
+    transform: translateY(-2px);
+}
+
+.interactive:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* Glassmorphism Effects */
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    .btn,
+    .cta-button,
+    .service-card,
+    .testimonial-card,
+    .gallery-item,
+    .contact-card,
+    .nav-link,
+    .reveal-on-scroll,
+    .toggle-slider,
+    .fab,
+    .toast,
+    .interactive,
+    .glass {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+    
+    .btn::before,
+    .cta-button::before,
+    .nav-link::after,
+    .skeleton-modern::after {
+        animation: none !important;
+    }
+}
+
 /* ===== ENHANCED LIGHTBOX - MOBILE FIRST ===== */
 .image-lightbox {
     position: fixed;
@@ -2041,5 +2566,537 @@ select {
         scroll-snap-align: start;
         scroll-snap-stop: always;
     }
+}
+
+/* ===== ADVANCED FORM ENHANCEMENTS PACKAGE ===== */
+/* Real-time validation, smart input features, and enhanced UX */
+
+/* Enhanced Form Container */
+.contact-form,
+.booking-form,
+.appointment-form {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-form:hover,
+.booking-form:hover,
+.appointment-form:hover {
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+/* Advanced Form Groups with Floating Labels */
+.form-group {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 1rem 1rem 1rem 1rem;
+    border: 2px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 0 3px rgba(190, 176, 147, 0.1),
+                0 4px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+/* Floating Label System */
+.form-group label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    font-size: 1rem;
+    color: #6B7280;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(to right, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 1) 20%, 
+        rgba(255, 255, 255, 1) 80%, 
+        rgba(255, 255, 255, 0) 100%);
+    padding: 0 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 2;
+}
+
+.form-group input:focus + label,
+.form-group textarea:focus + label,
+.form-group select:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group textarea:not(:placeholder-shown) + label,
+.form-group select:not([value=""]) + label,
+.form-group.has-value label {
+    top: -0.75rem;
+    left: 0.75rem;
+    font-size: 0.875rem;
+    color: var(--primary);
+    font-weight: 500;
+    background: rgba(255, 255, 255, 1);
+    padding: 0 0.5rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Real-time Validation States */
+.form-group.validating {
+    position: relative;
+}
+
+.form-group.validating::after {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: formSpin 1s linear infinite;
+    z-index: 3;
+}
+
+.form-group.valid input,
+.form-group.valid textarea,
+.form-group.valid select {
+    border-color: #10B981;
+    background: rgba(236, 253, 245, 0.8);
+}
+
+.form-group.valid::after {
+    content: '✓';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 20px;
+    height: 20px;
+    background: #10B981;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    animation: successPulse 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 3;
+}
+
+.form-group.invalid input,
+.form-group.invalid textarea,
+.form-group.invalid select {
+    border-color: #EF4444;
+    background: rgba(254, 242, 242, 0.8);
+    animation: formShake 0.5s ease-in-out;
+}
+
+.form-group.invalid::after {
+    content: '!';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 20px;
+    height: 20px;
+    background: #EF4444;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    animation: errorPulse 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 3;
+}
+
+/* Error Messages */
+.form-group .error-message {
+    position: absolute;
+    bottom: -1.5rem;
+    left: 0;
+    right: 0;
+    font-size: 0.875rem;
+    color: #EF4444;
+    padding: 0.25rem 0.75rem;
+    background: rgba(254, 242, 242, 0.9);
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    animation: slideInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 4;
+}
+
+.form-group .success-message {
+    position: absolute;
+    bottom: -1.5rem;
+    left: 0;
+    right: 0;
+    font-size: 0.875rem;
+    color: #10B981;
+    padding: 0.25rem 0.75rem;
+    background: rgba(236, 253, 245, 0.9);
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    animation: slideInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 4;
+}
+
+/* Smart Input Features */
+.form-group.phone-input input {
+    letter-spacing: 0.5px;
+}
+
+.form-group.email-input input {
+    text-transform: lowercase;
+}
+
+.form-group.name-input input {
+    text-transform: capitalize;
+}
+
+/* Character Counter */
+.form-group .char-counter {
+    position: absolute;
+    bottom: -1.5rem;
+    right: 0;
+    font-size: 0.75rem;
+    color: #6B7280;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.form-group .char-counter.warning {
+    color: #F59E0B;
+    background: rgba(255, 251, 235, 0.9);
+    border-color: rgba(245, 158, 11, 0.2);
+}
+
+.form-group .char-counter.danger {
+    color: #EF4444;
+    background: rgba(254, 242, 242, 0.9);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+/* Textarea Auto-resize */
+.form-group textarea {
+    resize: none;
+    min-height: 120px;
+    transition: height 0.3s ease;
+}
+
+/* Enhanced Select Styling */
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 1rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 3rem;
+}
+
+.form-group select:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23BEB093' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+/* Submit Button Enhanced */
+.submit-btn,
+.form-submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, #D4C5A3 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.submit-btn::before,
+.form-submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        transparent 100%);
+    transition: left 0.6s ease;
+}
+
+.submit-btn:hover::before,
+.form-submit-btn:hover::before {
+    left: 100%;
+}
+
+.submit-btn:hover,
+.form-submit-btn:hover {
+    background: linear-gradient(135deg, #D4C5A3 0%, var(--primary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(190, 176, 147, 0.4);
+}
+
+.submit-btn:active,
+.form-submit-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(190, 176, 147, 0.3);
+}
+
+/* Loading State */
+.submit-btn.loading,
+.form-submit-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.submit-btn.loading::after,
+.form-submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: formSpin 1s linear infinite;
+}
+
+.submit-btn.loading .btn-text,
+.form-submit-btn.loading .btn-text {
+    opacity: 0;
+}
+
+/* Success State */
+.submit-btn.success,
+.form-submit-btn.success {
+    background: #10B981;
+    color: white;
+}
+
+.submit-btn.success::after,
+.form-submit-btn.success::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    font-weight: bold;
+    animation: successBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Form Row Layout */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 640px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .form-row .form-group {
+        margin-bottom: 2rem;
+    }
+}
+
+/* Form Progress Indicator */
+.form-progress {
+    position: relative;
+    height: 4px;
+    background: #E5E7EB;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.form-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary) 0%, #D4C5A3 100%);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.form-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        transparent 100%);
+    animation: progressShine 2s infinite ease-in-out;
+}
+
+/* Smart Suggestions */
+.form-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 0.25rem;
+}
+
+.form-suggestion-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+.form-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.form-suggestion-item:hover,
+.form-suggestion-item.highlighted {
+    background: rgba(190, 176, 147, 0.1);
+}
+
+/* Form Enhancement Animations */
+@keyframes formSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes formShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes successPulse {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes errorPulse {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes successBounce {
+    0% { transform: translate(-50%, -50%) scale(0); }
+    50% { transform: translate(-50%, -50%) scale(1.3); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes progressShine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* RTL Support for Forms */
+[dir="rtl"] .form-group label {
+    left: auto;
+    right: 1rem;
+}
+
+[dir="rtl"] .form-group input:focus + label,
+[dir="rtl"] .form-group textarea:focus + label,
+[dir="rtl"] .form-group select:focus + label,
+[dir="rtl"] .form-group input:not(:placeholder-shown) + label,
+[dir="rtl"] .form-group textarea:not(:placeholder-shown) + label,
+[dir="rtl"] .form-group select:not([value=""]) + label,
+[dir="rtl"] .form-group.has-value label {
+    left: auto;
+    right: 0.75rem;
+}
+
+[dir="rtl"] .form-group.validating::after,
+[dir="rtl"] .form-group.valid::after,
+[dir="rtl"] .form-group.invalid::after {
+    right: auto;
+    left: 1rem;
+}
+
+[dir="rtl"] .form-group select {
+    background-position: left 1rem center;
+    padding-right: 1rem;
+    padding-left: 3rem;
+}
+
+[dir="rtl"] .form-group .char-counter {
+    right: auto;
+    left: 0;
 }
 `;

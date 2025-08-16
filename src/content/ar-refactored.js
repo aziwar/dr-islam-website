@@ -58,22 +58,31 @@ export const HTML_AR = `<!DOCTYPE html>
     ${getArabicFooter()}
 
     <!-- JavaScript modules -->
-    <script src="/js/main.js"></script>
+    <script type="module" src="/js/main.js"></script>
     <script>
-        // Initialize UI utilities for RTL
+        // Initialize UI utilities for RTL - Updated with error handling
         document.addEventListener('DOMContentLoaded', () => {
             // Set RTL mode
             document.body.classList.add('rtl-mode');
             
-            initializeUIUtils();
-            setupLazyLoading();
-            setupSmoothScroll();
-            setupKeyboardNav();
-            setupFormEnhancements();
-            setupFormValidation();
-            setupGalleryTouch();
-            setupBeforeAfterTouch();
-            initFormValidation();
+            // Core functionality that should always work
+            if (typeof initializeUIUtils === 'function') {
+                initializeUIUtils();
+            } else {
+                console.warn('initializeUIUtils not available');
+            }
+            
+            // Optional enhancements with fallbacks
+            if (typeof setupLazyLoading === 'function') setupLazyLoading();
+            if (typeof setupSmoothScroll === 'function') setupSmoothScroll();
+            if (typeof setupKeyboardNav === 'function') setupKeyboardNav();
+            if (typeof setupFormEnhancements === 'function') setupFormEnhancements();
+            if (typeof setupFormValidation === 'function') setupFormValidation();
+            if (typeof setupGalleryTouch === 'function') setupGalleryTouch();
+            if (typeof setupBeforeAfterTouch === 'function') setupBeforeAfterTouch();
+            if (typeof initFormValidation === 'function') initFormValidation();
+            
+            console.log('UI initialization completed (Arabic RTL)');
         });
     </script>
 </body>

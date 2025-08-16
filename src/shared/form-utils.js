@@ -27,7 +27,7 @@ const ERROR_MESSAGES = {
 /**
  * Detect current language from URL or document
  */
-function getCurrentLanguage() {
+export function getCurrentLanguage() {
     const urlParams = new URLSearchParams(window.location.search);
     const langParam = urlParams.get('lang');
     if (langParam && ERROR_MESSAGES[langParam]) {
@@ -47,7 +47,7 @@ function getCurrentLanguage() {
 /**
  * Get localized error message
  */
-function getErrorMessage(type, params = {}) {
+export function getErrorMessage(type, params = {}) {
     const lang = getCurrentLanguage();
     let message = ERROR_MESSAGES[lang][type] || ERROR_MESSAGES.en[type];
     

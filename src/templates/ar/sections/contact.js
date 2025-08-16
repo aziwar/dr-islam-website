@@ -37,20 +37,26 @@ export const getArabicContactSection = () => `
             <div class="contact-form-section">
                 <h3>أرسل لنا رسالة</h3>
                 <form id="contactForm" class="contact-form">
+                    <div class="form-progress">
+                        <div class="form-progress-bar"></div>
+                    </div>
+                    
                     <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" required>
+                        <div class="form-group name-input">
+                            <input type="text" id="name" name="name" placeholder=" " required minlength="2" maxlength="50">
                             <label for="name">الاسم الكامل</label>
                         </div>
-                        <div class="form-group">
-                            <input type="tel" id="phone" name="phone" required>
+                        <div class="form-group phone-input">
+                            <input type="tel" id="phone" name="phone" placeholder=" " required>
                             <label for="phone">رقم الهاتف</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" required>
+                    
+                    <div class="form-group email-input">
+                        <input type="email" id="email" name="email" placeholder=" " required>
                         <label for="email">البريد الإلكتروني</label>
                     </div>
+                    
                     <div class="form-group">
                         <select id="service" name="service" required>
                             <option value="">اختر الخدمة</option>
@@ -63,13 +69,14 @@ export const getArabicContactSection = () => `
                         </select>
                         <label for="service">الخدمة المطلوبة</label>
                     </div>
+                    
                     <div class="form-group">
-                        <textarea id="message" name="message" rows="4" required></textarea>
+                        <textarea id="message" name="message" placeholder=" " rows="4" required minlength="10" maxlength="500"></textarea>
                         <label for="message">الرسالة</label>
                     </div>
+                    
                     <button type="submit" class="submit-btn">
                         <span class="btn-text">إرسال الرسالة</span>
-                        <span class="btn-loading" style="display: none;">جاري الإرسال...</span>
                     </button>
                 </form>
             </div>

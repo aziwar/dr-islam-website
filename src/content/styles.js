@@ -4,23 +4,24 @@ import { COMPONENTS_CSS } from './css/components.css.js';
 import { ENHANCEMENTS_CSS } from './css/enhancements.css.js';
 import { A11Y_CSS } from './css/a11y.css.js';
 import { HEADER_CSS } from './css/header.css.js';
+import { MODERN_HEADER_CSS } from './css/modern-header.css.js';
 import { PerformanceOptimizer } from '../utils/performance-optimizer.js';
 
 // Critical CSS for inline inclusion (above-the-fold)
 export const INLINE_CSS = extractCriticalCSS();
 
 // Deferred CSS for progressive loading
-export const DEFERRED_STYLES = COMPONENTS_CSS + ENHANCEMENTS_CSS + HEADER_CSS;
+export const DEFERRED_STYLES = COMPONENTS_CSS + ENHANCEMENTS_CSS + HEADER_CSS + MODERN_HEADER_CSS;
 
 // Full CSS for legacy support with accessibility enhancements
-export const CSS = CORE_CSS + COMPONENTS_CSS + ENHANCEMENTS_CSS + A11Y_CSS + HEADER_CSS + PerformanceOptimizer.generateSkeletonCSS();
+export const CSS = CORE_CSS + COMPONENTS_CSS + ENHANCEMENTS_CSS + A11Y_CSS + HEADER_CSS + MODERN_HEADER_CSS + PerformanceOptimizer.generateSkeletonCSS();
 
 // Export consolidated modules
 export { CORE_CSS, COMPONENTS_CSS, ENHANCEMENTS_CSS };
 
 // Extract critical CSS from the full stylesheet
 function extractCriticalCSS() {
-    const fullCSS = CORE_CSS + COMPONENTS_CSS + ENHANCEMENTS_CSS + A11Y_CSS;
+    const fullCSS = CORE_CSS + COMPONENTS_CSS + ENHANCEMENTS_CSS + A11Y_CSS + MODERN_HEADER_CSS;
     
     // Critical selectors for above-the-fold content
     const criticalPatterns = [
@@ -32,8 +33,10 @@ function extractCriticalCSS() {
         '.hero', '.hero h1', '.hero p', '.hero-content',
         '.cta-button', '.nav-toggle', '.main-nav',
         
-        // Mobile navigation (critical for mobile UX)
-        '.nav-menu', '.nav-item', '.nav-link',
+        // Modern header navigation (critical for mobile UX)
+        '.modern-header', '.mobile-menu-toggle', '.nav-brand', '.brand-link',
+        '.navigation-menu', '.mobile-navigation', '.nav-backdrop',
+        '.nav-menu', '.nav-item', '.nav-link', '.toggle-icon', '.toggle-line',
         
         // Loading states (critical for perceived performance)
         '.skeleton', '.loading-spinner', '.progressive-load',
@@ -155,7 +158,7 @@ export function generateOptimizedHead(lang = 'en') {
     return `
         ${PerformanceOptimizer.generatePerformanceMeta()}
         ${PerformanceOptimizer.generateResourceHints()}
-        ${PerformanceOptimizer.generateFontOptimization()}
+        <!-- Font loading handled by head templates -->
         
         <style id="critical-css">
             ${optimizedCSS.critical}

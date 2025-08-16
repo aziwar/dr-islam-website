@@ -180,10 +180,24 @@ export const PerformanceOptimizer = {
     // Optimize font loading
     generateFontOptimization: () => {
         return `
-        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript>
-            <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-        </noscript>
+        <!-- Font loading optimized for performance -->
+        <style>
+        /* Font face declarations with font-display: swap for better loading performance */
+        @font-face {
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 400;
+          font-display: swap;
+          src: url(https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');
+        }
+        @font-face {
+          font-family: 'Poppins';
+          font-style: normal;
+          font-weight: 500;
+          font-display: swap;
+          src: url(https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLDD2JlJlSd2JQl2gUA.woff2) format('woff2');
+        }
+        </style>
         `;
     },
 

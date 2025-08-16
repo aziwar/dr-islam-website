@@ -1,5 +1,6 @@
 
 import './header.js';
+import { initializeAdvancedForms } from '../shared/advanced-form-handler.js';
 
 // Close menu when clicking outside or on backdrop
 document.addEventListener('click', function(e) {

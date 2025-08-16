@@ -173,7 +173,7 @@ export const MODERN_HEADER_CSS = `
 
 /* ===== MODERN HEADER ===== */
 .modern-header {
-  /* Container Queries Setup */
+  /* Container Queries Setup - CRITICAL for responsive behavior */
   container-type: inline-size;
   container-name: header;
   
@@ -235,8 +235,8 @@ export const MODERN_HEADER_CSS = `
 
 /* ===== MOBILE MENU TOGGLE ===== */
 .mobile-menu-toggle {
-  /* Layout */
-  display: flex;
+  /* Layout - IMPORTANT: Default mobile-first approach */
+  display: flex !important;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
@@ -313,7 +313,7 @@ export const MODERN_HEADER_CSS = `
 
 /* ===== DESKTOP NAVIGATION ===== */
 .navigation-menu {
-  display: none;
+  display: none !important;
 }
 
 .nav-list {
@@ -725,12 +725,12 @@ export const MODERN_HEADER_CSS = `
 }
 
 @container header (inline-size > 48rem) {
-  .mobile-menu-toggle {
-    display: none;
+  .modern-header .mobile-menu-toggle {
+    display: none !important;
   }
   
-  .navigation-menu {
-    display: block;
+  .modern-header .navigation-menu {
+    display: block !important;
   }
   
   .header-container {
