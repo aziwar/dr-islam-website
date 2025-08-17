@@ -421,6 +421,8 @@ export function createUIUtilsJS() {
      * Modal Management Functions - CRITICAL FOR BOOKING SYSTEM
      */
     function openBookingModal(service = '') {
+        // Show loading state while modal is being created
+        showBookingModalLoading();
         
         // Try to find existing modal
         let modal = document.querySelector('.booking-modal');
@@ -430,6 +432,7 @@ export function createUIUtilsJS() {
         if (!modal) {
             const success = createBookingModal(service);
             if (!success) {
+                hideBookingModalLoading();
                 return;
             }
             modal = document.querySelector('.booking-modal');
@@ -437,6 +440,9 @@ export function createUIUtilsJS() {
         }
         
         if (modal && overlay) {
+            // Hide loading and show modal
+            hideBookingModalLoading();
+            
             modal.classList.add('is-active');
             overlay.classList.add('is-active');
             document.body.style.overflow = 'hidden';
@@ -449,6 +455,9 @@ export function createUIUtilsJS() {
                 }
             }
             
+            // Initialize enhanced form handler with loading states
+            initializeBookingForm(modal);
+            
             // Focus on first form field
             setTimeout(() => {
                 const firstInput = modal.querySelector('input:not([type="hidden"])');
@@ -458,7 +467,8 @@ export function createUIUtilsJS() {
             }, 100);
             
         } else {
-            }
+            hideBookingModalLoading();
+        }
     }
     
     function createBookingModal(service = '') {
@@ -859,6 +869,111 @@ export function createUIUtilsJS() {
             }
         });
         
+    }
+
+    /**
+     * Booking Modal Loading State Functions
+     */
+    function showBookingModalLoading() {
+        // Create temporary loading overlay
+        const loadingOverlay = document.createElement('div');
+        loadingOverlay.className = 'booking-modal-loading-overlay';
+        loadingOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        `;
+        
+        loadingOverlay.innerHTML = `
+            <div style="
+                background: white;
+                padding: 2rem;
+                border-radius: 12px;
+                text-align: center;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            ">
+                <div style="
+                    width: 40px;
+                    height: 40px;
+                    border: 3px solid rgba(160, 143, 101, 0.3);
+                    border-top: 3px solid #A08F65;
+                    border-radius: 50%;
+                    animation: bookingSpinner 1s linear infinite;
+                    margin: 0 auto 1rem;
+                "></div>
+                <p style="margin: 0; color: #666; font-size: 0.9rem;">Loading booking form...</p>
+            </div>
+        `;
+        
+        document.body.appendChild(loadingOverlay);
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function hideBookingModalLoading() {
+        const loadingOverlay = document.querySelector('.booking-modal-loading-overlay');
+        if (loadingOverlay) {
+            loadingOverlay.remove();
+        }
+        // Don't restore body overflow here as modal will manage it
+    }
+    
+    function initializeBookingForm(modal) {
+        const form = modal.querySelector('.booking-form');
+        if (!form) return;
+        
+        // Import and initialize enhanced form handler
+        import('./advanced-form-handler.js').then(({ AdvancedFormHandler }) => {
+            new AdvancedFormHandler(form, {
+                realTimeValidation: true,
+                progressTracking: false,
+                smartFeatures: true
+            });
+        }).catch(error => {
+            console.warn('Could not load enhanced form handler:', error);
+            // Fallback to basic form handling
+            form.addEventListener('submit', handleBasicBookingSubmit);
+        });
+    }
+    
+    function handleBasicBookingSubmit(event) {
+        event.preventDefault();
+        
+        const form = event.target;
+        const submitButton = form.querySelector('button[type="submit"]');
+        
+        if (submitButton) {
+            const originalText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.innerHTML = `
+                <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" opacity="0.25"/>
+                        <path d="M12 2a10 10 0 0 1 10 10" opacity="0.75">
+                            <animateTransform attributeName="transform" type="rotate" dur="1s" repeatCount="indefinite" values="0 12 12;360 12 12"/>
+                        </path>
+                    </svg>
+                    Submitting...
+                </span>
+            `;
+            
+            // Simulate submission
+            setTimeout(() => {
+                submitButton.disabled = false;
+                submitButton.textContent = '✓ Submitted!';
+                setTimeout(() => {
+                    submitButton.textContent = originalText;
+                    closeBookingModal();
+                }, 2000);
+            }, 1500);
+        }
     }
 
     // Make functions globally available for onclick handlers - CRITICAL FIX

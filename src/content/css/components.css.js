@@ -838,6 +838,189 @@ export const COMPONENTS_CSS = `
     background: var(--light);
 }
 
+/* ===== LOADING STATES & SKELETON UI ===== */
+.skeleton {
+    background: linear-gradient(90deg, 
+        rgba(160, 143, 101, 0.08) 25%, 
+        rgba(160, 143, 101, 0.15) 50%, 
+        rgba(160, 143, 101, 0.08) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s ease-in-out infinite;
+    border-radius: var(--radius-md);
+}
+
+@keyframes skeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.gallery-skeleton {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: 3rem;
+}
+
+.gallery-item-skeleton {
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    height: 350px;
+}
+
+.gallery-item-skeleton .skeleton-image {
+    height: 220px;
+    width: 100%;
+}
+
+.gallery-item-skeleton .skeleton-content {
+    padding: 1.5rem;
+}
+
+.gallery-item-skeleton .skeleton-title {
+    height: 20px;
+    width: 70%;
+    margin-bottom: 0.5rem;
+}
+
+.gallery-item-skeleton .skeleton-category {
+    height: 16px;
+    width: 40%;
+    margin-bottom: 1rem;
+}
+
+.gallery-item-skeleton .skeleton-description {
+    height: 14px;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.gallery-item-skeleton .skeleton-description:last-child {
+    width: 60%;
+    margin-bottom: 0;
+}
+
+/* Image loading states */
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-loading {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-loaded {
+    opacity: 1;
+}
+
+.image-blur-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(20px);
+    transform: scale(1.1);
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.image-blur-placeholder.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ===== FORM LOADING STATES ===== */
+.form-loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.form-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.loading-spinner {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.5rem;
+}
+
+.loading-spinner svg {
+    color: currentColor;
+}
+
+/* Form success states */
+.is-success .form-group {
+    border-color: var(--success);
+}
+
+.is-success button[type="submit"] {
+    background: var(--success);
+    border-color: var(--success);
+}
+
+/* Form error states */
+.is-error button[type="submit"] {
+    background: var(--error);
+    border-color: var(--error);
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* ===== BOOKING WIDGET LOADING STATES ===== */
+.booking-widget-loading {
+    position: relative;
+}
+
+.booking-widget-loading .booking-form {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.booking-widget-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--primary-alpha);
+    border-top: 3px solid var(--primary);
+    border-radius: 50%;
+    animation: bookingSpinner 1s linear infinite;
+    z-index: 20;
+}
+
+@keyframes bookingSpinner {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 .gallery h2 {
     text-align: center;
     color: var(--secondary);

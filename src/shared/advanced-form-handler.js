@@ -2,6 +2,7 @@
 // Real-time validation, smart features, progress tracking, and UX enhancements
 
 import { validateField, validateForm, updateFormState, showFormMessage, clearFormMessages, getCurrentLanguage } from './form-utils.js';
+import { formLoadingManager } from './loading-states.js';
 
 /**
  * Advanced Form Handler Class
@@ -561,47 +562,41 @@ export class AdvancedFormHandler {
     
     /**
      * Set form state (loading, success, error, normal)
+     * Enhanced with smooth loading animations and better UX
      */
     setFormState(state) {
         const submitButton = this.form.querySelector('button[type="submit"], .submit-btn');
         
-        // Remove all state classes
-        this.form.classList.remove('is-loading', 'is-success', 'is-error');
-        if (submitButton) {
-            submitButton.classList.remove('loading', 'success', 'error');
-        }
-        
-        // Apply new state
+        // Apply new state with enhanced loading manager
         switch (state) {
             case 'loading':
+                const loadingText = this.currentLang === 'ar' ? 
+                    'جارٍ الإرسال...' : 'Submitting...';
+                
+                formLoadingManager.showLoading(this.form, {
+                    loadingText: loadingText
+                });
+                
+                // Add form-specific loading class
                 this.form.classList.add('is-loading');
-                if (submitButton) {
-                    submitButton.classList.add('loading');
-                    submitButton.disabled = true;
-                }
                 break;
                 
             case 'success':
+                formLoadingManager.hideLoading(this.form, true);
                 this.form.classList.add('is-success');
-                if (submitButton) {
-                    submitButton.classList.add('success');
-                    submitButton.disabled = false;
-                }
+                this.form.classList.remove('is-loading', 'is-error');
                 break;
                 
             case 'error':
+                formLoadingManager.hideLoading(this.form, false);
                 this.form.classList.add('is-error');
-                if (submitButton) {
-                    submitButton.classList.add('error');
-                    submitButton.disabled = false;
-                }
+                this.form.classList.remove('is-loading', 'is-success');
                 break;
                 
             case 'normal':
             default:
-                if (submitButton) {
-                    submitButton.disabled = false;
-                }
+                formLoadingManager.hideLoading(this.form, true);
+                this.form.classList.remove('is-loading', 'is-success', 'is-error');
                 break;
         }
     }
