@@ -1,28 +1,23 @@
-// Main CSS module - Consolidated 3-file architecture with performance optimization
+// Main CSS module - Simplified 3-file architecture
 import { CORE_CSS } from './css/core.css.js';
 import { COMPONENTS_CSS } from './css/components.css.js';
-import { HERRINGTON_MEDICAL_CSS } from './css/herrington-medical.css.js';
 import { ENHANCEMENTS_CSS } from './css/enhancements.css.js';
-import { A11Y_CSS } from './css/a11y.css.js';
-import { HEADER_CSS } from './css/header.css.js';
-import { MODERN_HEADER_CSS } from './css/modern-header.css.js';
-import { PerformanceOptimizer } from '../utils/performance-optimizer.js';
 
 // Critical CSS for inline inclusion (above-the-fold)
 export const INLINE_CSS = extractCriticalCSS();
 
 // Deferred CSS for progressive loading
-export const DEFERRED_STYLES = COMPONENTS_CSS + HERRINGTON_MEDICAL_CSS + ENHANCEMENTS_CSS + HEADER_CSS + MODERN_HEADER_CSS;
+export const DEFERRED_STYLES = COMPONENTS_CSS + ENHANCEMENTS_CSS;
 
-// Full CSS for legacy support with accessibility enhancements
-export const CSS = CORE_CSS + COMPONENTS_CSS + HERRINGTON_MEDICAL_CSS + ENHANCEMENTS_CSS + A11Y_CSS + HEADER_CSS + MODERN_HEADER_CSS + PerformanceOptimizer.generateSkeletonCSS();
+// Full CSS - consolidated into 3 core files
+export const CSS = CORE_CSS + COMPONENTS_CSS + ENHANCEMENTS_CSS;
 
 // Export consolidated modules
 export { CORE_CSS, COMPONENTS_CSS, ENHANCEMENTS_CSS };
 
 // Extract critical CSS from the full stylesheet
 function extractCriticalCSS() {
-    const fullCSS = CORE_CSS + COMPONENTS_CSS + HERRINGTON_MEDICAL_CSS + ENHANCEMENTS_CSS + A11Y_CSS + MODERN_HEADER_CSS;
+    const fullCSS = CORE_CSS + COMPONENTS_CSS + ENHANCEMENTS_CSS;
     
     // Critical selectors for above-the-fold content
     const criticalPatterns = [
@@ -86,7 +81,7 @@ function extractCriticalCSS() {
         }
     }
     
-    return criticalCSS.join('\n') + '\n' + A11Y_CSS + '\n' + PerformanceOptimizer.generateSkeletonCSS();
+    return criticalCSS.join('\n');
 }
 
 // Helper function to get CSS based on device type and performance requirements

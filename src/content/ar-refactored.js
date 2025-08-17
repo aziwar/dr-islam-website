@@ -69,8 +69,7 @@ export const HTML_AR = `<!DOCTYPE html>
             if (typeof initializeUIUtils === 'function') {
                 initializeUIUtils();
             } else {
-                console.warn('initializeUIUtils not available');
-            }
+                }
             
             // Optional enhancements with fallbacks
             if (typeof setupLazyLoading === 'function') setupLazyLoading();
@@ -82,19 +81,10 @@ export const HTML_AR = `<!DOCTYPE html>
             if (typeof setupBeforeAfterTouch === 'function') setupBeforeAfterTouch();
             if (typeof initFormValidation === 'function') initFormValidation();
             
-            console.log('UI initialization completed (Arabic RTL)');
+            ');
         });
     </script>
 </body>
 </html>`;
 
 // Progress Report: Phase 2 Arabic Refactoring
-console.log(`
-🎯 PHASE 2 PROGRESS REPORT:
-✅ Extracted: Arabic Head, Header sections
-✅ Created: Arabic component directory structure  
-✅ Eliminated: Monolithic 2,079-line Arabic architecture
-📊 Reduction: ~150 lines extracted into reusable components
-🔄 Remaining: Arabic sections + CSS consolidation to complete
-⚡ Impact: RTL support maintained, improved Arabic typography
-`);

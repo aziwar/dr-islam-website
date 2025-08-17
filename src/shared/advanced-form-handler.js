@@ -618,8 +618,6 @@ export class AdvancedFormHandler {
         const data = Object.fromEntries(formData.entries());
         
         // Log form data (replace with actual submission)
-        console.log('Form Data:', data);
-        
         // Simulate random success/failure for demo
         if (Math.random() > 0.1) { // 90% success rate
             return { success: true, message: 'Form submitted successfully' };

@@ -314,8 +314,7 @@ export function handleFormSubmit(form, onSubmit, options = {}) {
         } catch (error) {
             // Log error in development only
             if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-                console.error('Form submission error:', error);
-            }
+                }
             updateFormState(form, 'error');
             showFormMessage(form, error.message || 'حدث خطأ أثناء الإرسال / An error occurred during submission', 'error');
         }

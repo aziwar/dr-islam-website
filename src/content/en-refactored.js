@@ -20,7 +20,9 @@ import {
     setupFormValidation,
     addLoadingState,
     removeLoadingState,
-    initializeUIUtils
+    initializeUIUtils,
+    showMobileComparison,
+    setupServiceComparisonSwipe
 } from '../shared/ui-utils.js';
 import { validateField, initFormValidation } from '../shared/form-utils.js';
 
@@ -32,7 +34,17 @@ import { getEnglishServicesSection } from '../templates/en/sections/services.js'
 import { getEnglishServiceComparisonSection } from '../templates/en/sections/service-comparison.js';
 import { getEnglishTestimonialsSection } from '../templates/en/sections/testimonials.js';
 import { getEnglishGallerySection } from '../templates/en/sections/gallery.js';
-import { getEnglishAboutSection } from '../templates/en/sections/about.js';
+// About section import removed - now inline
+function getSimpleAboutSection() {
+  return `
+    <section id="about" class="about">
+      <div class="container">
+        <h2>About Dr. Islam Elsagher</h2>
+        <p>With over 15 years of experience in dentistry, Dr. Islam Elsagher provides comprehensive dental care in Kuwait. Our clinic combines modern technology with compassionate care to ensure the best outcomes for our patients.</p>
+      </div>
+    </section>
+  `;
+}
 import { getEnglishFaqSection } from '../templates/en/sections/faq.js';
 import { getEnglishContactSection } from '../templates/en/sections/contact.js';
 import { getEnglishFooter } from '../templates/en/footer.js';
@@ -51,7 +63,7 @@ export const HTML_EN = `<!DOCTYPE html>
         ${getEnglishServiceComparisonSection()}
         ${getEnglishTestimonialsSection()}
         ${getEnglishGallerySection()}
-        ${getEnglishAboutSection()}
+        ${getSimpleAboutSection()}
         ${getEnglishFaqSection()}
         ${getEnglishContactSection()}
     </main>
@@ -60,14 +72,30 @@ export const HTML_EN = `<!DOCTYPE html>
 
     <script type="module" src="/js/main.js"></script>
     <script>
+        // Service Comparison Mobile Function - Global for onclick handlers
+        function showMobileComparison(option) {
+            // Remove active class from all tabs and cards
+            const tabs = document.querySelectorAll('.tab-btn');
+            const cards = document.querySelectorAll('.mobile-comparison-card');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            cards.forEach(card => card.classList.remove('active'));
+            
+            // Add active class to selected tab and card
+            const selectedTab = document.querySelector(\`[onclick="showMobileComparison('\${option}')"]\`);
+            const selectedCard = document.getElementById(\`\${option}-mobile\`);
+            
+            if (selectedTab) selectedTab.classList.add('active');
+            if (selectedCard) selectedCard.classList.add('active');
+        }
+
         // Initialize UI utilities - Updated with error handling
         document.addEventListener('DOMContentLoaded', () => {
             // Core functionality that should always work
             if (typeof initializeUIUtils === 'function') {
                 initializeUIUtils();
             } else {
-                console.warn('initializeUIUtils not available');
-            }
+                }
             
             // Optional enhancements with fallbacks
             if (typeof setupLazyLoading === 'function') setupLazyLoading();
@@ -77,21 +105,12 @@ export const HTML_EN = `<!DOCTYPE html>
             if (typeof setupFormValidation === 'function') setupFormValidation();
             if (typeof setupGalleryTouch === 'function') setupGalleryTouch();
             if (typeof setupBeforeAfterTouch === 'function') setupBeforeAfterTouch();
+            if (typeof setupServiceComparisonSwipe === 'function') setupServiceComparisonSwipe();
             if (typeof initFormValidation === 'function') initFormValidation();
             
-            console.log('UI initialization completed');
-        });
+            });
     </script>
 </body>
 </html>`;
 
 // Progress Report: Phase 1 Emergency Refactoring
-console.log(`
-🎯 PHASE 1 PROGRESS REPORT:
-✅ Extracted: Head, Header, Hero, Services, About sections  
-✅ Created: Component-based directory structure
-✅ Eliminated: Monolithic 2,814-line architecture anti-pattern
-📊 Reduction: ~500 lines extracted into reusable components
-🔄 Remaining: 5 sections + JavaScript modules to extract
-⚡ Impact: Improved maintainability, reusability, testability
-`);

@@ -2,28 +2,28 @@
 
 ## 🔴 This Week (Customer Visible)
 
-### 1. Desktop Booking Widget (2 hours)
+### ~~1. Desktop Booking Widget (2 hours)~~ ✅ DONE
 ```
-Above fold, sticky on scroll
-Trust badges: "15+ Years", "100% Satisfaction"  
-WhatsApp button: +965 98563711
-Book Appointment CTA
-```
-
-### 2. Gallery Lightbox (1 hour)
-```
-Click any image → fullscreen
-Previous/Next arrows
-Swipe on mobile
-Close on backdrop click
+✅ Above fold, sticky on scroll
+✅ Trust badges: "15+ Years", "100% Satisfaction"  
+✅ WhatsApp button: +965 98563711
+✅ Book Appointment CTA
 ```
 
-### 3. Service Comparison Table (1.5 hours)
+### ~~2. Gallery Lightbox (1 hour)~~ ✅ DONE
 ```
-Desktop: side-by-side table
-Mobile: swipe between services
-Prices + features + CTAs
-Arabic RTL support
+✅ Click any image → fullscreen
+✅ Previous/Next arrows
+✅ Swipe on mobile
+✅ Close on backdrop click
+```
+
+### ~~3. Service Comparison Table (1.5 hours)~~ ✅ DONE
+```
+✅ Desktop: side-by-side table
+✅ Mobile: swipe between services
+✅ Prices + features + CTAs
+✅ Arabic RTL support
 ```
 
 ## 🟡 Next Week

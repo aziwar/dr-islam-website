@@ -2257,4 +2257,188 @@ export const COMPONENTS_CSS = `
 [dir="rtl"] .patient-details {
     text-align: right;
 }
+
+/* Service Comparison Mobile Styles */
+.mobile-comparison {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .comparison-table-wrapper {
+        display: none;
+    }
+    
+    .mobile-comparison {
+        display: block;
+    }
+}
+
+.comparison-tabs {
+    display: flex;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 0.75rem 0.5rem;
+    background: #f8f9fa;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tab-btn:not(:last-child) {
+    border-right: 1px solid #e9ecef;
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(190, 176, 147, 0.3);
+}
+
+.tab-btn:hover:not(.active) {
+    background: #e9ecef;
+    color: #333;
+}
+
+.mobile-comparison-card {
+    display: none;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mobile-comparison-card.active {
+    display: block;
+    transform: translateX(0);
+    opacity: 1;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.mobile-card-header {
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 1.5rem;
+}
+
+.mobile-card-header.recommended {
+    border-bottom-color: var(--primary);
+    background: linear-gradient(135deg, rgba(190, 176, 147, 0.1) 0%, rgba(190, 176, 147, 0.05) 100%);
+    margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    border-radius: 12px 12px 0 0;
+}
+
+.mobile-card-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 0.5rem 0;
+}
+
+.recommended-badge {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.option-subtitle {
+    color: #666;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.mobile-features {
+    display: grid;
+    gap: 1rem;
+}
+
+.mobile-feature {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.mobile-feature:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.mobile-feature.highlight {
+    background: linear-gradient(135deg, rgba(190, 176, 147, 0.1) 0%, rgba(190, 176, 147, 0.05) 100%);
+    border-left: 4px solid var(--primary);
+}
+
+.feature-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.feature-value {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Touch-friendly swipe indicators */
+.mobile-comparison::after {
+    content: '← Swipe to compare →';
+    display: block;
+    text-align: center;
+    color: #999;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    padding: 0.5rem;
+}
+
+/* RTL Support for Mobile Comparison */
+[dir="rtl"] .mobile-comparison::after {
+    content: '→ اسحب للمقارنة ←';
+}
+
+[dir="rtl"] .mobile-feature {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .mobile-feature.highlight {
+    border-left: none;
+    border-right: 4px solid var(--primary);
+}
+
+[dir="rtl"] .tab-btn:not(:last-child) {
+    border-right: none;
+    border-left: 1px solid #e9ecef;
+}
 `;

@@ -1,16 +1,29 @@
 // Arabic Header and Navigation Section - Modern 2024/2025 Standards
 // Enhanced with accessibility, responsive design, RTL support, and modern interactions
 import { DentalLogo } from '../../content/components/DentalLogo.js';
-import { createModernArabicHeader } from '../shared/modern-header.js';
-import { Button } from '../../components/atoms/Button.js';
+// Component imports removed - now using inline implementations
 
 /**
  * Get Arabic Header - Modern header with 2024/2025 standards and full RTL support
  * Uses the new modern header architecture
  */
 export function getArabicHeader() {
-  // Use modern header component
-  return createModernArabicHeader();
+  // Simple inline header implementation for Arabic
+  return `
+    <header class="main-header" dir="rtl">
+      <div class="container">
+        <nav class="nav-wrapper">
+          <a href="/ar" class="logo">د. اسلام الصغير</a>
+          <ul class="nav-menu">
+            <li><a href="#services">الخدمات</a></li>
+            <li><a href="#testimonials">آراء المرضى</a></li>
+            <li><a href="#contact">اتصل بنا</a></li>
+          </ul>
+          <button class="nav-toggle" aria-label="القائمة">☰</button>
+        </nav>
+      </div>
+    </header>
+  `;
 }
 
 /**

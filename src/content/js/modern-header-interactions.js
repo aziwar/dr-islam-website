@@ -38,8 +38,7 @@ class ModernHeaderController {
     this.updateMenuState(false);
     this.closeAllDropdowns();
     
-    console.log('Modern Header Controller initialized');
-  }
+    }
 
   /**
    * Bind DOM elements
@@ -59,7 +58,6 @@ class ModernHeaderController {
     this.emergencyBanner = document.querySelector('.modern-emergency-banner');
     
     if (!this.header) {
-      console.error('Modern header element not found');
       return;
     }
   }
@@ -616,8 +614,7 @@ class ModernHeaderController {
     // Reset body styles
     document.body.style.overflow = '';
 
-    console.log('Modern Header Controller destroyed');
-  }
+    }
 }
 
 /**

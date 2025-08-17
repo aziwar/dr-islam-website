@@ -353,8 +353,7 @@ export function createUIUtilsJS() {
         /^[+]?[\d\-\s()]{8,}$/.test('test');
         /^[0-9+\-\s()]{10,}$/.test('test');
     } catch (regexError) {
-        console.error('Regex pattern error detected:', regexError);
-    }
+        }
     
     /**
      * Breadcrumb Management
@@ -384,7 +383,6 @@ export function createUIUtilsJS() {
         const backdrop = document.querySelector('.nav-backdrop');
         
         if (!menu) {
-            console.error('Mobile menu not found');
             return;
         }
         
@@ -432,7 +430,6 @@ export function createUIUtilsJS() {
         if (!modal) {
             const success = createBookingModal(service);
             if (!success) {
-                console.error('Failed to create booking modal');
                 return;
             }
             modal = document.querySelector('.booking-modal');
@@ -461,8 +458,7 @@ export function createUIUtilsJS() {
             }, 100);
             
         } else {
-            console.error('Could not open booking modal');
-        }
+            }
     }
     
     function createBookingModal(service = '') {
@@ -592,7 +588,6 @@ export function createUIUtilsJS() {
         const insertedOverlay = document.querySelector('.modal-overlay');
         
         if (!insertedModal || !insertedOverlay) {
-            console.error('Modal insertion failed!');
             return false;
         }
         
@@ -790,12 +785,10 @@ export function createUIUtilsJS() {
                 }, 2000);
             } else {
                 showBookingError(result.error || 'Submission failed. Please try again.');
-                console.error('Booking submission error:', result.error);
-            }
+                }
         } catch (error) {
             showBookingError('Network error. Please check your connection and try again.');
-            console.error('Booking submission network error:', error);
-        } finally {
+            } finally {
             // Restore button state
             btnText.style.display = 'inline';
             spinner.style.display = 'none';
@@ -954,4 +947,99 @@ export function createUIUtilsJS() {
 })();
 
 `;
+}
+
+/**
+ * Service Comparison Mobile Functions
+ */
+export function showMobileComparison(option) {
+    // Remove active class from all tabs and cards
+    const tabs = document.querySelectorAll('.tab-btn');
+    const cards = document.querySelectorAll('.mobile-comparison-card');
+    
+    tabs.forEach(tab => tab.classList.remove('active'));
+    cards.forEach(card => card.classList.remove('active'));
+    
+    // Add active class to selected tab and card
+    const selectedTab = document.querySelector(`[onclick="showMobileComparison('${option}')"]`);
+    const selectedCard = document.getElementById(`${option}-mobile`);
+    
+    if (selectedTab) selectedTab.classList.add('active');
+    if (selectedCard) selectedCard.classList.add('active');
+}
+
+export function setupServiceComparisonSwipe() {
+    const mobileComparison = document.querySelector('.mobile-comparison');
+    if (!mobileComparison) return;
+    
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+    
+    const options = ['implants', 'bridge', 'dentures'];
+    let currentIndex = 0;
+    
+    // Touch start
+    mobileComparison.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = true;
+    }, { passive: true });
+    
+    // Touch move - prevent default if horizontal swipe
+    mobileComparison.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        const deltaX = Math.abs(currentX - startX);
+        const deltaY = Math.abs(currentY - startY);
+        
+        // If horizontal swipe is detected, prevent vertical scroll
+        if (deltaX > deltaY && deltaX > 20) {
+            e.preventDefault();
+        }
+    });
+    
+    // Touch end
+    mobileComparison.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        const endX = e.changedTouches[0].clientX;
+        const deltaX = endX - startX;
+        const threshold = 50; // Minimum swipe distance
+        
+        if (Math.abs(deltaX) > threshold) {
+            if (deltaX > 0) {
+                // Swipe right - previous option
+                currentIndex = currentIndex > 0 ? currentIndex - 1 : options.length - 1;
+            } else {
+                // Swipe left - next option
+                currentIndex = currentIndex < options.length - 1 ? currentIndex + 1 : 0;
+            }
+            
+            showMobileComparison(options[currentIndex]);
+        }
+    }, { passive: true });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!mobileComparison.offsetParent) return; // Not visible
+        
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            currentIndex = currentIndex > 0 ? currentIndex - 1 : options.length - 1;
+            showMobileComparison(options[currentIndex]);
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            currentIndex = currentIndex < options.length - 1 ? currentIndex + 1 : 0;
+            showMobileComparison(options[currentIndex]);
+        }
+    });
+}
+
+// Make showMobileComparison globally available for onclick handlers (browser only)
+if (typeof window !== 'undefined') {
+    window.showMobileComparison = showMobileComparison;
 }

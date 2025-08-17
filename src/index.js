@@ -5,7 +5,6 @@ import { CSS, INLINE_CSS, DEFERRED_STYLES, getCSSForRequest } from './content/st
 import { SERVICE_WORKER_JS } from './content/sw.js';
 import { OFFLINE_HTML } from './content/offline.js';
 import { logger } from './utils/logger.js';
-import { ImageOptimizationSystem } from './utils/image-optimizer.js';
 import { GalleryAPI } from './utils/gallery-api.js';
 
 // Constants for better maintainability
@@ -303,8 +302,6 @@ function closeBookingModal() {
 // Essential UI utility functions - CRITICAL FIX for initializeUIUtils
 function initializeUIUtils() {
   // Initialize all UI components
-  console.log('UI Utils initialized successfully');
-  
   // Initialize mobile menu functionality
   const toggle = document.querySelector('.nav-toggle');
   if (toggle) {
@@ -430,7 +427,6 @@ window.addEventListener('scroll', function() {
     });
 });
 
-console.log('Main JavaScript loaded successfully with proper MIME type');
 `;
       
       const response = new Response(mainJsContent, {
@@ -1316,8 +1312,6 @@ export class AdvancedFormHandler {
         const data = Object.fromEntries(formData.entries());
         
         // Log form data (replace with actual submission)
-        console.log('Form Data:', data);
-        
         // Simulate random success/failure for demo
         if (Math.random() > 0.1) { // 90% success rate
             return { success: true, message: 'Form submitted successfully' };
@@ -1697,8 +1691,7 @@ export function handleFormSubmit(form, onSubmit, options = {}) {
         } catch (error) {
             // Log error in development only
             if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-                console.error('Form submission error:', error);
-            }
+                }
             updateFormState(form, 'error');
             showFormMessage(form, error.message || 'حدث خطأ أثناء الإرسال / An error occurred during submission', 'error');
         }

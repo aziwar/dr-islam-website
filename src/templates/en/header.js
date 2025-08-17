@@ -1,16 +1,29 @@
 // English Header and Navigation Section - Modern 2024/2025 Standards
 // Enhanced with accessibility, responsive design, and modern interactions
 import { DentalLogo } from '../../content/components/DentalLogo.js';
-import { createModernEnglishHeader } from '../shared/modern-header.js';
-import { Button } from '../../components/atoms/Button.js';
+// Component imports removed - now using inline implementations
 
 /**
  * Get English Header - Modern header with 2024/2025 standards
  * Uses the new modern header architecture
  */
 export function getEnglishHeader() {
-  // Use modern header component
-  return createModernEnglishHeader();
+  // Simple inline header implementation
+  return `
+    <header class="main-header">
+      <div class="container">
+        <nav class="nav-wrapper">
+          <a href="/" class="logo">Dr. Islam Elsagher</a>
+          <ul class="nav-menu">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <button class="nav-toggle" aria-label="Menu">☰</button>
+        </nav>
+      </div>
+    </header>
+  `;
 }
 
 /**

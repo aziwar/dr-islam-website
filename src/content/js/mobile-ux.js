@@ -344,7 +344,6 @@ window.handleQuickBooking = async function(event) {
             throw new Error(result.message || 'Failed to submit appointment request');
         }
     } catch (error) {
-        console.error('Booking error:', error);
         showNotification('Failed to submit request. Please try calling us directly at +965 98563711', 'error');
     } finally {
         // Restore button
